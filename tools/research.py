@@ -102,10 +102,38 @@ def youtube(cfg):
             "top_words": top_words(texts), "audience_questions": questions(texts)}
 
 
+def reddit_rss(cfg):
+    """Fallback without an API app: public RSS feeds of the week's top posts (no votes or comment counts)."""
+    import html
+    import xml.etree.ElementTree as ET
+    ns = {"a": "http://www.w3.org/2005/Atom"}
+    top, texts = [], []
+    for sub in cfg["subreddits"]:
+        for wait in (8, 30):  # gentle: Reddit answers 429 to fast feed reads, so one retry after a longer pause
+            r = requests.get(f"https://www.reddit.com/r/{sub}/top/.rss", params={"t": "week", "limit": 15},
+                             headers={"User-Agent": UA}, timeout=30)
+            time.sleep(wait)
+            if r.status_code != 429:
+                break
+        if not r.ok:
+            continue
+        for e in ET.fromstring(r.content).findall("a:entry", ns):
+            title = e.findtext("a:title", "", ns)
+            body = re.sub(r"<[^>]+>", " ", html.unescape(e.findtext("a:content", "", ns)))
+            body = re.sub(r"submitted by\s+/u/\S+|\[link\]|\[comments\]", " ", body)
+            body = re.sub(r"\s+", " ", body).strip()[:500]
+            top.append({"sub": sub, "title": title, "url": e.find("a:link", ns).get("href")})
+            texts.append(f"{title} {body}")
+    if not top:
+        return {"skipped": "Reddit RSS unavailable (blocked or empty)"}
+    return {"source": "rss", "posts": top[:30], "posts_analyzed": len(texts), "sentiment": sentiment(texts),
+            "top_words": top_words(texts), "audience_questions": questions(texts)}
+
+
 def reddit(cfg):
     raw = secret("REDDIT_JSON", "reddit.json")
     if not raw:
-        return {"skipped": "REDDIT_JSON not configured"}
+        return reddit_rss(cfg)
     c = json.loads(raw)
     tok = requests.post("https://www.reddit.com/api/v1/access_token", auth=(c["client_id"], c["client_secret"]),
                         data={"grant_type": "client_credentials"}, headers={"User-Agent": c.get("user_agent", UA)}, timeout=30).json()
@@ -192,7 +220,11 @@ def report(name, week, d):
     if "skipped" in r:
         L += [f"Saltato: {r['skipped']}", ""]
     else:
-        L += [f"- [{p['title'][:90]}]({p['url']}) r/{p['sub']}, {p['score']:,} voti, {p['comments']} commenti" for p in r["posts"][:15]]
+        if r.get("source") == "rss":
+            L += ["Fonte: feed RSS pubblici (top della settimana, in ordine di Reddit; senza numero di voti).", ""]
+            L += [f"- [{p['title'][:90]}]({p['url']}) r/{p['sub']}" for p in r["posts"][:15]]
+        else:
+            L += [f"- [{p['title'][:90]}]({p['url']}) r/{p['sub']}, {p['score']:,} voti, {p['comments']} commenti" for p in r["posts"][:15]]
         s = r["sentiment"]
         L += ["", f"Post analizzati: {r['posts_analyzed']}. Sentiment: {s['pos']:.0%} positivo, {s['neu']:.0%} neutro, "
               f"{s['neg']:.0%} negativo.", f"Parole più frequenti: {', '.join(r['top_words'])}.", "", "Domande ricorrenti:"]

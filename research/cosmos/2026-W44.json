@@ -1,9 +1,352 @@
 {
+ "youtube": {
+  "videos": [
+   {
+    "id": "wka6dUErnQU",
+    "title": "NASA가 종이접기 작가를 부른이유ㄷㄷ",
+    "channel": "소란도란",
+    "published": "2026-10-25",
+    "duration": "PT22S",
+    "views": 966243,
+    "views_per_day": 966243,
+    "likes": 6725,
+    "comments": 167,
+    "engagement": 0.0071
+   },
+   {
+    "id": "tKikZXrcZCQ",
+    "title": "Why Nothing Can Survive Venus",
+    "channel": "Facts' Mine",
+    "published": "2026-10-24",
+    "duration": "PT57S",
+    "views": 1643662,
+    "views_per_day": 821831,
+    "likes": 94618,
+    "comments": 476,
+    "engagement": 0.0579
+   },
+   {
+    "id": "TGDF1889rGE",
+    "title": "The Lid NASA Couldn’t Open",
+    "channel": "BrainRush",
+    "published": "2026-10-16",
+    "duration": "PT1M6S",
+    "views": 6220893,
+    "views_per_day": 622089,
+    "likes": 165380,
+    "comments": 1425,
+    "engagement": 0.0268
+   },
+   {
+    "id": "Buh0gX_-5lY",
+    "title": "How Small Is the Planck Length? 💀🔬 #Shorts #Space #Astronomy #Science #QuantumPhysics #Physics",
+    "channel": "Science Of Infinity",
+    "published": "2026-10-15",
+    "duration": "PT36S",
+    "views": 6195497,
+    "views_per_day": 563227,
+    "likes": 120162,
+    "comments": 1284,
+    "engagement": 0.0196
+   },
+   {
+    "id": "xU60JQSjxLc",
+    "title": "What TON 618 Would Look Like at Different Distances",
+    "channel": "Universe Dimensions",
+    "published": "2026-10-04",
+    "duration": "PT8M1S",
+    "views": 8549447,
+    "views_per_day": 388611,
+    "likes": 56852,
+    "comments": 4900,
+    "engagement": 0.0072
+   },
+   {
+    "id": "SqDwpO3E9MU",
+    "title": "How Big is the Universe, Really? 🌌💀 #Shorts #Space #Universe #Astronomy #Science #Cosmos #Physics",
+    "channel": "Science Of Infinity",
+    "published": "2026-10-17",
+    "duration": "PT46S",
+    "views": 3151139,
+    "views_per_day": 350126,
+    "likes": 87923,
+    "comments": 1066,
+    "engagement": 0.0282
+   },
+   {
+    "id": "Fme5MA1VYJc",
+    "title": "insane facts about Sun!",
+    "channel": "Dev",
+    "published": "2026-10-14",
+    "duration": "PT1M50S",
+    "views": 3650302,
+    "views_per_day": 331845,
+    "likes": 121851,
+    "comments": 745,
+    "engagement": 0.0336
+   },
+   {
+    "id": "P67HxeFTRHw",
+    "title": "In 1859, Earth was struck by one of the most powerful solar storms ever recorded. ⚡☀️",
+    "channel": "Beyond Earth",
+    "published": "2026-09-30",
+    "duration": "PT6S",
+    "views": 7266439,
+    "views_per_day": 279478,
+    "likes": 88219,
+    "comments": 1411,
+    "engagement": 0.0123
+   },
+   {
+    "id": "ppQmLxCxmGw",
+    "title": "Ant vs the Universe | Size Comparison 💀",
+    "channel": "The Scale Dive",
+    "published": "2026-10-07",
+    "duration": "PT50S",
+    "views": 4815766,
+    "views_per_day": 267542,
+    "likes": 30823,
+    "comments": 266,
+    "engagement": 0.0065
+   },
+   {
+    "id": "x9fM_-eVCXI",
+    "title": "Kalpana Chawla Ki Kahani: Karnal Se NASA Aur Columbia Tak",
+    "channel": "StrategyLabIndia",
+    "published": "2026-10-15",
+    "duration": "PT2M20S",
+    "views": 2547275,
+    "views_per_day": 254727,
+    "likes": 73452,
+    "comments": 395,
+    "engagement": 0.029
+   },
+   {
+    "id": "ezoMxP0sBS8",
+    "title": "Something Strange is Happening on Mars",
+    "channel": "GetsetflySCIENCE by Gaurav Thakur",
+    "published": "2026-09-26",
+    "duration": "PT29M53S",
+    "views": 6926427,
+    "views_per_day": 238842,
+    "likes": 42362,
+    "comments": 1562,
+    "engagement": 0.0063
+   },
+   {
+    "id": "BdRisD_BV8o",
+    "title": "ALERTA Super Niño: la NASA descubre anomalía en el océano que agravará el fenómeno",
+    "channel": "Ciudadano news",
+    "published": "2026-10-19",
+    "duration": "PT53S",
+    "views": 1531108,
+    "views_per_day": 218729,
+    "likes": 19614,
+    "comments": 754,
+    "engagement": 0.0133
+   },
+   {
+    "id": "KvOOhdCWRyc",
+    "title": "This Animal Might Be Living On The Moon",
+    "channel": "Facts' Mine",
+    "published": "2026-09-28",
+    "duration": "PT45S",
+    "views": 6103312,
+    "views_per_day": 217975,
+    "likes": 229083,
+    "comments": 896,
+    "engagement": 0.0377
+   },
+   {
+    "id": "3T3F-LNnfMI",
+    "title": "Tesla unveils new flying car model",
+    "channel": "NBC News",
+    "published": "2026-10-16",
+    "duration": "PT1M49S",
+    "views": 1807000,
+    "views_per_day": 200777,
+    "likes": 5121,
+    "comments": 1241,
+    "engagement": 0.0035
+   },
+   {
+    "id": "Zzs458AUj1M",
+    "title": "What would happen if Earth fell into a black hole? #space #outerspace #blackhole #spacefacts",
+    "channel": "prodbeatsbymat",
+    "published": "2026-10-05",
+    "duration": "PT1M28S",
+    "views": 3776991,
+    "views_per_day": 188849,
+    "likes": 62778,
+    "comments": 2420,
+    "engagement": 0.0173
+   },
+   {
+    "id": "Zezt6EsG9WE",
+    "title": "NASA Moon Base: Rovers and Lunar Terrain Vehicles (October 2026 Update)",
+    "channel": "NASA",
+    "published": "2026-10-20",
+    "duration": "PT9M18S",
+    "views": 897268,
+    "views_per_day": 179453,
+    "likes": 10848,
+    "comments": 0,
+    "engagement": 0.0121
+   },
+   {
+    "id": "qQAM7FvLVio",
+    "title": "Why is everyone going to this hole in the Moon",
+    "channel": "The Space Race",
+    "published": "2026-10-10",
+    "duration": "PT20M33S",
+    "views": 2648259,
+    "views_per_day": 176550,
+    "likes": 17237,
+    "comments": 3704,
+    "engagement": 0.0079
+   },
+   {
+    "id": "kGe6LHzmCXo",
+    "title": "Crew 12 successfully splashes down off coast",
+    "channel": "FOX 5 New York",
+    "published": "2026-10-08",
+    "duration": "PT1M27S",
+    "views": 2898618,
+    "views_per_day": 170506,
+    "likes": 22861,
+    "comments": 499,
+    "engagement": 0.0081
+   },
+   {
+    "id": "ASEchqxT_5I",
+    "title": "Something Weird Is Happening On Europa",
+    "channel": "The Space Race",
+    "published": "2026-09-26",
+    "duration": "PT14M51S",
+    "views": 4430579,
+    "views_per_day": 152778,
+    "likes": 23632,
+    "comments": 1283,
+    "engagement": 0.0056
+   },
+   {
+    "id": "GPTPM9HyEC0",
+    "title": "Nepoleon மகனுக்கு NASA-ல Internship 😲 ? | #nepolean #viral #nasa #aerospace",
+    "channel": "JFW Binge",
+    "published": "2026-10-21",
+    "duration": "PT1M10S",
+    "views": 741969,
+    "views_per_day": 148393,
+    "likes": 8493,
+    "comments": 87,
+    "engagement": 0.0116
+   },
+   {
+    "id": "0USB9ARf-9c",
+    "title": "Is There Only ONE Electron In the Universe?",
+    "channel": "PBS Space Time",
+    "published": "2026-10-15",
+    "duration": "PT1M40S",
+    "views": 1409108,
+    "views_per_day": 140910,
+    "likes": 40142,
+    "comments": 1755,
+    "engagement": 0.0297
+   },
+   {
+    "id": "Cyj7slWWtqk",
+    "title": "Physics Nobel Prize 2026 (Ice Cube Neutrino Discovery)",
+    "channel": "GYRUS SULCUS",
+    "published": "2026-10-07",
+    "duration": "PT32M14S",
+    "views": 2504351,
+    "views_per_day": 139130,
+    "likes": 20001,
+    "comments": 1374,
+    "engagement": 0.0085
+   },
+   {
+    "id": "EkDI0KrzMhU",
+    "title": "how to photograph a Black Hole!",
+    "channel": "Dev",
+    "published": "2026-10-18",
+    "duration": "PT1M53S",
+    "views": 1068618,
+    "views_per_day": 133577,
+    "likes": 41583,
+    "comments": 223,
+    "engagement": 0.0391
+   },
+   {
+    "id": "1rFpmhvXUZ8",
+    "title": "NASA Simulated Falling Into A Black Hole! 🕳️",
+    "channel": "UNIVERSIA",
+    "published": "2026-09-27",
+    "duration": "PT11S",
+    "views": 3081502,
+    "views_per_day": 106258,
+    "likes": 0,
+    "comments": 2009,
+    "engagement": 0.0007
+   },
+   {
+    "id": "cYVd1Nq2W2E",
+    "title": "Blackhole doesn't follow the laws of physics 💀 #space #blackhole #spacefacts",
+    "channel": "Dark Void",
+    "published": "2026-09-29",
+    "duration": "PT21S",
+    "views": 2856355,
+    "views_per_day": 105790,
+    "likes": 63923,
+    "comments": 1484,
+    "engagement": 0.0229
+   }
+  ],
+  "comments_analyzed": 400,
+  "sentiment": {
+   "n": 400,
+   "pos": 0.4,
+   "neu": 0.44,
+   "neg": 0.16
+  },
+  "top_words": [
+   "light",
+   "science",
+   "video",
+   "years",
+   "earth",
+   "than",
+   "universe",
+   "planck",
+   "length",
+   "time",
+   "thing",
+   "away",
+   "fact",
+   "very",
+   "solar"
+  ],
+  "audience_questions": [
+   "한마 유지로 모양 패널은 없나요?",
+   "저게 진짜로 종이접기 작가가 필요한 작업이야?",
+   "Whats in here, rocks?",
+   "You know what is as old as the solar system?",
+   "But did they put the capsule in a vacuum to reopen it?",
+   "What was in it, you ask?",
+   "That's just great! \nNow can I get some health insurance?",
+   "That's nice. Now what did they find from the asteroid?",
+   "10^-35 meters... the edge of our understanding?",
+   "Why haven't I got the GIF feature on YouTube yet?"
+  ]
+ },
+ "reddit": {
+  "skipped": "REDDIT_JSON not configured"
+ },
  "instagram": {
   "space": [
    {
     "type": "IMAGE",
-    "likes": 377257,
+    "likes": 377266,
     "comments": 1430,
     "url": "https://www.instagram.com/p/DeR4fSKm2XE/",
     "caption": "Just down the galactic street\n\n5,000 light-years may seem like an unimaginable distance — but on a cosmic scale, it's next to nothing. This stellar cr"
@@ -31,7 +374,7 @@
    },
    {
     "type": "IMAGE",
-    "likes": 2318,
+    "likes": 2321,
     "comments": 151,
     "url": "https://www.instagram.com/p/DeOEl7gMMG5/",
     "caption": "The Triangulum Galaxy M33\nIt contains an estimated 40 billion stars ✨ \nIt is the third-largest member of our Local Group of galaxies, behind the Andro"
@@ -45,21 +388,21 @@
    },
    {
     "type": "IMAGE",
-    "likes": 1870,
+    "likes": 1873,
     "comments": 47,
     "url": "https://www.instagram.com/p/DefTNvdR0Tp/",
     "caption": "«Από τον Άρη στα Κάτω Πατήσια. Κρίμα.».\n.\n.\n#athens #greece #space #ufo"
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 1777,
+    "likes": 1778,
     "comments": 2,
     "url": "https://www.instagram.com/p/De3BCH8k0iy/",
     "caption": "Astronaut Don Pettit has shared a unique view of Earth's auroras, showing the planet as a green sphere through a fisheye lens. The photograph offers a"
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 1736,
+    "likes": 1737,
     "comments": 59,
     "url": "https://www.instagram.com/p/DeYEDCiCcql/",
     "caption": "Reflections in the Alps\n\nIn a far-flung corner of the Aoraki Mackenzie International Dark Sky Reserve, the Hopkins River Valley sits beneath one of th"
@@ -76,7 +419,7 @@
   "nasa": [
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 210135,
+    "likes": 210136,
     "comments": 722,
     "url": "https://www.instagram.com/p/DdWojaYFDf-/",
     "caption": "The boosters for Artemis III are almost stacked!\n \nThese boosters will contribute over 75% of the Space Launch System’s total rocket thrust at launch,"
@@ -97,7 +440,7 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 34105,
+    "likes": 34306,
     "comments": 473,
     "url": "https://www.instagram.com/p/De6cbLsiH3S/",
     "caption": "Badan Penerbangan dan Antariksa Amerika Serikat (NASA) menyoroti kebakaran hutan dan lahan (karhutla) di Pulau Papua yang menyebabkan lonjakan emisi k"
@@ -111,7 +454,7 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 27624,
+    "likes": 27626,
     "comments": 106,
     "url": "https://www.instagram.com/p/Dd83CYFlPL-/",
     "caption": "Reaching for the stars.\n\nThe U.S. Navy and nasa recently conducted hoist training with the crew of Artemis III in the San Diego Bay, marking the first"
@@ -125,7 +468,7 @@
    },
    {
     "type": "IMAGE",
-    "likes": 17679,
+    "likes": 17682,
     "comments": 54,
     "url": "https://www.instagram.com/p/DeKcZQ8D7Xl/",
     "caption": "Quite the planetary view 🪐\n\nWhile Saturn’s rings put on a stellar display in this image captured by our Cassini spacecraft, take a closer look at the "
@@ -291,25 +634,6 @@
   ]
  },
  "trends": {
-  "james webb": {
-   "last_4w": 0,
-   "change": 0
-  },
-  "black hole": {
-   "last_4w": 2,
-   "change": 0
-  },
-  "stargazing": {
-   "last_4w": 0,
-   "change": 0
-  },
-  "meteor shower": {
-   "last_4w": 1,
-   "change": -2
-  },
-  "mars": {
-   "last_4w": 15,
-   "change": -2
-  }
+  "skipped": "Google Trends unavailable: TooManyRequestsError"
  }
 }

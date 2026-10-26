@@ -1,16 +1,18 @@
 # Cosmos in Numbers: publishes the due queue items (Meta, Threads, X, TikTok) at the exact minute.
-# Crons are UTC = Italian winter time minus 1 h (CET, from 25/10/2026): 11:55, 12:55, 15:55, 18:55, 20:55.
-# The script then waits for the "at" minute of each item (12:00, 13:00, 16:00, 19:00, 21:00).
+# Crons are UTC = Italian winter time minus 1 h (CET, from 25/10/2026): 11:58, 15:58, 18:58, 20:58.
+# The script then waits for the "at" minute of each item (12:00, 16:00, 19:00, 21:00): 2 min of waiting, not 5,
+# to stay well inside the free Actions minutes of a private repo (26/10/2026).
+# 13:00 slot (TikTok "dati" Short) removed while TIKTOK_ENABLED is false: add back "58 11 * * *" when TikTok is on.
+# Summer time (from 28/03/2027): every hour one less ("58 9", "58 13", "58 16", "58 18").
 # Reversible: disable this workflow from the Actions tab (or `gh workflow disable publish`).
 name: publish
 
 on:
   schedule:
-    - cron: "55 10 * * *"
-    - cron: "55 11 * * *"
-    - cron: "55 14 * * *"
-    - cron: "55 17 * * *"
-    - cron: "55 19 * * *"
+    - cron: "58 10 * * *"
+    - cron: "58 14 * * *"
+    - cron: "58 17 * * *"
+    - cron: "58 19 * * *"
   workflow_dispatch:
     inputs:
       dry_run:

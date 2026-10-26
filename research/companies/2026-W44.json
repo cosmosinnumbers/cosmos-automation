@@ -7,11 +7,11 @@
     "channel": "Raj Grover",
     "published": "2026-10-25",
     "duration": "PT2M21S",
-    "views": 1810426,
-    "views_per_day": 1810426,
-    "likes": 92936,
-    "comments": 1116,
-    "engagement": 0.052
+    "views": 1825400,
+    "views_per_day": 1825400,
+    "likes": 93253,
+    "comments": 1120,
+    "engagement": 0.0517
    },
    {
     "id": "wX7tBNTFySU",
@@ -19,9 +19,9 @@
     "channel": "CarterPCs",
     "published": "2026-10-19",
     "duration": "PT24S",
-    "views": 6232918,
-    "views_per_day": 890416,
-    "likes": 202585,
+    "views": 6233598,
+    "views_per_day": 890514,
+    "likes": 202606,
     "comments": 3192,
     "engagement": 0.033
    },
@@ -31,10 +31,10 @@
     "channel": "OBF",
     "published": "2026-10-13",
     "duration": "PT17M35S",
-    "views": 7951874,
-    "views_per_day": 611682,
-    "likes": 43321,
-    "comments": 5378,
+    "views": 7953852,
+    "views_per_day": 611834,
+    "likes": 43326,
+    "comments": 5382,
     "engagement": 0.0061
    },
    {
@@ -43,9 +43,9 @@
     "channel": "Raj Grover",
     "published": "2026-10-23",
     "duration": "PT1M3S",
-    "views": 1789727,
-    "views_per_day": 596575,
-    "likes": 90867,
+    "views": 1792745,
+    "views_per_day": 597581,
+    "likes": 90954,
     "comments": 595,
     "engagement": 0.0511
    },
@@ -55,9 +55,9 @@
     "channel": "VALORANT",
     "published": "2026-10-18",
     "duration": "PT2M43S",
-    "views": 3273296,
-    "views_per_day": 409162,
-    "likes": 93634,
+    "views": 3273815,
+    "views_per_day": 409226,
+    "likes": 93639,
     "comments": 3457,
     "engagement": 0.0297
    },
@@ -67,9 +67,9 @@
     "channel": "Savlnlas",
     "published": "2026-10-19",
     "duration": "PT18S",
-    "views": 2457690,
-    "views_per_day": 351098,
-    "likes": 41537,
+    "views": 2461420,
+    "views_per_day": 351631,
+    "likes": 41596,
     "comments": 213,
     "engagement": 0.017
    },
@@ -79,8 +79,8 @@
     "channel": "CNN",
     "published": "2026-10-16",
     "duration": "PT2M1S",
-    "views": 2817963,
-    "views_per_day": 313107,
+    "views": 2817985,
+    "views_per_day": 313109,
     "likes": 30145,
     "comments": 4967,
     "engagement": 0.0125
@@ -91,23 +91,11 @@
     "channel": "Bizopsy",
     "published": "2026-10-17",
     "duration": "PT1M41S",
-    "views": 2336261,
-    "views_per_day": 259584,
-    "likes": 131079,
+    "views": 2336321,
+    "views_per_day": 259591,
+    "likes": 131081,
     "comments": 768,
     "engagement": 0.0564
-   },
-   {
-    "id": "VE9Y6SrPfMU",
-    "title": "Fortuner vs JCB: Which Makes More Money? #fortuner #business #money",
-    "channel": "Manveer Singh",
-    "published": "2026-10-03",
-    "duration": "PT57S",
-    "views": 5612309,
-    "views_per_day": 255104,
-    "likes": 109510,
-    "comments": 432,
-    "engagement": 0.0196
    },
    {
     "id": "S77KyOFmN9A",
@@ -115,11 +103,23 @@
     "channel": "Learn with Jaspal",
     "published": "2026-10-21",
     "duration": "PT37S",
-    "views": 1265164,
-    "views_per_day": 253032,
-    "likes": 22066,
+    "views": 1266701,
+    "views_per_day": 253340,
+    "likes": 22080,
     "comments": 169,
     "engagement": 0.0176
+   },
+   {
+    "id": "VE9Y6SrPfMU",
+    "title": "Fortuner vs JCB: Which Makes More Money? #fortuner #business #money",
+    "channel": "Manveer Singh",
+    "published": "2026-10-03",
+    "duration": "PT57S",
+    "views": 5614773,
+    "views_per_day": 244120,
+    "likes": 109542,
+    "comments": 432,
+    "engagement": 0.0196
    },
    {
     "id": "hriu0irRcpE",
@@ -127,10 +127,10 @@
     "channel": "Mark Tilbury",
     "published": "2026-10-24",
     "duration": "PT26M24S",
-    "views": 467978,
-    "views_per_day": 233989,
-    "likes": 11413,
-    "comments": 531,
+    "views": 469429,
+    "views_per_day": 234714,
+    "likes": 11433,
+    "comments": 532,
     "engagement": 0.0255
    },
    {
@@ -139,9 +139,9 @@
     "channel": "fern",
     "published": "2026-10-07",
     "duration": "PT46M53S",
-    "views": 4111195,
-    "views_per_day": 228399,
-    "likes": 69495,
+    "views": 4111465,
+    "views_per_day": 228414,
+    "likes": 69496,
     "comments": 4416,
     "engagement": 0.018
    },
@@ -151,9 +151,9 @@
     "channel": "Hidden Ops India",
     "published": "2026-10-21",
     "duration": "PT34M",
-    "views": 1051083,
-    "views_per_day": 210216,
-    "likes": 8817,
+    "views": 1053636,
+    "views_per_day": 210727,
+    "likes": 8839,
     "comments": 169,
     "engagement": 0.0085
    },
@@ -163,9 +163,9 @@
     "channel": "Caleb Hammer",
     "published": "2026-10-23",
     "duration": "PT58S",
-    "views": 409552,
-    "views_per_day": 204776,
-    "likes": 11848,
+    "views": 409749,
+    "views_per_day": 204874,
+    "likes": 11855,
     "comments": 185,
     "engagement": 0.0294
    },
@@ -175,9 +175,9 @@
     "channel": "Rise & Fall Khabri",
     "published": "2026-09-29",
     "duration": "PT22S",
-    "views": 5474239,
-    "views_per_day": 202749,
-    "likes": 27620,
+    "views": 5474919,
+    "views_per_day": 202774,
+    "likes": 27625,
     "comments": 277,
     "engagement": 0.0051
    },
@@ -187,23 +187,11 @@
     "channel": "Jacob Karram",
     "published": "2026-10-14",
     "duration": "PT1M18S",
-    "views": 1914184,
-    "views_per_day": 174016,
-    "likes": 71204,
+    "views": 1914664,
+    "views_per_day": 174060,
+    "likes": 71226,
     "comments": 535,
     "engagement": 0.0375
-   },
-   {
-    "id": "PsAc3luNflc",
-    "title": "How Much Money Does Indigo Make With ONE Flight?",
-    "channel": "Unravelled by Shankar",
-    "published": "2026-10-18",
-    "duration": "PT1M15S",
-    "views": 1369798,
-    "views_per_day": 171224,
-    "likes": 19262,
-    "comments": 239,
-    "engagement": 0.0142
    },
    {
     "id": "Q-DFC0AnbY4",
@@ -211,9 +199,9 @@
     "channel": "The Diary Of A CEO",
     "published": "2026-10-05",
     "duration": "PT1H28M12S",
-    "views": 2959500,
-    "views_per_day": 140928,
-    "likes": 32611,
+    "views": 2959808,
+    "views_per_day": 140943,
+    "likes": 32620,
     "comments": 2460,
     "engagement": 0.0119
    },
@@ -223,9 +211,9 @@
     "channel": "Raj Grover",
     "published": "2026-10-06",
     "duration": "PT55S",
-    "views": 2538772,
-    "views_per_day": 126938,
-    "likes": 69865,
+    "views": 2539380,
+    "views_per_day": 126969,
+    "likes": 69883,
     "comments": 502,
     "engagement": 0.0277
    },
@@ -235,9 +223,9 @@
     "channel": "Think School",
     "published": "2026-10-09",
     "duration": "PT18M3S",
-    "views": 1990536,
-    "views_per_day": 117090,
-    "likes": 15404,
+    "views": 1990732,
+    "views_per_day": 117101,
+    "likes": 15405,
     "comments": 380,
     "engagement": 0.0079
    },
@@ -247,8 +235,8 @@
     "channel": "D_edits208",
     "published": "2026-10-13",
     "duration": "PT46S",
-    "views": 1501744,
-    "views_per_day": 115518,
+    "views": 1501759,
+    "views_per_day": 115519,
     "likes": 34563,
     "comments": 64,
     "engagement": 0.0231
@@ -259,8 +247,8 @@
     "channel": "Damon Cassidy",
     "published": "2026-10-07",
     "duration": "PT23M36S",
-    "views": 2170574,
-    "views_per_day": 114240,
+    "views": 2170663,
+    "views_per_day": 114245,
     "likes": 30886,
     "comments": 4419,
     "engagement": 0.0163
@@ -271,8 +259,8 @@
     "channel": "Business Insider",
     "published": "2026-10-03",
     "duration": "PT31M6S",
-    "views": 2526552,
-    "views_per_day": 109850,
+    "views": 2526621,
+    "views_per_day": 109853,
     "likes": 12042,
     "comments": 3213,
     "engagement": 0.006
@@ -283,9 +271,9 @@
     "channel": "Rise&Fall Daily",
     "published": "2026-09-26",
     "duration": "PT18S",
-    "views": 2758823,
-    "views_per_day": 95131,
-    "likes": 19026,
+    "views": 2758794,
+    "views_per_day": 95130,
+    "likes": 19027,
     "comments": 32,
     "engagement": 0.0069
    },
@@ -295,11 +283,23 @@
     "channel": "Statrys",
     "published": "2026-10-13",
     "duration": "PT14M49S",
-    "views": 1147356,
-    "views_per_day": 88258,
-    "likes": 8468,
-    "comments": 820,
+    "views": 1149225,
+    "views_per_day": 88401,
+    "likes": 8476,
+    "comments": 821,
     "engagement": 0.0081
+   },
+   {
+    "id": "BbFCnmrLwKE",
+    "title": "CHINA | Cities That Don’t Seem Real (Documentary)",
+    "channel": "Lifeder",
+    "published": "2026-10-16",
+    "duration": "PT3H41M",
+    "views": 855066,
+    "views_per_day": 85506,
+    "likes": 2786,
+    "comments": 131,
+    "engagement": 0.0034
    }
   ],
   "comments_analyzed": 400,
@@ -307,7 +307,7 @@
    "n": 400,
    "pos": 0.65,
    "neu": 0.17,
-   "neg": 0.18
+   "neg": 0.17
   },
   "top_words": [
    "priyanka",
@@ -323,8 +323,8 @@
    "finally",
    "fail",
    "it's",
-   "than",
-   "school"
+   "school",
+   "even"
   ],
   "audience_questions": [
    "Carter, can you make a video about the two screens at a time in the iPhone duo?",
@@ -469,13 +469,13 @@
    },
    {
     "sub": "stocks",
-    "title": "Samsung Electronics Forecasts $420 Billion Operating Profit in 2027 Despite Stock Slump. HBM Prices to Rise 100–150%",
-    "url": "https://www.reddit.com/r/stocks/comments/1xbn6bm/samsung_electronics_forecasts_420_billion/"
+    "title": "Anthropic just filed to go public. $16.3 BILLION in revenue in six months… and an $80.7 BILLION reported loss.",
+    "url": "https://www.reddit.com/r/stocks/comments/1xfwuks/anthropic_just_filed_to_go_public_163_billion_in/"
    },
    {
     "sub": "stocks",
-    "title": "Anthropic just filed to go public. $16.3 BILLION in revenue in six months… and an $80.7 BILLION reported loss.",
-    "url": "https://www.reddit.com/r/stocks/comments/1xfwuks/anthropic_just_filed_to_go_public_163_billion_in/"
+    "title": "Samsung Electronics Forecasts $420 Billion Operating Profit in 2027 Despite Stock Slump. HBM Prices to Rise 100–150%",
+    "url": "https://www.reddit.com/r/stocks/comments/1xbn6bm/samsung_electronics_forecasts_420_billion/"
    },
    {
     "sub": "stocks",
@@ -526,42 +526,42 @@
   "business": [
    {
     "type": "IMAGE",
-    "likes": 8745,
+    "likes": 8747,
     "comments": 77,
     "url": "https://www.instagram.com/p/DefI0-noIPm/",
     "caption": "GOLDEN STATE STANDARD: The WNBA Finals-bound Valkyries have become the first professional women's sports team to generate $100 million in annual reven"
    },
    {
     "type": "IMAGE",
-    "likes": 6553,
+    "likes": 6555,
     "comments": 68,
     "url": "https://www.instagram.com/p/DeoSjKNIDSQ/",
     "caption": "Promis on veut pas prendre la vedette. Quoi que … 🤣\n\n#entreprendre #entrepreneuse #business #sororité\n\nEntrepreneuse coach insta coach Instagram tips "
    },
    {
     "type": "IMAGE",
-    "likes": 5999,
+    "likes": 6000,
     "comments": 158,
     "url": "https://www.instagram.com/p/DerKFsqF6_V/",
     "caption": "Nobody gets to approve how I spend my days.\n\nThat's the rule I built my whole business around.\n\nI never want to ask another adult for permission to:\n\n"
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 5732,
+    "likes": 5748,
     "comments": 21,
     "url": "https://www.instagram.com/p/De3w2ChAjRr/",
     "caption": "Business 🔥⚜️\n#instagram #business #tata\n#truck #vehicle"
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 2984,
+    "likes": 2986,
     "comments": 20,
     "url": "https://www.instagram.com/p/De1pJw0ERBN/",
     "caption": "Somebody will ask you for a discount this week.\n\nSay yes and your price was never real.\nSay no and you start a fight.\n\nThere is a third move. Agree wi"
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 2978,
+    "likes": 2979,
     "comments": 61,
     "url": "https://www.instagram.com/p/Deuv5fgiUUh/",
     "caption": "Revelando alguns aprendizados sendo irmã e sócia do lasarodocarmojr \n\nTrabalhar com família tem uma vantagem que pouca gente fala: a conversa é sem fi"
@@ -569,7 +569,7 @@
    {
     "type": "IMAGE",
     "likes": 2414,
-    "comments": 495,
+    "comments": 496,
     "url": "https://www.instagram.com/p/De4MvzEmiME/",
     "caption": "#LinkInBio | India's own Apple or Samsung moment could be coming, says Vaishnaw | The iPhone Duo went out of stock despite carrying a price tag of nea"
    },
@@ -612,7 +612,7 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 28520,
+    "likes": 28533,
     "comments": 218,
     "url": "https://www.instagram.com/p/De2b63zIDci/",
     "caption": "Die EU-Staaten haben sich auf ihre Vorstellungen für eine neue EU-weite Unternehmensform geeinigt. Wer sich für die sogenannte EU Inc. entscheidet, so"
@@ -647,10 +647,10 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 3267,
-    "comments": 130,
-    "url": "https://www.instagram.com/p/Dc-N0RyjnLo/",
-    "caption": "Out for my favorite season 🥂✨\n\n#virgoseason #explorepage✨ #babas #startup"
+    "likes": 3239,
+    "comments": 75,
+    "url": "https://www.instagram.com/p/Dck1QSlDp1e/",
+    "caption": "Il ciclo for dei soldi infiniti.\n\nAnthropic oggi vale decine di miliardi, raccoglie capitali enormi e promette una crescita che, messa nero su bianco,"
    },
    {
     "type": "IMAGE",
@@ -719,7 +719,7 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 1841,
+    "likes": 1842,
     "comments": 170,
     "url": "https://www.instagram.com/p/DekKu1OAJuy/",
     "caption": "This one is for you, Dad.🤍🕊️\n\n#graduated #mastersdegree #finance #morocco #fyp"
@@ -742,14 +742,14 @@
   "entrepreneur": [
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 126675,
+    "likes": 126681,
     "comments": 1293,
     "url": "https://www.instagram.com/p/Dd_j8WMldIC/",
     "caption": "A $15 haircut and a $45 haircut can pay you exactly the same. One of them just keeps you at work until 10pm.\n\n$15 haircut: 30 a day. $45 haircut: 10 a"
    },
    {
     "type": "IMAGE",
-    "likes": 20898,
+    "likes": 20942,
     "comments": 32,
     "url": "https://www.instagram.com/p/Dec7yLTvFDH/",
     "caption": "😌 \n\n•\n•\n•\n#early20s #motivation #lifestyle #entrepreneur #womeninbusiness"
@@ -777,21 +777,21 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 6314,
-    "comments": 303,
+    "likes": 6340,
+    "comments": 304,
     "url": "https://www.instagram.com/p/De4v0qyiPuh/",
     "caption": "J’ai honte de cette France que je vois à la télé.\n\nPendant 30 ans, j’ai été entrepreneur.\nAu plus fort de mon activité, 50 salariés. 50 familles qui v"
    },
    {
     "type": "IMAGE",
-    "likes": 5999,
+    "likes": 6001,
     "comments": 158,
     "url": "https://www.instagram.com/p/DerKFsqF6_V/",
     "caption": "Nobody gets to approve how I spend my days.\n\nThat's the rule I built my whole business around.\n\nI never want to ask another adult for permission to:\n\n"
    },
    {
     "type": "IMAGE",
-    "likes": 2990,
+    "likes": 2991,
     "comments": 51,
     "url": "https://www.instagram.com/p/DeMiuTDRTCT/",
     "caption": "Let’s be honest, our brains are wired to speak up when something goes wrong. But how many amazing local experiences happen every single day that never"
@@ -805,7 +805,7 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 2582,
+    "likes": 2584,
     "comments": 2396,
     "url": "https://www.instagram.com/p/DeWwPtmDvqV/",
     "caption": "These 5 GitHub repos feel illegal to use. Each one kills an app you pay for.\n\nComment “PEAKY” and I’ll send you all 5 links and how to set each one up"

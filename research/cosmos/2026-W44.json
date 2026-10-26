@@ -7,9 +7,9 @@
     "channel": "소란도란",
     "published": "2026-10-25",
     "duration": "PT22S",
-    "views": 989569,
-    "views_per_day": 989569,
-    "likes": 6764,
+    "views": 991551,
+    "views_per_day": 991551,
+    "likes": 6770,
     "comments": 168,
     "engagement": 0.007
    },
@@ -19,9 +19,9 @@
     "channel": "Facts' Mine",
     "published": "2026-10-24",
     "duration": "PT57S",
-    "views": 1650767,
-    "views_per_day": 825383,
-    "likes": 95401,
+    "views": 1651906,
+    "views_per_day": 825953,
+    "likes": 95537,
     "comments": 479,
     "engagement": 0.0581
    },
@@ -31,11 +31,11 @@
     "channel": "BrainRush",
     "published": "2026-10-16",
     "duration": "PT1M6S",
-    "views": 6241214,
-    "views_per_day": 624121,
-    "likes": 165556,
+    "views": 6243058,
+    "views_per_day": 624305,
+    "likes": 165571,
     "comments": 1425,
-    "engagement": 0.0268
+    "engagement": 0.0267
    },
    {
     "id": "Buh0gX_-5lY",
@@ -43,9 +43,9 @@
     "channel": "Science Of Infinity",
     "published": "2026-10-15",
     "duration": "PT36S",
-    "views": 6204895,
-    "views_per_day": 564081,
-    "likes": 120372,
+    "views": 6206691,
+    "views_per_day": 564244,
+    "likes": 120389,
     "comments": 1286,
     "engagement": 0.0196
    },
@@ -55,8 +55,8 @@
     "channel": "Zap Facts",
     "published": "2026-10-13",
     "duration": "PT43S",
-    "views": 5964809,
-    "views_per_day": 458831,
+    "views": 5966902,
+    "views_per_day": 458992,
     "likes": 0,
     "comments": 1181,
     "engagement": 0.0002
@@ -67,10 +67,10 @@
     "channel": "Universe Dimensions",
     "published": "2026-10-04",
     "duration": "PT8M1S",
-    "views": 8555289,
-    "views_per_day": 388876,
-    "likes": 56874,
-    "comments": 4901,
+    "views": 8556919,
+    "views_per_day": 388950,
+    "likes": 56878,
+    "comments": 4902,
     "engagement": 0.0072
    },
    {
@@ -79,9 +79,9 @@
     "channel": "Dev",
     "published": "2026-10-14",
     "duration": "PT1M50S",
-    "views": 3651080,
-    "views_per_day": 304256,
-    "likes": 121897,
+    "views": 3651274,
+    "views_per_day": 304272,
+    "likes": 121910,
     "comments": 745,
     "engagement": 0.0336
    },
@@ -91,23 +91,11 @@
     "channel": "Beyond Earth",
     "published": "2026-09-30",
     "duration": "PT6S",
-    "views": 7275336,
-    "views_per_day": 279820,
-    "likes": 88306,
+    "views": 7276771,
+    "views_per_day": 279875,
+    "likes": 88325,
     "comments": 1413,
     "engagement": 0.0123
-   },
-   {
-    "id": "x9fM_-eVCXI",
-    "title": "Kalpana Chawla Ki Kahani: Karnal Se NASA Aur Columbia Tak",
-    "channel": "StrategyLabIndia",
-    "published": "2026-10-15",
-    "duration": "PT2M20S",
-    "views": 2555998,
-    "views_per_day": 255599,
-    "likes": 73918,
-    "comments": 395,
-    "engagement": 0.0291
    },
    {
     "id": "ppQmLxCxmGw",
@@ -115,9 +103,9 @@
     "channel": "The Scale Dive",
     "published": "2026-10-07",
     "duration": "PT50S",
-    "views": 4838372,
-    "views_per_day": 254651,
-    "likes": 30876,
+    "views": 4840511,
+    "views_per_day": 254763,
+    "likes": 30883,
     "comments": 266,
     "engagement": 0.0064
    },
@@ -127,11 +115,23 @@
     "channel": "GetsetflySCIENCE by Gaurav Thakur",
     "published": "2026-09-26",
     "duration": "PT29M53S",
-    "views": 6927451,
-    "views_per_day": 238877,
-    "likes": 42376,
+    "views": 6927621,
+    "views_per_day": 238883,
+    "likes": 42377,
     "comments": 1562,
     "engagement": 0.0063
+   },
+   {
+    "id": "x9fM_-eVCXI",
+    "title": "Kalpana Chawla Ki Kahani: Karnal Se NASA Aur Columbia Tak",
+    "channel": "StrategyLabIndia",
+    "published": "2026-10-15",
+    "duration": "PT2M20S",
+    "views": 2557730,
+    "views_per_day": 232520,
+    "likes": 74010,
+    "comments": 395,
+    "engagement": 0.0291
    },
    {
     "id": "BdRisD_BV8o",
@@ -139,9 +139,9 @@
     "channel": "Ciudadano news",
     "published": "2026-10-19",
     "duration": "PT53S",
-    "views": 1533404,
-    "views_per_day": 219057,
-    "likes": 19647,
+    "views": 1533727,
+    "views_per_day": 219103,
+    "likes": 19650,
     "comments": 755,
     "engagement": 0.0133
    },
@@ -151,9 +151,9 @@
     "channel": "Facts' Mine",
     "published": "2026-09-28",
     "duration": "PT45S",
-    "views": 6107475,
-    "views_per_day": 218124,
-    "likes": 229239,
+    "views": 6108066,
+    "views_per_day": 218145,
+    "likes": 229260,
     "comments": 897,
     "engagement": 0.0377
    },
@@ -163,9 +163,9 @@
     "channel": "NBC News",
     "published": "2026-10-16",
     "duration": "PT1M49S",
-    "views": 1809420,
-    "views_per_day": 201046,
-    "likes": 5128,
+    "views": 1809736,
+    "views_per_day": 201081,
+    "likes": 5130,
     "comments": 1243,
     "engagement": 0.0035
    },
@@ -175,9 +175,9 @@
     "channel": "prodbeatsbymat",
     "published": "2026-10-05",
     "duration": "PT1M28S",
-    "views": 3779795,
-    "views_per_day": 188989,
-    "likes": 62808,
+    "views": 3780158,
+    "views_per_day": 189007,
+    "likes": 62811,
     "comments": 2420,
     "engagement": 0.0173
    },
@@ -187,9 +187,9 @@
     "channel": "The Space Race",
     "published": "2026-10-10",
     "duration": "PT20M33S",
-    "views": 2649744,
-    "views_per_day": 176649,
-    "likes": 17242,
+    "views": 2649950,
+    "views_per_day": 176663,
+    "likes": 17244,
     "comments": 3705,
     "engagement": 0.0079
    },
@@ -199,9 +199,9 @@
     "channel": "FOX 5 New York",
     "published": "2026-10-08",
     "duration": "PT1M27S",
-    "views": 2900348,
-    "views_per_day": 170608,
-    "likes": 22867,
+    "views": 2900622,
+    "views_per_day": 170624,
+    "likes": 22869,
     "comments": 500,
     "engagement": 0.0081
    },
@@ -211,9 +211,9 @@
     "channel": "The Space Race",
     "published": "2026-09-26",
     "duration": "PT14M51S",
-    "views": 4435024,
-    "views_per_day": 152931,
-    "likes": 23652,
+    "views": 4435715,
+    "views_per_day": 152955,
+    "likes": 23655,
     "comments": 1284,
     "engagement": 0.0056
    },
@@ -223,9 +223,9 @@
     "channel": "NASA",
     "published": "2026-10-20",
     "duration": "PT9M18S",
-    "views": 898878,
-    "views_per_day": 149813,
-    "likes": 10864,
+    "views": 899288,
+    "views_per_day": 149881,
+    "likes": 10868,
     "comments": 0,
     "engagement": 0.0121
    },
@@ -235,9 +235,9 @@
     "channel": "JFW Binge",
     "published": "2026-10-21",
     "duration": "PT1M10S",
-    "views": 745990,
-    "views_per_day": 149198,
-    "likes": 8574,
+    "views": 746705,
+    "views_per_day": 149341,
+    "likes": 8585,
     "comments": 87,
     "engagement": 0.0116
    },
@@ -247,8 +247,8 @@
     "channel": "PBS Space Time",
     "published": "2026-10-15",
     "duration": "PT1M40S",
-    "views": 1409427,
-    "views_per_day": 140942,
+    "views": 1409499,
+    "views_per_day": 140949,
     "likes": 40149,
     "comments": 1755,
     "engagement": 0.0297
@@ -259,9 +259,9 @@
     "channel": "GYRUS SULCUS",
     "published": "2026-10-07",
     "duration": "PT32M14S",
-    "views": 2505137,
-    "views_per_day": 139174,
-    "likes": 20009,
+    "views": 2505316,
+    "views_per_day": 139184,
+    "likes": 20011,
     "comments": 1374,
     "engagement": 0.0085
    },
@@ -271,23 +271,11 @@
     "channel": "Dev",
     "published": "2026-10-18",
     "duration": "PT1M53S",
-    "views": 1068878,
-    "views_per_day": 133609,
-    "likes": 41596,
+    "views": 1068929,
+    "views_per_day": 133616,
+    "likes": 41597,
     "comments": 223,
     "engagement": 0.0391
-   },
-   {
-    "id": "zJdZAh5wAy8",
-    "title": "Why TON 618 Is So Terrifying",
-    "channel": "Ridddle",
-    "published": "2026-10-12",
-    "duration": "PT17M35S",
-    "views": 1695972,
-    "views_per_day": 130459,
-    "likes": 16852,
-    "comments": 1750,
-    "engagement": 0.011
    },
    {
     "id": "1rFpmhvXUZ8",
@@ -295,11 +283,23 @@
     "channel": "UNIVERSIA",
     "published": "2026-09-27",
     "duration": "PT11S",
-    "views": 3081780,
-    "views_per_day": 106268,
+    "views": 3081827,
+    "views_per_day": 106269,
     "likes": 0,
-    "comments": 2009,
-    "engagement": 0.0007
+    "comments": 0,
+    "engagement": 0.0
+   },
+   {
+    "id": "cYVd1Nq2W2E",
+    "title": "Blackhole doesn't follow the laws of physics 💀 #space #blackhole #spacefacts",
+    "channel": "Dark Void",
+    "published": "2026-09-29",
+    "duration": "PT21S",
+    "views": 2857793,
+    "views_per_day": 105844,
+    "likes": 63966,
+    "comments": 1484,
+    "engagement": 0.0229
    }
   ],
   "comments_analyzed": 400,
@@ -474,6 +474,11 @@
    },
    {
     "sub": "askastronomy",
+    "title": "Blown my mind! Outer space objects involved in our daily life that we don't notice",
+    "url": "https://www.reddit.com/r/askastronomy/comments/1xfydq0/blown_my_mind_outer_space_objects_involved_in_our/"
+   },
+   {
+    "sub": "askastronomy",
     "title": "Question about frequency of stars and Voyager 1",
     "url": "https://www.reddit.com/r/askastronomy/comments/1xfj1b9/question_about_frequency_of_stars_and_voyager_1/"
    },
@@ -486,11 +491,6 @@
     "sub": "askastronomy",
     "title": "What is this thing? Brass telescope or microscope.",
     "url": "https://www.reddit.com/r/askastronomy/comments/1xen5hx/what_is_this_thing_brass_telescope_or_microscope/"
-   },
-   {
-    "sub": "askastronomy",
-    "title": "Any help identifying this object in the sky?",
-    "url": "https://www.reddit.com/r/askastronomy/comments/1xb2j24/any_help_identifying_this_object_in_the_sky/"
    }
   ],
   "posts_analyzed": 30,
@@ -501,19 +501,19 @@
    "neg": 0.17
   },
   "top_words": [
+   "space",
    "rocket",
    "spacex",
-   "space",
+   "satellite",
    "habitable",
    "planet",
    "military",
-   "seen",
    "star",
    "will",
    "andromeda",
-   "night",
    "canada",
-   "satellite",
+   "seen",
+   "used",
    "moon",
    "company"
   ],
@@ -534,7 +534,7 @@
   "space": [
    {
     "type": "IMAGE",
-    "likes": 377338,
+    "likes": 377344,
     "comments": 1432,
     "url": "https://www.instagram.com/p/DeR4fSKm2XE/",
     "caption": "Just down the galactic street\n\n5,000 light-years may seem like an unimaginable distance — but on a cosmic scale, it's next to nothing. This stellar cr"
@@ -555,14 +555,14 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 4130,
-    "comments": 381,
+    "likes": 4131,
+    "comments": 382,
     "url": "https://www.instagram.com/p/DeV2MrYlAKF/",
     "caption": "Imagine landing on the Moon after traveling nearly a quarter of a million miles from Earth, only to discover that your spacecraft is sitting at a noti"
    },
    {
     "type": "IMAGE",
-    "likes": 2330,
+    "likes": 2331,
     "comments": 151,
     "url": "https://www.instagram.com/p/DeOEl7gMMG5/",
     "caption": "The Triangulum Galaxy M33\nIt contains an estimated 40 billion stars ✨ \nIt is the third-largest member of our Local Group of galaxies, behind the Andro"
@@ -583,7 +583,7 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 1780,
+    "likes": 1781,
     "comments": 2,
     "url": "https://www.instagram.com/p/De3BCH8k0iy/",
     "caption": "Astronaut Don Pettit has shared a unique view of Earth's auroras, showing the planet as a green sphere through a fisheye lens. The photograph offers a"
@@ -613,7 +613,7 @@
    },
    {
     "type": "IMAGE",
-    "likes": 8845,
+    "likes": 8846,
     "comments": 52,
     "url": "https://www.instagram.com/p/Dee3JzCpS3E/",
     "caption": "A black hole and a treble clef walk into the universe...⚫🎼\n\nScientists using Chandra have discovered that the origin of an unusual source of radio wav"
@@ -634,8 +634,8 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 4130,
-    "comments": 381,
+    "likes": 4131,
+    "comments": 382,
     "url": "https://www.instagram.com/p/DeV2MrYlAKF/",
     "caption": "Imagine landing on the Moon after traveling nearly a quarter of a million miles from Earth, only to discover that your spacecraft is sitting at a noti"
    },
@@ -655,7 +655,7 @@
    },
    {
     "type": "IMAGE",
-    "likes": 2330,
+    "likes": 2331,
     "comments": 151,
     "url": "https://www.instagram.com/p/DeOEl7gMMG5/",
     "caption": "The Triangulum Galaxy M33\nIt contains an estimated 40 billion stars ✨ \nIt is the third-largest member of our Local Group of galaxies, behind the Andro"
@@ -669,7 +669,7 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 1794,
+    "likes": 1796,
     "comments": 24,
     "url": "https://www.instagram.com/p/DeMwT7hiHbL/",
     "caption": "Looking 2,5 million years back in time 🌌\nAnother Andromeda Galaxy test from my backyard - this time with 500mm focal length and only 40 minutes total "
@@ -685,7 +685,7 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 133024,
+    "likes": 133027,
     "comments": 0,
     "url": "https://www.instagram.com/p/DePUJOmkhYI/",
     "caption": "Sie war entscheidend am Apollo-Mondprogramm der NASA beteiligt und galt als eine Pionierin der Informatik: Nun ist die US-Wissenschaftlerin Margaret H"
@@ -699,8 +699,8 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 35294,
-    "comments": 480,
+    "likes": 35413,
+    "comments": 481,
     "url": "https://www.instagram.com/p/De6cbLsiH3S/",
     "caption": "Badan Penerbangan dan Antariksa Amerika Serikat (NASA) menyoroti kebakaran hutan dan lahan (karhutla) di Pulau Papua yang menyebabkan lonjakan emisi k"
    },
@@ -720,14 +720,14 @@
    },
    {
     "type": "CAROUSEL_ALBUM",
-    "likes": 24008,
+    "likes": 24009,
     "comments": 226,
     "url": "https://www.instagram.com/p/DdcOgzoiTtm/",
     "caption": "Parecen pinturas creadas por computadora, pero son enormes estructuras reales flotando en nuestra galaxia.\n\nEl James Webb está permitiendo observar re"
    },
    {
     "type": "IMAGE",
-    "likes": 17706,
+    "likes": 17708,
     "comments": 54,
     "url": "https://www.instagram.com/p/DeKcZQ8D7Xl/",
     "caption": "Quite the planetary view 🪐\n\nWhile Saturn’s rings put on a stellar display in this image captured by our Cassini spacecraft, take a closer look at the "
@@ -747,78 +747,7 @@
     "caption": "7 Stunden und 55 Minuten: Laut der US-Raumfahrtbehörde Nasa ist das die schnellste Zeitspanne vom Start bis zum Andocken eines US-Raumschiffs in der G"
    }
   ],
-  "stargazing": [
-   {
-    "type": "IMAGE",
-    "likes": 154846,
-    "comments": 162,
-    "url": "https://www.instagram.com/p/DbQ5bhTvywU/",
-    "caption": "Look up✨🌻 You will think them❤️ (under this sky or not)\n\n#digitalpainting #digitalart #artistsoninstagram #stargazing #yuvan"
-   },
-   {
-    "type": "CAROUSEL_ALBUM",
-    "likes": 100190,
-    "comments": 185,
-    "url": "https://www.instagram.com/p/DbgHzEXlGq7/",
-    "caption": "The best Perseid viewing conditions until 2029 happen two weeks from now, and the peak lands midweek. New moon, no light pollution, and you can watch "
-   },
-   {
-    "type": "IMAGE",
-    "likes": 75640,
-    "comments": 108,
-    "url": "https://www.instagram.com/p/Db6GBQYyBLN/",
-    "caption": "Jis qadar jis ki qadar ki\nUs qadar be-qadar hue hum\n.\n.\n.\n#poetry #hanle #stargazing #poetic #mountains"
-   },
-   {
-    "type": "IMAGE",
-    "likes": 38337,
-    "comments": 88,
-    "url": "https://www.instagram.com/p/DbZdYK-CTsT/",
-    "caption": "There's just something special about a starry night. ⭐\n\nSkye and Lyra have gone out to stargaze! 🔭\n\nSkye is keen to teach Lyra some interesting facts "
-   },
-   {
-    "type": "CAROUSEL_ALBUM",
-    "likes": 13878,
-    "comments": 43,
-    "url": "https://www.instagram.com/p/DbUKO-SD1xP/",
-    "caption": "🌌 wonder haus is built into the earth, but the best part goes straight up. the home was designed with passive solar principles and inspired by ancient"
-   },
-   {
-    "type": "CAROUSEL_ALBUM",
-    "likes": 12637,
-    "comments": 58,
-    "url": "https://www.instagram.com/p/DdJ4aWpErUs/",
-    "caption": "Make a wish 🌠✨ \n.\n.\n.\n#Shootingstars #stargazing #astrophile #astronomy #sonyalpha"
-   },
-   {
-    "type": "CAROUSEL_ALBUM",
-    "likes": 10350,
-    "comments": 94,
-    "url": "https://www.instagram.com/p/DcFhYXuD9Y5/",
-    "caption": "Meteor shower dekhne nikla tha…\nbut I didn’t know ki aaj ki raat ek memory ban jayegi.\nKuch moments camera mein capture hote hain,\naur kuch seedha dil"
-   },
-   {
-    "type": "IMAGE",
-    "likes": 9050,
-    "comments": 49,
-    "url": "https://www.instagram.com/p/DaOwfmYzMke/",
-    "caption": "Lost myself somewhere in galaxy..\n.\n.\n.\n.\n.\n.\n#milkyway #mountains #solotravel #himachal #stargazing"
-   },
-   {
-    "type": "CAROUSEL_ALBUM",
-    "likes": 7008,
-    "comments": 284,
-    "url": "https://www.instagram.com/p/Db02Ie_lPyr/",
-    "caption": "Want to photograph the Perseid meteor shower with an iPhone, Samsung, DSLR, mirrorless camera or Insta360? ☄️\n\nThe biggest mistake is waiting until yo"
-   },
-   {
-    "type": "CAROUSEL_ALBUM",
-    "likes": 5848,
-    "comments": 107,
-    "url": "https://www.instagram.com/p/DbRWRiJFsfb/",
-    "caption": "A foto das estrelas não acontece por acaso. Ela é resultado de planejamento, do lugar certo e de alguns ajustes que fazem toda a diferença. 🌌✨\n\nSe voc"
-   }
-  ],
+  "stargazing": [],
   "jameswebb": [
    {
     "type": "CAROUSEL_ALBUM",

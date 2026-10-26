@@ -1,11 +1,12 @@
-# Weekly niche research (free official APIs, no scraping, no Claude tokens): Sunday 20:00 Italian time.
-# Writes research/<niche>/<YYYY-Www>.md, read on Monday by the cosmos-strategy-weekly task.
+# Daily niche research (free official APIs, no scraping, no Claude tokens): every day 07:00 Italian time.
+# Writes research/<niche>/<YYYY-Www>.md (refreshed daily within the week) and research/<niche>/gemini-<date>.md
+# (Gemini watches the 3 fastest-growing competitor videos not seen yet), read by the cosmos-strategy-weekly task.
 # A source without credentials is skipped and the report says so.
 name: research
 
 on:
   schedule:
-    - cron: "0 19 * * 0"   # Sunday 20:00 CET (summer time: "0 18 * * 0")
+    - cron: "0 6 * * *"   # 07:00 CET (summer time: "0 5 * * *")
   workflow_dispatch:
     inputs:
       niche:
@@ -43,6 +44,15 @@ jobs:
           niches="$IN_NICHE"
           [ -z "$niches" ] && niches=$(ls research/niches | sed 's/\.json$//')
           for n in $niches; do python tools/research.py "$n"; done
+      - name: Gemini watches competitor videos
+        continue-on-error: true  # a Gemini failure must not lose the research reports
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          IN_NICHE: ${{ inputs.niche }}
+        run: |
+          niches="$IN_NICHE"
+          [ -z "$niches" ] && niches=$(ls research/niches | sed 's/\.json$//')
+          for n in $niches; do python tools/gemini_watch.py "$n" 3; done
       - name: Save reports
         run: |
           git config user.name "cosmos-automation[bot]"

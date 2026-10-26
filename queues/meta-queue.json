@@ -1,0 +1,23 @@
+[
+ {
+  "ref": "c06-gas-giants-ig",
+  "at": "2026-10-27 19:00",
+  "action": "ig-carousel",
+  "images": [
+   "https://cosmosinnumbers.github.io/media/2026-10-27/c06-01.jpg",
+   "https://cosmosinnumbers.github.io/media/2026-10-27/c06-02.jpg",
+   "https://cosmosinnumbers.github.io/media/2026-10-27/c06-03.jpg",
+   "https://cosmosinnumbers.github.io/media/2026-10-27/c06-04.jpg",
+   "https://cosmosinnumbers.github.io/media/2026-10-27/c06-05.jpg",
+   "https://cosmosinnumbers.github.io/media/2026-10-27/c06-06.jpg",
+   "https://cosmosinnumbers.github.io/media/2026-10-27/c06-07.jpg"
+  ],
+  "caption": "Two giants, no ground to stand on, and more moons than we can keep up with. Which number surprised you most?\n\n📘 LOOK UP, our stargazing guide by the numbers: cosmosinnumbers.gumroad.com/l/look-up (link in bio) · code LAUNCH9: $9 until Nov 30\n\nData: NASA Planetary Fact Sheet (nssdc.gsfc.nasa.gov/planetary/factsheet); NASA Jupiter and Saturn fact sheets (temperature at 1 bar, black-body temperature).\n\nCharts and text are ours, AI-assisted and checked by a human. Real images credited on each slide.\n\n#jupiter #saturn #planets #space #astronomy"
+ },
+ {
+  "ref": "n44a-perseverance-fbstory",
+  "at": "2026-10-27 21:00",
+  "action": "fb-story",
+  "video_url": "https://cosmosinnumbers.github.io/media/2026-10-27/n44a-perseverance-record_story.mp4"
+ }
+]

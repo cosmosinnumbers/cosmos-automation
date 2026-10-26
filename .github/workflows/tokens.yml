@@ -1,0 +1,40 @@
+# Weekly token care. Threads long-lived token (60 days) is refreshed and written back to the THREADS_JSON
+# secret with GH_SECRETS_TOKEN (fine-grained PAT: only this repository, permission "Secrets: read and write").
+# Meta Page token never expires, but its data access does: `check` warns 21 days before.
+name: tokens
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"   # Monday 08:00 Italian time
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tokens:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONIOENCODING: utf-8
+      TZ: Europe/Rome
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q -r requirements.txt
+      - name: Refresh Threads token
+        env:
+          THREADS_JSON: ${{ secrets.THREADS_JSON }}
+          GH_SECRETS_TOKEN: ${{ secrets.GH_SECRETS_TOKEN }}
+        run: python tools/threads_api.py refresh
+      - name: Check Meta token
+        env:
+          META_JSON: ${{ secrets.META_JSON }}
+        run: python tools/meta_api.py check | grep -E "token valid|WARNING" | sed -E 's/scopes:.*//'
+      - name: Refresh TikTok token (only once TikTok is enabled)
+        if: vars.TIKTOK_ENABLED == 'true'
+        env:
+          TIKTOK_JSON: ${{ secrets.TIKTOK_JSON }}
+          GH_SECRETS_TOKEN: ${{ secrets.GH_SECRETS_TOKEN }}
+        run: python tools/tiktok_api.py refresh

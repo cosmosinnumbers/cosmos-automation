@@ -113,7 +113,8 @@ def main():
     print(f"{'DRY RUN ' if dry else ''}slot {creds.now_local():%Y-%m-%d %H:%M} Europe/Rome: "
           f"{len(due)} due item(s), {len(missed)} missed")
     for ch, ref, at in missed:
-        problems.append(f"MISSED {ch} {ref} (due {at}): the run started too late, not published")
+        # a missed item is skipped on purpose (never published late): a warning, not a failure of the slot
+        print(f"MISSED {ch} {ref} (due {at}): the run started too late, skipped")
         if not dry:
             creds.append("missed-log.jsonl", {"p": ch, "ref": ref, "due": at, "at": int(now)})
     if missed and not dry:

@@ -47,7 +47,7 @@ jobs:
       - name: Gemini watches competitor videos
         continue-on-error: true  # a Gemini failure must not lose the research reports
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINIAPIKEY3 }}  # the secret was saved as GEMINIAPIKEY3
           IN_NICHE: ${{ inputs.niche }}
         run: |
           niches="$IN_NICHE"

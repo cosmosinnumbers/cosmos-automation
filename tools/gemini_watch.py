@@ -48,17 +48,22 @@ def config():
 def watch(url, cfg, niche):
     body = {"contents": [{"parts": [{"file_data": {"file_uri": url}},
                                     {"text": PROMPT.format(profile=PROFILES.get(niche, niche))}]}]}
-    for attempt in range(3):
-        r = requests.post(API.format(model=cfg.get("model", "gemini-3.8-flash")), params={"key": cfg["api_key"]},
-                          json=body, timeout=600)
-        if r.status_code == 429:  # free-tier rate limit: wait and retry
+    models = [cfg.get("model", "gemini-3.8-flash"), "gemini-3.6-flash"]  # fallback when the newest model is overloaded
+    for attempt in range(4):
+        model = models[0] if attempt < 2 else models[1]
+        try:
+            r = requests.post(API.format(model=model), params={"key": cfg["api_key"]}, json=body, timeout=300)
+        except requests.RequestException as e:  # timeout or dropped connection: same as overload
+            print("  retry after", type(e).__name__, flush=True)
+            continue
+        if r.status_code in (429, 500, 503):  # rate limit or "high demand": wait and retry
             time.sleep(60 * (attempt + 1))
             continue
         j = r.json()
         if r.status_code != 200:
-            return f"ERRORE Gemini {r.status_code}: {j.get('error', {}).get('message', j)}"
-        return "".join(p.get("text", "") for p in j["candidates"][0]["content"]["parts"])
-    return "ERRORE Gemini: limite del livello gratuito, riprova più tardi."
+            return None, f"ERRORE Gemini {r.status_code}: {j.get('error', {}).get('message', j)}"
+        return model, "".join(p.get("text", "") for p in j["candidates"][0]["content"]["parts"])
+    return None, "ERRORE Gemini: modello sovraccarico, troppo lento o limite gratuito; riprovo al prossimo giro."
 
 
 def main(niche, n=3):
@@ -75,12 +80,20 @@ def main(niche, n=3):
         return
     cfg = config()
     out = [f"# {niche}: competitor analizzati da Gemini ({time.strftime('%d/%m/%Y')})\n"]
+    ok = 0
     for v in todo:
         url = f"https://www.youtube.com/watch?v={v['id']}"
-        print("Watching", url)
+        print("Watching", url, flush=True)
+        model, text = watch(url, cfg, niche)
         out.append(f"## {v.get('title', '')} ({v.get('channel', '')})\n{url} · {v.get('views', '?')} visualizzazioni, "
-                   f"{v.get('views_per_day', '?')} al giorno, pubblicato {v.get('published', '?')}\n\n{watch(url, cfg, niche)}\n")
-        seen.add(v["id"])
+                   f"{v.get('views_per_day', '?')} al giorno, pubblicato {v.get('published', '?')}"
+                   f"{f' · analisi {model}' if model else ''}\n\n{text}\n")
+        if model:  # failed videos stay unseen and are retried next run
+            seen.add(v["id"])
+            ok += 1
+    if not ok:
+        print("Every analysis failed; no report written.")
+        return
     (folder / f"gemini-{time.strftime('%Y-%m-%d')}.md").write_text("\n".join(out), "utf-8")
     seen_f.write_text(json.dumps(sorted(seen), indent=0), "utf-8")
 

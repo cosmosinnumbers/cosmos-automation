@@ -74,7 +74,8 @@ def youtube(cfg):
     ids = []
     for q in cfg["youtube_queries"]:
         r = requests.get(f"{YT}/search", params={"key": key, "q": q, "part": "id", "type": "video", "order": "viewCount",
-                                                  "publishedAfter": since, "maxResults": 15, "relevanceLanguage": "en"}, timeout=30).json()
+                                                  "publishedAfter": since, "maxResults": 15, "relevanceLanguage": "en",
+                                                  "regionCode": cfg.get("region", "US")}, timeout=30).json()
         if "error" in r:
             return {"skipped": f"YouTube API: {r['error'].get('message', '')[:120]}"}
         ids += [i["id"]["videoId"] for i in r.get("items", [])]

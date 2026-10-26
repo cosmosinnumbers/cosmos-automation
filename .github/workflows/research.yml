@@ -1,0 +1,51 @@
+# Weekly niche research (free official APIs, no scraping, no Claude tokens): Sunday 20:00 Italian time.
+# Writes research/<niche>/<YYYY-Www>.md, read on Monday by the cosmos-strategy-weekly task.
+# A source without credentials is skipped and the report says so.
+name: research
+
+on:
+  schedule:
+    - cron: "0 19 * * 0"   # Sunday 20:00 CET (summer time: "0 18 * * 0")
+  workflow_dispatch:
+    inputs:
+      niche:
+        description: "Niche file in research/niches (empty = all)"
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: research
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt vaderSentiment pytrends
+      - name: Research
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          REDDIT_JSON: ${{ secrets.REDDIT_JSON }}
+          META_JSON: ${{ secrets.META_JSON }}
+          IN_NICHE: ${{ inputs.niche }}
+        run: |
+          niches="$IN_NICHE"
+          [ -z "$niches" ] && niches=$(ls research/niches | sed 's/\.json$//')
+          for n in $niches; do python tools/research.py "$n"; done
+      - name: Save reports
+        run: |
+          git config user.name "cosmos-automation[bot]"
+          git config user.email "cosmos-automation@users.noreply.github.com"
+          git add research
+          git diff --cached --quiet || (git commit -q -m "research: weekly reports" && git pull -q --rebase && git push -q)

@@ -1,0 +1,8 @@
+{
+  "name": "Companies in Numbers",
+  "youtube_queries": ["company collapse explained", "rise and fall of", "business documentary", "how this company makes money", "bankruptcy explained"],
+  "subreddits": ["business", "investing", "stocks", "Entrepreneur", "wallstreetbets"],
+  "reddit_keywords": ["collapse", "bankruptcy", "10-K", "earnings", "what happened to"],
+  "ig_hashtags": ["business", "startup", "finance", "entrepreneur"],
+  "trends_terms": ["bankruptcy", "layoffs", "ipo", "earnings"]
+}

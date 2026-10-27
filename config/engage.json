@@ -1,0 +1,56 @@
+{
+  "_doc": "Rules of tools/engage.py (ManyChat-style auto replies). Edit texts and keywords here, not in the code. {link}, {code_line}, {video_title}, {video_url} are filled in by the code. Channel content stays in English.",
+  "links": {
+    "free_chapter": "https://cosmosinnumbers.github.io/look-up.html?src={src}",
+    "guide": "https://cosmosinnumbers.gumroad.com/l/look-up",
+    "channel": "https://www.youtube.com/@CosmosinNumbers"
+  },
+  "code_line": "Code LAUNCH9 → $9 until Nov 30.",
+  "code_until": "2026-11-30",
+  "keywords": {
+    "free": ["sky", "chapter", "free", "freebie"],
+    "guide": ["guide", "book", "ebook", "lookup", "look up", "buy", "price", "link"],
+    "video": ["video", "full video", "youtube"]
+  },
+  "keyword_max_words": 3,
+  "texts": {
+    "free": {
+      "dm": "Hi! 🔭 Here's your free chapter of LOOK UP, our beginner's stargazing guide (no telescope needed):\n{link}\nClear skies! Cosmos in Numbers",
+      "public_link": "🔭 Here you go! Free chapter of our beginner's stargazing guide (no telescope needed): {link} Clear skies!",
+      "public_bio": "🔭 Here you go! The free chapter is one tap away: link in our bio. Clear skies!",
+      "public_dm_sent": "Just sent you a DM 📩 (check your message requests if you don't see it)",
+      "youtube": "🔭 Here you go! The free chapter link is in our pinned comment (and in the channel links). Clear skies!"
+    },
+    "guide": {
+      "dm": "Hi! 📘 Here's LOOK UP, our beginner's stargazing guide, by the numbers (eyes and binoculars, no telescope needed):\n{link}\n{code_line}\nClear skies!",
+      "public_link": "📘 LOOK UP, our beginner's stargazing guide: {link} {code_line}",
+      "public_bio": "📘 LOOK UP, our stargazing guide, is in our bio. {code_line}",
+      "public_dm_sent": "Just sent you the link in DM 📩 (check your message requests)",
+      "youtube": "📘 LOOK UP, our beginner's stargazing guide, is linked in our pinned comment and in the channel links. {code_line}"
+    },
+    "video": {
+      "dm": "Hi! 🎬 Here's the full video on YouTube: {video_title}\n{video_url}\nEnjoy, and clear skies!",
+      "public_link": "🎬 Full video on YouTube: {video_title} → {video_url}",
+      "public_bio": "🎬 Full video on our YouTube channel: \"{video_title}\" (link in bio, @CosmosinNumbers)",
+      "public_dm_sent": "Just sent you the video link in DM 📩",
+      "youtube": "🎬 The full video is on our channel: \"{video_title}\" (see the related video link above the title, or our channel page)."
+    },
+    "dm_menu": "Hi, thanks for the message! 🔭 Reply with one word:\nSKY → free chapter of our stargazing guide\nGUIDE → LOOK UP, the full guide\nVIDEO → our latest full video on YouTube"
+  },
+  "ai": {
+    "enabled": true,
+    "max_chars": 260,
+    "channel": "Cosmos in Numbers: faceless English space channel. Real NASA/ESA footage and data, every number with a primary source. Sells LOOK UP, a $14 beginner stargazing guide (eyes and binoculars) on Gumroad; a free first chapter exists."
+  },
+  "caps": {
+    "_doc": "[max per run, max per 24h, min pause s, max pause s]; Instagram stays slow (account suspended on 15/10/2026)",
+    "ig": [5, 20, 20, 40],
+    "fb": [8, 30, 5, 12],
+    "th": [8, 30, 5, 12],
+    "yt": [8, 30, 5, 12],
+    "dm": [10, 40, 5, 12]
+  },
+  "max_age_days": 14,
+  "dm_max_age_days": 7,
+  "skip_authors": []
+}

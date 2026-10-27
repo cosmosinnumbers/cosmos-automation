@@ -1,0 +1,1 @@
+{"level": "product", "id": "look-up", "title": "LOOK UP", "kind": "product", "published": "", "metrics": {}, "missing": {"sales": "manca secrets/gumroad.json (token di Gumroad)", "revenue_usd": "idem", "visits": "non esposte dall'API"}, "read_at": "2026-10-27T11:31:25+00:00", "date": "2026-10-27", "channel": "gumroad"}

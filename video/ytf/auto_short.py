@@ -70,21 +70,57 @@ Rewrite the narration (same rules) using only numbers that appear verbatim in th
 to the primary pages that contain them. Answer with the full JSON again, same fields."""
 
 
-def gemini(messages):
+FEEDS = ["https://www.nasa.gov/news-release/feed/", "https://www.nasa.gov/feed/", "https://science.nasa.gov/feed/",
+         "https://www.jpl.nasa.gov/feeds/news", "https://www.esa.int/rssfeed/Our_Activities/Space_Science",
+         "https://www.esa.int/rssfeed/Science_Exploration", "https://esawebb.org/news/feed/",
+         "https://esahubble.org/news/feed/", "https://www.eso.org/public/news/feed/", "https://noirlab.edu/public/news/feed/"]
+
+RSS_PROMPT = """You are the news writer of "Cosmos in Numbers", a faceless English YouTube Shorts channel about space:
+real NASA/ESA footage and data, every number with a primary source. Today is {today}.
+Below are recent news items from primary sources, each with an excerpt of its page. Pick the ONE with the most
+striking, concrete number that is NOT in this list of topics already used: {used}
+{hint}
+{items}
+
+Write the Short using ONLY facts and numbers that appear in the excerpt of the item you pick:
+- "narration": 85 to 110 words, plain spoken English. First sentence = the key number, no greeting or intro
+  ("Did you know", "In this video" are forbidden). Short sentences. Every number exactly as written in the excerpt
+  (digits). Say "about" for rounded values. End with one sentence of why it matters.
+- "title": max 80 characters plus " #shorts", curiosity + the number, no clickbait lies.
+- "headline": max 45 characters, shown on screen above the footage.
+- "slug": 2-4 lowercase words joined by "-".
+- "sources": [{{"title": "...", "url": "<the item's url, exactly>"}}]
+- "description_intro": 1-2 sentences with source name and date.
+- "footage_queries": 3 short queries (2-4 words) for the NASA Image and Video Library (mission, telescope, planet).
+- "image_query": 1 query for a related NASA image.
+Answer with JSON only:
+{{"slug": "", "title": "", "headline": "", "narration": "", "description_intro": "", "sources": [], "footage_queries": [], "image_query": ""}}"""
+
+
+def gemini(messages, search=True):
+    """(raw text, parsed JSON). search=True uses Google Search grounding; a 429 there means no grounding quota."""
     key = os.environ.get("GEMINI_API_KEY")
     if not key:
         sys.exit("No GEMINI_API_KEY secret.")
     model = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
-    body = {"contents": messages, "tools": [{"google_search": {}}], "generationConfig": {"temperature": 0.4}}
-    for attempt in range(5):
+    body = {"contents": messages, "generationConfig": {"temperature": 0.4}}
+    if search:
+        body["tools"] = [{"google_search": {}}]
+    else:
+        body["generationConfig"]["responseMimeType"] = "application/json"
+    codes = []
+    for attempt in range(2 if search else 5):
         m = model if attempt < 3 else "gemini-3.6-flash"
         try:
             r = requests.post(GEMINI.format(model=m), params={"key": key}, json=body, timeout=180)
-        except requests.RequestException:
+        except requests.RequestException as e:
+            codes.append(type(e).__name__)
             time.sleep(20)
             continue
+        codes.append(f"{m}:{r.status_code}")
         if r.status_code in (429, 500, 503):
-            time.sleep(30 * (attempt + 1))
+            print(f"  Gemini {m} HTTP {r.status_code}: {r.text[:200]}", flush=True)
+            time.sleep(15 if search else 30 * (attempt + 1))
             continue
         if r.status_code != 200:
             sys.exit(f"Gemini error {r.status_code}: {r.text[:300]}")
@@ -94,7 +130,67 @@ def gemini(messages):
         if not mt:
             sys.exit(f"Gemini did not return JSON: {text[:300]}")
         return text, json.loads(mt.group())
-    sys.exit("Gemini unavailable after 5 attempts.")
+    if search:
+        return None, None  # caller falls back to the RSS feeds without grounding
+    sys.exit(f"Gemini unavailable: {', '.join(codes)}")
+
+
+def rss_items(days=7, n=10):
+    """Recent items of the primary-source feeds, newest first, with an excerpt of each page."""
+    import xml.etree.ElementTree as ET
+    from email.utils import parsedate_to_datetime
+    items = []
+    for url in FEEDS:
+        try:
+            r = requests.get(url, headers=UA, timeout=30)
+            if r.status_code != 200:
+                print("  feed", r.status_code, url)
+                continue
+            root = ET.fromstring(r.content)
+        except Exception as e:  # noqa: BLE001
+            print("  feed failed", url, type(e).__name__)
+            continue
+        for it in root.iter("item"):
+            link, title, date = it.findtext("link"), it.findtext("title"), it.findtext("pubDate")
+            try:
+                d = parsedate_to_datetime(date)
+            except Exception:  # noqa: BLE001
+                continue
+            if link and title and (datetime.now(d.tzinfo) - d).days <= days:
+                items.append({"title": title.strip(), "url": link.strip(), "date": d})
+    items.sort(key=lambda x: x["date"], reverse=True)
+    seen, out = set(), []
+    for it in items:
+        if it["url"] in seen:
+            continue
+        seen.add(it["url"])
+        try:
+            it["text"] = " ".join(page_text(it["url"]).split())[:2500]
+        except Exception:  # noqa: BLE001
+            continue
+        out.append(it)
+        if len(out) >= n:
+            break
+    print(f"  {len(out)} recent items from the feeds")
+    return out
+
+
+def write_spec(today, hint):
+    """Grounded search first; without grounding quota, the RSS feeds of the agencies."""
+    used = used_topics()
+    msgs = [{"role": "user", "parts": [{"text": PROMPT.format(today=today, hint=hint, used=used)}]}]
+    raw, spec = gemini(msgs, search=True)
+    if spec:
+        return msgs, raw, spec, True
+    print("Google Search grounding unavailable: using the agencies' RSS feeds")
+    items = rss_items()
+    if not items:
+        sys.exit("No recent item readable from the feeds: no Short today.")
+    block = "\n\n".join(f"[{i}] {it['title']} ({it['date']:%Y-%m-%d})\nURL: {it['url']}\nEXCERPT: {it['text']}"
+                         for i, it in enumerate(items, 1))
+    msgs = [{"role": "user", "parts": [{"text": RSS_PROMPT.format(today=today, hint=hint, used=used, items=block)}]}]
+    raw, spec = gemini(msgs, search=False)
+    return msgs, raw, spec, False
 
 
 def used_topics() -> str:
@@ -231,15 +327,16 @@ def main():
         missing, problems, report = check(spec)
     else:
         hint = f"Prefer this topic if there is fresh news on it: {a[a.index('--topic') + 1]}." if "--topic" in a else ""
-        msgs = [{"role": "user", "parts": [{"text": PROMPT.format(today=today, hint=hint, used=used_topics())}]}]
-        raw, spec = gemini(msgs)
+        msgs, raw, spec, search = write_spec(today, hint)
         missing, problems, report = check(spec)
         if missing or problems:
             print("first draft rejected:", missing, problems)
             msgs += [{"role": "model", "parts": [{"text": raw}]},
                      {"role": "user", "parts": [{"text": FIX.format(missing=", ".join(missing) or "none") +
                                                  (" Source problems: " + "; ".join(problems) if problems else "")}]}]
-            raw, spec = gemini(msgs)
+            raw, spec = gemini(msgs, search=search)
+            if not spec:
+                sys.exit("Gemini unavailable for the correction: no Short today.")
             missing, problems, report = check(spec)
     print(report)
     if missing or problems:

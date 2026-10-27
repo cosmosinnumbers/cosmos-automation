@@ -71,18 +71,23 @@ to the primary pages that contain them. Answer with the full JSON again, same fi
 
 
 FEEDS = ["https://www.nasa.gov/news-release/feed/", "https://www.nasa.gov/feed/", "https://science.nasa.gov/feed/",
-         "https://www.jpl.nasa.gov/feeds/news", "https://www.esa.int/rssfeed/Our_Activities/Space_Science",
-         "https://www.esa.int/rssfeed/Science_Exploration", "https://esawebb.org/news/feed/",
+         "https://www.jpl.nasa.gov/feeds/news/", "https://www.esa.int/rssfeed/Our_Activities/Space_Science",
+         "https://esawebb.org/news/feed/",
          "https://esahubble.org/news/feed/", "https://www.eso.org/public/news/feed/", "https://noirlab.edu/public/news/feed/"]
 
 RSS_PROMPT = """You are the news writer of "Cosmos in Numbers", a faceless English YouTube Shorts channel about space:
 real NASA/ESA footage and data, every number with a primary source. Today is {today}.
-Below are recent news items from primary sources, each with an excerpt of its page. Pick the ONE with the most
-striking, concrete number that is NOT in this list of topics already used: {used}
+Below are recent news items from primary sources, each with an excerpt of its page. Pick the ONE about space or
+astronomy (planets, stars, galaxies, telescopes, missions, the Sun, asteroids, astronauts in orbit) with the most
+striking, concrete measured number (distance, size, mass, temperature, speed, age, count), NOT in this list of
+topics already used: {used}
+Never pick aeronautics, aircraft, education, agency business or event pages. If no item has a real measured
+number about space, answer only {{"skip": "<why>"}}.
 {hint}
 {items}
 
-Write the Short using ONLY facts and numbers that appear in the excerpt of the item you pick:
+Write the Short using ONLY facts and numbers that appear in the excerpt of the item you pick. At least two
+measured numbers from the excerpt must be in the narration; mission or aircraft names with digits do not count:
 - "narration": 85 to 110 words, plain spoken English. First sentence = the key number, no greeting or intro
   ("Did you know", "In this video" are forbidden). Short sentences. Every number exactly as written in the excerpt
   (digits). Say "about" for rounded values. End with one sentence of why it matters.
@@ -102,15 +107,20 @@ def gemini(messages, search=True):
     key = os.environ.get("GEMINI_API_KEY")
     if not key:
         sys.exit("No GEMINI_API_KEY secret.")
-    model = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
+    models = [m.strip() for m in os.environ.get("GEMINI_MODELS", "gemini-3.8-flash,gemini-3.6-flash,"
+                                                "gemini-3.6-flash-lite").split(",") if m.strip()]
     body = {"contents": messages, "generationConfig": {"temperature": 0.4}}
     if search:
         body["tools"] = [{"google_search": {}}]
     else:
         body["generationConfig"]["responseMimeType"] = "application/json"
-    codes = []
-    for attempt in range(2 if search else 5):
-        m = model if attempt < 3 else "gemini-3.6-flash"
+    codes, dead = [], set()
+    # without grounding: up to 9 tries over ~12 minutes, rotating models (a 503 is usually a busy model)
+    for attempt in range(2 if search else 9):
+        live = [m for m in models if m not in dead]
+        if not live:
+            break
+        m = live[0] if search else live[attempt % len(live)]
         try:
             r = requests.post(GEMINI.format(model=m), params={"key": key}, json=body, timeout=180)
         except requests.RequestException as e:
@@ -118,9 +128,13 @@ def gemini(messages, search=True):
             time.sleep(20)
             continue
         codes.append(f"{m}:{r.status_code}")
-        if r.status_code in (429, 500, 503):
+        if r.status_code in (429, 500, 502, 503, 504):
             print(f"  Gemini {m} HTTP {r.status_code}: {r.text[:200]}", flush=True)
-            time.sleep(15 if search else 30 * (attempt + 1))
+            time.sleep(15 if search else min(150, 20 + 20 * attempt))
+            continue
+        if r.status_code == 404:  # model name not available on this key: next model
+            print(f"  Gemini {m} HTTP 404 (model not available)", flush=True)
+            dead.add(m)
             continue
         if r.status_code != 200:
             sys.exit(f"Gemini error {r.status_code}: {r.text[:300]}")
@@ -135,29 +149,74 @@ def gemini(messages, search=True):
     sys.exit(f"Gemini unavailable: {', '.join(codes)}")
 
 
-def rss_items(days=7, n=10):
-    """Recent items of the primary-source feeds, newest first, with an excerpt of each page."""
-    import xml.etree.ElementTree as ET
+# Not channel material: aeronautics, education, agency business. Matched on title + URL of the feed items.
+OFF_TOPIC = re.compile(r"aeronaut|aircraft|aviation|airplane|x-59|quesst|supersonic|drone|helicopter|wind tunnel|"
+                       r"student|educator|internship|\bstem\b|learning resources|contract|award|budget|leadership|"
+                       r"administrator|appoint|nominat|partnership|agreement|employee|hiring|career|podcast|webinar|"
+                       r"media accredit|ceremony|art contest|biograph|obituar|in memoriam", re.I)
+
+
+def feed_entries(xml: str):
+    """(title, link, date) of an RSS or Atom feed, tolerant of leading junk and of HTML in the fields."""
     from email.utils import parsedate_to_datetime
+
+    def field(block, tag):
+        m = re.search(rf"<{tag}\b[^>]*>(.*?)</{tag}>", block, re.S | re.I)
+        v = m.group(1) if m else ""
+        v = re.sub(r"<!\[CDATA\[(.*?)\]\]>", r"\1", v, flags=re.S)
+        return html.unescape(re.sub(r"<[^>]+>", "", v)).strip()
+
+    for block in re.findall(r"<(?:item|entry)\b.*?</(?:item|entry)>", xml, re.S | re.I):
+        link = field(block, "link")
+        if not link:  # Atom: <link href="..."/>
+            m = re.search(r"<link\b[^>]*href=[\"']([^\"']+)", block, re.I)
+            link = html.unescape(m.group(1)) if m else ""
+        raw = field(block, "pubDate") or field(block, "published") or field(block, "updated") or field(block, "dc:date")
+        try:
+            d = parsedate_to_datetime(raw) if re.match(r"[A-Za-z]{3},", raw) else datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except Exception:  # noqa: BLE001
+            continue
+        if d.tzinfo is None:
+            continue
+        yield field(block, "title"), link.strip(), d
+
+
+def get_feed(url):
+    for wait in (0, 20, 60):  # nasa.gov answers 429 to bursts
+        time.sleep(wait)
+        r = requests.get(url, headers=UA, timeout=30)
+        if r.status_code != 429:
+            return r
+    return r
+
+
+def rss_items(days=7, n=10):
+    """Recent space items of the primary-source feeds, newest first, with an excerpt of each page."""
     items = []
     for url in FEEDS:
         try:
-            r = requests.get(url, headers=UA, timeout=30)
+            r = get_feed(url)
             if r.status_code != 200:
                 print("  feed", r.status_code, url)
                 continue
-            root = ET.fromstring(r.content)
+            found = list(feed_entries(r.text))
         except Exception as e:  # noqa: BLE001
             print("  feed failed", url, type(e).__name__)
             continue
-        for it in root.iter("item"):
-            link, title, date = it.findtext("link"), it.findtext("title"), it.findtext("pubDate")
-            try:
-                d = parsedate_to_datetime(date)
-            except Exception:  # noqa: BLE001
+        if not found:
+            print("  feed unreadable", url, r.headers.get("content-type"), repr(r.text[:120]))
+            continue
+        fresh = kept = 0
+        for title, link, d in found:
+            if not (link and title and (datetime.now(d.tzinfo) - d).days <= days):
                 continue
-            if link and title and (datetime.now(d.tzinfo) - d).days <= days:
-                items.append({"title": title.strip(), "url": link.strip(), "date": d})
+            fresh += 1
+            if OFF_TOPIC.search(title + " " + link):
+                continue
+            kept += 1
+            items.append({"title": title, "url": link, "date": d, "feed": url})
+        print(f"  feed ok {url}: {len(found)} items, {fresh} recent, {kept} on topic")
+        time.sleep(2)
     items.sort(key=lambda x: x["date"], reverse=True)
     seen, out = set(), []
     for it in items:
@@ -245,6 +304,13 @@ def check(spec) -> tuple[list[str], list[str], str]:
             f"- Numeri NON trovati nelle fonti: {', '.join(missing) or 'nessuno'}"]
     if not 70 <= words <= 125:
         problems.append(f"narration has {words} words")
+    data = [n for n in dict.fromkeys(numbers(spec["narration"])) if not re.fullmatch(r"(19|20)\d\d", n)
+            and not re.search(rf"[A-Za-z]-?{re.escape(n)}\b", spec["narration"])]  # X-59, JWST-1 are names
+    rep.append(f"- Dati numerici (esclusi anni e nomi): {', '.join(data) or 'nessuno'}")
+    if len(data) < 2:
+        problems.append(f"only {len(data)} real numbers in the narration (need 2: no data, no Short)")
+    if OFF_TOPIC.search(" ".join([spec.get("title", ""), spec.get("headline", "")] + [s.get("url", "") for s in spec.get("sources", [])])):
+        problems.append("off topic for the channel (aeronautics, education or agency business)")
     if not texts:
         problems.append("no readable primary source")
     return missing, problems, "\n".join(rep) + "\n"
@@ -328,6 +394,8 @@ def main():
     else:
         hint = f"Prefer this topic if there is fresh news on it: {a[a.index('--topic') + 1]}." if "--topic" in a else ""
         msgs, raw, spec, search = write_spec(today, hint)
+        if spec.get("skip"):
+            sys.exit(f"Gemini found no space news with real data today: {spec['skip']}")
         missing, problems, report = check(spec)
         if missing or problems:
             print("first draft rejected:", missing, problems)

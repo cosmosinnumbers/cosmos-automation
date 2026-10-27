@@ -1,0 +1,77 @@
+# Cosmos in Numbers: one news Short a day built in the cloud, no Claude tokens (owner decision 27/10/2026:
+# "tutto su GitHub, Short con Gemini"). Gemini (Google Search) writes it, video/ytf/auto_short.py checks sources and
+# numbers, downloads real NASA footage and renders it with the same pipeline as the PC (Kokoro voice, short.py).
+# Result: a GitHub release "aMMDD-<slug>" with the mp4, upload.md (title + description) and factcheck.md.
+# Nothing is uploaded: YouTube stays in Studio (API audit), Instagram/TikTok take only clips of the long videos.
+# The 10:00 task on the PC downloads it (gh release download) and schedules it in Studio for 21:00.
+# 07:15 Italian time (winter): cron in UTC. Off switch: repository variable SHORTS_ENABLED=false.
+name: shorts-build
+
+on:
+  schedule:
+    - cron: "15 6 * * *"
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "Optional topic hint for Gemini (e.g. 'Europa Clipper')"
+        type: string
+        default: ""
+      dry_run:
+        description: "Dry run: write and fact-check the script, no footage, no render, no release"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shorts-build
+
+jobs:
+  build:
+    if: vars.SHORTS_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -q kokoro-onnx espeakng-loader phonemizer-fork onnxruntime soundfile numpy scipy pillow matplotlib fonttools imageio-ffmpeg PyYAML requests tzdata
+      - name: Kokoro voice model (cached)
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/kokoro
+          key: kokoro-v1.0
+      - run: |
+          mkdir -p ~/.cache/kokoro && cd ~/.cache/kokoro
+          [ -s kokoro-v1.0.onnx ] || curl -sSLf -o kokoro-v1.0.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
+          [ -s voices-v1.0.bin ] || curl -sSLf -o voices-v1.0.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+      - name: Write and render the Short
+        id: short
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINIAPIKEY3 }}
+          IN_TOPIC: ${{ inputs.topic }}
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          args=()
+          [ -n "$IN_TOPIC" ] && args+=(--topic "$IN_TOPIC")
+          [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          python video/ytf/auto_short.py "${args[@]}"
+      - name: "Publish as a release (private repo, only the owner can download it)"
+        if: steps.short.outputs.id != ''
+        env:
+          ID: ${{ steps.short.outputs.id }}
+          DIR: ${{ steps.short.outputs.dir }}
+        run: |
+          title=$(python -c "import json,os;print(json.load(open(os.environ['DIR']+'/result.json'))['title'])")
+          cp "$DIR/short/short.yaml" "$DIR/material/assets.yaml" "$DIR/material/script.yaml" "$DIR/"
+          mv "$DIR/assets.yaml" "$DIR/material-assets.yaml"; mv "$DIR/script.yaml" "$DIR/material-script.yaml"
+          gh release create "$ID" --prerelease --title "$title" --notes-file "$DIR/factcheck.md" \
+            "$DIR/short/out/$ID.mp4" "$DIR/short/out/upload.md" "$DIR/factcheck.md" "$DIR/short.yaml" \
+            "$DIR/material-assets.yaml" "$DIR/material-script.yaml"

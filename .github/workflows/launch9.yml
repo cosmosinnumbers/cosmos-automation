@@ -1,0 +1,32 @@
+# End of the LOOK UP launch price: deletes the Gumroad offer code LAUNCH9 on 30/11/2026 at 23:30 Italian time
+# (owner decision, replaces the one-off PC task lookup-launch9-fine). The script refuses to act before that time.
+# After it ran successfully this workflow can be disabled from the Actions tab.
+name: launch9
+
+on:
+  schedule:
+    - cron: "35 22 30 11 *"   # 23:35 CET on 30 November
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only check that LOOK UP and LAUNCH9 are found"
+        type: boolean
+        default: true
+
+jobs:
+  launch9:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -q requests tzdata
+      - env:
+          GUMROAD_JSON: ${{ secrets.GUMROAD_JSON }}
+        run: python video/ci_secrets.py
+      - env:
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          if [ "$IN_DRY" = "true" ]; then python video/gumroad_launch9.py --dry-run; else python video/gumroad_launch9.py; fi

@@ -1,0 +1,51 @@
+# Daily metrics snapshot (video/ytf/metrics.py all: YouTube + Analytics, Instagram, Facebook, Threads, Gumroad,
+# comments), read-only, free API quotas, no Claude tokens. Commits 07-analytics/metrics/*.jsonl: the PC tasks
+# (cosmos-daily-content step 0b, cosmos-strategy-weekly) read them after a git pull instead of running metrics.py.
+# 08:30 Italian time (winter), before the 09:00 / 10:00 PC tasks. TikTok Studio and Gumroad visits stay manual.
+name: metrics
+
+on:
+  schedule:
+    - cron: "30 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-commits
+  cancel-in-progress: false
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -q requests PyYAML google-api-python-client google-auth google-auth-oauthlib tzdata
+      - name: Secrets to files (never printed)
+        env:
+          META_JSON: ${{ secrets.META_JSON }}
+          THREADS_JSON: ${{ secrets.THREADS_JSON }}
+          YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+          YOUTUBE_ANALYTICS_TOKEN_JSON: ${{ secrets.YOUTUBE_ANALYTICS_TOKEN_JSON }}
+          GUMROAD_JSON: ${{ secrets.GUMROAD_JSON }}
+        run: python video/ci_secrets.py
+      - name: Snapshot
+        run: timeout 600 python video/ytf/metrics.py all < /dev/null
+      - name: Save
+        run: |
+          git config user.name "cosmos-metrics[bot]"
+          git config user.email "cosmos-metrics@users.noreply.github.com"
+          git add 07-analytics/metrics
+          git diff --cached --quiet && exit 0
+          git commit -q -m "metrics: daily snapshot $(date +%F)"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep $((i * 10)); done
+          exit 1

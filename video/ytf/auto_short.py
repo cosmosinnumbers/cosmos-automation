@@ -343,6 +343,8 @@ def nasa_image(query, news_dir, assets):
 def footage(spec, news_dir) -> list[dict]:
     """Download >= 2 NASA clips and maybe 1 image; return the visuals list (clip first)."""
     news_dir.mkdir(parents=True, exist_ok=True)
+    if not (news_dir / "assets.yaml").exists():  # stock.get reads the register before adding to it
+        save_yaml(news_dir / "assets.yaml", {})
     picked, seen = [], set()
     for q in spec.get("footage_queries", [])[:4]:
         try:

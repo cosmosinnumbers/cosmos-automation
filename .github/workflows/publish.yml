@@ -1,5 +1,7 @@
 # Cosmos in Numbers: publishes the due queue items (Meta, Threads, X, TikTok) at the exact minute.
-# Crons are UTC = Italian winter time minus 1 h (CET, from 25/10/2026): 11:58, 15:58, 18:58, 20:58.
+# Crons are UTC = Italian winter time minus 1 h (CET, from 25/10/2026): 11:45, 15:45, 18:45, 20:45.
+# 15 min early since 27/10/2026: GitHub started the :58 crons 20-25 min late on 26/10. AHEAD_MIN (25) covers the wait;
+# 30 min early was rejected: worst case 4 x 31 min/day would exceed the 2,000 free Actions minutes of a private repo.
 # The script then waits for the "at" minute of each item (12:00, 16:00, 19:00, 21:00): 2 min of waiting, not 5,
 # to stay well inside the free Actions minutes of a private repo (26/10/2026).
 # 13:00 slot (TikTok "dati" Short) removed while TIKTOK_ENABLED is false: add back "58 11 * * *" when TikTok is on.
@@ -9,10 +11,10 @@ name: publish
 
 on:
   schedule:
-    - cron: "58 10 * * *"
-    - cron: "58 14 * * *"
-    - cron: "58 17 * * *"
-    - cron: "58 19 * * *"
+    - cron: "45 10 * * *"
+    - cron: "45 14 * * *"
+    - cron: "45 17 * * *"
+    - cron: "45 19 * * *"
   workflow_dispatch:
     inputs:
       dry_run:

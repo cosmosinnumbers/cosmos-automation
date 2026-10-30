@@ -1,12 +1,16 @@
-"""Queue the daily Short as an Instagram Reel (no Claude, no PC): runs after shorts-build.
+"""Queue the daily Short on Meta (no Claude, no PC): runs after shorts-build.
 
   python tools/queue_short_reel.py [--tag a1031-slug] [--dry-run]
 
 Takes the release of shorts-build (default: the newest a<MMDD>-* of today, Europe/Rome), copies its mp4 into
-media/shorts/ and appends an `ig-reel` item to queues/meta-queue.json. publish.yml publishes it at the minute.
-Pacing: Instagram counts 24 h between Reels on the real publication time, so the slot is at least 24 h + 2 min after
-the last Reel (published in logs/meta-publish-log.jsonl or already queued), between 20:48 and 21:10 Rome time;
-otherwise the next day. A Short whose slot would be more than 2 days away is news that went stale: not queued. Old media/shorts files (published, >7 days) are deleted. Needs GH_TOKEN and GITHUB_REPOSITORY.
+media/shorts/ (plus a 19 s Story cut, <tag>_story.mp4) and appends to queues/meta-queue.json, for publish.yml:
+  sr-<tag> ig-reel, fr-<tag> fb-reel (caption with the LOOK UP link: Facebook allows links), si-<tag> ig-story,
+  sf-<tag> fb-story (owner 30/10/2026: "Collegare allo Short del giorno Reel FB, Storia IG e Storia FB").
+Kinds: env SHORT_META_KINDS (default all four). Pacing: Meta counts 24 h on the real publication time, so each
+item's slot is at least 24 h + 2 min after the last one of the same kind (published in logs/meta-publish-log.jsonl
+or already queued), between 20:48 and 21:10 Rome time; otherwise the next day. meta_api.guard() checks again at
+publish time (warm-up limits until 15/11). A slot more than 2 days away is news that went stale: that kind is not
+queued. Old media/shorts files (published, >7 days) are deleted. Needs GH_TOKEN and GITHUB_REPOSITORY.
 """
 from __future__ import annotations
 
@@ -50,8 +54,14 @@ def stamp(at: str) -> datetime:
     return datetime.strptime(at, "%Y-%m-%d %H:%M").replace(tzinfo=TZ)
 
 
-def last_reel(queue: list) -> datetime | None:
-    """Latest Instagram Reel, published (real time in the log) or still queued."""
+# action -> (log platform, log kind, ref prefix)
+KINDS = {"ig-reel": ("ig", "reel", "sr"), "fb-reel": ("fb", "reel", "fr"), "ig-story": ("ig", "story", "si"),
+         "fb-story": ("fb", "story", "sf")}
+
+
+def last_of(queue: list, action: str) -> datetime | None:
+    """Latest Meta action of this kind, published (real time in the log) or still queued."""
+    p, k, _ = KINDS[action]
     times = []
     if LOG.exists():
         for line in LOG.read_text("utf-8").splitlines():
@@ -59,9 +69,9 @@ def last_reel(queue: list) -> datetime | None:
                 e = json.loads(line)
             except ValueError:
                 continue
-            if e.get("p") == "ig" and e.get("k") == "reel":
+            if e.get("p") == p and e.get("k") == k:
                 times.append(datetime.fromtimestamp(int(e["at"]), TZ))
-    times += [stamp(i["at"]) for i in queue if i.get("action") == "ig-reel"]
+    times += [stamp(i["at"]) for i in queue if i.get("action") == action]
     return max(times) if times else None
 
 
@@ -76,44 +86,60 @@ def slot(now: datetime, last: datetime | None) -> datetime:
         day += timedelta(days=1)
 
 
-def caption(title: str, now: datetime) -> str:
+def caption(title: str, now: datetime, fb: bool = False) -> str:
     code = " · code LAUNCH9" if now < LAUNCH9_UNTIL else ""
-    return (f"{title.replace(' #shorts', '').strip()}\n\nFull video on YouTube: @CosmosinNumbers (link in bio)\n"
-            f"📘 LOOK UP stargazing guide: link in bio{code}\n\nSources in the YouTube description. "
+    product = (f"📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up{code}" if fb
+               else f"📘 LOOK UP stargazing guide: link in bio{code}")
+    return (f"{title.replace(' #shorts', '').strip()}\n\nFull video on YouTube: @CosmosinNumbers"
+            f"{'' if fb else ' (link in bio)'}\n{product}\n\nSources in the YouTube description. "
             "Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science")
 
 
 def main():
     now = datetime.now(TZ)
     rel = release(now)
-    ref = f"sr-{rel['tag_name']}"
+    tag = rel["tag_name"]
     queue = json.loads(QUEUE.read_text("utf-8")) if QUEUE.exists() else []
-    if any(i.get("ref") == ref for i in queue):
-        print(f"{ref} is already queued.")
+    kinds = [k for k in os.environ.get("SHORT_META_KINDS", ",".join(KINDS)).split(",") if k in KINDS]
+    todo = [k for k in kinds if not any(i.get("ref") == f"{KINDS[k][2]}-{tag}" for i in queue)]
+    if not todo:
+        print(f"{tag}: already queued ({', '.join(kinds)}).")
         return
     mp4 = next((a for a in rel["assets"] if a["name"].endswith(".mp4")), None)
     if not mp4:
-        sys.exit(f"{rel['tag_name']}: no mp4 in the release.")
-    when = slot(now, last_reel(queue))
-    item = {"ref": ref, "at": f"{when:%Y-%m-%d %H:%M}", "action": "ig-reel",
-            "video_url": f"media/shorts/{rel['tag_name']}.mp4", "caption": caption(rel["name"], now)}
-    print(json.dumps(item, ensure_ascii=False, indent=1))
-    if (when.date() - now.date()).days > 2:
-        print(f"Slot {item['at']} is more than 2 days away: Short not queued (the Reels backlog is full).")
-        return
-    if DRY:
+        sys.exit(f"{tag}: no mp4 in the release.")
+    video, story = f"media/shorts/{tag}.mp4", f"media/shorts/{tag}_story.mp4"
+    new = []
+    for k in todo:
+        when = slot(now, last_of(queue + new, k))
+        item = {"ref": f"{KINDS[k][2]}-{tag}", "at": f"{when:%Y-%m-%d %H:%M}", "action": k,
+                "video_url": story if k.endswith("story") else video}
+        if k.endswith("reel"):
+            item["caption"] = caption(rel["name"], now, fb=k == "fb-reel")
+        print(json.dumps(item, ensure_ascii=False, indent=1))
+        if (when.date() - now.date()).days > 2:
+            print(f"{k}: slot {item['at']} is more than 2 days away: not queued (backlog full).")
+            continue
+        new.append(item)
+    if DRY or not new:
         return
     MEDIA.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory() as d:
-        gh("release", "download", rel["tag_name"], "--repo", REPO, "-p", mp4["name"], "-D", d)
-        (MEDIA / f"{rel['tag_name']}.mp4").write_bytes((Path(d) / mp4["name"]).read_bytes())
-    queue.append(item)
+    if not (ROOT / video).exists():
+        with tempfile.TemporaryDirectory() as d:
+            gh("release", "download", tag, "--repo", REPO, "-p", mp4["name"], "-D", d)
+            (ROOT / video).write_bytes((Path(d) / mp4["name"]).read_bytes())
+    if any(i["action"].endswith("story") for i in new) and not (ROOT / story).exists():
+        sys.path.insert(0, str(ROOT / "tools"))
+        import meta_api
+        meta_api.story_cut(str(ROOT / video))  # -> media/shorts/<tag>_story.mp4
+    queue += new
+    queue.sort(key=lambda i: i["at"])
     QUEUE.write_text(json.dumps(queue, ensure_ascii=False, indent=1) + "\n", "utf-8")
     cutoff = now - timedelta(days=7)
     for f in MEDIA.glob("*.mp4"):
-        if datetime.fromtimestamp(f.stat().st_mtime, TZ) < cutoff and f.stem != rel["tag_name"]:
+        if datetime.fromtimestamp(f.stat().st_mtime, TZ) < cutoff and not f.stem.startswith(tag):
             f.unlink()
-    print(f"queued {ref} at {item['at']}")
+    print(f"queued {', '.join(i['ref'] + ' ' + i['at'] for i in new)}")
 
 
 if __name__ == "__main__":

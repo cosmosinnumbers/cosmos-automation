@@ -28,7 +28,7 @@ QUEUE = {"meta": "meta-queue.json", "threads": "threads-queue.json", "x": "x-que
 LOG = {"meta": "meta-publish-log.jsonl", "threads": "threads-publish-log.jsonl", "x": "x-publish-log.jsonl",
        "tiktok": "tiktok-publish-log.jsonl"}
 META_KIND = {"ig-carousel": ("ig", "post"), "ig-reel": ("ig", "reel"), "ig-story": ("ig", "story"),
-             "fb-story": ("fb", "story")}
+             "fb-story": ("fb", "story"), "fb-reel": ("fb", "reel")}
 
 
 def enabled(ch):
@@ -64,6 +64,8 @@ def run_meta(item, go):
         meta_api.ig_story(item["video_url"], item["ref"])
     elif act == "fb-story":
         meta_api.fb_story(item["video_url"], item["ref"])
+    elif act == "fb-reel":  # published now by this slot (no native scheduling: one publisher, same retries)
+        meta_api.fb_reel(item["video_url"], item["caption"], item=item["ref"])
 
 
 def run(ch, item, go):

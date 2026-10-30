@@ -1,0 +1,43 @@
+# Weekly health check for the owner (30/10/2026): every Monday an issue with the runs of the last 7 days, posts
+# published per platform, Short releases, future queue items and deadlines (Threads token, Meta data access,
+# LAUNCH9). tools/health.py prints only counts and ages, never a secret.
+# Monday 08:15 Italian time (winter; summer time from 28/03/2027: "15 6"), after tokens.yml (08:00).
+name: health
+
+on:
+  schedule:
+    - cron: "15 7 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: print the report, open no issue"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  actions: read
+  issues: write
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -q requests tzdata
+      - name: Weekly report
+        env:
+          META_JSON: ${{ secrets.META_JSON }}
+          THREADS_JSON: ${{ secrets.THREADS_JSON }}
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          args=()
+          [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          python tools/health.py "${args[@]}"

@@ -7,7 +7,7 @@ Could Saturn Float with a Density of 687? (NASA data) #shorts
 
 ## Description
 ```
-📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up (code LAUNCH9 → $9 until Nov 30)
+📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up (code COSMOS9 → $9 until Nov 30)
 
 Planetary bulk parameters and orbital data are sourced directly from the NASA Saturn Fact Sheet maintained by NASA Goddard Space Flight Center.
 

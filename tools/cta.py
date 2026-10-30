@@ -8,7 +8,7 @@ from __future__ import annotations
 import zlib
 
 LINK = "https://cosmosinnumbers.gumroad.com/l/look-up"
-CODE = "Code LAUNCH9 → $9 until Nov 30."
+CODE = "Code COSMOS9 → $9 until Nov 30."
 TEXTS = [  # each under 280 characters with the link (X counts a URL as 23)
     f"📘 Want to go further? LOOK UP, our beginner's stargazing guide (no telescope needed): {LINK}\n{CODE}",
     f"🔭 Learn to find these things in the real sky with LOOK UP, our stargazing guide by the numbers: {LINK}\n{CODE}",
@@ -22,6 +22,6 @@ def first_reply(ref: str, replies: list[str], expired: bool = False) -> list[str
     own = [r for r in replies if "gumroad.com/l/look-up" in r]
     rest = [r for r in replies if "gumroad.com/l/look-up" not in r]
     link = own[0] if own else TEXTS[zlib.crc32(ref.encode()) % len(TEXTS)]
-    if expired:  # after 30/11/2026 the LAUNCH9 price ends: drop the code line
+    if expired:  # after 30/11/2026 the COSMOS9 price ends: drop the code line
         link = link.replace("\n" + CODE, "").replace(" " + CODE, "")
     return [link, *rest]

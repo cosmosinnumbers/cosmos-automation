@@ -8,7 +8,7 @@ parte via API di `cosmos-comment-replies`.
 1. Legge i commenti nuovi (ultimi 14 giorni) sotto i nostri post: YouTube, Instagram, Pagina Facebook, Threads.
 2. Parole chiave (in `config/engage.json`, modificabili senza toccare il codice):
    - **SKY / chapter / free** → capitolo gratuito (`look-up.html`);
-   - **GUIDE / book / buy / price / link** → LOOK UP su Gumroad + LAUNCH9 (fino al 30/11, poi sparisce da solo);
+   - **GUIDE / book / buy / price / link** → LOOK UP su Gumroad + COSMOS9 (fino al 30/11, poi sparisce da solo);
    - **VIDEO / full video / youtube** → l'ultimo video lungo pubblico su YouTube.
    Valgono nei commenti corti (fino a 3 parole) o scritte in maiuscolo ("comment SKY").
 3. Tutto il resto lo legge **Gemini** (chiave già nei segreti): sceglie uno dei flussi sopra, oppure scrive una

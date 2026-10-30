@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
 TZ = ZoneInfo("Europe/Rome")
 QUEUE, LOG, MEDIA = ROOT / "queues" / "meta-queue.json", ROOT / "logs" / "meta-publish-log.jsonl", ROOT / "media" / "shorts"
-LAUNCH9_UNTIL = datetime(2026, 12, 1, tzinfo=TZ)
+COSMOS9_UNTIL = datetime(2026, 12, 1, tzinfo=TZ)
 DRY = "--dry-run" in sys.argv
 
 
@@ -87,7 +87,7 @@ def slot(now: datetime, last: datetime | None) -> datetime:
 
 
 def caption(title: str, now: datetime, fb: bool = False) -> str:
-    code = " · code LAUNCH9" if now < LAUNCH9_UNTIL else ""
+    code = " · code COSMOS9" if now < COSMOS9_UNTIL else ""
     product = (f"📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up{code}" if fb
                else f"📘 LOOK UP stargazing guide: link in bio{code}")
     return (f"{title.replace(' #shorts', '').strip()}\n\nFull video on YouTube: @CosmosinNumbers"

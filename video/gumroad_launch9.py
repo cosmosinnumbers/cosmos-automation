@@ -1,8 +1,8 @@
-"""End of the LAUNCH9 launch price on Gumroad (owner decision: $9 until 30/11/2026), run by launch9.yml.
+"""End of the COSMOS9 launch price on Gumroad (owner decision: $9 until 30/11/2026), run by launch9.yml.
 
   python tools/gumroad_launch9.py [--dry-run]
 
-Finds the LOOK UP product and its offer code LAUNCH9 with the Gumroad API (token in secrets/gumroad.json,
+Finds the LOOK UP product and its offer code COSMOS9 with the Gumroad API (token in secrets/gumroad.json,
 "access_token") and deletes the code, only from 30/11/2026 23:30 Italian time onwards. Before that, or with
 --dry-run, it only prints what it would do. If the code is already gone it says so and exits 0.
 """
@@ -16,7 +16,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 API = "https://api.gumroad.com/v2"
-CODE, PERMALINK = "LAUNCH9", "look-up"
+CODE, PERMALINK = "COSMOS9", "look-up"
 NOT_BEFORE = datetime(2026, 11, 30, 23, 30, tzinfo=ZoneInfo("Europe/Rome"))
 
 

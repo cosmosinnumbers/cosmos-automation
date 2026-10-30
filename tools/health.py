@@ -4,7 +4,7 @@
 
 Sections: runs of every workflow in the last 7 days (gh run list), posts published per platform (the logs of the
 repo), Short releases, future items per queue, Short reserve, deadlines (Threads token age, Meta data access,
-LAUNCH9 end). Never prints a secret: only ages, days and counts. --dry-run prints the issue instead of opening it.
+COSMOS9 end). Never prints a secret: only ages, days and counts. --dry-run prints the issue instead of opening it.
 """
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ import creds  # noqa: E402
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
 DAYS = 7
-LAUNCH9_END = date(2026, 11, 30)
+COSMOS9_END = date(2026, 11, 30)
 THREADS_TOKEN_DAYS = 60
 
 
@@ -112,8 +112,8 @@ def deadlines(today: date) -> list[str]:
                    + (" ⚠️ Simone deve rigenerarlo (SOP 15.7)" if left < 21 else ""))
     except (SystemExit, Exception) as e:  # noqa: BLE001
         out.append(f"- Meta: controllo non riuscito ({type(e).__name__})")
-    left = (LAUNCH9_END - today).days
-    out.append(f"- LAUNCH9: {'finisce fra ' + str(left) + ' giorni (30/11/2026)' if left >= 0 else 'finito il 30/11/2026'}")
+    left = (COSMOS9_END - today).days
+    out.append(f"- COSMOS9: {'finisce fra ' + str(left) + ' giorni (30/11/2026)' if left >= 0 else 'finito il 30/11/2026'}")
     return out
 
 

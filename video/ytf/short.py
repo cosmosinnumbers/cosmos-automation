@@ -92,7 +92,7 @@ def write_upload(sd, spec, src_dir, assets, dur):
     used = [s for s in long_src if s["id"] in set(spec.get("sources", []))]
     imgs = [assets[v["src"]] for v in spec["visuals"] if assets[v["src"]]["type"] in ("image", "video")]
     credits = sorted({a["credit"] for a in imgs if a.get("credit")})
-    product = "📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up (code LAUNCH9 → $9 until Nov 30)"
+    product = "📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up (code COSMOS9 → $9 until Nov 30)"
     lines = [product, "", spec["description_intro"].strip(), "", "Sources:", *[f"- {s['title']} — {s['url']}" for s in used], ""]
     if credits:
         lines += ["Images and footage: " + "; ".join(credits) + ".", meta.NO_ENDORSEMENT, ""]
@@ -167,7 +167,7 @@ def main():
         d0.text((px + 28 - pb[0], py + 15 - pb[1]), promo, font=pf, fill=BRAND["space"])
 
     END_CTA_S = spec.get("end_cta_seconds", 3.0)
-    end_cta = spec.get("end_cta", ["LOOK UP", "Stargazing guide: link in bio · code LAUNCH9"])
+    end_cta = spec.get("end_cta", ["LOOK UP", "Stargazing guide: link in bio · code COSMOS9"])
     cta_big, cta_small = font("display", 92, 700), font("text", 38, 600)
 
     cmd = [ffmpeg_exe(), "-hide_banner", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",

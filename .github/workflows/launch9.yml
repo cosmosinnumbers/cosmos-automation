@@ -1,4 +1,4 @@
-# End of the LOOK UP launch price: deletes the Gumroad offer code LAUNCH9 on 30/11/2026 at 23:30 Italian time
+# End of the LOOK UP launch price: deletes the Gumroad offer code COSMOS9 on 30/11/2026 at 23:30 Italian time
 # (owner decision, replaces the one-off PC task lookup-launch9-fine). The script refuses to act before that time.
 # After it ran successfully this workflow can be disabled from the Actions tab.
 name: launch9
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Only check that LOOK UP and LAUNCH9 are found"
+        description: "Only check that LOOK UP and COSMOS9 are found"
         type: boolean
         default: true
 

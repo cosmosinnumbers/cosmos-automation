@@ -1,6 +1,6 @@
 # Weekly health check for the owner (30/10/2026): every Monday an issue with the runs of the last 7 days, posts
 # published per platform, Short releases, future queue items and deadlines (Threads token, Meta data access,
-# LAUNCH9). tools/health.py prints only counts and ages, never a secret.
+# COSMOS9). tools/health.py prints only counts and ages, never a secret.
 # Monday 08:15 Italian time (winter; summer time from 28/03/2027: "15 6"), after tokens.yml (08:00).
 name: health
 

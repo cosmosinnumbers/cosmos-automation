@@ -92,7 +92,7 @@ def main():
             for txt, fnt, col, yy in (("FULL VIDEO ON YOUTUBE", big, BRAND["amber"], 40),
                                       ("@CosmosinNumbers", mid, BRAND["star"], 160),
                                       ("LOOK UP · stargazing guide", small, BRAND["cyan"], 270),
-                                      ("link in bio · code LAUNCH9", small, BRAND["star"], 330)):
+                                      ("link in bio · code COSMOS9", small, BRAND["star"], 330)):
                 bb = cdw.textbbox((0, 0), txt, font=fnt)
                 cdw.text(((card.width - (bb[2] - bb[0])) // 2 - bb[0], yy), txt, font=fnt, fill=col + (int(255 * a),))
             f.paste(card, (40, VIS_Y + (VH - card.height) // 2), card)
@@ -106,7 +106,7 @@ def main():
          "-movflags", "+faststart", dest])
     (out / "caption.txt").write_text(
         f"{headline}\n\nFull video on YouTube: \"{script['title']}\" @CosmosinNumbers (link in bio)\n"
-        "📘 LOOK UP stargazing guide: link in bio · code LAUNCH9\n\n"
+        "📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\n"
         "Sources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n"
         "#space #astronomy #science\n", "utf-8")
     print(f"-> {dest} ({dur:.1f}s, from {t0:.1f}s of {src.name})")

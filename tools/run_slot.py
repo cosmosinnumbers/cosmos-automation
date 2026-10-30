@@ -37,7 +37,7 @@ def enabled(ch):
 
 def done_refs(ch):
     ev = creds.events(LOG[ch]) + creds.events("missed-log.jsonl")
-    return {e.get("item") if ch == "meta" else e.get("ref") for e in ev} - {None}
+    return {(e.get("item") or e.get("ref")) if ch == "meta" else e.get("ref") for e in ev} - {None}
 
 
 def has_creds(ch):

@@ -247,7 +247,32 @@ def todays_short(day: datetime) -> dict | None:
     return spec
 
 
+def host_video(tag: str):
+    """Put the Short on cosmosinnumbers.github.io/media/shorts/<tag>.mp4 (Threads needs a public URL), re-encoded
+    in the Threads format (H.264 High, 1080x1920, 30 fps, AAC 48 kHz, faststart). Needs the secret PAGES_TOKEN
+    (fine-grained token, only cosmosinnumbers.github.io, Contents: read and write); without it, nothing happens."""
+    import base64
+    tok = os.environ.get("PAGES_TOKEN")
+    if not tok or DRY:
+        print(f"  video hosting skipped ({'dry run' if tok else 'no PAGES_TOKEN'}): the 21:00 post goes out as text")
+        return
+    api = f"https://api.github.com/repos/cosmosinnumbers/cosmosinnumbers.github.io/contents/media/shorts/{tag}.mp4"
+    head = {"Authorization": f"Bearer {tok}", "Accept": "application/vnd.github+json"}
+    if requests.get(api, headers=head, timeout=60).status_code == 200:
+        print("  video already on github.io")
+        return
+    import meta_api
+    with tempfile.TemporaryDirectory() as d:
+        gh("release", "download", tag, "--repo", REPO, "-p", f"{tag}.mp4", "-D", d)
+        mp4 = meta_api.ig_ready(str(Path(d) / f"{tag}.mp4"))
+        data = base64.b64encode(Path(mp4).read_bytes()).decode()
+    r = requests.put(api, headers=head, timeout=300,
+                     json={"message": f"media: Short {tag} per Threads", "content": data})
+    print(f"  video on github.io: HTTP {r.status_code}")
+
+
 def video(day: datetime, short: dict) -> dict:
+    host_video(short["tag"])
     title = short["title"].replace("#shorts", "").strip()
     src = short["source_list"][0] if short["source_list"] else {}
     agency = next((n for dom, n in AGENCY if dom in src.get("url", "")), "NASA")

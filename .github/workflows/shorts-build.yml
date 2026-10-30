@@ -74,6 +74,6 @@ jobs:
           cp "$DIR/short/short.yaml" "$DIR/material/assets.yaml" "$DIR/material/script.yaml" "$DIR/"
           mv "$DIR/assets.yaml" "$DIR/material-assets.yaml"; mv "$DIR/script.yaml" "$DIR/material-script.yaml"
           python tools/phone_notes.py "$DIR/short/out/upload.md" "$DIR/factcheck.md" "$DIR/phone.md"
-          gh release create "$ID" --prerelease --title "$title" --notes-file "$DIR/phone.md" \
+          gh release create "$ID" --title "$title" --notes-file "$DIR/phone.md" \
             "$DIR/short/out/$ID.mp4" "$DIR/short/out/upload.md" "$DIR/factcheck.md" "$DIR/short.yaml" \
             "$DIR/material-assets.yaml" "$DIR/material-script.yaml"

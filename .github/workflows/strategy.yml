@@ -1,0 +1,51 @@
+# Weekly strategy without Claude (owner 30/10/2026): scorecard computed by code from 07-analytics/metrics, analysis
+# and at most 2 decisions written by Gemini (backup: Groq), numbers checked against the facts. Output in reports/
+# (scorecard-<date>.md, decisioni-settimanali.md). Publishes nothing.
+# Monday 09:15 Italian time (winter; summer time from 28/03/2027: "15 7"), after metrics.yml (08:30).
+name: strategy
+
+on:
+  schedule:
+    - cron: "15 8 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: print the report, commit nothing"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency: strategy
+
+jobs:
+  strategy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -q requests PyYAML tzdata
+      - name: Scorecard and decisions
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINIAPIKEY3 }}
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          git pull -q  # today's metrics.yml readings
+          args=()
+          [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          python tools/strategy_weekly.py "${args[@]}"
+      - name: Commit the report
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        run: |
+          git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
+          git add reports
+          git diff --cached --quiet && exit 0
+          git commit -q -m "strategia: scorecard e decisioni della settimana"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done; exit 1

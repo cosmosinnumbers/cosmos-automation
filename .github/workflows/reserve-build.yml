@@ -1,0 +1,84 @@
+# Reserve Shorts (owner decision 30/10/2026, option B): twice a week, when the Gemini quota of the day is spare,
+# builds one evergreen "data" Short from the NASA fact sheets (video/ytf/auto_short.py --reserve: same writers,
+# same fact check, same render as the daily Short) and stores it in reserve/. shorts-build uses it only when every
+# attempt of a day failed (tools/reserve_short.py). Stops at 5 ready Shorts. Off switch: RESERVE_ENABLED=false.
+name: reserve-build
+
+on:
+  schedule:
+    - cron: "0 15 * * 3"   # Wednesday 16:00 Italian time (winter)
+    - cron: "0 15 * * 6"   # Saturday 16:00
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: write and fact-check the script only"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shorts-build   # never together with the daily Short (same Gemini quota, same build folder)
+
+jobs:
+  reserve:
+    if: vars.RESERVE_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reserve full?
+        id: full
+        run: |
+          n=$(find reserve -mindepth 2 -maxdepth 2 -name factcheck.md 2>/dev/null | wc -l)
+          echo "ready Shorts in reserve: $n"
+          [ "$n" -ge 5 ] && echo "full=true" >> "$GITHUB_OUTPUT"; true
+      - uses: actions/setup-python@v5
+        if: steps.full.outputs.full != 'true'
+        with:
+          python-version: "3.13"
+          cache: pip
+      - if: steps.full.outputs.full != 'true'
+        run: pip install -q kokoro-onnx espeakng-loader phonemizer-fork onnxruntime soundfile numpy scipy pillow matplotlib fonttools imageio-ffmpeg PyYAML requests tzdata
+      - name: Kokoro voice model (cached)
+        if: steps.full.outputs.full != 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/kokoro
+          key: kokoro-v1.0
+      - if: steps.full.outputs.full != 'true'
+        run: |
+          mkdir -p ~/.cache/kokoro && cd ~/.cache/kokoro
+          [ -s kokoro-v1.0.onnx ] || curl -sSLf -o kokoro-v1.0.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
+          [ -s voices-v1.0.bin ] || curl -sSLf -o voices-v1.0.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+      - name: Write and render a reserve Short
+        id: short
+        if: steps.full.outputs.full != 'true'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINIAPIKEY3 }}
+          BACKUP_LLM_URL: ${{ secrets.BACKUP_LLM_URL }}
+          BACKUP_LLM_KEY: ${{ secrets.BACKUP_LLM_KEY }}
+          BACKUP_LLM_MODELS: ${{ secrets.BACKUP_LLM_MODELS }}
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          args=(--reserve)
+          [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          python video/ytf/auto_short.py "${args[@]}"
+      - name: Store it in reserve/
+        if: steps.short.outputs.id != ''
+        env:
+          ID: ${{ steps.short.outputs.id }}
+          DIR: ${{ steps.short.outputs.dir }}
+        run: |
+          mkdir -p "reserve/$ID"
+          cp "$DIR/short/out/$ID.mp4" "reserve/$ID/$ID.mp4"
+          cp "$DIR/short/out/upload.md" "$DIR/factcheck.md" "reserve/$ID/"
+          git config user.name "cosmos-automation[bot]"; git config user.email "cosmos-automation@users.noreply.github.com"
+          git add "reserve/$ID"
+          git commit -q -m "riserva: nuovo Short $ID"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done; exit 1

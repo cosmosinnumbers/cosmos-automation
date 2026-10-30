@@ -323,12 +323,58 @@ def write_spec(today, hint):
     return msgs, raw, spec, False
 
 
+# Reserve Shorts (owner decision 30/10/2026, option B): numbers that do not expire, from NASA fact sheets.
+REF_PAGES = [f"https://nssdc.gsfc.nasa.gov/planetary/factsheet/{p}fact.html"
+             for p in ("mercury", "venus", "earth", "moon", "mars", "jupiter", "saturn", "uranus", "neptune", "sun")]
+REF_PROMPT = """You are the data writer of "Cosmos in Numbers", a faceless English YouTube Shorts channel about space:
+real NASA footage and data, every number with a primary source. Today is {today}.
+Below are NASA fact sheets. Write ONE evergreen "data" Short (numbers that do not expire, no news) about the
+single most surprising measured number or comparison you can build from ONE or TWO of these sheets, NOT in this
+list of topics already used: {used}
+{items}
+
+Write the Short using ONLY numbers that appear in the sheets you use. At least two measured numbers from the
+sheets must be in the narration:
+- "narration": 85 to 110 words, plain spoken English. First sentence = the key number, no greeting or intro
+  ("Did you know", "In this video" are forbidden). Short sentences. Every number exactly as written in the sheet
+  (digits). Say "about" for rounded values. End with one sentence of why it matters.
+- "title": max 80 characters plus " #shorts", curiosity + the number, ending with "(NASA data)".
+- "headline": max 45 characters, shown on screen above the footage.
+- "slug": 2-4 lowercase words joined by "-".
+- "sources": [{{"title": "NASA <planet> Fact Sheet", "url": "<the sheet url, exactly>"}}]
+- "description_intro": 1-2 sentences naming the NASA fact sheet(s).
+- "footage_queries": 3 short queries (2-4 words) for the NASA Image and Video Library.
+- "image_query": 1 query for a related NASA image.
+Answer with JSON only:
+{{"slug": "", "title": "", "headline": "", "narration": "", "description_intro": "", "sources": [], "footage_queries": [], "image_query": ""}}"""
+
+
+def write_reserve_spec(today):
+    """Evergreen data Short from the NASA fact sheets, no grounding: same writers and same check() as the news."""
+    week = int(datetime.now().strftime("%W"))
+    pages = REF_PAGES[week % len(REF_PAGES):] + REF_PAGES[:week % len(REF_PAGES)]
+    blocks = []
+    for i, url in enumerate(pages[:5], 1):
+        try:
+            text = " ".join(page_text(url).split())[:2500]
+        except Exception as e:  # noqa: BLE001
+            print("  page failed", url, str(e)[:80])
+            continue
+        blocks.append(f"[{i}] URL: {url}\nSHEET: {text}")
+    if not blocks:
+        sys.exit("No NASA fact sheet readable: no reserve Short.")
+    msgs = [{"role": "user", "parts": [{"text": REF_PROMPT.format(today=today, used=used_topics(), items="\n\n".join(blocks))}]}]
+    raw, spec = gemini(msgs, search=False)
+    return msgs, raw, spec, False
+
+
 def used_topics() -> str:
     seen = []
     f = ROOT / "governance" / "argomenti-usati.md"
     if f.exists():
         seen.append(f.read_text("utf-8")[-3000:])
     seen += [p.name for p in (ROOT / "04-produzione" / "shorts").glob("*") if p.is_dir()]
+    seen += [p.name for p in (ROOT / "reserve").glob("*") if p.is_dir()]  # reserve Shorts not yet released
     r = subprocess.run(["gh", "release", "list", "--limit", "60", "--json", "name"], capture_output=True, text=True)
     if r.returncode == 0:
         seen += [x["name"] for x in json.loads(r.stdout or "[]")]
@@ -508,7 +554,7 @@ def main():
         missing, problems, report = check(spec)
     else:
         hint = f"Prefer this topic if there is fresh news on it: {a[a.index('--topic') + 1]}." if "--topic" in a else ""
-        msgs, raw, spec, search = write_spec(today, hint)
+        msgs, raw, spec, search = write_reserve_spec(today) if "--reserve" in a else write_spec(today, hint)
         if spec.get("skip"):
             sys.exit(f"Gemini found no space news with real data today: {spec['skip']}")
         missing, problems, report = check(spec)
@@ -525,7 +571,7 @@ def main():
     if missing or problems:
         sys.exit("FACT CHECK FAILED: no Short today. " + "; ".join(problems + [f"number {n} not in sources" for n in missing]))
     slug = re.sub(r"[^a-z0-9-]", "", spec["slug"].lower())[:40] or "news"
-    sid = f"a{datetime.now():%m%d}-{slug}"
+    sid = f"{'r' if '--reserve' in a else 'a'}{datetime.now():%m%d}-{slug}"
     base = OUT / sid
     news_dir, short_dir = base / "material", base / "short"
     print("Short:", sid, "|", spec["title"])

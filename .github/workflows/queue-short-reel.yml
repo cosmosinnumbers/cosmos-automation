@@ -27,8 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with: {python-version: "3.12"}
       - run: pip install -q requests imageio-ffmpeg tzdata  # ffmpeg for the 19 s Story cut
       - name: Queue the Reel
@@ -39,11 +39,14 @@ jobs:
           [ -n "${{ inputs.tag }}" ] && args+=(--tag "${{ inputs.tag }}")
           [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ] && args+=(--dry-run)
           python tools/queue_short_reel.py "${args[@]}"
+      - name: Remove published media from the repo
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        run: python tools/media_cleanup.py
       - name: Commit the queue
         run: |
           git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
           git add queues/meta-queue.json
-          [ -d media/shorts ] && git add media/shorts || true
+          git add -A media
           git diff --cached --quiet && exit 0
           git commit -m "coda Meta: Reel IG e FB e Storie dello Short del giorno"
           for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 5; done; exit 1

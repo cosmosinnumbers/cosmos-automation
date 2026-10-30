@@ -31,14 +31,14 @@ jobs:
       PYTHONIOENCODING: utf-8
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Reserve full?
         id: full
         run: |
           n=$(find reserve -mindepth 2 -maxdepth 2 -name factcheck.md 2>/dev/null | wc -l)
           echo "ready Shorts in reserve: $n"
           [ "$n" -ge 5 ] && echo "full=true" >> "$GITHUB_OUTPUT"; true
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         if: steps.full.outputs.full != 'true'
         with:
           python-version: "3.13"
@@ -47,7 +47,7 @@ jobs:
         run: pip install -q kokoro-onnx espeakng-loader phonemizer-fork onnxruntime soundfile numpy scipy pillow matplotlib fonttools imageio-ffmpeg PyYAML requests tzdata
       - name: Kokoro voice model (cached)
         if: steps.full.outputs.full != 'true'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/kokoro
           key: kokoro-v1.0

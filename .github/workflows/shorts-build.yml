@@ -45,7 +45,7 @@ jobs:
       PYTHONIOENCODING: utf-8
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Today's Short already out?
         id: today
         run: |
@@ -54,7 +54,7 @@ jobs:
             echo "Today's Short is already out ($tag): nothing to do."; echo "done=true" >> "$GITHUB_OUTPUT"
           fi
           [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date +%H)" -ge 14 ] && echo "last=true" >> "$GITHUB_OUTPUT"; true
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         if: steps.today.outputs.done != 'true'
         with:
           python-version: "3.13"
@@ -63,7 +63,7 @@ jobs:
         run: pip install -q kokoro-onnx espeakng-loader phonemizer-fork onnxruntime soundfile numpy scipy pillow matplotlib fonttools imageio-ffmpeg PyYAML requests tzdata
       - name: Kokoro voice model (cached)
         if: steps.today.outputs.done != 'true'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/kokoro
           key: kokoro-v1.0

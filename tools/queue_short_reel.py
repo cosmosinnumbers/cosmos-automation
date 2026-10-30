@@ -10,7 +10,7 @@ Kinds: env SHORT_META_KINDS (default all four). Pacing: Meta counts 24 h on the 
 item's slot is at least 24 h + 2 min after the last one of the same kind (published in logs/meta-publish-log.jsonl
 or already queued), between 20:48 and 21:10 Rome time; otherwise the next day. meta_api.guard() checks again at
 publish time (warm-up limits until 15/11). A slot more than 2 days away is news that went stale: that kind is not
-queued. Old media/shorts files (published, >7 days) are deleted. Needs GH_TOKEN and GITHUB_REPOSITORY.
+queued. Published media files are removed by tools/media_cleanup.py. Needs GH_TOKEN and GITHUB_REPOSITORY.
 """
 from __future__ import annotations
 
@@ -135,10 +135,6 @@ def main():
     queue += new
     queue.sort(key=lambda i: i["at"])
     QUEUE.write_text(json.dumps(queue, ensure_ascii=False, indent=1) + "\n", "utf-8")
-    cutoff = now - timedelta(days=7)
-    for f in MEDIA.glob("*.mp4"):
-        if datetime.fromtimestamp(f.stat().st_mtime, TZ) < cutoff and not f.stem.startswith(tag):
-            f.unlink()
     print(f"queued {', '.join(i['ref'] + ' ' + i['at'] for i in new)}")
 
 

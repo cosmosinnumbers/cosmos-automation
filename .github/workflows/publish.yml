@@ -5,7 +5,9 @@
 # The script then waits for the "at" minute of each item (12:00, 16:00, 19:00, 21:00): 2 min of waiting, not 5,
 # to stay well inside the free Actions minutes of a private repo (26/10/2026).
 # 13:00 slot (TikTok "dati" Short) removed while TIKTOK_ENABLED is false: add back "58 11 * * *" when TikTok is on.
-# Summer time (from 28/03/2027): every hour one less ("58 9", "58 13", "58 16", "58 18").
+# Italian time all year (30/10/2026): the second set of crons is the same slots in summer time (CEST, from
+# 28/03/2027). The off-season set runs 1 h early (nothing due within AHEAD_MIN: no-op) or 1 h late (items already
+# published: no-op; an item the on-time run missed goes out late, within LATE_MAX_MIN).
 # Reversible: disable this workflow from the Actions tab (or `gh workflow disable publish`).
 name: publish
 
@@ -15,6 +17,10 @@ on:
     - cron: "45 14 * * *"
     - cron: "45 17 * * *"
     - cron: "45 19 * * *"
+    - cron: "45 9 * * *"     # summer time (CEST)
+    - cron: "45 13 * * *"
+    - cron: "45 16 * * *"
+    - cron: "45 18 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -50,8 +56,8 @@ jobs:
       TIKTOK_ENABLED: ${{ vars.TIKTOK_ENABLED || 'false' }}
       TIKTOK_AIGC_LABEL: ${{ vars.TIKTOK_AIGC_LABEL || 'false' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -86,8 +92,8 @@ jobs:
       TZ: Europe/Rome
       YT_ENABLED: "true"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: pip install -q -r requirements.txt google-api-python-client google-auth

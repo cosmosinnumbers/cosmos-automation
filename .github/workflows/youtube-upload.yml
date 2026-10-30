@@ -9,7 +9,8 @@ on:
     workflows: [shorts-build]
     types: [completed]
   schedule:
-    - cron: "45 19 * * *"   # 20:45 Italian time (winter); summer time: "45 18 * * *"
+    - cron: "45 19 * * *"   # 20:45 Italian time in winter (CET)
+    - cron: "45 18 * * *"   # 20:45 in summer (CEST, from 28/03/2027); off-season it only checks (19:45) or is a no-op (21:45)
   workflow_dispatch:
     inputs:
       tag:
@@ -39,8 +40,8 @@ jobs:
       PYTHONIOENCODING: utf-8
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip

@@ -1,0 +1,92 @@
+img_europa:
+  file: assets/img_europa.jpg
+  type: image
+  kind: photo
+  title: Europa Leading Hemisphere
+  source: https://images.nasa.gov/details/PIA00874
+  credit: NASA/JPL
+  license: 'JPL Image Use Policy: any purpose without prior permission unless otherwise noted; credit ''NASA/JPL-Caltech'';
+    no endorsement.'
+  check: ok
+  size:
+  - 600
+  - 600
+img_ganymede:
+  file: assets/img_ganymede.jpg
+  type: image
+  kind: photo
+  title: Juno's Ganymede Close-up
+  source: https://images.nasa.gov/details/PIA24681
+  credit: NASA/JPL-Caltech/SwRI/MSSS
+  license: 'JPL Image Use Policy: any purpose without prior permission unless otherwise noted; credit ''NASA/JPL-Caltech'';
+    no endorsement.'
+  check: ok
+  size:
+  - 1625
+  - 2524
+img_callisto:
+  file: assets/img_callisto.jpg
+  type: image
+  kind: photo
+  title: Callisto
+  source: https://images.nasa.gov/details/PIA02253
+  credit: NASA/JPL
+  license: 'JPL Image Use Policy: any purpose without prior permission unless otherwise noted; credit ''NASA/JPL-Caltech'';
+    no endorsement.'
+  check: ok
+  size:
+  - 800
+  - 800
+img_jupiter:
+  file: assets/img_jupiter.jpg
+  type: image
+  kind: photo
+  title: Cassini Jupiter Portrait
+  source: https://images.nasa.gov/details/PIA04866
+  credit: NASA/JPL/Space Science Institute
+  license: 'JPL Image Use Policy: any purpose without prior permission unless otherwise noted; credit ''NASA/JPL-Caltech'';
+    no endorsement.'
+  check: ok
+  size:
+  - 1920
+  - 2400
+img_clipper:
+  file: assets/img_clipper.jpg
+  type: image
+  kind: illustration
+  title: Europa Clipper spacecraft
+  source: https://images.nasa.gov/details/PIA26433
+  credit: NASA/JPL-Caltech
+  license: 'JPL Image Use Policy: any purpose without prior permission unless otherwise noted; credit ''NASA/JPL-Caltech'';
+    no endorsement.'
+  check: ok
+  size:
+  - 3840
+  - 2160
+chart_timeline:
+  file: charts/chart_timeline.png
+  type: chart
+  kind: data-vis
+  title: Europa Clipper mission timeline
+  source: https://science.nasa.gov/mission/europa-clipper/mission-timeline/
+  credit: ''
+  license: Original chart (Cosmos in Numbers) based on NASA mission timeline
+  check: ok
+chart_questions:
+  file: charts/chart_questions.png
+  type: chart
+  kind: data-vis
+  title: Questions Europa Clipper investigates
+  source: https://science.nasa.gov/mission/europa-clipper/mission/
+  credit: ''
+  license: Original chart (Cosmos in Numbers) based on NASA mission description
+  check: ok
+chart_flybys:
+  file: charts/chart_flybys.png
+  type: chart
+  kind: data-vis
+  title: 49 planned science-dedicated Europa flybys
+  source: https://www.jpl.nasa.gov/press-kits/europa-clipper/mission/
+  credit: ''
+  license: Original chart (Cosmos in Numbers) based on NASA/JPL mission plan
+  check: ok

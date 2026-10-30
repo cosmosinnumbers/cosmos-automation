@@ -1,0 +1,24 @@
+A:
+  bg: img_europa
+  lines: ["49 FLYBYS", "ONE HIDDEN", "OCEAN?"]
+  accent: cyan
+  badge: NASA MISSION PLAN
+  side: left
+  focus: [0.5, 0.5]
+  highlight: 2
+B:
+  bg: img_clipper
+  lines: ["WHY NOT", "ORBIT", "EUROPA?"]
+  accent: amber
+  badge: ARTIST'S CONCEPT
+  side: right
+  focus: [0.5, 0.5]
+  highlight: 1
+C:
+  bg: img_jupiter
+  lines: ["THE OCEAN", "UNDER", "THE ICE"]
+  accent: cyan
+  badge: EVIDENCE, NOT LIFE
+  side: left
+  focus: [0.5, 0.5]
+  highlight: 0

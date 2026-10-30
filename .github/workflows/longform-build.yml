@@ -1,0 +1,123 @@
+# Long video built in the cloud from an approved script (owner 30/10/2026): voice (Kokoro), 16:9 render, captions,
+# thumbnails, description and QC with the same video/ytf pipeline as the PC (make.py), then the vertical clips listed
+# in clips.yaml (clip.py: real frames and mix, no new facts), all as a release "lf-<id>" ready for the phone.
+# Input: longform/<id>/ with script.yaml, assets.yaml, assets/, charts/, optional thumbs.yaml and clips.yaml
+#   (- {id: clip-a, start: 12.5, end: 48.0, headline: "..."}). The script is approved by hand once a week:
+#   a push builds only when script.yaml has "approved: true"; "Run workflow" with the id builds at once.
+# Uploads nothing: YouTube, Reels and TikTok stay separate steps. Never builds twice the same id (release exists).
+name: longform-build
+
+on:
+  push:
+    branches: [main]
+    paths: ["longform/*/script.yaml", "longform/*/clips.yaml"]
+  workflow_dispatch:
+    inputs:
+      id:
+        description: "Folder in longform/ (e.g. p6-europa-clipper)"
+        required: true
+      steps:
+        description: "make.py steps (empty = all)"
+        default: ""
+      rebuild:
+        description: "Build again even if the release lf-<id> exists (replaces its files)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency: longform-build
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with: {fetch-depth: 2}
+      - name: Which video
+        id: pick
+        env:
+          IN_ID: ${{ inputs.id }}
+          REBUILD: ${{ inputs.rebuild }}
+        run: |
+          if [ -n "$IN_ID" ]; then ids="$IN_ID"
+          else ids=$(git diff --name-only HEAD~1 HEAD -- 'longform/*/script.yaml' 'longform/*/clips.yaml' | cut -d/ -f2 | sort -u)
+          fi
+          for id in $ids; do
+            [ -f "longform/$id/script.yaml" ] || { echo "longform/$id/script.yaml missing"; exit 1; }
+            if [ -z "$IN_ID" ] && ! grep -Eq '^approved:\s*true' "longform/$id/script.yaml"; then
+              echo "$id: not approved yet (add 'approved: true' to script.yaml)"; continue
+            fi
+            if gh release view "lf-$id" >/dev/null 2>&1 && [ "$REBUILD" != "true" ]; then
+              echo "$id: release lf-$id already exists (use rebuild)"; continue
+            fi
+            echo "id=$id" >> "$GITHUB_OUTPUT"; echo "building $id"; break
+          done
+      - uses: actions/setup-python@v7
+        if: steps.pick.outputs.id != ''
+        with:
+          python-version: "3.13"
+          cache: pip
+      - if: steps.pick.outputs.id != ''
+        run: pip install -q kokoro-onnx espeakng-loader phonemizer-fork onnxruntime soundfile numpy scipy pillow matplotlib fonttools imageio-ffmpeg PyYAML requests tzdata
+      - name: Kokoro voice model (cached)
+        if: steps.pick.outputs.id != ''
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/kokoro
+          key: kokoro-v1.0
+      - if: steps.pick.outputs.id != ''
+        run: |
+          mkdir -p ~/.cache/kokoro && cd ~/.cache/kokoro
+          [ -s kokoro-v1.0.onnx ] || curl -sSLf -o kokoro-v1.0.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
+          [ -s voices-v1.0.bin ] || curl -sSLf -o voices-v1.0.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+      - name: Voice, render, captions, thumbnails, description, QC
+        if: steps.pick.outputs.id != ''
+        env:
+          ID: ${{ steps.pick.outputs.id }}
+          IN_STEPS: ${{ inputs.steps }}
+        run: |
+          start=$(date +%s)
+          args=(); [ -n "$IN_STEPS" ] && args+=(--steps "$IN_STEPS")
+          python video/ytf/make.py "longform/$ID" "${args[@]}"
+          echo "MAKE_MIN=$(( ($(date +%s) - start + 59) / 60 ))" >> "$GITHUB_ENV"
+      - name: Vertical clips (clips.yaml)
+        if: steps.pick.outputs.id != '' && hashFiles(format('longform/{0}/clips.yaml', steps.pick.outputs.id)) != ''
+        env:
+          ID: ${{ steps.pick.outputs.id }}
+        run: |
+          python - <<'EOF' > /tmp/clips.txt
+          import os, yaml
+          for c in yaml.safe_load(open(f"longform/{os.environ['ID']}/clips.yaml", encoding="utf-8")) or []:
+              print(f"{c['id']}\t{c['start']}\t{c['end']}\t{c['headline']}")
+          EOF
+          while IFS=$'\t' read -r cid t0 t1 head; do
+            python video/ytf/clip.py "longform/$ID" "$cid" "$t0" "$t1" "$head"
+          done < /tmp/clips.txt
+      - name: Release for the phone
+        if: steps.pick.outputs.id != ''
+        env:
+          ID: ${{ steps.pick.outputs.id }}
+        run: |
+          out="longform/$ID/out"
+          files=("$out/$ID.mp4" "$out/$ID.srt" "$out/upload.md" "$out/qc.md" "$out"/thumb_*.jpg)
+          for c in longform/$ID/clips/*/out/*.mp4; do
+            [ -f "$c" ] || continue
+            cp "$(dirname "$c")/caption.txt" "/tmp/$(basename "$c" .mp4)-caption.txt"
+            files+=("$c" "/tmp/$(basename "$c" .mp4)-caption.txt")
+          done
+          title=$(python -c "import yaml;print(yaml.safe_load(open('longform/$ID/script.yaml',encoding='utf-8'))['title'])")
+          { echo "Video lungo pronto (non caricato). Build: ${MAKE_MIN} min. QC:"; grep -m1 -E "PASS|FAIL" "$out/qc.md" || true
+            echo; echo "Titolo, descrizione e impostazioni in upload.md. Clip verticali per Reel e TikTok, se presenti, con la loro didascalia."; } > /tmp/notes.md
+          if gh release view "lf-$ID" >/dev/null 2>&1; then
+            gh release upload "lf-$ID" "${files[@]}" --clobber
+          else
+            gh release create "lf-$ID" --title "$title" --notes-file /tmp/notes.md "${files[@]}"
+          fi
+          du -h "$out/$ID.mp4"

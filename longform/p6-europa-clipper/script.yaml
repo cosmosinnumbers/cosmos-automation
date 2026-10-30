@@ -1,0 +1,318 @@
+id: p6-europa-clipper
+title: Why NASA Will Fly Past Europa 49 Times
+alt_titles:
+- 'Europa Clipper: 49 Flybys to Test a Hidden Ocean'
+- Why NASA Won't Orbit Europa — And What 49 Passes Can Reveal
+voice: af_heart
+speed: 1.08
+music:
+  seed: 63
+  mood: wonder
+hashtags:
+- europa
+- nasa
+- space
+tags:
+- Europa Clipper mission
+- 49 Europa flybys
+- why NASA is going to Europa
+- Europa hidden ocean evidence
+- Jupiter radiation belts
+- NASA Europa Clipper timeline
+- Jupiter moon Europa facts
+- Europa ocean life search
+- space documentary
+- real space data
+description_intro: 'NASA''s Europa Clipper launched in 2024 and is currently scheduled to reach Jupiter in 2030.
+  The mission plan calls for 49 science-dedicated flybys of Europa, plus separate gravity assists at Ganymede and
+  Callisto. The dates and flyby count below describe NASA/JPL''s current plan, not completed events.
+
+
+  Galileo data provide strong indirect evidence consistent with a salty ocean beneath Europa''s ice. Europa Clipper
+  is designed to investigate whether Europa has conditions that could support life; it is not a direct life-detection
+  mission.
+
+  '
+sources:
+- id: S1
+  title: NASA Europa Clipper Mission Overview
+  url: https://science.nasa.gov/mission/europa-clipper/
+- id: S2
+  title: NASA Europa Clipper Mission Timeline, checked 27 Oct 2026
+  url: https://science.nasa.gov/mission/europa-clipper/mission-timeline/
+- id: S3
+  title: JPL Europa Clipper Press Kit, Mission Plan
+  url: https://www.jpl.nasa.gov/press-kits/europa-clipper/mission/
+- id: S4
+  title: JPL Europa Clipper Press Kit, Science Objectives
+  url: https://www.jpl.nasa.gov/press-kits/europa-clipper/mission/science/
+- id: S5
+  title: NASA Europa Clipper FAQ
+  url: https://science.nasa.gov/mission/europa-clipper/mission-faq/
+- id: S6
+  title: NASA Evidence for Europa's Ocean
+  url: https://europa.nasa.gov/why-europa/evidence-for-an-ocean/
+- id: S7
+  title: NASA Europa Clipper Spacecraft Instruments
+  url: https://science.nasa.gov/mission/europa-clipper/spacecraft-instruments/
+segments:
+- id: hook
+  chapter: Intro
+  sources:
+  - S1
+  - S3
+  - S5
+  narration: 'NASA is not planning to park a spacecraft in orbit around Europa. It is not sending a lander, either.
+    The current mission plan sends Europa Clipper past the icy moon again and again: forty-nine science-dedicated
+    flybys.
+
+
+    Why design a mission that keeps rushing by its target? Because Europa circles Jupiter inside a harsh radiation
+    environment. A low orbit around Europa could expose a spacecraft to damaging radiation for too long. Instead,
+    Clipper will orbit Jupiter, swoop close to Europa, take measurements, then move back out to relay data and prepare
+    for another pass.
+
+
+    The strategy turns one destination into a sequence of changing views. Each close encounter can sample different
+    terrain and different parts of the moon''s environment.
+
+
+    But the number forty-nine is a plan, not a promise of forty-nine discoveries. The bigger question is what those
+    passes can tell us about a world that may hide a global ocean beneath its ice.
+
+    '
+  visuals:
+  - type: image
+    src: img_europa
+    motion: zoom_in
+  - type: image
+    src: img_clipper
+    motion: pan_left
+  - type: chart
+    src: chart_timeline
+    anim: reveal
+  weights:
+  - 0.3333333333333333
+  - 0.3333333333333333
+  - 0.3333333333333333
+- id: evidence
+  chapter: What we know about the ocean
+  sources:
+  - S5
+  - S6
+  narration: 'Start with the evidence. The Galileo spacecraft passed through the Jupiter system in the nineteen-nineties
+    and two-thousands. Its magnetometer measured changes in the magnetic field near Europa. The best explanation
+    is that a conductive layer inside the moon responds to Jupiter''s changing magnetic field.
+
+
+    A salty ocean beneath the ice is the interpretation that fits those measurements well. That is strong indirect
+    evidence, but it is not the same as seeing the ocean directly or collecting a sample. No spacecraft has drilled
+    through Europa''s ice. The ocean''s depth, salinity, and exchange with the surface remain uncertain.
+
+
+    Hubble observations have also suggested possible plumes of water vapor, but those clues have not established
+    a dependable, ongoing plume that Clipper can simply fly through. The mission will examine the surface and atmosphere
+    for signs of activity, while keeping the distinction between evidence and confirmation clear.
+
+
+    Europa''s ocean is therefore a scientific hypothesis supported by several lines of evidence, not a place we
+    have visited or a source of life we have found. Europa Clipper is designed to test how strong that picture is.
+
+    '
+  visuals:
+  - type: image
+    src: img_europa
+    motion: pan_right
+  - type: chart
+    src: chart_questions
+    anim: reveal
+  weights:
+  - 0.5
+  - 0.5
+- id: orbit_choice
+  chapter: Why fly by instead of orbit
+  sources:
+  - S3
+  - S5
+  narration: 'The orbit choice is a trade. Jupiter''s radiation belts can damage a spacecraft''s electronics. An
+    orbiter that stayed near Europa could receive a large radiation dose in a short time. A Jupiter orbit gives
+    Clipper room to move outside the most intense region between close passes, downlink its observations, and prepare
+    for the next encounter.
+
+
+    The flybys also change the geometry. Each pass approaches a different area of Europa, and instruments can gather
+    data from different altitudes and angles. Some planned passes may come within about twenty-five kilometers of
+    the surface. That is close enough for detailed measurements, but Europa''s gravity is not what keeps the spacecraft
+    in a permanent orbit.
+
+
+    This plan depends on timing and navigation. The trajectory is shaped by Jupiter''s moons as well as the planets.
+    Europa Clipper''s flight path uses gravity assists from Mars and Earth on the way out, and additional encounters
+    in the Jupiter system to set up the mission''s orbit.
+
+
+    A flyby is not a lesser visit. It is the central way this spacecraft will explore Europa while managing radiation
+    and building a broad map over time.
+
+    '
+  visuals:
+  - type: image
+    src: img_clipper
+    motion: zoom_out
+  - type: chart
+    src: chart_flybys
+    anim: reveal
+  weights:
+  - 0.5
+  - 0.5
+- id: journey
+  chapter: A journey measured in years
+  sources:
+  - S1
+  - S2
+  - S3
+  narration: 'Europa Clipper launched on October fourteenth, twenty twenty-four, aboard a Falcon Heavy rocket. That
+    launch is a completed event. The spacecraft then used Mars for a gravity assist on March first, twenty twenty-five,
+    gaining a change in speed and direction from the planet''s motion around the Sun.
+
+
+    The next major planetary assist is planned at Earth in December twenty twenty-six. As of October twenty-seventh,
+    NASA and JPL describe that as a future maneuver. It has not happened yet. The spacecraft is scheduled to reach
+    Jupiter in April twenty-thirty and enter orbit around the giant planet.
+
+
+    The timeline stretches across years because Jupiter is far away and because the route saves propellant. Gravity
+    assists trade a carefully chosen path past a moving planet for a change in the spacecraft''s trajectory. They
+    are not engine burns, and they do not mean the spacecraft travels in a straight line from Earth to Europa.
+
+
+    Before it begins its main Europa observations, the mission plan includes additional passes by Ganymede and Callisto.
+    Those encounters help shape the orbit that will bring Europa into view again and again.
+
+    '
+  visuals:
+  - type: chart
+    src: chart_timeline
+    anim: reveal
+  - type: image
+    src: img_ganymede
+    motion: zoom_in
+  weights:
+  - 0.5
+  - 0.5
+- id: instruments
+  chapter: What the spacecraft will measure
+  sources:
+  - S3
+  - S4
+  - S7
+  narration: 'The mission carries nine science instruments, plus a gravity experiment using the spacecraft''s radio
+    link. They work together during the encounters. Cameras and spectrometers map surface features and composition.
+    Radar is designed to look below the ice. A magnetometer and plasma instruments study the moon''s interaction
+    with Jupiter''s space environment. Thermal measurements help identify where the surface is unusually warm.
+
+
+    The science is organized around three questions. What is inside Europa: how thick is the ice, and how does the
+    interior connect to a possible ocean? What is the moon made of, from the surface to any material in its atmosphere?
+    And how active is the surface: are cracks, ridges, or other features being renewed?
+
+
+    The gravity experiment adds another view of the interior. As the spacecraft flies past, its motion changes slightly
+    with Europa''s pull. Tracking that motion can help scientists infer how mass is distributed inside the moon.
+
+
+    No single instrument answers the whole question. The mission combines images, spectra, radar, magnetic measurements,
+    and gravity data so that one type of evidence can be checked against another.
+
+    '
+  visuals:
+  - type: image
+    src: img_clipper
+    motion: pan_right
+  - type: chart
+    src: chart_questions
+    anim: reveal
+  weights:
+  - 0.5
+  - 0.5
+- id: forty_nine
+  chapter: What 49 flybys mean
+  sources:
+  - S3
+  - S4
+  narration: 'The forty-nine planned Europa flybys are not forty-nine copies of the same measurement. The mission
+    will pass different regions, at different angles and altitudes, while changing where it is in Jupiter''s radiation
+    environment. The planned science campaigns cover the side of Europa facing away from Jupiter first, followed
+    later by observations of the side facing Jupiter.
+
+
+    The mission plan also includes seven additional flybys of Ganymede and nine of Callisto to help shape the tour.
+    Those are separate from the forty-nine science-dedicated passes at Europa. Mixing them into one total would
+    obscure what the number refers to.
+
+
+    There is no complete public list of every future pass in the sources used here, so this video does not invent
+    a sequence or assign a discovery to any one pass. The number describes the current mission design. Schedules
+    can shift as navigation and operations evolve.
+
+
+    If the measurements work as intended, Clipper can estimate properties such as the thickness of the ice shell,
+    the ocean''s salinity, and whether material moves between the surface and the interior. Those would answer questions
+    about habitability: whether the conditions needed for life could exist there.
+
+    '
+  visuals:
+  - type: chart
+    src: chart_flybys
+    anim: reveal
+  - type: image
+    src: img_callisto
+    motion: pan_left
+  weights:
+  - 0.5
+  - 0.5
+- id: conclusion
+  chapter: What the mission cannot promise
+  sources:
+  - S4
+  - S5
+  - S6
+  narration: 'Europa Clipper is not a life detector. It will not land on Europa, drill through the ice, or bring
+    an ocean sample back to Earth. The mission is designed to determine whether Europa has conditions that could
+    support life, not to prove that life exists there.
+
+
+    Today, the ocean is strongly suggested by indirect measurements. Possible plumes remain uncertain. The December
+    twenty twenty-six Earth assist and the Jupiter arrival in twenty-thirty are parts of the current plan, not milestones
+    already completed. The forty-nine flybys are a science campaign we are waiting to see unfold.
+
+
+    That is what makes this mission compelling. It connects an old magnetic clue to a new set of measurements, then
+    returns to Europa from many directions instead of trusting one close look. The best result may not be a dramatic
+    image. It may be a better answer to a narrower question: how much of Europa''s hidden ocean can its surface
+    reveal?
+
+
+    The next major step is still ahead. For now, the data tell us why Europa is worth visiting and why a spacecraft
+    will make so many passes before we can say what the ocean is really like.
+
+
+
+    No single flyby can answer every question. The mission combines images, spectra, radar, magnetic measurements,
+    and gravity observations to build a more complete picture over time. Those instruments observe different properties,
+    and the team will compare their results rather than treating one measurement as a final verdict. That careful
+    combination is the point of returning again and again.'
+  visuals:
+  - type: image
+    src: img_europa
+    motion: zoom_in
+  - type: image
+    src: img_clipper
+    motion: zoom_out
+  - type: chart
+    src: chart_timeline
+    anim: reveal
+  weights:
+  - 0.3333333333333333
+  - 0.3333333333333333
+  - 0.3333333333333333

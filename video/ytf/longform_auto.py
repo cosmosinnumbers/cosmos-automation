@@ -67,9 +67,9 @@ RETENTION (this is what keeps people watching to the end):
 - Turn numbers into things people can picture: comparisons of size, travel times, "X Earths would fit".
 - Short spoken sentences. Total narration 1,350 to 1,550 words (the video must last over 8 minutes): about
   60-70 beats of 18-28 words each, 8-10 beats per chapter. Count your words before answering.
-- NEVER compute new numbers (no sums, differences, conversions or percentages of your own): say the numbers as the
-  sources print them, with the same decimals, and let the "compare" and "scale" visuals show the ratios (the code
-  computes them). If the sources do not have a number you need, change the sentence, not the number.
+- Say the numbers as the sources print them, with the same decimals. A number you compute (sum, difference,
+  ratio, conversion) is allowed only if that beat has "calc": "6378.1 + 3474.8 = 9852.9" with source numbers on the
+  left: the code redoes the arithmetic and rejects mistakes. Otherwise change the sentence, not the number.
 - Last chapter: payoff, one sentence on why it matters, then ONE sentence inviting viewers who want to see these
   objects in the real sky to the beginner's stargazing guide "LOOK UP" (link in the description). Nowhere else.
 
@@ -93,7 +93,7 @@ Answer JSON only:
 {{"id": "2-4 lowercase words joined by -", "title": "max 70 characters with a number, curiosity, no lie",
  "alt_titles": ["", ""], "description_intro": "2 sentences naming the sources", "tags": ["8-12 search phrases"],
  "hashtags": ["space", "nasa", "astronomy"], "thumbs": [{{"lines": ["2-3 WORDS", "PER LINE"], "query": "NASA image query"}}, 2 more],
- "chapters": [{{"title": "", "sources": ["S1"], "beats": [{{"say": "", "show": {{}}}}]}}]}}"""
+ "chapters": [{{"title": "", "sources": ["S1"], "beats": [{{"say": "", "show": {{}}, "calc": "optional"}}]}}]}}"""
 
 REVIEW = """You are a strict science fact-checker. Below are the SOURCES and a SCRIPT written from them. List every
 claim in the script that the sources do not support, that overstates them (certainty, "first", "largest", "proves"),
@@ -154,7 +154,42 @@ def fetch_sources(p: dict) -> list[dict]:
 
 
 def beats(spec: dict) -> list[tuple[int, dict]]:
-    return [(i, b) for i, ch in enumerate(spec.get("chapters", [])) for b in ch.get("beats", [])]
+    out = []
+    for i, ch in enumerate(spec.get("chapters", [])):
+        if not isinstance(ch, dict):
+            continue
+        bs = ch.get("beats", [])
+        ch["beats"] = [b if isinstance(b, dict) else {"say": str(b), "show": {"type": "kinetic", "text": str(b)[:40]}}
+                       for b in bs]
+        out += [(i, b) for b in ch["beats"]]
+    return out
+
+
+def calc_results(spec: dict, blob: str, flat: str) -> tuple[set, list[str]]:
+    """Derived numbers declared by the writer as "calc": "6378.1 + 3474.8 = 9852.9": operands must be in the
+    sources, the arithmetic is redone here (1% tolerance for rounding). Returns (allowed results, problems)."""
+    ok, bad = set(), []
+    for _, b in beats(spec):
+        c = str(b.get("calc", "")).replace(",", "").replace("×", "*").replace("x", "*")
+        if not c or "=" not in c:
+            continue
+        expr, res = c.rsplit("=", 1)
+        if not re.fullmatch(r"[\d.\s+\-*/()]+", expr) or not re.fullmatch(r"\s*[\d.]+\s*", res):
+            bad.append(f"calc not readable: {b['calc']}")
+            continue
+        missing = [n for n in re.findall(r"\d+(?:\.\d+)?", expr) if n not in flat and len(n) > 1]
+        try:
+            val, want = eval(expr, {"__builtins__": {}}), float(res)  # noqa: S307 - digits and + - * / ( ) only
+        except Exception:  # noqa: BLE001
+            bad.append(f"calc not computable: {b['calc']}")
+            continue
+        if missing:
+            bad.append(f"calc uses numbers not in the sources: {', '.join(missing)}")
+        elif abs(val - want) > max(0.01 * abs(want), 0.5):
+            bad.append(f"calc is wrong: {b['calc']} (correct: {val:,.1f})")
+        else:
+            ok |= {res.strip(), f"{want:,.0f}", f"{want:,.1f}", f"{round(want):,}"}
+    return ok, bad
 
 
 def visual_numbers(show: dict) -> list[str]:
@@ -169,13 +204,14 @@ def visual_numbers(show: dict) -> list[str]:
 def fact_check(spec: dict, sources: list[dict]) -> list[str]:
     blob = " ".join(s["text"] for s in sources)
     flat = blob.replace(",", "").replace(" ", "")
+    derived, problems = calc_results(spec, blob, flat)
     nums = []
     for _, b in beats(spec):
         nums += a.numbers(b.get("say", "")) + visual_numbers(b.get("show", {}))
     missing = []
     for n in dict.fromkeys(nums):
         plain = n.replace(",", "")
-        if n in blob or plain in flat or re.fullmatch(r"(19|20)\d\d", n):
+        if n in blob or plain in flat or n in derived or plain in {d.replace(",", "") for d in derived}                 or re.fullmatch(r"(19|20)\d\d", n):
             continue
         if re.fullmatch(r"\d", plain):  # single digits: counting words ("2 reasons"), not data
             continue
@@ -185,7 +221,7 @@ def fact_check(spec: dict, sources: list[dict]) -> list[str]:
         except ValueError:
             pass
         missing.append(n)
-    return [f"number {n} is not in any source" for n in missing]
+    return problems + [f"number {n} is not in any source (add a \"calc\" if it is computed)" for n in missing]
 
 
 def script_check(spec: dict) -> list[str]:

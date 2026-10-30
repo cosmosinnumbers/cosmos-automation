@@ -1,0 +1,33 @@
+# Manual check of the backup writer (BACKUP_LLM_* secrets, e.g. Groq): one tiny JSON request, prints only which
+# secrets are set, the model that answered and OK/FAIL. Never prints the key.
+name: backup-llm-check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  models: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.13"}
+      - run: pip install -q requests PyYAML pillow numpy
+      - env:
+          BACKUP_LLM_URL: ${{ secrets.BACKUP_LLM_URL }}
+          BACKUP_LLM_KEY: ${{ secrets.BACKUP_LLM_KEY }}
+          BACKUP_LLM_MODELS: ${{ secrets.BACKUP_LLM_MODELS }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for v in BACKUP_LLM_URL BACKUP_LLM_KEY BACKUP_LLM_MODELS; do [ -n "${!v}" ] && echo "$v: set" || echo "$v: MISSING"; done
+          cd video/ytf && python -c "
+          import sys; sys.argv=['x']
+          import auto_short as a
+          r = a.backup_llm([{'role': 'user', 'parts': [{'text': 'Answer with JSON only: {\"ok\": true}'}]}])
+          print('backup writer:', 'OK' if r and r[1].get('ok') else 'FAIL')
+          sys.exit(0 if r else 1)"

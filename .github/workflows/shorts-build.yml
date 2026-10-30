@@ -3,7 +3,8 @@
 # numbers, downloads real NASA footage and renders it with the same pipeline as the PC (Kokoro voice, short.py).
 # Result: a GitHub release "aMMDD-<slug>" with the mp4, upload.md (title + description) and factcheck.md.
 # Nothing is uploaded: YouTube stays in Studio (API audit), Instagram/TikTok take only clips of the long videos.
-# The 10:00 task on the PC downloads it (gh release download) and schedules it in Studio for 21:00.
+# The owner downloads it on the phone (release notes = title and description ready to copy, guida GUIDA-TELEFONO.txt)
+# and uploads it from the YouTube app for 21:00 (decision of 30/10/2026).
 # 07:15 Italian time (winter): cron in UTC. Off switch: repository variable SHORTS_ENABLED=false.
 name: shorts-build
 
@@ -72,6 +73,7 @@ jobs:
           title=$(python -c "import json,os;print(json.load(open(os.environ['DIR']+'/result.json'))['title'])")
           cp "$DIR/short/short.yaml" "$DIR/material/assets.yaml" "$DIR/material/script.yaml" "$DIR/"
           mv "$DIR/assets.yaml" "$DIR/material-assets.yaml"; mv "$DIR/script.yaml" "$DIR/material-script.yaml"
-          gh release create "$ID" --prerelease --title "$title" --notes-file "$DIR/factcheck.md" \
+          python tools/phone_notes.py "$DIR/short/out/upload.md" "$DIR/factcheck.md" "$DIR/phone.md"
+          gh release create "$ID" --prerelease --title "$title" --notes-file "$DIR/phone.md" \
             "$DIR/short/out/$ID.mp4" "$DIR/short/out/upload.md" "$DIR/factcheck.md" "$DIR/short.yaml" \
             "$DIR/material-assets.yaml" "$DIR/material-script.yaml"

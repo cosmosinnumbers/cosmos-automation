@@ -1,0 +1,74 @@
+GUIDA: CARICARE GLI SHORT E LE CLIP DAL TELEFONO
+(Cosmos in Numbers, aggiornata il 30/10/2026)
+
+COSA SUCCEDE OGNI GIORNO
+- Verso le 07:20 GitHub prepara da solo lo Short del giorno (video + testi).
+- Lo trovi come "release" nel repo cosmosinnumbers/cosmos-automation.
+- Il nome inizia con la data: a1030-... = 30 ottobre, a1031-... = 31 ottobre.
+- Le clip per TikTok arrivano allo stesso modo, con il nome tiktok-...
+- Instagram, Facebook e Threads NON li carichi tu: escono da soli da GitHub.
+
+-----------------------------------------------------------------
+PRIMA VOLTA SOLA (5 minuti): FARTI AVVISARE SUL TELEFONO
+-----------------------------------------------------------------
+1. Installa l'app "GitHub" (App Store o Play Store) e accedi con il tuo
+   account Redwraith.
+2. Nell'app cerca il repo: cosmosinnumbers/cosmos-automation e aprilo.
+3. Tocca "Watch" (o l'icona dell'occhio) > "Custom" > spunta "Releases" > Applica.
+4. Accetta le notifiche dell'app quando te lo chiede.
+5. Nel browser del telefono (Safari o Chrome) apri github.com e accedi
+   anche lì con Redwraith: serve per scaricare i video.
+
+Da quel momento, ogni volta che c'è un video nuovo ti arriva una notifica
+dall'app GitHub (e anche una mail).
+
+-----------------------------------------------------------------
+OGNI GIORNO: SHORT SU YOUTUBE (2 minuti)
+-----------------------------------------------------------------
+1. Tocca la notifica, oppure apri nel browser:
+   https://github.com/cosmosinnumbers/cosmos-automation/releases
+   e scegli la release di oggi (la prima in alto, nome a + data).
+2. In fondo alla pagina, sotto "Assets", tocca il file che finisce in .mp4.
+3. Salva il video nella galleria:
+   - iPhone: si apre il video > tocca il tasto Condividi (quadrato con la
+     freccia) > "Salva video". Se finisce nell'app File: aprilo da File >
+     Condividi > "Salva video".
+   - Android: si scarica da solo; lo trovi in Galleria o in Download.
+4. Sulla stessa pagina della release, copia il TITOLO (punto 2) e la
+   DESCRIZIONE (punto 3): tieni premuto sul testo > Copia.
+5. Apri l'app YouTube con il canale Cosmos in Numbers > tasto + > "Crea uno Short"
+   > in basso a sinistra scegli il video dalla galleria > Avanti.
+6. Incolla il titolo. Nella descrizione incolla il testo copiato.
+7. Imposta:
+   - Pubblico: "No, non è destinato ai bambini"
+   - Contenuti alterati o sintetici: No
+   - Visibilità: "Programma" per oggi alle 21:00. Se l'app non ti dà
+     "Programma", pubblicalo alle 21:00.
+8. Carica. Fatto.
+
+Se oggi non c'è nessuna release nuova: lo Short di oggi non è stato creato
+(capita se Gemini è sovraccarico o mancano clip NASA). Non devi fare nulla.
+
+-----------------------------------------------------------------
+QUANDO ARRIVA UNA CLIP PER TIKTOK (nome tiktok-...)
+-----------------------------------------------------------------
+1. Apri la release, scarica il .mp4 e salvalo in galleria (come sopra).
+2. Prima controlla nel tuo profilo TikTok che quella clip non sia già uscita.
+3. App TikTok > + > Carica > scegli il video.
+4. Copia e incolla la DIDASCALIA dalla pagina della release.
+5. Impostazioni:
+   - "Contenuti generati dall'IA": ATTIVO
+   - "Divulga il contenuto del post" / "Il tuo brand": MAI attivarli
+6. Pubblica alle 21:00 (o programma alle 21:00 se l'app lo permette).
+Nella didascalia TikTok NON ci sono LOOK UP né LAUNCH9: è giusto così,
+il prodotto sta solo nella bio.
+
+-----------------------------------------------------------------
+SE QUALCOSA NON VA
+-----------------------------------------------------------------
+- Il link del video chiede di accedere: accedi a github.com con Redwraith
+  nel browser del telefono.
+- Il video non si salva in galleria: aprilo dall'app File (iPhone) o
+  Download (Android) e usa Condividi > Salva video.
+- Dubbi su un numero del video: in fondo alla pagina della release c'è il
+  "Fact check automatico" con la fonte.

@@ -487,6 +487,9 @@ class Shot:
             paste(f, card, xy, ease(t / 0.7))
         for ov, xy in self.overlays:
             paste(f, ov, xy, ease((t - 0.3) / 0.6))
+        if self.v.get("stickman"):  # recurring human scale over the real image (owner 31/10/2026)
+            import stickman
+            f = stickman.overlay(f, self.v["stickman"], t)
         if self.chapter is not None and t < 4.0:
             a = ease((t - 0.2) / 0.5) * (1 - ease((t - 3.3) / 0.6))
             paste(f, self.chapter, (80, H - self.chapter.height - 120), a)

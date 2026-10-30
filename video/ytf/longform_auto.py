@@ -36,6 +36,8 @@ from common import ROOT, media_duration, save_yaml  # noqa: E402
 
 LONG = ROOT / "longform"
 FACTSHEETS = ["https://nssdc.gsfc.nasa.gov/planetary/factsheet/"]
+# length target: ~163 spoken words a minute at voice speed 1.1 (P6: 1,319 words = 8.23 min at 1.08)
+LEN = {"mmin": 8, "mmax": 10, "wmin": 1350, "wmax": 1550, "cmin": 6, "cmax": 8}
 DRY = "--dry-run" in sys.argv
 MOTION = {"counter", "scale", "timer", "compare", "bars", "kinetic"}
 REAL = {"footage", "image"}
@@ -59,14 +61,20 @@ Use ONLY facts and numbers that appear in the SOURCES below; write every number 
 (say "about" when rounding). Never invent a number, a date, a quote or a mission detail.
 
 RETENTION (this is what keeps people watching to the end):
-- Sentence 1: a common belief that is wrong, or the single most striking number, in under 20 words. No greeting,
-  no "In this video", no "Did you know".
-- Then promise the payoff ("by the end you'll know ..."), and keep 1-2 open questions alive at all times.
-- 6 to 8 chapters; every chapter ends on a question or a twist that pulls into the next; escalate the scale or the
+- Sentence 1 (the first 5 seconds, max 14 words): a question or a promise, built on a common belief that is
+  wrong or on the single most striking number. No greeting, no "In this video", no "Did you know".
+- The first 30 seconds (about 75 words) decide retention: a question, the stakes, the promise of the payoff ("by the
+  end you'll know ..."), and one first surprising fact. Keep 1-2 open questions alive at all times.
+- About every 2 minutes (every ~{recap_every} words) one beat is a one-sentence recap of what we know so far plus
+  the next question: mark that beat with "recap": true.
+- The channel's stick man is the human scale: on footage/image beats where size matters add
+  "stickman": {{"label": "YOU", "size": "small|tiny|big"}} (tiny = you are a dot next to this). Use it on at least 6
+  beats, spread through the video.
+- {chapters} chapters; every chapter ends on a question or a twist that pulls into the next; escalate the scale or the
   stakes chapter by chapter; the biggest reveal near the end.
 - Turn numbers into things people can picture: comparisons of size, travel times, "X Earths would fit".
-- Short spoken sentences. Total narration 1,350 to 1,550 words (the video must last over 8 minutes): about
-  60-70 beats of 18-28 words each, 8-10 beats per chapter. Count your words before answering.
+- Short spoken sentences. Total narration {wmin:,} to {wmax:,} words (the video must last {mmin}-{mmax} minutes):
+  beats of 18-28 words each, 8-10 beats per chapter. Count your words before answering.
 - Say the numbers as the sources print them, with the same decimals. A number you compute (sum, difference,
   ratio, conversion) is allowed only if that beat has "calc": "6378.1 + 3474.8 = 9852.9" with source numbers on the
   left: the code redoes the arithmetic and rejects mistakes. Otherwise change the sentence, not the number.
@@ -75,8 +83,8 @@ RETENTION (this is what keeps people watching to the end):
 
 BEATS: each chapter is a list of beats; a beat is 1-2 sentences (max 30 words) said over ONE visual (~5 s).
 Visual types ("show"):
-- {{"type": "footage", "query": "2-4 words for the NASA video library (mission, telescope, planet)"}}
-- {{"type": "image", "query": "2-4 words for the NASA image library"}}
+- {{"type": "footage", "query": "2-4 words for the NASA video library (mission, telescope, planet)", "stickman": optional}}
+- {{"type": "image", "query": "2-4 words for the NASA image library", "stickman": optional}}
 - {{"type": "counter", "value": 384400, "suffix": " km", "label": "EARTH TO MOON", "sub": "short line"}}
 - {{"type": "scale", "title": "", "items": [{{"label": "Earth", "value": 12756, "display": "12,756 km"}}, ...2-4 items]}}
 - {{"type": "timer", "seconds": 500, "label": "SUNLIGHT TO EARTH", "display": "about 8 min 20 s"}}
@@ -92,7 +100,7 @@ SOURCES:
 Answer JSON only:
 {{"id": "2-4 lowercase words joined by -", "title": "max 70 characters with a number, curiosity, no lie",
  "alt_titles": ["", ""], "description_intro": "2 sentences naming the sources", "tags": ["8-12 search phrases"],
- "hashtags": ["space", "nasa", "astronomy"], "thumbs": [{{"lines": ["2-3 WORDS", "PER LINE"], "query": "NASA image query"}}, 2 more],
+ "hashtags": ["space", "nasa", "astronomy"], "thumbs": [{{"lines": ["2-3 WORDS", "PER LINE"], "query": "NASA image query"}}, 2 more; the third with "stickman": true],
  "chapters": [{{"title": "", "sources": ["S1"], "beats": [{{"say": "", "show": {{}}, "calc": "optional"}}]}}]}}"""
 
 REVIEW = """You are a strict science fact-checker. Below are the SOURCES and a SCRIPT written from them. List every
@@ -109,6 +117,34 @@ Answer JSON only: {{"issues": [{{"claim": "", "problem": "", "severity": "high|m
 FIX = """Your script failed these checks:
 {problems}
 Rewrite the whole script fixing every point (same JSON format, same rules, only numbers from the sources)."""
+
+
+def llm(msgs: list) -> tuple[str, dict]:
+    """Gemini without search, room for a 15-minute script (maxOutputTokens), JSON checked; a truncated or broken
+    answer moves to the next model, then to the backup writer (Groq)."""
+    import os
+    import time
+    import requests
+    key = os.environ.get("GEMINI_API_KEY")
+    if key:
+        for attempt in range(6):
+            m = a.gemini_models(key)[attempt % len(a.gemini_models(key))]
+            try:
+                r = requests.post(a.GEMINI.format(model=m), params={"key": key}, timeout=300, json={
+                    "contents": msgs, "generationConfig": {"temperature": 0.5, "responseMimeType": "application/json",
+                                                           "maxOutputTokens": 60000}})
+                if r.status_code != 200:
+                    print(f"  Gemini {m} HTTP {r.status_code}", flush=True)
+                    time.sleep(20)
+                    continue
+                text = "".join(x.get("text", "") for x in r.json()["candidates"][0]["content"]["parts"])
+                return text, json.loads(text[text.index("{"): text.rindex("}") + 1])
+            except (ValueError, KeyError, IndexError, requests.RequestException) as e:
+                print(f"  Gemini {m}: unusable answer ({type(e).__name__})", flush=True)
+    out = a.backup_llm(msgs)
+    if not out:
+        sys.exit("No writer available (Gemini and backup).")
+    return out
 
 
 def research_notes() -> str:
@@ -233,13 +269,23 @@ def script_check(spec: dict) -> list[str]:
     says = [b.get("say", "") for _, b in bs]
     text = " ".join(says)
     words = len(text.split())
-    if not 1320 <= words <= 1650:
-        p.append(f"narration has {words} words (need 1,350-1,550: the video must last over 8 minutes)")
-    if not 6 <= len(chs) <= 8:
-        p.append(f"{len(chs)} chapters (need 6-8)")
+    wmin, wmax = LEN["wmin"], LEN["wmax"]
+    if not wmin - 30 <= words <= wmax + 100:
+        p.append(f"narration has {words} words (need {wmin:,}-{wmax:,}: the video must last {LEN['mmin']}-{LEN['mmax']} minutes)")
+    if not LEN["cmin"] <= len(chs) <= LEN["cmax"]:
+        p.append(f"{len(chs)} chapters (need {LEN['cmin']}-{LEN['cmax']})")
+    recaps = sum(1 for _, b in bs if b.get("recap"))
+    if recaps < max(2, LEN["mmin"] // 2 - 1):
+        p.append(f"{recaps} recap beats (need one every ~2 minutes: at least {max(2, LEN['mmin'] // 2 - 1)})")
+    sticks = sum(1 for _, b in bs if (b.get("show") or {}).get("stickman"))
+    if sticks < 6:
+        p.append(f"stick man on {sticks} beats (need at least 6, spread through the video)")
+    first75 = " ".join(text.split()[:75])
+    if "?" not in first75:
+        p.append("no question in the first 30 seconds")
     first = re.split(r"(?<=[.!?])\s", says[0] if says else "")[0]
-    if len(first.split()) > 22:
-        p.append(f"first sentence has {len(first.split())} words (max 20)")
+    if len(first.split()) > 16 or not ("?" in first or re.search(r"you('ll| will)|by the end", first, re.I)):
+        p.append(f"first sentence ({len(first.split())} words) must be a question or a promise within 5 s (max 14 words)")
     long = [s[:40] for s in says if len(s.split()) > 32]
     if long:
         p.append(f"{len(long)} beats over 30 words (one picture every ~5 s): {long[:3]}")
@@ -366,8 +412,12 @@ def build_folder(spec: dict, sources: list[dict], report: str) -> Path:
                     if reg[k]["type"] == "video":
                         dur = media_duration(vdir / reg[k]["file"])
                         v = {"type": "video", "src": k, "start": round(min(8.0, dur * 0.2), 1)}
+                        if s.get("stickman"):
+                            v["stickman"] = s["stickman"] if isinstance(s["stickman"], dict) else {"label": "YOU"}
                     else:
                         v = {"type": "image", "src": k, "motion": motions[len(visuals) % len(motions)]}
+                        if s.get("stickman"):
+                            v["stickman"] = s["stickman"] if isinstance(s["stickman"], dict) else {"label": "YOU"}
                         last_img = k
             elif kind in MOTION:
                 v = {"type": kind, **{k2: s[k2] for k2 in s if k2 != "query"}}
@@ -398,7 +448,8 @@ def build_folder(spec: dict, sources: list[dict], report: str) -> Path:
         k = nasa_asset(t.get("query", spec["id"]), "image", vdir, f"thumb_{name}", taken) or last_img
         if k:
             thumbs[name] = {"bg": k, "lines": t.get("lines", [spec["title"][:20]])[:3], "accent": "amber" if name != "B" else "cyan",
-                            "badge": "REAL NASA DATA", "side": "left", "focus": [0.5, 0.5], "highlight": 0}
+                            "badge": "REAL NASA DATA", "side": "left", "focus": [0.5, 0.5], "highlight": 0,
+                            "stickman": bool(t.get("stickman")) or name == "C"}
     save_yaml(vdir / "thumbs.yaml", thumbs)
     script = {"id": vid, "title": spec["title"], "alt_titles": spec.get("alt_titles", [])[:2], "voice": "af_heart",
               "speed": 1.1, "music": {"seed": int(datetime.now().strftime("%j")), "mood": "wonder"},
@@ -416,14 +467,27 @@ def main():
     args = sys.argv[1:]
     today = datetime.now().strftime("%Y-%m-%d")
     hint = f"Prefer this topic: {args[args.index('--topic') + 1]}." if "--topic" in args else ""
-    p = plan(today, hint)
+    if "--minutes" in args:  # e.g. 12-16 (owner 31/10/2026 for TON 618)
+        lo, hi = (int(x) for x in args[args.index("--minutes") + 1].split("-"))
+        LEN.update(mmin=lo, mmax=hi, wmin=lo * 163 + 60, wmax=hi * 150, cmin=max(6, lo // 2), cmax=max(8, hi // 2 + 1))
+    if "--sources" in args:  # pages chosen by hand (e.g. when Google Search grounding has no quota)
+        urls = [u.strip() for u in args[args.index("--sources") + 1].split(",") if u.strip()]
+        _, p = llm([{"role": "user", "parts": [{"text": PLAN.format(today=today, hint=hint, used=used(),
+                    research=research_notes()) + " No search: the sources are fixed, give only topic and angle."}]}])
+        p["sources"] = [{"title": u, "url": u} for u in urls] + [
+            {"title": f"NASA {n.title()} Fact Sheet", "url": f"https://nssdc.gsfc.nasa.gov/planetary/factsheet/{n}fact.html"}
+            for n in ("sun", "earth")]
+    else:
+        p = plan(today, hint)
     print("Topic:", p.get("topic"), "|", p.get("angle"))
     sources = fetch_sources(p)
     src_block = "\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text']}" for s in sources)
-    msgs = [{"role": "user", "parts": [{"text": WRITE.format(topic=p.get("topic"), angle=p.get("angle"), sources=src_block)}]}]
+    msgs = [{"role": "user", "parts": [{"text": WRITE.format(
+        topic=p.get("topic"), angle=p.get("angle"), sources=src_block, recap_every=330, wmin=LEN["wmin"], wmax=LEN["wmax"],
+        mmin=LEN["mmin"], mmax=LEN["mmax"], chapters=f"{LEN['cmin']} to {LEN['cmax']}")}]}]
     history = []
     for rnd in range(3):
-        raw, spec = a.gemini(msgs, search=False)
+        raw, spec = llm(msgs)
         problems = fact_check(spec, sources) + script_check(spec)
         if not [x for x in problems if x.startswith("number")]:  # the reviewer only on drafts whose numbers are clean
             problems += review(spec, sources)

@@ -32,7 +32,7 @@ def fit_text(draw, text, kind, max_w, start, weight=700, min_size=40):
 
 
 def make(bg_path: Path, lines: list[str], dest: Path, accent="amber", badge="REAL DATA",
-         focus=(0.5, 0.5), side="left", highlight: int = 0, label: str | None = None):
+         focus=(0.5, 0.5), side="left", highlight: int = 0, label: str | None = None, stickman: bool = False):
     """label: small corner tag, set automatically to "ARTIST'S CONCEPT" for illustrations
     so a thumbnail never passes an illustration off as a photograph."""
     img = cover(Image.open(bg_path).convert("RGB"), TW, TH, focus)
@@ -71,6 +71,11 @@ def make(bg_path: Path, lines: list[str], dest: Path, accent="amber", badge="REA
         lw, lh = b[2] - b[0] + 20, b[3] - b[1] + 12
         d.rounded_rectangle((TW - lw - 24, 22, TW - 24, 22 + lh), radius=5, fill=(0, 0, 0))
         d.text((TW - lw - 14 - b[0], 28 - b[1]), label, font=f, fill=BRAND["star"])
+    if stickman:  # the channel's human scale, opposite the text
+        import stickman as sm
+        fig = sm.figure(int(TH * 0.3))
+        x = TW - fig.width - 70 if side == "left" else 70
+        img.paste(fig, (x, TH - fig.height - 60), fig)
     dest.parent.mkdir(parents=True, exist_ok=True)
     img.save(dest, quality=92)
     return dest

@@ -66,7 +66,8 @@ def main():
                        accent=t.get("accent", "amber"), badge=t.get("badge", "REAL DATA"),
                        focus=tuple(t.get("focus", (0.5, 0.5))), side=t.get("side", "left"),
                        highlight=t.get("highlight", 0),
-                       label="ARTIST'S CONCEPT" if assets[t["bg"]].get("kind") == "illustration" else None)
+                       label="ARTIST'S CONCEPT" if assets[t["bg"]].get("kind") == "illustration" else None,
+                       stickman=bool(t.get("stickman")))
         print(f"[thumbs] {len(spec)}")
     if "meta" in steps:
         srt = video / "out" / f"{script['id']}.srt"

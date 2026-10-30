@@ -173,7 +173,44 @@ def gemini(messages, search=True):
         return text, json.loads(mt.group())
     if search:
         return None, None  # caller falls back to the RSS feeds without grounding
-    sys.exit(f"Gemini unavailable: {', '.join(codes)}")
+    print(f"  Gemini unavailable ({', '.join(codes)}): trying the backup writer", flush=True)
+    out = backup_llm(messages)
+    if out:
+        return out
+    sys.exit(f"Gemini unavailable: {', '.join(codes)}; backup writer unavailable too.")
+
+
+def backup_llm(messages):
+    """Backup writer (owner decision 30/10/2026), only on the RSS path: it writes from the article texts already
+    extracted by the code and its draft goes through the same check() as Gemini's. Any OpenAI-compatible
+    chat endpoint: secrets BACKUP_LLM_URL / BACKUP_LLM_KEY / BACKUP_LLM_MODELS (e.g. Groq or OpenRouter free tier);
+    without them, GitHub Models with the repo token (on 30/10/2026 it answered a bare "OK": treated as unavailable).
+    (raw text, parsed JSON) or None."""
+    url = os.environ.get("BACKUP_LLM_URL") or "https://models.github.ai/inference/chat/completions"
+    tok = os.environ.get("BACKUP_LLM_KEY") or os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    models = os.environ.get("BACKUP_LLM_MODELS") or "openai/gpt-4.1-mini,openai/gpt-4o-mini"
+    if not tok:
+        print("  backup writer: no token", flush=True)
+        return None
+    chat = [{"role": "assistant" if m["role"] == "model" else "user",
+             "content": "".join(p.get("text", "") for p in m["parts"])} for m in messages]
+    for model in [m.strip() for m in models.split(",") if m.strip()]:
+        try:
+            r = requests.post(url, timeout=120, headers={"Authorization": f"Bearer {tok}"},
+                              json={"model": model, "messages": chat, "temperature": 0.4,
+                                    "response_format": {"type": "json_object"}})
+            text = r.json()["choices"][0]["message"]["content"] or "" if r.status_code == 200 else ""
+        except (requests.RequestException, ValueError, KeyError, IndexError, TypeError) as e:
+            print(f"  backup writer {model}: no usable answer ({type(e).__name__})", flush=True)
+            continue
+        if r.status_code != 200:
+            print(f"  backup writer {model} HTTP {r.status_code}: {r.text[:200]}", flush=True)
+            continue
+        mt = re.search(r"\{.*\}", text, re.S)
+        if mt:
+            print(f"  written by the backup writer {model}", flush=True)
+            return text, json.loads(mt.group())
+    return None
 
 
 # Not channel material: aeronautics, education, agency business. Matched on title + URL of the feed items.

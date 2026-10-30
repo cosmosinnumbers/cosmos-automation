@@ -39,7 +39,10 @@ def release(now: datetime) -> dict:
     tag = sys.argv[sys.argv.index("--tag") + 1] if "--tag" in sys.argv else None
     rel = next((r for r in rels if (r["tag_name"] == tag if tag else r["tag_name"].startswith(f"a{now:%m%d}-"))), None)
     if not rel:
-        sys.exit(f"No Short release for today ({now:%m%d}): nothing to queue.")
+        if tag:
+            sys.exit(f"No release {tag}.")
+        print(f"No Short release for today ({now:%m%d}) yet: nothing to queue (shorts-build retries at 11:00 and 15:00).")
+        sys.exit(0)
     return rel
 
 

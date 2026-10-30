@@ -82,5 +82,11 @@ modifiche e in stato.md con la prova (run id, link). Se un passo fallisce due vo
 - Un solo publisher per canale: non creare un secondo workflow che pubblica la stessa cosa (controlla `publish.yml`,
   `youtube-upload.yml`, `queue-short-reel.yml`).
 - Account, login, consensi OAuth, segreti, pagamenti: li fa Simone. Preparagli link e clic esatti (scrive dall'iPhone).
+- Quando a Simone serve fare qualcosa nel browser o sul PC, NON descriverlo e basta: aprigli tu la pagina o la
+  cartella. Pagine web: aprile nel suo browser con Claude in Chrome (Brave), oppure sul PC con
+  `Start-Process "<url>"` (PowerShell), e scrivigli anche il link completo cliccabile nel messaggio, così funziona
+  pure dall'iPhone. Cartelle o file del PC: aprili con `explorer.exe "<percorso>"` (o lo strumento che mostra il
+  percorso) e scrivigli il percorso. Poi digli solo il clic finale da fare (es. "premi Add collaborator"). Le azioni
+  che restano sue (login, password, consensi, segreti, pagamenti) le completa lui: tu apri la pagina giusta e ti fermi.
 - Mai leggere `secrets/` né stampare token; nei log solo nomi e stati.
 - Alla fine di ogni punto: messaggio breve a Simone in italiano con esito, prova e cosa deve fare lui.

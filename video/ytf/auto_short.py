@@ -102,30 +102,57 @@ Answer with JSON only:
 {{"slug": "", "title": "", "headline": "", "narration": "", "description_intro": "", "sources": [], "footage_queries": [], "image_query": ""}}"""
 
 
+_MODELS: list[str] = []
+
+
+def gemini_models(key) -> list[str]:
+    """GEMINI_MODELS first, then every other Flash model this key can call (newest first): a model name that
+    disappears or a busy model never stops the Short."""
+    if _MODELS:
+        return _MODELS
+    wanted = [m.strip() for m in os.environ.get("GEMINI_MODELS", "gemini-3.8-flash,gemini-3.6-flash").split(",") if m.strip()]
+    avail = []
+    try:
+        r = requests.get("https://generativelanguage.googleapis.com/v1beta/models", params={"key": key, "pageSize": 200},
+                         timeout=30)
+        for m in r.json().get("models", []):
+            name = m["name"].split("/")[-1]
+            if ("generateContent" in m.get("supportedGenerationMethods", []) and "flash" in name
+                    and not re.search(r"image|tts|audio|live|embed|thinking|exp", name)):
+                avail.append(name)
+    except Exception as e:  # noqa: BLE001
+        print("  Gemini model list failed:", type(e).__name__)
+    ver = lambda n: [float(x) for x in re.findall(r"\d+(?:\.\d+)?", n)[:1]] or [0.0]  # noqa: E731
+    extra = sorted((n for n in avail if n not in wanted), key=lambda n: (ver(n), "lite" not in n, "preview" not in n),
+                   reverse=True)
+    _MODELS[:] = ([m for m in wanted if not avail or m in avail] + extra)[:5] or wanted
+    print("  Gemini models:", ", ".join(_MODELS), flush=True)
+    return _MODELS
+
+
 def gemini(messages, search=True):
     """(raw text, parsed JSON). search=True uses Google Search grounding; a 429 there means no grounding quota."""
     key = os.environ.get("GEMINI_API_KEY")
     if not key:
         sys.exit("No GEMINI_API_KEY secret.")
-    models = [m.strip() for m in os.environ.get("GEMINI_MODELS", "gemini-3.8-flash,gemini-3.6-flash,"
-                                                "gemini-3.6-flash-lite").split(",") if m.strip()]
+    models = gemini_models(key)
     body = {"contents": messages, "generationConfig": {"temperature": 0.4}}
     if search:
         body["tools"] = [{"google_search": {}}]
     else:
         body["generationConfig"]["responseMimeType"] = "application/json"
     codes, dead = [], set()
-    # without grounding: up to 9 tries over ~12 minutes, rotating models (a 503 is usually a busy model)
-    for attempt in range(2 if search else 9):
+    # without grounding: up to 10 tries over ~15 minutes, rotating models (a 503 is usually a busy model)
+    for attempt in range(2 if search else 10):
         live = [m for m in models if m not in dead]
         if not live:
             break
         m = live[0] if search else live[attempt % len(live)]
         try:
-            r = requests.post(GEMINI.format(model=m), params={"key": key}, json=body, timeout=180)
+            r = requests.post(GEMINI.format(model=m), params={"key": key}, json=body, timeout=120)
         except requests.RequestException as e:
-            codes.append(type(e).__name__)
-            time.sleep(20)
+            codes.append(f"{m}:{type(e).__name__}")
+            time.sleep(10)
             continue
         codes.append(f"{m}:{r.status_code}")
         if r.status_code in (429, 500, 502, 503, 504):

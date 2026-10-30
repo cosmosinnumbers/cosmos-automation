@@ -403,14 +403,21 @@ def footage(spec, news_dir) -> list[dict]:
     news_dir.mkdir(parents=True, exist_ok=True)
     if not (news_dir / "assets.yaml").exists():  # stock.get reads the register before adding to it
         save_yaml(news_dir / "assets.yaml", {})
-    picked, seen = [], set()
-    for q in spec.get("footage_queries", [])[:4]:
-        try:
-            items = nasa_items(q, "video")
-        except Exception as e:  # noqa: BLE001
-            print("  NASA search failed:", q, e)
-            continue
-        for it in items[:6]:
+    picked, seen, results = [], set(), {}
+
+    def take(q, per_query):
+        """Download up to per_query new clips of query q; stops at 3 clips in total."""
+        if q not in results:
+            try:
+                results[q] = nasa_items(q, "video")[:8]
+            except Exception as e:  # noqa: BLE001
+                print("  NASA search failed:", q, e)
+                results[q] = []
+            print(f"  NASA '{q}': {len(results[q])} videos")
+        got = 0
+        for it in results[q]:
+            if got >= per_query or len(picked) >= 3:
+                return
             sid = it["data"][0]["nasa_id"]
             if sid in seen:
                 continue
@@ -422,9 +429,20 @@ def footage(spec, news_dir) -> list[dict]:
                 print("  skip", sid, str(e)[:120])
                 continue
             picked.append(key)
+            got += 1
+
+    queries = [q for q in spec.get("footage_queries", [])[:4] if q.strip()]
+    for q in queries:  # one clip per story query first, for variety
+        take(q, 1)
+    for q in queries:  # then more from the same queries
+        if len(picked) < 2:
+            take(q, 2)
+    # last resort: the single key words of the queries (mission, telescope, object), then real NASA space footage
+    words = [w for q in queries for w in q.split() if len(w) > 3 and w.lower() not in ("nasa", "with", "from", "space")]
+    for q in list(dict.fromkeys(words))[:4] + ["Hubble space telescope", "James Webb Space Telescope", "deep space"]:
+        if len(picked) >= 2:
             break
-        if len(picked) >= 3:
-            break
+        take(q, 1)
     if len(picked) < 2:
         sys.exit(f"Only {len(picked)} NASA clips found: Short not built (rule: at least 2 real clips).")
     assets = stock.load_yaml(news_dir / "assets.yaml")

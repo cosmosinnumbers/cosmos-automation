@@ -1,0 +1,34 @@
+# Lista giornaliera "da caricare" (YouTube e TikTok si caricano dal telefono finché gli audit API non sono approvati).
+# Parte appena finisce shorts-build (riuscito o no) e apre UNA issue con video, titolo e descrizione da copiare:
+# l'app GitHub manda la notifica. Guida: docs/guida-caricare-dal-telefono.txt
+name: da-caricare
+
+on:
+  workflow_run:
+    workflows: [shorts-build]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: stampa la lista senza aprire l'issue"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency: da-caricare
+
+jobs:
+  digest:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.event == 'schedule' || github.event.workflow_run.event == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Open today's issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DIGEST_MENTION: ${{ vars.DIGEST_MENTION }}
+        run: python tools/daily_digest.py ${{ inputs.dry_run && '--dry-run' || '' }}

@@ -1,0 +1,64 @@
+COME CARICARE GLI SHORT DAL TELEFONO (Cosmos in Numbers)
+========================================================
+
+Perché a mano: YouTube e TikTok non hanno ancora approvato le nostre app (audit).
+Finché non arriva l'ok, un video caricato via API resterebbe privato, quindi
+lo carichi tu dal telefono: 2-3 minuti al giorno.
+Instagram, Facebook e Threads invece escono da soli dalla coda di GitHub.
+
+
+1. COME TI ARRIVA SUL TELEFONO (da fare una volta sola)
+-------------------------------------------------------
+a) Installa l'app "GitHub" (Play Store / App Store) e accedi con l'account che
+   ha accesso a cosmosinnumbers/cosmos-automation (cosmosinnumbers o Redwraith).
+b) Nell'app: Profilo > Impostazioni > Notifiche > attiva le notifiche push.
+c) Apri il repo cosmosinnumbers/cosmos-automation > in alto "Watch" (occhio)
+   > "Custom" > spunta "Issues" > Apply.
+   (In alternativa chiedimi di aggiungere il tuo nome utente: ti menziono io.)
+
+Ogni mattina, verso le 8:30, quando GitHub ha finito di preparare lo Short,
+ti arriva una notifica: "📱 Da caricare oggi GG/MM".
+Dentro trovi: il link per scaricare il video, il titolo e la descrizione già
+pronti da copiare e, se c'è, la clip per TikTok con la sua didascalia.
+Se lo Short non è stato creato (es. Gemini fuori servizio), la notifica lo dice.
+
+
+2. SCARICARE IL VIDEO
+---------------------
+a) Apri la notifica e tocca "Scarica il video".
+b) Se l'app GitHub non lo scarica, tieni premuto il link > "Apri nel browser":
+   nel browser devi essere connesso a GitHub (è un repo privato).
+c) Il file .mp4 finisce in Download / File. Su iPhone: "Condividi" > "Salva video"
+   per averlo nella galleria.
+
+
+3. YOUTUBE (app YouTube, canale Cosmos in Numbers)
+--------------------------------------------------
+a) Tocca "+" in basso > "Carica un video" (o "Short") > scegli il video scaricato.
+b) Tocca "Avanti" (non serve modificare nulla: musica e scritte sono già nel video).
+c) Titolo: incolla il TITOLO della notifica (tieni premuto sul riquadro > Copia).
+d) Tocca "Aggiungi descrizione" e incolla la DESCRIZIONE della notifica.
+e) Pubblico: "No, non è per bambini".
+f) Visibilità: "Pubblico", oppure "Pianifica" alle 21:00 se vuoi l'orario fisso.
+g) Tocca "Carica Short".
+Facoltativo, dal computer: in YouTube Studio fissa il commento "LOOK UP"
+che il canale scrive da solo sotto ogni video nuovo (l'API non può fissarlo).
+
+
+4. TIKTOK (solo se la notifica ha una sezione TikTok)
+-----------------------------------------------------
+a) Scarica la clip TikTok dal link della notifica (come al punto 2).
+b) App TikTok > "+" > "Carica" > scegli la clip > "Avanti".
+c) Didascalia: incolla quella della notifica (solo "Full video on YouTube...",
+   MAI link LOOK UP o codice LAUNCH9 nella didascalia: il link sta solo in bio).
+d) "Altre opzioni": attiva "Contenuto generato con IA" (etichetta IA).
+   NON attivare mai "Divulgazione contenuti commerciali" / "Il tuo brand".
+e) Pubblica.
+
+
+5. ALLA FINE
+------------
+Nella notifica (issue) tocca "Close issue": così sai che oggi è fatto.
+Il giorno dopo la vecchia issue si chiude comunque da sola.
+
+Problemi? Scrivimi nel thread del progetto.

@@ -35,6 +35,7 @@ import stock  # noqa: E402
 from common import ROOT, media_duration, save_yaml  # noqa: E402
 
 LONG = ROOT / "longform"
+FACTSHEETS = ["https://nssdc.gsfc.nasa.gov/planetary/factsheet/"]
 DRY = "--dry-run" in sys.argv
 MOTION = {"counter", "scale", "timer", "compare", "bars", "kinetic"}
 REAL = {"footage", "image"}
@@ -64,7 +65,11 @@ RETENTION (this is what keeps people watching to the end):
 - 6 to 8 chapters; every chapter ends on a question or a twist that pulls into the next; escalate the scale or the
   stakes chapter by chapter; the biggest reveal near the end.
 - Turn numbers into things people can picture: comparisons of size, travel times, "X Earths would fit".
-- Short spoken sentences. Total narration 1,350 to 1,550 words (the video must last over 8 minutes).
+- Short spoken sentences. Total narration 1,350 to 1,550 words (the video must last over 8 minutes): about
+  60-70 beats of 18-28 words each, 8-10 beats per chapter. Count your words before answering.
+- NEVER compute new numbers (no sums, differences, conversions or percentages of your own): say the numbers as the
+  sources print them, with the same decimals, and let the "compare" and "scale" visuals show the ratios (the code
+  computes them). If the sources do not have a number you need, change the sentence, not the number.
 - Last chapter: payoff, one sentence on why it matters, then ONE sentence inviting viewers who want to see these
   objects in the real sky to the beginner's stargazing guide "LOOK UP" (link in the description). Nowhere else.
 
@@ -126,21 +131,23 @@ def plan(today: str, hint: str) -> dict:
     if not p or not p.get("sources"):
         print("No grounded plan: NASA fact sheets instead")
         _, p = a.gemini([{"role": "user", "parts": [{"text": PLAN.format(today=today, hint=hint, used=used(),
-                         research=research_notes()) + "\nNo search available: use ONLY these pages: "
-                         + ", ".join(a.REF_PAGES)}]}], search=False)
+                         research=research_notes()) + "\nNo search available: pick a topic that NASA's planetary "
+                         "fact sheets (planets, Moon, Sun) can fully answer; the writer gets all of them."}]}], search=False)
+        p["sources"] = [{"title": "NASA Planetary Fact Sheet (all planets)", "url": FACTSHEETS[0]}] + [
+            {"title": f"NASA {u.split('/')[-1].replace('fact.html', '').title()} Fact Sheet", "url": u} for u in a.REF_PAGES]
     return p
 
 
 def fetch_sources(p: dict) -> list[dict]:
     out = []
-    for s in p.get("sources", [])[:6]:
+    for s in p.get("sources", [])[:11]:
         try:
             text = " ".join(a.page_text(s["url"]).split())
         except Exception as e:  # noqa: BLE001
             print("  source refused:", s.get("url"), str(e)[:80])
             continue
         if len(text) > 400:
-            out.append({"id": f"S{len(out) + 1}", "title": s.get("title") or s["url"], "url": s["url"], "text": text[:9000]})
+            out.append({"id": f"S{len(out) + 1}", "title": s.get("title") or s["url"], "url": s["url"], "text": text[:7000]})
     if len(out) < 2:
         sys.exit(f"Only {len(out)} readable primary sources: no long video this week.")
     return out

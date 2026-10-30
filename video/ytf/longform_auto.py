@@ -177,7 +177,10 @@ def calc_results(spec: dict, blob: str, flat: str) -> tuple[set, list[str]]:
         if not re.fullmatch(r"[\d.\s+\-*/()]+", expr) or not re.fullmatch(r"\s*[\d.]+\s*", res):
             bad.append(f"calc not readable: {b['calc']}")
             continue
-        missing = [n for n in re.findall(r"\d+(?:\.\d+)?", expr) if n not in flat and len(n) > 1]
+        # operands: source numbers, results of earlier calcs, or powers of ten (unit conversions: 10^6 km -> km)
+        prev = {x.replace(",", "") for x in ok}
+        missing = [n for n in re.findall(r"\d+(?:\.\d+)?", expr) if n not in flat and len(n) > 1 and n not in prev
+                   and n.rstrip("0").rstrip(".") not in prev and not re.fullmatch(r"10*", n)]
         try:
             val, want = eval(expr, {"__builtins__": {}}), float(res)  # noqa: S307 - digits and + - * / ( ) only
         except Exception:  # noqa: BLE001
@@ -188,7 +191,7 @@ def calc_results(spec: dict, blob: str, flat: str) -> tuple[set, list[str]]:
         elif abs(val - want) > max(0.01 * abs(want), 0.5):
             bad.append(f"calc is wrong: {b['calc']} (correct: {val:,.1f})")
         else:
-            ok |= {res.strip(), f"{want:,.0f}", f"{want:,.1f}", f"{round(want):,}"}
+            ok |= {res.strip(), f"{want:,.0f}", f"{want:,.1f}", f"{round(want):,}", f"{want:g}"}
     return ok, bad
 
 

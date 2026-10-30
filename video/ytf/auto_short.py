@@ -333,9 +333,11 @@ single most surprising measured number or comparison you can build from ONE or T
 list of topics already used: {used}
 {items}
 
-Write the Short using ONLY numbers that appear in the sheets you use. At least two measured numbers from the
-sheets must be in the narration:
-- "narration": 85 to 110 words, plain spoken English. First sentence = the key number, no greeting or intro
+Write the Short using ONLY numbers that appear in the sheets you use. ONE idea, told as a story, not a list:
+2 to 4 measured numbers in total (never more than 5), each with a vivid comparison a viewer can picture.
+Units in spoken words, never symbols ("kilograms per cubic meter", "meters per second", "times Earth"):
+no "/", "^" or unit abbreviations in the narration.
+- "narration": 80 to 95 words, plain spoken English. First sentence = the key number, no greeting or intro
   ("Did you know", "In this video" are forbidden). Short sentences. Every number exactly as written in the sheet
   (digits). Say "about" for rounded values. End with one sentence of why it matters.
 - "title": max 80 characters plus " #shorts", curiosity + the number, ending with "(NASA data)".
@@ -347,6 +349,17 @@ sheets must be in the narration:
 - "image_query": 1 query for a related NASA image.
 Answer with JSON only:
 {{"slug": "", "title": "", "headline": "", "narration": "", "description_intro": "", "sources": [], "footage_queries": [], "image_query": ""}}"""
+
+
+def reserve_problems(spec) -> list[str]:
+    """Extra rules of the reserve Shorts: they go out with no human reading them first."""
+    out, n = [], spec.get("narration", "")
+    data = [x for x in dict.fromkeys(numbers(n)) if not re.fullmatch(r"(19|20)\d\d", x)]
+    if len(data) > 5:
+        out.append(f"{len(data)} numbers in the narration (max 5: one idea, not a list)")
+    if re.search(r"/|\^|\b(km|kg|mph)\b|\d\s?(K|m|s)\b|\bm \d\b", n):
+        out.append("unit symbols in the narration (the voice must hear words)")
+    return out
 
 
 def write_reserve_spec(today):
@@ -558,6 +571,8 @@ def main():
         if spec.get("skip"):
             sys.exit(f"Gemini found no space news with real data today: {spec['skip']}")
         missing, problems, report = check(spec)
+        if "--reserve" in a:
+            problems += reserve_problems(spec)
         if missing or problems:
             print("first draft rejected:", missing, problems)
             msgs += [{"role": "model", "parts": [{"text": raw}]},
@@ -567,6 +582,8 @@ def main():
             if not spec:
                 sys.exit("Gemini unavailable for the correction: no Short today.")
             missing, problems, report = check(spec)
+            if "--reserve" in a:
+                problems += reserve_problems(spec)
     print(report)
     if missing or problems:
         sys.exit("FACT CHECK FAILED: no Short today. " + "; ".join(problems + [f"number {n} not in sources" for n in missing]))
@@ -596,7 +613,7 @@ def main():
         sys.exit("short.py failed")
     mp4 = short_dir / "out" / f"{sid}.mp4"
     dur = media_duration(mp4)
-    if not 20 <= dur <= 60:
+    if not 20 <= dur <= (45 if "--reserve" in a else 60):
         sys.exit(f"QC: duration {dur:.1f}s outside 20-60 s")
     meta = {"id": sid, "title": title, "duration": round(dur, 1), "mp4": str(mp4),
             "upload": str(short_dir / "out" / "upload.md"), "factcheck": str(base / "factcheck.md")}

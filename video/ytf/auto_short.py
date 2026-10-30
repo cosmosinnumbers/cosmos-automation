@@ -356,11 +356,11 @@ def check(spec) -> tuple[list[str], list[str], str]:
         missing.append(n)
     words = len(spec["narration"].split())
     rep = [f"# Fact check automatico ({datetime.now():%Y-%m-%d %H:%M})", "",
-           f"- Parole: {words} (85-110)", f"- Fonti lette: {len(texts)}/{len(spec.get('sources', []))}"]
+           f"- Parole: {words} (obiettivo 85-110, minimo 60)", f"- Fonti lette: {len(texts)}/{len(spec.get('sources', []))}"]
     rep += [f"- PROBLEMA fonte: {p}" for p in problems]
     rep += [f"- Numeri nella narrazione: {', '.join(dict.fromkeys(numbers(spec['narration']))) or 'nessuno'}",
             f"- Numeri NON trovati nelle fonti: {', '.join(missing) or 'nessuno'}"]
-    if not 70 <= words <= 125:
+    if not 60 <= words <= 125:  # 60 words at speed 1.2 are ~25 s, still a full Short
         problems.append(f"narration has {words} words")
     data = [n for n in dict.fromkeys(numbers(spec["narration"])) if not re.fullmatch(r"(19|20)\d\d", n)
             and not re.search(rf"[A-Za-z]-?{re.escape(n)}\b", spec["narration"])]  # X-59, JWST-1 are names

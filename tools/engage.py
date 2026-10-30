@@ -173,8 +173,13 @@ def fetch_yt(book):
     for v in yt_videos():
         if v["status"]["privacyStatus"] != "public":
             continue
-        for t in yt().commentThreads().list(part="snippet,replies", videoId=v["id"], maxResults=100,
-                                            order="time").execute().get("items", []):
+        try:
+            threads = yt().commentThreads().list(part="snippet,replies", videoId=v["id"], maxResults=100,
+                                                 order="time").execute().get("items", [])
+        except Exception as e:  # noqa: BLE001 - one video (comments off, transient 400) must not stop the others
+            print(f"  yt {v['id']}: comments not readable, skipped ({str(e)[:120]})")
+            continue
+        for t in threads:
             s = t["snippet"]["topLevelComment"]["snippet"]
             mine = lambda c: c.get("authorChannelId", {}).get("value") == me  # noqa: E731
             if t["id"] in book.done or mine(s) or age_days(s["publishedAt"]) > CFG["max_age_days"]:

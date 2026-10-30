@@ -205,7 +205,8 @@ def feed_entries(xml: str):
             continue
         if d.tzinfo is None:
             continue
-        yield field(block, "title"), link.strip(), d
+        yield field(block, "title"), link.strip(), d, field(block, "content:encoded") or field(block, "description") \
+            or field(block, "summary") or field(block, "content")
 
 
 def get_feed(url):
@@ -234,14 +235,14 @@ def rss_items(days=7, n=10):
             print("  feed unreadable", url, r.headers.get("content-type"), repr(r.text[:120]))
             continue
         fresh = kept = 0
-        for title, link, d in found:
+        for title, link, d, summary in found:
             if not (link and title and (datetime.now(d.tzinfo) - d).days <= days):
                 continue
             fresh += 1
             if OFF_TOPIC.search(title + " " + link):
                 continue
             kept += 1
-            items.append({"title": title, "url": link, "date": d, "feed": url})
+            items.append({"title": title, "url": link, "date": d, "feed": url, "summary": " ".join(summary.split())})
         print(f"  feed ok {url}: {len(found)} items, {fresh} recent, {kept} on topic")
         time.sleep(2)
     items.sort(key=lambda x: x["date"], reverse=True)
@@ -251,8 +252,14 @@ def rss_items(days=7, n=10):
             continue
         seen.add(it["url"])
         try:
-            it["text"] = " ".join(page_text(it["url"]).split())[:2500]
-        except Exception:  # noqa: BLE001
+            body = article_text(it["url"])
+        except Exception as e:  # noqa: BLE001
+            print("  page failed", it["url"], str(e)[:80])
+            continue
+        # the article body, not the site menus: the feed summary first, then the paragraphs of the page
+        it["text"] = (it["summary"] + " " + body).strip()[:3000]
+        if len(it["text"]) < 300 or not re.search(r"\d", it["text"]):
+            print("  no article text", it["url"], len(it["text"]))
             continue
         out.append(it)
         if len(out) >= n:
@@ -300,6 +307,30 @@ def page_text(url: str) -> str:
         raise ValueError(f"HTTP {r.status_code}")
     t = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", r.text, flags=re.S | re.I)
     return html.unescape(re.sub(r"<[^>]+>", " ", t))
+
+
+def article_text(url: str) -> str:
+    """Paragraphs of the article only (no menus, sidebars, footers): <article>/<main> if present, then its <p>s."""
+    host = urllib.parse.urlparse(url).hostname or ""
+    if not any(host == d or host.endswith("." + d) for d in ALLOWED):
+        raise ValueError(f"not a primary source domain: {host}")
+    r = requests.get(url, headers=UA, timeout=60, allow_redirects=True)
+    if r.status_code != 200:
+        raise ValueError(f"HTTP {r.status_code}")
+    t = re.sub(r"<(script|style|nav|header|footer|aside|form|noscript)\b[^>]*>.*?</\1>", " ", r.text, flags=re.S | re.I)
+    m = re.search(r"<article\b.*?</article>", t, re.S | re.I) or re.search(r"<main\b.*?</main>", t, re.S | re.I)
+    def ps(block):
+        out = [" ".join(html.unescape(re.sub(r"<[^>]+>", " ", x)).split())
+               for x in re.findall(r"<p\b[^>]*>(.*?)</p>", block, re.S | re.I)]
+        return [x for x in out if len(x) >= 60 and not re.search(r"cookie|subscribe|share this|follow us", x, re.I)]
+
+    paras = ps(m.group()) if m else []
+    if sum(map(len, paras)) < 300:  # <article> was only a teaser: every paragraph of the page
+        paras = ps(t)
+    if not paras and m:  # article without <p>: its plain text
+        paras = [" ".join(html.unescape(re.sub(r"<[^>]+>", " ", m.group())).split())]
+    meta = re.search(r'<meta[^>]+(?:property="og:description"|name="description")[^>]+content="([^"]+)"', r.text, re.I)
+    return " ".join(([html.unescape(meta.group(1))] if meta else []) + paras)
 
 
 def numbers(text: str) -> list[str]:
@@ -414,7 +445,7 @@ def footage(spec, news_dir) -> list[dict]:
 
 
 def main():
-    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)  # log lines in order in Actions
     a = sys.argv[1:]
     today = datetime.now().strftime("%Y-%m-%d")
     if "--spec" in a:

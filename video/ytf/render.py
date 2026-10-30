@@ -275,6 +275,119 @@ def bars_frame(bg: Image.Image, v: dict, t: float, dur: float) -> Image.Image:
     return f
 
 
+# ---------- motion graphics, round 2 (owner 30/10/2026: "animazioni più carine", from the competitor analysis:
+# numbers shown as physical comparisons, running clocks, A-vs-B reveals) ----------
+def _sphere(r: int, col: tuple) -> Image.Image:
+    """A lit sphere (radial gradient + rim), RGBA, diameter 2r."""
+    r = max(2, r)
+    yy, xx = np.mgrid[-r:r, -r:r].astype(np.float32) + 0.5
+    d = np.sqrt(xx ** 2 + yy ** 2) / r
+    light = np.clip(1.15 - np.sqrt((xx / r + 0.35) ** 2 + (yy / r + 0.35) ** 2) * 0.75, 0.25, 1.15)
+    rgb = np.clip(np.array(col, np.float32)[None, None, :] * light[..., None], 0, 255)
+    a = np.clip((1 - d) * r, 0, 1) * 255
+    return Image.fromarray(np.dstack([rgb, a]).astype(np.uint8), "RGBA")
+
+
+def scale_frame(bg: Image.Image, v: dict, t: float, dur: float) -> Image.Image:
+    """Objects side by side at true relative size (diameter ∝ value), growing one after another.
+    items: [{label, value, display}], title, note."""
+    f = bg.copy()
+    d = ImageDraw.Draw(f)
+    items = v["items"]
+    tf, lf, vf, nf = font("display", 58, 700), font("display", 40, 700), font("text", 32, 600), font("text", 24, 500)
+    if v.get("title"):
+        tb = d.textbbox((0, 0), v["title"], font=tf)
+        d.text(((W - (tb[2] - tb[0])) // 2, 70), v["title"], font=tf, fill=BRAND["star"])
+    if v.get("note"):
+        d.text((110, H - 64), v["note"], font=nf, fill=BRAND["dust"])
+    vmax = max(it["value"] for it in items)
+    gap = 70
+    maxd = min(560, (W - 240 - gap * (len(items) - 1)) / max(1.0, sum(it["value"] for it in items) / vmax))
+    diam = [max(6, maxd * it["value"] / vmax) for it in items]
+    total = sum(diam) + gap * (len(items) - 1)
+    x, base = (W - total) / 2, H * 0.66
+    stagger = min(1.4, 0.6 * dur / len(items))
+    cols = [BRAND["cyan"], BRAND["amber"], (150, 120, 230), (110, 200, 160), BRAND["star"]]
+    for i, (it, dm) in enumerate(zip(items, diam)):
+        p = ease_out((t - 0.2 - i * stagger) / 0.8)
+        if p > 0:
+            s = _sphere(int(dm * p / 2), cols[i % len(cols)])
+            f.paste(s, (int(x + dm / 2 - s.width / 2), int(base - s.height)), s)
+            a = int(255 * min(1, p * 1.5))
+            lb = d.textbbox((0, 0), it["label"], font=lf)
+            d.text((x + dm / 2 - (lb[2] - lb[0]) / 2, base + 24), it["label"], font=lf, fill=BRAND["star"] + (a,))
+            if it.get("display") and p > 0.8:
+                vb = d.textbbox((0, 0), it["display"], font=vf)
+                d.text((x + dm / 2 - (vb[2] - vb[0]) / 2, base + 80), it["display"], font=vf, fill=BRAND["amber"])
+        x += dm + gap
+    return f
+
+
+def timer_frame(bg: Image.Image, v: dict, t: float, dur: float) -> Image.Image:
+    """A clock that runs (accelerated) up to `seconds`, with a progress ring; `display` is the spoken value."""
+    f = bg.copy()
+    d = ImageDraw.Draw(f)
+    run_s = min(v.get("count", 3.0), dur * 0.7)
+    p = ease_out(t / run_s)
+    s = v["seconds"] * p
+    if v["seconds"] >= 2 * 86400:
+        txt, final = f"{s / 86400:,.0f} days", f"{v['seconds'] / 86400:,.0f} days"
+    elif v["seconds"] >= 3600:
+        txt = f"{int(s // 3600):02d}:{int(s % 3600 // 60):02d}:{int(s % 60):02d}"
+        final = f"{int(v['seconds'] // 3600):02d}:00:00"
+    else:
+        txt, final = f"{int(s // 60):02d}:{s % 60:05.2f}", "00:00.00"
+    cx, cy, r = W // 2, H // 2 - 10, 330
+    d.ellipse((cx - r, cy - r, cx + r, cy + r), outline=BRAND["dust"], width=6)
+    d.arc((cx - r, cy - r, cx + r, cy + r), -90, -90 + 360 * p, fill=BRAND["cyan"], width=14)
+    big = font("display", 120 if len(final) <= 5 else 100 if len(final) <= 8 else 84, 700)
+    fb = d.textbbox((0, 0), final, font=big)
+    tb = d.textbbox((0, 0), txt, font=big)
+    x0 = cx - (fb[2] - fb[0]) // 2 - fb[0]
+    d.text((x0 + (fb[2] - tb[2]), cy - (fb[3] - fb[1]) // 2 - fb[1]), txt, font=big, fill=BRAND["amber"])
+    if v.get("label"):
+        lf = font("display", 46, 700)
+        lb = d.textbbox((0, 0), v["label"].upper(), font=lf)
+        d.text((cx - (lb[2] - lb[0]) // 2, cy - r - 90), v["label"].upper(), font=lf, fill=BRAND["cyan"])
+    if v.get("display"):
+        a = ease((t - run_s) / 0.5)
+        sub = text_overlay([(v["display"], font("text", 54, 600), BRAND["star"])], pad=(10, 6), bg=None, center=True)
+        paste(f, sub, ((W - sub.width) // 2, cy + r + 30), a)
+    return f
+
+
+def compare_frame(bg: Image.Image, v: dict, t: float, dur: float) -> Image.Image:
+    """Two numbers counting up side by side, then the ratio between them (computed, marked ≈)."""
+    f = bg.copy()
+    d = ImageDraw.Draw(f)
+    a, b = v["items"][:2]
+    if v.get("title"):
+        tf = font("display", 56, 700)
+        tb = d.textbbox((0, 0), v["title"], font=tf)
+        d.text(((W - (tb[2] - tb[0])) // 2, 80), v["title"], font=tf, fill=BRAND["star"])
+    for k, (it, cx, col) in enumerate(((a, W // 4 + 20, BRAND["cyan"]), (b, 3 * W // 4 - 20, BRAND["amber"]))):
+        p = ease_out((t - 0.2 - k * 0.6) / 1.4)
+        if p <= 0:
+            continue
+        lf = font("display", 50, 700)
+        lb = d.textbbox((0, 0), it["label"].upper(), font=lf)
+        d.text((cx - (lb[2] - lb[0]) // 2, H // 2 - 170), it["label"].upper(), font=lf, fill=BRAND["star"])
+        dec = it.get("decimals", 0)
+        txt = f"{it['value'] * p:,.{dec}f}{it.get('suffix', '')}"
+        big = font("display", 120 if len(txt) <= 9 else 88, 700)
+        tb = d.textbbox((0, 0), txt, font=big)
+        d.text((cx - (tb[2] - tb[0]) // 2, H // 2 - 60), txt, font=big, fill=col)
+    d.line((W // 2, H // 2 - 180, W // 2, H // 2 + 120), fill=BRAND["dust"], width=3)
+    lo, hi = sorted([a["value"], b["value"]])
+    if lo > 0:
+        ratio = hi / lo
+        rt = f"≈ {ratio:,.0f}×" if ratio >= 10 else f"≈ {ratio:,.1f}×"
+        al = ease((t - 2.4) / 0.5)
+        ov = text_overlay([(rt, font("display", 96, 700), BRAND["amber"])], pad=(30, 14), bg=(11, 16, 38, 220), radius=12)
+        paste(f, ov, ((W - ov.width) // 2, H // 2 + 170), al)
+    return f
+
+
 @lru_cache(maxsize=8)
 def dim_image(path: str, amount: float = 0.6) -> Image.Image:
     img = prepare_image(Path(path)).resize((W, H), Image.LANCZOS)
@@ -310,7 +423,7 @@ class Shot:
             self.reader = VideoReader(video / a["file"], W, H, self.v.get("start", 0.0))
             label = self.v.get("label") or ("Artist's concept" if a.get("kind") == "illustration" else None)
             self.overlays = credit_overlay(a.get("credit", ""), label, "Video")
-        elif kind in ("counter", "kinetic", "bars"):
+        elif kind in ("counter", "kinetic", "bars", "scale", "timer", "compare"):
             bg = self.v.get("bg")
             self.canvas = (dim_image(str(video / assets[bg]["file"]), self.v.get("dim", 0.62)) if bg
                            else starfield(self.v.get("seed", 11)).resize((W, H), Image.BILINEAR))
@@ -349,6 +462,12 @@ class Shot:
             f = kinetic_frame(self.canvas, self.v, t, dur)
         elif kind == "bars":
             f = bars_frame(self.canvas, self.v, t, dur)
+        elif kind == "scale":
+            f = scale_frame(self.canvas, self.v, t, dur)
+        elif kind == "timer":
+            f = timer_frame(self.canvas, self.v, t, dur)
+        elif kind == "compare":
+            f = compare_frame(self.canvas, self.v, t, dur)
         else:
             z, cx, cy = self.camera(i)
             cw, ch = self.canvas.size
@@ -397,6 +516,8 @@ def render_video(script: dict, video: Path, assets: dict, timings: dict) -> list
             f = shot.frame(i)
             if prev_last is not None and i < XFADE:
                 f = Image.blend(prev_last, f, ease((i + 1) / XFADE))
+            if script.get("progress_bar"):  # thin progress line at the bottom (retention cue)
+                ImageDraw.Draw(f).rectangle((0, H - 6, int(W * (written + i) / total_frames), H), fill=BRAND["cyan"])
             proc.stdin.write(f.tobytes())
             last = f
         written += n
@@ -417,8 +538,13 @@ def render_audio(script: dict, video: Path, timings: dict, shots: list[dict]):
     for sh in shots:
         if sh.get("chapter") and sh["start"] > 1:
             events.append((sh["start"], "whoosh"))
-        if (sh["visual"]["type"] == "chart" and sh["visual"].get("anim") == "reveal") or sh["visual"]["type"] == "counter":
+        elif script.get("cut_sfx") and sh["start"] > 1:  # a soft swish on every cut
+            events.append((sh["start"], "swish"))
+        if (sh["visual"]["type"] == "chart" and sh["visual"].get("anim") == "reveal") or sh["visual"]["type"] in (
+                "counter", "scale", "compare"):
             events.append((sh["start"] + 0.2, "ping"))
+        if sh["visual"]["type"] == "timer":
+            events.append((sh["start"] + min(sh["visual"].get("count", 3.0), (sh["end"] - sh["start"]) * 0.7), "ping"))
     music.write(build / "sfx.wav", music.sfx_track(dur, events))
     graph = ("[0:a]aresample=48000,aformat=channel_layouts=stereo,asplit=2[v][vsc];"
              "[1:a]volume=0.32[m];[m][vsc]sidechaincompress=threshold=0.02:ratio=8:attack=40:release=700[md];"

@@ -146,9 +146,9 @@ def sfx_track(duration: float, events: list[tuple[float, str]], seed: int = 3) -
     rng = np.random.default_rng(seed)
     track = np.zeros((int(duration * SR) + SR, 2), dtype=np.float32)
     for at, kind in events:
-        snd = whoosh(rng) if kind == "whoosh" else ping()
+        snd = whoosh(rng) if kind == "whoosh" else whoosh(rng, 0.6) * 0.35 if kind == "swish" else ping()
         # whoosh peaks at its middle: start it early so the peak lands on the cut
-        start = int(max(0.0, at - (0.45 if kind == "whoosh" else 0.0)) * SR)
+        start = int(max(0.0, at - {"whoosh": 0.45, "swish": 0.3}.get(kind, 0.0)) * SR)
         end = min(len(track), start + len(snd))
         track[start:end] += snd[: end - start, None]
     return track[: int(duration * SR)]

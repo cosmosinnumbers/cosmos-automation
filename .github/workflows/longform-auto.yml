@@ -1,0 +1,68 @@
+# Weekly long video with no human step (owner 30/10/2026: "approva i video in automatico"): video/ytf/longform_auto.py
+# plans the topic with primary sources, writes the script in beats, runs the checks (every number in the sources, a
+# second model as reviewer, structure and pace) and approves it only if all pass; then longform-build makes the video
+# and the release. Nothing is uploaded. Failed checks: an issue. Saturday 09:00 Italian time (summer: "0 7").
+name: longform-auto
+
+on:
+  schedule:
+    - cron: "0 8 * * 6"
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "Optional topic hint"
+        default: ""
+      dry_run:
+        description: "Dry run: plan, write and check the script only (no assets, no commit, no build)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  actions: write
+  issues: write
+
+concurrency: longform-auto
+
+jobs:
+  write:
+    if: vars.LONGFORM_AUTO != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.13", cache: pip}
+      - run: pip install -q requests PyYAML pillow numpy scipy imageio-ffmpeg tzdata
+      - name: Plan, write, check and approve
+        id: auto
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINIAPIKEY3 }}
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+          IN_TOPIC: ${{ inputs.topic }}
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          args=()
+          [ -n "$IN_TOPIC" ] && args+=(--topic "$IN_TOPIC")
+          [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          python video/ytf/longform_auto.py "${args[@]}"
+      - name: Commit and start the build
+        if: steps.auto.outputs.id != ''
+        env:
+          ID: ${{ steps.auto.outputs.id }}
+        run: |
+          git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
+          git add "longform/$ID"
+          git commit -q -m "video lungo approvato dai controlli: $ID"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
+          gh workflow run longform-build.yml -f id="$ID"
+      - name: Issue if the checks failed
+        if: failure() && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+        run: |
+          gh label create alert --color B60205 --description "Automazione fallita" 2>/dev/null || true
+          gh issue create --title "Video lungo della settimana non approvato $(date +%d/%m/%Y)" --label alert \
+            --body "I controlli automatici non sono passati. Log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

@@ -180,15 +180,38 @@ def gemini(messages, search=True):
     sys.exit(f"Gemini unavailable: {', '.join(codes)}; backup writer unavailable too.")
 
 
+def backup_models(base, tok) -> str:
+    """Text models the key can call (OpenAI-compatible /models), biggest first: no hard-coded model names."""
+    try:
+        r = requests.get(f"{base}/models", headers={"Authorization": f"Bearer {tok}"}, timeout=30)
+        ids = [m["id"] for m in r.json().get("data", [])]
+    except Exception as e:  # noqa: BLE001
+        print(f"  backup writer: model list failed ({type(e).__name__})", flush=True)
+        return ""
+    ids = [i for i in ids if not re.search(r"whisper|tts|guard|vision|image|embed|audio|speech|prompt|compound", i)]
+    size = lambda i: max([float(x) for x in re.findall(r"(\d+(?:\.\d+)?)b\b", i)] or [0])  # noqa: E731
+    ids.sort(key=lambda i: ("versatile" in i, "grok" in i and "mini" not in i, size(i)), reverse=True)
+    print("  backup writer models:", ", ".join(ids[:3]) or "none", flush=True)
+    return ",".join(ids[:3])
+
+
 def backup_llm(messages):
     """Backup writer (owner decision 30/10/2026), only on the RSS path: it writes from the article texts already
     extracted by the code and its draft goes through the same check() as Gemini's. Any OpenAI-compatible
     chat endpoint: secrets BACKUP_LLM_URL / BACKUP_LLM_KEY / BACKUP_LLM_MODELS (e.g. Groq or OpenRouter free tier);
     without them, GitHub Models with the repo token (on 30/10/2026 it answered a bare "OK": treated as unavailable).
     (raw text, parsed JSON) or None."""
-    url = os.environ.get("BACKUP_LLM_URL") or "https://models.github.ai/inference/chat/completions"
-    tok = os.environ.get("BACKUP_LLM_KEY") or os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
-    models = os.environ.get("BACKUP_LLM_MODELS") or "openai/gpt-4.1-mini,openai/gpt-4o-mini"
+    # GROK_API_KEY (the name the owner used on 30/10/2026): provider from the key prefix, model from its /models list
+    key = os.environ.get("BACKUP_LLM_KEY") or os.environ.get("GROK_API_KEY") or os.environ.get("GROQ_API_KEY") or ""
+    provider = {"gsk_": "groq", "xai-": "xai"}.get(key[:4], "")
+    base = {"groq": "https://api.groq.com/openai/v1", "xai": "https://api.x.ai/v1"}.get(provider)
+    if provider:
+        print(f"  backup writer provider: {provider}", flush=True)
+    url = os.environ.get("BACKUP_LLM_URL") or (f"{base}/chat/completions" if base else
+                                               "https://models.github.ai/inference/chat/completions")
+    tok = key or os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    models = os.environ.get("BACKUP_LLM_MODELS") or (backup_models(base, tok) if base else
+                                                     "openai/gpt-4.1-mini,openai/gpt-4o-mini")
     if not tok:
         print("  backup writer: no token", flush=True)
         return None

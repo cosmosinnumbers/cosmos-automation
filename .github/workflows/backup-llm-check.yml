@@ -22,9 +22,10 @@ jobs:
           BACKUP_LLM_URL: ${{ secrets.BACKUP_LLM_URL }}
           BACKUP_LLM_KEY: ${{ secrets.BACKUP_LLM_KEY }}
           BACKUP_LLM_MODELS: ${{ secrets.BACKUP_LLM_MODELS }}
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          for v in BACKUP_LLM_URL BACKUP_LLM_KEY BACKUP_LLM_MODELS; do [ -n "${!v}" ] && echo "$v: set" || echo "$v: MISSING"; done
+          for v in BACKUP_LLM_URL BACKUP_LLM_KEY BACKUP_LLM_MODELS GROK_API_KEY; do [ -n "${!v}" ] && echo "$v: set" || echo "$v: MISSING"; done
           cd video/ytf && python -c "
           import sys; sys.argv=['x']
           import auto_short as a

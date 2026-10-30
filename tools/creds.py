@@ -66,7 +66,11 @@ def stamp(at: str) -> int:
 
 
 def check_url(url: str):
-    """Refuse media that is not publicly reachable (HTTP 200)."""
+    """Refuse media that is not reachable: a file of the repo must exist, a URL must answer HTTP 200."""
+    if not url.startswith("http"):
+        if not Path(url).is_file():
+            sys.exit(f"Media file not in the repo: {url}")
+        return
     r = requests.head(url, allow_redirects=True, timeout=30)
     if r.status_code != 200:
         sys.exit(f"Media not reachable (HTTP {r.status_code}): {url}")

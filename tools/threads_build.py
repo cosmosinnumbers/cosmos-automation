@@ -1,0 +1,303 @@
+"""Daily Threads posts without an LLM (owner decision 30/10/2026): adds today's items to queues/threads-queue.json.
+
+  python tools/threads_build.py [--date 2026-11-01] [--only news,quiz,video] [--dry-run]
+
+- 12:00 news: the newest on-topic item (last 3 days) of the agencies' feeds (NASA, JPL, ESA, ESA/Webb, ESA/Hubble,
+  ESO, NOIRLab), text copied from the page (title + lead sentences), never rewritten. One reply with a sentence of
+  the article that holds a number, and the link. Every number is checked against the page with auto_short.check().
+- 16:00 quiz: a poll built from the NASA Planetary Fact Sheet table (nssdc.gsfc.nasa.gov/planetary/factsheet/),
+  3 planets whose values differ clearly; yesterday's answer (field "answer" of the previous quiz) on top.
+- 21:00 video: the Short of the day (release a<MMDD>-* of shorts-build), text from its checked narration and
+  source. The video file needs a public URL: threads_api.short_video() looks for it at publish time, otherwise
+  the post goes out as text (the Short itself is on YouTube at 21:00).
+LOOK UP stays out of the posts: threads_api adds it as the first reply (cta.py). Topic tag: one per post.
+Pacing: max 3 posts a day, 3 h apart (12, 16, 21) and threads_api.guard() at publish time. A slot that already
+has an item (any ref) is left alone, so manual items always win. Needs gh (GH_TOKEN) for the release.
+"""
+from __future__ import annotations
+
+import json
+import os
+import random
+import re
+import subprocess
+import sys
+import tempfile
+from datetime import datetime, timedelta
+from pathlib import Path
+
+import requests
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "video" / "ytf"))
+import creds  # noqa: E402
+
+QUEUE = creds.QUEUES / "threads-queue.json"
+REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
+FACTSHEET = "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+UA = {"User-Agent": "Mozilla/5.0 (CosmosInNumbers fact check)"}
+SLOTS = {"news": "12:00", "quiz": "16:00", "video": "21:00"}
+DISCLOSURE = "Narration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers"
+DRY = "--dry-run" in sys.argv
+
+# topic tag from the words of the post (Threads accepts one per post), first match wins
+TAGS = [(r"\bwebb\b|jwst", "JWST"), (r"hubble", "Hubble"), (r"\bmars\b|perseverance|curiosity", "Mars"),
+        (r"\bmoon\b|lunar|artemis", "Moon"), (r"\bsun\b|solar", "Sun"), (r"jupiter|europa", "Jupiter"),
+        (r"saturn|titan|enceladus", "Saturn"), (r"asteroid|comet|meteor", "Asteroids"),
+        (r"exoplanet", "Exoplanets"), (r"galax|black hole|nebula|star\b|stars\b", "Astronomy"),
+        (r"\besa\b", "ESA"), (r"\bnasa\b", "NASA")]
+AGENCY = [("esawebb.org", "ESA/Webb"), ("esahubble.org", "ESA/Hubble"), ("esa.int", "ESA"), ("eso.org", "ESO"),
+          ("noirlab.edu", "NOIRLab"), ("jpl.nasa.gov", "NASA/JPL"), ("nasa.gov", "NASA")]
+
+
+def tag_for(text: str, default="Space") -> str:
+    return next((t for p, t in TAGS if re.search(p, text, re.I)), default)
+
+
+def sentences(text: str) -> list[str]:
+    text = re.sub(r"\s*(\[(…|\.\.\.)\]|…)\s*$", "", " ".join(text.split()))
+    return [s.strip() for s in re.split(r"(?<=[.!?])\s+(?=[A-Z0-9\"“])", text) if s.strip()]
+
+
+def fit(parts: list[str], limit: int) -> str:
+    """Join paragraphs; drop trailing sentences of the second paragraph until the text fits."""
+    head, body, tail = parts[0], parts[1], parts[2:]
+    ss = sentences(body)
+    while ss:
+        t = "\n\n".join([head, " ".join(ss), *tail])
+        if len(t) <= limit:
+            return t
+        ss.pop()
+    return "\n\n".join([head, *tail])[:limit]
+
+
+def load_queue() -> list[dict]:
+    return json.loads(QUEUE.read_text("utf-8")) if QUEUE.exists() else []
+
+
+def gh(*a) -> str:
+    r = subprocess.run(["gh", *a], capture_output=True, text=True)
+    if r.returncode:
+        sys.exit(f"gh {' '.join(a[:3])} failed: {r.stderr.strip()[:300]}")
+    return r.stdout
+
+
+# ---------- news ----------
+
+# news articles only (no mission, gallery, photojournal, Earth or community pages), about space
+NEWS_URL = re.compile(r"jpl\.nasa\.gov/news/|esa\.int/Science_Exploration/|esawebb\.org/news/|esahubble\.org/news/|"
+                      r"eso\.org/public/news/|noirlab\.edu/public/news/|nasa\.gov/news-release/|"
+                      r"science\.nasa\.gov/missions/|nasa\.gov/(solar-system|universe|image-article|missions)/", re.I)
+SPACE = re.compile(r"planet|star\b|stars|galax|nebula|telescope|webb|hubble|mars|moon|lunar|asteroid|comet|"
+                   r"\bsun\b|solar|orbit|spacecraft|astronaut|space station|exoplanet|black hole|universe|cosmic|"
+                   r"jupiter|saturn|uranus|neptune|venus|mercury|pluto|voyager|meteorite|supernova|light-year", re.I)
+JUNK = re.compile(r"credit|min read|©|appeared first on|enable javascript|image processing|<img|photo release|"
+                  r"organisation release", re.I)
+
+
+def lead_of(url: str, summary: str) -> list[str]:
+    """Lead sentences as written by the agency: og:description of the page, else the feed summary."""
+    try:
+        page = requests.get(url, headers=UA, timeout=60).text
+        m = re.search(r'<meta[^>]+(?:property="og:description"|name="description")[^>]+content="([^"]+)"', page, re.I)
+        import html
+        text = html.unescape(m.group(1)) if m else summary
+    except requests.RequestException:
+        text = summary
+    text = re.sub(r"<[^>]+>", " ", text)
+    return [s for s in sentences(text) if len(s) > 40 and not JUNK.search(s)]
+
+
+def news(day: datetime, queue: list[dict], short_urls: set[str]) -> dict | None:
+    import auto_short as a
+    used = {u.rstrip("/") for i in queue for u in re.findall(r"https?://\S+", " ".join([i["text"], *i.get("replies", [])]))}
+    used |= {u.rstrip("/") for u in short_urls}
+    used_titles = {i.get("news_title") for i in queue}
+    items = [it for it in a.rss_items(days=3, n=20) if NEWS_URL.search(it["url"]) and it["url"].rstrip("/") not in used
+             and SPACE.search(it["title"] + " " + it["summary"][:400]) and len(it["title"].split()) >= 4]
+    cands = []
+    for it in items:
+        title = re.sub(r"^(Photo|Organisation|Science|Press) Release:\s*", "", it["title"]).rstrip(".")
+        if title in used_titles or title in {c[1]["title"] for c in cands}:  # same story on two agency sites
+            continue
+        it["title"] = title
+        lead = lead_of(it["url"], it["summary"])
+        if lead:
+            cands.append((0 if a.numbers(" ".join(lead[:2])) else 1, it, lead))
+    cands.sort(key=lambda c: (c[0], -c[1]["date"].timestamp()))
+    for _, it, lead in cands:
+        url = it["url"]
+        agency = next((n for d, n in AGENCY if d in url), "NASA")
+        title = it["title"]
+        src = f"Source: {agency} ({it['date']:%d %b %Y})."
+        text = fit([title, " ".join(lead[:3]), src], 500)
+        if len(text) < 120:
+            continue
+        lead_nums = set(a.numbers(text))
+        extra = next((s for s in sentences(it["text"]) if s not in text and 40 < len(s) < 300 and a.numbers(s)
+                      and set(a.numbers(s)) - lead_nums and not JUNK.search(s) and not re.search(r"image:|photo:", s, re.I)), None)
+        reply = f"{extra}\n\n{url}" if extra and len(extra) + len(url) < 480 else f"Read more: {url}"
+        missing, problems, _ = a.check({"narration": text + " " + reply, "sources": [{"url": url}]})
+        problems = [p for p in problems if "words" not in p and "real numbers" not in p]
+        if missing or problems:
+            print(f"  news skipped {url}: missing {missing}, {problems}")
+            continue
+        return {"ref": f"th-news-{day:%m%d}-{slug(title)}", "at": f"{day:%Y-%m-%d} {SLOTS['news']}",
+                "tag": tag_for(title + " " + text), "text": text, "replies": [reply], "news_title": title}
+    print("No recent feed item usable for the news post.")
+    return None
+
+
+def slug(s: str, n=3) -> str:
+    w = [x for x in re.findall(r"[a-z0-9]+", s.lower()) if x not in {"the", "a", "an", "of", "and", "to", "in", "on", "for", "s"}]
+    return "-".join(w[:n]) or "post"
+
+
+# ---------- quiz ----------
+
+PLANETS = ["MERCURY", "VENUS", "EARTH", "MARS", "JUPITER", "SATURN", "URANUS", "NEPTUNE"]
+# row label prefix, question (max/min), emoji, answer unit
+QUIZZES = [
+    ("Diameter", "is the widest", "is the narrowest", "📏", "km across"),
+    ("Mass", "is the most massive", "is the least massive", "⚖️", "× 10^24 kg"),
+    ("Density", "is the densest", "is the least dense", "🪨", "kg per cubic meter"),
+    ("Gravity", "has the strongest surface gravity", "has the weakest surface gravity", "🏋️", "m/s² at the surface"),
+    ("Escape Velocity", "has the highest escape velocity", "has the lowest escape velocity", "🚀", "km/s to escape"),
+    ("Length of Day", "has the longest day", "has the shortest day", "🕰️", "hours from sunrise to sunrise"),
+    ("Orbital Period", "has the longest year", "has the shortest year", "📅", "days per orbit"),
+    ("Orbital Velocity", "orbits the Sun fastest", "orbits the Sun slowest", "💨", "km/s around the Sun"),
+    ("Mean Temperature", "is the hottest on average", "is the coldest on average", "🌡️", "°C on average"),
+    ("Number of Moons", "has the most known moons", "has the fewest known moons", "🌙", "known moons"),
+    ("Obliquity", "is the most tilted", "is the least tilted", "🌀", "degrees of tilt"),
+]
+
+
+def factsheet() -> dict[str, dict[str, str]]:
+    import html
+    r = requests.get(FACTSHEET, headers=UA, timeout=60)
+    r.raise_for_status()
+    rows = []
+    for tr in re.findall(r"<tr.*?</tr>", r.text, re.S | re.I):
+        rows.append([" ".join(html.unescape(re.sub(r"<[^>]+>", " ", c)).split())
+                     for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", tr, re.S | re.I)])
+    head = [c.upper() for c in rows[0]]
+    if head[1:9] != ["MERCURY", "VENUS", "EARTH", "MOON", "MARS", "JUPITER", "SATURN", "URANUS"]:
+        sys.exit(f"NASA fact sheet layout changed: {head}")
+    return {row[0]: dict(zip(head[1:], row[1:])) for row in rows[1:] if row and row[0]}
+
+
+def value(s: str) -> float | None:
+    try:
+        return float(s.replace(",", "").rstrip("*"))
+    except ValueError:
+        return None
+
+
+def quiz(day: datetime, queue: list[dict]) -> dict | None:
+    sheet = factsheet()
+    recent = [i.get("quiz", "") for i in queue if i.get("poll")][-14:]
+    rnd = random.Random(day.strftime("%Y%m%d"))
+    choices = [(q, d) for q in QUIZZES for d in (0, 1) if f"{q[0]}-{d}" not in recent]
+    rnd.shuffle(choices)
+    for (label, qmax, qmin, emo, unit), d in choices:
+        row = next((v for k, v in sheet.items() if k.startswith(label)), None)
+        if not row:
+            continue
+        vals = {p: value(row.get(p, "")) for p in PLANETS}
+        vals = {p: abs(v) if label == "Length of Day" else v for p, v in vals.items() if v is not None}
+        for _ in range(30):
+            pick = rnd.sample(sorted(vals), 3)
+            vs = sorted(vals[p] for p in pick)
+            best = (max if d == 0 else min)(pick, key=lambda p: vals[p])
+            # unambiguous: the answer is clearly ahead of the runner-up (15%, or 2 units for small counts)
+            other = vs[-2] if d == 0 else vs[1]
+            gap = abs(vals[best] - other)
+            if gap >= max(0.15 * abs(vals[best]), 0.15 * abs(other), 2 if label == "Number of Moons" else 0):
+                break
+        else:
+            continue
+        name = lambda p: p.title()  # noqa: E731
+        opts = [name(p) for p in pick]
+        raw = row[best].rstrip("*")
+        answer = f"{name(best)}, {raw} {unit} (NASA Planetary Fact Sheet)"
+        prev = next((i for i in reversed(queue) if i.get("poll") and i["at"] < f"{day:%Y-%m-%d}"), None)
+        top = f"Yesterday's answer: {prev['answer']}.\n\n" if prev and prev.get("answer") else ""
+        text = f"{top}Today's quiz {emo} Which of these planets {qmax if d == 0 else qmin}?\n\nAnswer tomorrow."
+        return {"ref": f"th-quiz-{day:%m%d}-{slug(label, 2)}-{'max' if d == 0 else 'min'}",
+                "at": f"{day:%Y-%m-%d} {SLOTS['quiz']}", "tag": "Astronomy", "poll": opts, "text": text,
+                "replies": [f"Data: NASA Planetary Fact Sheet, {FACTSHEET}"], "quiz": f"{label}-{d}", "answer": answer}
+    print("No unambiguous quiz found.")
+    return None
+
+
+# ---------- video ----------
+
+def todays_short(day: datetime) -> dict | None:
+    rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=15"))
+    rel = next((r for r in rels if r["tag_name"].startswith(f"a{day:%m%d}-")), None)
+    if not rel:
+        return None
+    import yaml
+    with tempfile.TemporaryDirectory() as d:
+        gh("release", "download", rel["tag_name"], "--repo", REPO, "-p", "short.yaml", "-p", "material-script.yaml", "-D", d)
+        spec = yaml.safe_load(Path(d, "short.yaml").read_text("utf-8"))
+        mat = yaml.safe_load(Path(d, "material-script.yaml").read_text("utf-8")) or {}
+    spec["tag"] = rel["tag_name"]
+    spec["source_list"] = mat.get("sources", [])
+    return spec
+
+
+def video(day: datetime, short: dict) -> dict:
+    title = short["title"].replace("#shorts", "").strip()
+    src = short["source_list"][0] if short["source_list"] else {}
+    agency = next((n for dom, n in AGENCY if dom in src.get("url", "")), "NASA")
+    text = fit([title, short["narration"], f"Source: {agency}.\n{DISCLOSURE}"], 500)
+    replies = [f"Source: {s['title']}: {s['url']}" for s in short["source_list"][:1]]
+    return {"ref": f"th-{short['tag']}", "at": f"{day:%Y-%m-%d} {SLOTS['video']}", "tag": tag_for(title + " " + short["narration"]),
+            "text": text, "replies": replies, "short": short["tag"]}
+
+
+# ---------- main ----------
+
+def main():
+    sys.stdout.reconfigure(encoding="utf-8")
+    a = sys.argv
+    day = datetime.strptime(a[a.index("--date") + 1], "%Y-%m-%d") if "--date" in a else creds.now_local().replace(tzinfo=None)
+    only = a[a.index("--only") + 1].split(",") if "--only" in a else list(SLOTS)
+    queue = load_queue()
+    taken = {i["at"] for i in queue}
+    short = todays_short(day) if "video" in only or "news" in only else None
+    short_urls = {s["url"] for s in (short or {}).get("source_list", [])}
+    added = []
+    for kind in only:
+        at = f"{day:%Y-%m-%d} {SLOTS[kind]}"
+        if at in taken:
+            print(f"{kind}: slot {at} already has an item, left alone")
+            continue
+        if kind == "video" and not short:
+            print(f"video: no Short release a{day:%m%d}-* yet")
+            continue
+        item = {"news": lambda: news(day, queue, short_urls), "quiz": lambda: quiz(day, queue),
+                "video": lambda: video(day, short)}[kind]()
+        if item and any(i["ref"] == item["ref"] for i in queue):
+            print(f"{kind}: {item['ref']} already queued")
+            continue
+        if item:
+            if len(item["text"]) > 500 or any(len(r) > 500 for r in item["replies"]) or any(len(o) > 25 for o in item.get("poll", [])):
+                sys.exit(f"{item['ref']}: text, reply or poll option too long")
+            print(json.dumps(item, ensure_ascii=False, indent=1))
+            queue.append(item)
+            added.append(item["ref"])
+    if not added:
+        print("Nothing added.")
+        return
+    queue.sort(key=lambda i: i["at"])
+    if DRY:
+        print(f"DRY-RUN: would add {', '.join(added)}")
+        return
+    QUEUE.write_text(json.dumps(queue, ensure_ascii=False, indent=1) + "\n", "utf-8")
+    print(f"added {', '.join(added)}")
+
+
+if __name__ == "__main__":
+    main()

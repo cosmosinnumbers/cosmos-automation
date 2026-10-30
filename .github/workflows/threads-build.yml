@@ -1,0 +1,65 @@
+# Cosmos in Numbers: today's Threads posts, no LLM (owner decision 30/10/2026). tools/threads_build.py adds to
+# queues/threads-queue.json the 12:00 news (text copied from a NASA/ESA/ESO page, numbers checked on the page), the
+# 16:00 quiz (NASA Planetary Fact Sheet) and the 21:00 post of the Short of the day. publish.yml publishes them.
+# 07:40 Italian time (winter; summer time from 28/03/2027: "40 5"), and again after every shorts-build run for the
+# video post. Slots that already have an item are left alone. Off switch: repository variable THREADS_BUILD=false.
+name: threads-build
+
+on:
+  schedule:
+    - cron: "40 6 * * *"
+  workflow_run:
+    workflows: [shorts-build]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Day YYYY-MM-DD (empty = today, Europe/Rome)"
+        default: ""
+      only:
+        description: "news,quiz,video (empty = all)"
+        default: ""
+      dry_run:
+        description: "Dry run: print the items, change nothing"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency: threads-build
+
+jobs:
+  build:
+    if: vars.THREADS_BUILD != 'false' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -q requests PyYAML tzdata
+      - name: Build today's Threads posts
+        env:
+          IN_DATE: ${{ inputs.date }}
+          IN_ONLY: ${{ inputs.only }}
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          args=()
+          [ -n "$IN_DATE" ] && args+=(--date "$IN_DATE")
+          [ -n "$IN_ONLY" ] && args+=(--only "$IN_ONLY")
+          [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          # after shorts-build only the video post is new; the morning run does all three
+          [ "${{ github.event_name }}" = "workflow_run" ] && args+=(--only video)
+          python tools/threads_build.py "${args[@]}"
+      - name: Commit the queue
+        run: |
+          git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
+          git add queues/threads-queue.json
+          git diff --cached --quiet && exit 0
+          git commit -m "coda Threads: post del giorno (news, quiz, video)"
+          for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 5; done; exit 1

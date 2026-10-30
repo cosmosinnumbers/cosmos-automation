@@ -41,7 +41,8 @@ jobs:
       - name: Commit the queue
         run: |
           git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
-          git add queues/meta-queue.json media/shorts
+          git add queues/meta-queue.json
+          [ -d media/shorts ] && git add media/shorts || true
           git diff --cached --quiet && exit 0
           git commit -m "coda Meta: Reel IG dello Short del giorno"
           for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 5; done; exit 1

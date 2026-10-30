@@ -5,8 +5,8 @@
 Takes the release of shorts-build (default: the newest a<MMDD>-* of today, Europe/Rome), copies its mp4 into
 media/shorts/ and appends an `ig-reel` item to queues/meta-queue.json. publish.yml publishes it at the minute.
 Pacing: Instagram counts 24 h between Reels on the real publication time, so the slot is at least 24 h + 2 min after
-the last Reel (published in logs/meta-publish-log.jsonl or already queued), between 20:50 and 21:08 Rome time;
-otherwise the next day. Old media/shorts files (published, >7 days) are deleted. Needs GH_TOKEN and GITHUB_REPOSITORY.
+the last Reel (published in logs/meta-publish-log.jsonl or already queued), between 20:48 and 21:10 Rome time;
+otherwise the next day. A Short whose slot would be more than 2 days away is news that went stale: not queued. Old media/shorts files (published, >7 days) are deleted. Needs GH_TOKEN and GITHUB_REPOSITORY.
 """
 from __future__ import annotations
 
@@ -65,10 +65,10 @@ def last_reel(queue: list) -> datetime | None:
 def slot(now: datetime, last: datetime | None) -> datetime:
     day = now.date() if now.hour < 19 else (now + timedelta(days=1)).date()
     while True:
-        t = datetime(day.year, day.month, day.day, 20, 50, tzinfo=TZ)
+        t = datetime(day.year, day.month, day.day, 20, 48, tzinfo=TZ)
         if last and t < last + timedelta(hours=24, minutes=2):
             t = (last + timedelta(hours=24, minutes=2, seconds=59)).replace(second=0, microsecond=0)
-        if t.date() == day and t.hour * 60 + t.minute <= 21 * 60 + 8:
+        if t.date() == day and t.hour * 60 + t.minute <= 21 * 60 + 10:
             return t
         day += timedelta(days=1)
 
@@ -95,6 +95,9 @@ def main():
     item = {"ref": ref, "at": f"{when:%Y-%m-%d %H:%M}", "action": "ig-reel",
             "video_url": f"media/shorts/{rel['tag_name']}.mp4", "caption": caption(rel["name"], now)}
     print(json.dumps(item, ensure_ascii=False, indent=1))
+    if (when.date() - now.date()).days > 2:
+        print(f"Slot {item['at']} is more than 2 days away: Short not queued (the Reels backlog is full).")
+        return
     if DRY:
         return
     MEDIA.mkdir(parents=True, exist_ok=True)

@@ -48,8 +48,8 @@ def runs(since: datetime) -> tuple[list[str], list[str]]:
         last_txt = f"[{last['conclusion'] or last['status']}]({last['url']}) {last['createdAt'][:10]}" if last else "nessuna"
         other = sum(v for k, v in c.items() if k not in ("success", "failure"))
         out.append(f"| {wf['name']} | {c['success']} | {c['failure']} | {other} | {last_txt} |")
-        if c["failure"]:
-            bad.append(f"{wf['name']} ({c['failure']} fallite)")
+        if last and last["conclusion"] == "failure":  # failures already fixed by a later success are only counted
+            bad.append(f"{wf['name']}: ultima run fallita ({last['url']})")
     return out, bad
 
 
@@ -84,7 +84,7 @@ def queues(now: str) -> list[str]:
 
 def shorts(since: datetime) -> list[str]:
     rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=30"))
-    days = {(since + timedelta(days=i)).strftime("%m%d") for i in range(DAYS)}
+    days = {(since + timedelta(days=i)).strftime("%m%d") for i in range(1, DAYS + 1)}
     got = sorted({r["tag_name"][1:5] for r in rels if r["tag_name"][:1] == "a" and r["tag_name"][1:5] in days})
     missing = sorted(days - set(got))
     reserve = [p.name for p in (creds.REPO / "reserve").iterdir() if p.is_dir()] if (creds.REPO / "reserve").exists() else []
@@ -126,7 +126,7 @@ def main():
         table, bad = runs(since)
     except RuntimeError as e:
         table, bad = [f"Elenco delle run non disponibile: {e}"], []
-    body += ["## Da guardare", *(f"- ⚠️ {b}" for b in bad), "" if bad else "- Nessun workflow fallito.", ""]
+    body += ["## Da guardare", *(f"- ⚠️ {b}" for b in bad), "" if bad else "- Nessun workflow con l'ultima run fallita.", ""]
     body += ["## Workflow (ultimi 7 giorni)", *table, ""]
     body += ["## Pubblicato (dai log del repo)", *published(int(since.timestamp())), ""]
     try:
@@ -137,7 +137,7 @@ def main():
     body += ["## Scadenze", *deadlines(now.date()), ""]
     body.append("Nessun segreto in questo testo: solo conteggi, età e giorni.")
     text = "\n".join(body)
-    title = f"Salute settimanale {now:%d/%m/%Y}" + (f" – {len(bad)} workflow da guardare" if bad else "")
+    title = f"Salute settimanale {now:%d/%m/%Y}" + (f": {len(bad)} workflow da guardare" if bad else ": tutto in ordine")
     print(title, "\n", text, sep="")
     if "--dry-run" in sys.argv:
         return

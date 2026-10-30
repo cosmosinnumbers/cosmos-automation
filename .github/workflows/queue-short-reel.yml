@@ -1,0 +1,47 @@
+# The daily Short (shorts-build release) becomes an Instagram Reel in the Meta queue; publish.yml publishes it at
+# the minute. No Claude, no PC. Switch off with the repo variable SHORT_REEL_ENABLED=false.
+name: queue-short-reel
+
+on:
+  workflow_run:
+    workflows: [shorts-build]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (empty = today's Short)"
+        default: ""
+      dry_run:
+        description: "Dry run: print the item, change nothing"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency: queue-short-reel
+
+jobs:
+  queue:
+    if: vars.SHORT_REEL_ENABLED != 'false' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - name: Queue the Reel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          args=()
+          [ -n "${{ inputs.tag }}" ] && args+=(--tag "${{ inputs.tag }}")
+          [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ] && args+=(--dry-run)
+          python tools/queue_short_reel.py "${args[@]}"
+      - name: Commit the queue
+        run: |
+          git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
+          git add queues/meta-queue.json media/shorts
+          git diff --cached --quiet && exit 0
+          git commit -m "coda Meta: Reel IG dello Short del giorno"
+          for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 5; done; exit 1

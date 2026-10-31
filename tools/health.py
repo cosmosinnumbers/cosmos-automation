@@ -34,7 +34,8 @@ def gh(*a) -> str:
 
 
 def runs(since: datetime) -> tuple[list[str], list[str]]:
-    out = ["| Workflow | Riuscite | Fallite | Altre | Ultima |", "|---|---|---|---|---|"]
+    out = ["Solo run automatiche (pianificate o a catena); le prove lanciate a mano non contano.", "",
+           "| Workflow | Riuscite | Fallite | Altre | Ultima |", "|---|---|---|---|---|"]
     bad = []
     wfs = json.loads(gh("api", f"repos/{REPO}/actions/workflows", "--jq", ".workflows"))
     for wf in sorted(wfs, key=lambda w: w["name"]):
@@ -42,7 +43,8 @@ def runs(since: datetime) -> tuple[list[str], list[str]]:
             out.append(f"| {wf['name']} | | | | disattivato |")
             continue
         rs = json.loads(gh("run", "list", "--repo", REPO, "--workflow", str(wf["id"]), "--limit", "200",
-                           "--created", f">={since:%Y-%m-%d}", "--json", "conclusion,status,createdAt,url"))
+                           "--created", f">={since:%Y-%m-%d}", "--json", "conclusion,status,createdAt,url,event"))
+        rs = [r for r in rs if r["event"] != "workflow_dispatch"]  # only the automatic runs: manual tests are not failures
         c = Counter(r["conclusion"] or r["status"] for r in rs)
         last = rs[0] if rs else None
         last_txt = f"[{last['conclusion'] or last['status']}]({last['url']}) {last['createdAt'][:10]}" if last else "nessuna"

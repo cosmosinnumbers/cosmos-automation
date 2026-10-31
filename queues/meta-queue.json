@@ -21,6 +21,18 @@
   "video_url": "https://cosmosinnumbers.github.io/media/2026-10-27/n44a-perseverance-record_story.mp4"
  },
  {
+  "ref": "si-a1031-iss-solar-power-upgrade",
+  "at": "2026-10-31 20:48",
+  "action": "ig-story",
+  "video_url": "media/shorts/a1031-iss-solar-power-upgrade_story.mp4"
+ },
+ {
+  "ref": "sf-a1031-iss-solar-power-upgrade",
+  "at": "2026-10-31 20:48",
+  "action": "fb-story",
+  "video_url": "media/shorts/a1031-iss-solar-power-upgrade_story.mp4"
+ },
+ {
   "ref": "p4b-proxima-ig",
   "at": "2026-10-31 21:00",
   "action": "ig-reel",
@@ -33,6 +45,13 @@
   "action": "ig-reel",
   "video_url": "media/p4/clip-c-andromeda.mp4",
   "caption": "The farthest thing you can see with your own eyes\n\nFull video on YouTube: \"How Far Is a Light-Year? From the Moon to the Edge of the Universe, in Real Numbers\" @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "fr-a1031-iss-solar-power-upgrade",
+  "at": "2026-11-02 21:02",
+  "action": "fb-reel",
+  "video_url": "media/shorts/a1031-iss-solar-power-upgrade.mp4",
+  "caption": "Boosting Space Station Power to 215 kW\n\nFull video on YouTube: @CosmosinNumbers\n📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
  },
  {
   "ref": "sr-a1030-ghost-nebula-cepheus-flare",

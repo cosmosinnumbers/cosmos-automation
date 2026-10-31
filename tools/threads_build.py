@@ -252,7 +252,7 @@ def host_video(tag: str):
     in the Threads format (H.264 High, 1080x1920, 30 fps, AAC 48 kHz, faststart). Needs the secret PAGES_TOKEN
     (fine-grained token, only cosmosinnumbers.github.io, Contents: read and write); without it, nothing happens."""
     import base64
-    tok = os.environ.get("PAGES_TOKEN")
+    tok = (os.environ.get("PAGES_TOKEN") or "").strip()  # a pasted secret can end with a newline
     if not tok or DRY:
         print(f"  video hosting skipped ({'dry run' if tok else 'no PAGES_TOKEN'}): the 21:00 post goes out as text")
         return
@@ -272,7 +272,10 @@ def host_video(tag: str):
 
 
 def video(day: datetime, short: dict) -> dict:
-    host_video(short["tag"])
+    try:  # hosting is a bonus: without it the 21:00 post still goes out, as text
+        host_video(short["tag"])
+    except Exception as e:  # noqa: BLE001
+        print(f"  video hosting failed ({type(e).__name__}): the 21:00 post goes out as text")
     title = short["title"].replace("#shorts", "").strip()
     src = short["source_list"][0] if short["source_list"] else {}
     agency = next((n for dom, n in AGENCY if dom in src.get("url", "")), "NASA")

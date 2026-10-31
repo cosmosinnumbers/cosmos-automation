@@ -23,7 +23,7 @@ concurrency:
 jobs:
   research:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
       TZ: Europe/Rome
       PYTHONIOENCODING: utf-8
@@ -46,6 +46,7 @@ jobs:
           for n in $niches; do python tools/research.py "$n"; done
       - name: Gemini watches competitor videos
         continue-on-error: true  # a Gemini failure must not lose the research reports
+        timeout-minutes: 10      # 31/10/2026: a quota-exhausted Gemini ran into the job timeout and the reports were lost
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINIAPIKEY3 }}  # the secret was saved as GEMINIAPIKEY3
           IN_NICHE: ${{ inputs.niche }}
@@ -54,6 +55,7 @@ jobs:
           [ -z "$niches" ] && niches=$(ls research/niches | sed 's/\.json$//')
           for n in $niches; do python tools/gemini_watch.py "$n" 3; done
       - name: Save reports
+        if: always()
         run: |
           git config user.name "cosmos-automation[bot]"
           git config user.email "cosmos-automation@users.noreply.github.com"

@@ -179,7 +179,7 @@ def errors_of(platform: str, kind: str, text: str, replies: list[str] | None = N
     m = PLACEHOLDER.search(allt)
     if m:
         errs.append(f"leftover placeholder or HTML ({m.group()!r})")
-    m = CREDIT_GLUE.search(allt)
+    m = next((m for p in [text, *replies] for q in paragraphs(p) if (m := CREDIT_GLUE.search(q))), None)
     if m:
         errs.append(f"image credit or heading glued to the text ({m.group().strip()!r})")
     if re.search(r"\bLAUNCH9\b", allt, re.I):

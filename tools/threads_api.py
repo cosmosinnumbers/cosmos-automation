@@ -103,7 +103,8 @@ def cmd_perms():
 
 def cmd_delete(ref, go):
     """Delete the thread published for queue ref REF: main post first, then its replies (REF-r1, REF-r2...).
-    The ids come only from the log, and each post is read back first: it must belong to this profile."""
+    The ids come only from the log, and each post is read back first: it must belong to this profile. A post
+    already deleted by hand in the app is only logged as deleted (k "deleted", by "hand"), so pacing forgets it."""
     c = cfg()
     ev = events()
     gone = {e["id"] for e in ev if e.get("k") == "deleted"}
@@ -113,22 +114,32 @@ def cmd_delete(ref, go):
     if not posts or posts[0].get("ref") != ref:
         sys.exit(f"No online main post with ref {ref} in {LOG.name}.")
     me = call("GET", "/v1.0/me", fields="id,username", access_token=c["token"])
+    online = []
     for e in posts:
-        p = call("GET", f"/v1.0/{e['id']}", fields="id,username,text,timestamp,permalink", access_token=c["token"])
+        r = requests.get(f"{G}/v1.0/{e['id']}", timeout=60, params={
+            "fields": "id,username,text,timestamp,permalink", "access_token": c["token"]})
+        p = r.json()
+        if r.status_code != 200 or "error" in p:  # already gone (deleted by hand in the app): only the log changes
+            print(f"{e['ref']}  {e['id']}  not online any more (HTTP {r.status_code}): logged as deleted")
+            if go:
+                creds.append(LOG.name, {"p": "threads", "k": "deleted", "at": int(time.time()), "id": e["id"],
+                                        "ref": e["ref"], "by": "hand"})
+            continue
         if p.get("username") != me.get("username"):
             sys.exit(f"{e['id']} belongs to @{p.get('username')}, not @{me.get('username')}: nothing deleted.")
-        print(f"{e['ref']}  {e['id']}  {p.get('timestamp')}  {p.get('permalink')}\n    {(p.get('text') or '')[:120]!r}")
+        print(f"{e['ref']}  {e['id']}  {p.get('timestamp')}  {p.get('permalink')}
+    {(p.get('text') or '')[:120]!r}")
+        online.append(e)
     if not go:
         print("DRY-RUN: nothing deleted.")
         return
-    for e in posts:
+    for e in online:
         r = requests.delete(f"{G}/v1.0/{e['id']}", params={"access_token": c["token"]}, timeout=60)
         j = r.json() if r.content else {}
         if r.status_code != 200 or "error" in j:
             sys.exit(f"Delete {e['ref']} ({e['id']}) failed: HTTP {r.status_code} {j.get('error', j)}")
         creds.append(LOG.name, {"p": "threads", "k": "deleted", "at": int(time.time()), "id": e["id"], "ref": e["ref"]})
         print(f"Deleted {e['ref']} ({e['id']})")
-
 
 def fb_video_url(video_id):
     """Fresh public MP4 URL of a Reel already on the Cosmos Facebook Page (CDN link, valid for hours)."""

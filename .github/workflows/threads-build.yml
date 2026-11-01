@@ -4,7 +4,9 @@
 # 07:40 Italian time (winter; summer time from 28/03/2027: "40 5"), and again after every shorts-build run for the
 # video post. Slots that already have an item are left alone. APOD (1/11/2026): title + explanation from the NASA API
 # (secret NASA_API_KEY, else DEMO_KEY) or the APOD page, never the site menu; tools/threads_build.bad_text() drops
-# menu text, short or cut bodies, and the slot falls back to the next feed item. Off switch: repository variable THREADS_BUILD=false.
+# menu text, short or cut bodies, and the slot falls back to the next feed item. Every post goes through
+# tools/post_qc.py (blocking rules + copy score with the week's niche trends): the 12:00 news is the best-scoring clean
+# candidate, else a data post from the NASA Planetary Fact Sheet. Off switch: repository variable THREADS_BUILD=false.
 name: threads-build
 
 on:
@@ -46,7 +48,7 @@ jobs:
         with: {python-version: "3.12"}
       - run: pip install -q requests PyYAML tzdata imageio-ffmpeg
       - name: Quality filter tests
-        run: python tests/test_threads_quality.py
+        run: python tests/test_threads_quality.py && python tests/test_post_qc.py
       - name: Build today's Threads posts
         env:
           PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}

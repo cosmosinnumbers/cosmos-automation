@@ -26,6 +26,19 @@ per i canali che hanno un'API (Instagram, Facebook Storie, Threads, X; TikTok do
 Media: `https://cosmosinnumbers.github.io/media/<AAAA-MM-GG>/` (repo pubblico del sito). Ogni URL va verificato con
 risposta 200 prima di metterlo in coda (lo ricontrolla anche il workflow).
 
+## Controllo qualità dei post (`tools/post_qc.py`, dal 1/11/2026)
+Ogni post passa due controlli, senza LLM: quando entra in coda (`threads_build.py`) e un attimo prima di uscire
+(`run_slot.py`, tutti i canali con testo).
+- **Blocca:** testo di menu dei siti, frasi tagliate, HTML o segnaposto rimasti, limiti di lunghezza, LAUNCH9 (il
+  codice giusto è COSMOS9), link Gumroad senza COSMOS9 fino al 30/11, fonte mancante, numeri che non sono nella fonte,
+  doppioni recenti, hashtag nei post Threads, TikTok con prodotto/link/codice o senza "Full video on YouTube".
+- **Punteggio 0-100:** hook della prima riga, chiarezza, numeri, parole dei trend della settimana
+  (`research/cosmos/<settimana>.json`), fonte, invito all'azione. La news delle 12:00 è la candidata pulita con il
+  punteggio più alto (minimo 55).
+- **Se un post non passa:** pulizia automatica sicura; altrimenti non esce e, su Threads, al suo posto esce un post
+  "dati" dalla NASA Planetary Fact Sheet. Ogni decisione è in `logs/qc-log.jsonl`.
+- Controllo a mano della coda: `python tools/post_qc.py` (solo i post futuri) o `--all`.
+
 ## Interruttori (Settings → Secrets and variables → Actions → Variables)
 `META_ENABLED`, `THREADS_ENABLED`, `X_ENABLED` (predefinito true), `TIKTOK_ENABLED` (false finché TikTok non approva
 l'app e un post pubblico di prova non è verificato), `TIKTOK_AIGC_LABEL` (false: decisione del 24/10/2026),

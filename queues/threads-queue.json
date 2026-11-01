@@ -245,5 +245,31 @@
    "Source: Space Crops and Advanced Tech Wrap Up Week Following Spacewalk: https://www.nasa.gov/blogs/spacestation/2026/10/30/space-crops-and-advanced-tech-wrap-up-week-following-spacewalk/"
   ],
   "short": "a1031-iss-solar-power-upgrade"
+ },
+ {
+  "ref": "th-news-1101-apod-2026-november",
+  "at": "2026-11-01 12:00",
+  "tag": "Moon",
+  "text": "APOD: 2026 November 1 – Colors of the Moon\n\nAPOD Science APOD APOD: 2026 November 1 –… Today’s APOD Archive Submissions Index Search Calendar RSS Education About Discuss APOD Astronomy Picture of the Day Discover the cosmos! Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer. Colors of the Moon Explanation: What color is the Moon?\n\nSource: NASA (01 Nov 2026).",
+  "replies": [
+   "The featured image highlights a collection of apparent colors of the full moon on Earth, documented by one astrophotographer over 10 years from different locations across Italy.\n\nhttps://science.nasa.gov/image-article/apod-2026-november-1-colors-of-the-moon/"
+  ],
+  "news_title": "APOD: 2026 November 1 – Colors of the Moon"
+ },
+ {
+  "ref": "th-quiz-1101-density-min",
+  "at": "2026-11-01 16:00",
+  "tag": "Astronomy",
+  "poll": [
+   "Uranus",
+   "Earth",
+   "Mercury"
+  ],
+  "text": "Yesterday's answer: four, Jupiter, Saturn, Uranus and Neptune all have rings (NASA Planetary Fact Sheet).\n\nToday's quiz 🪨 Which of these planets is the least dense?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Density-1",
+  "answer": "Uranus, 1270 kg per cubic meter (NASA Planetary Fact Sheet)"
  }
 ]

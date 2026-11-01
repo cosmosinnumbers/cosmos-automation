@@ -127,8 +127,7 @@ def cmd_delete(ref, go):
             continue
         if p.get("username") != me.get("username"):
             sys.exit(f"{e['id']} belongs to @{p.get('username')}, not @{me.get('username')}: nothing deleted.")
-        print(f"{e['ref']}  {e['id']}  {p.get('timestamp')}  {p.get('permalink')}
-    {(p.get('text') or '')[:120]!r}")
+        print(f"{e['ref']}  {e['id']}  {p.get('timestamp')}  {p.get('permalink')}\n    {(p.get('text') or '')[:120]!r}")
         online.append(e)
     if not go:
         print("DRY-RUN: nothing deleted.")

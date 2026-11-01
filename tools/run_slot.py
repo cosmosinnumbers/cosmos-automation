@@ -37,7 +37,52 @@ def enabled(ch):
 
 def done_refs(ch):
     ev = creds.events(LOG[ch]) + creds.events("missed-log.jsonl")
-    return {(e.get("item") or e.get("ref")) if ch == "meta" else e.get("ref") for e in ev} - {None}
+    blocked = {e.get("ref") for e in creds.events("qc-log.jsonl") if e.get("stage") == "publish" and e.get("p") == ch
+               and not e.get("ok")}  # blocked by QC: never retried (the reserve post went out instead)
+    return ({(e.get("item") or e.get("ref")) if ch == "meta" else e.get("ref") for e in ev} | blocked) - {None}
+
+
+def qc_gate(ch, item, queue, dry):
+    """post_qc at publish time. Returns the item to publish (cleaned if needed), a reserve item, or None (skip).
+    Threads: a blocked post is swapped for a data post from the NASA Planetary Fact Sheet (threads_build.data_post).
+    Stories carry no text and pass as they are."""
+    import post_qc
+    plat = {"threads": "threads", "x": "x", "tiktok": "tiktok"}.get(ch) or \
+        ("fb" if item.get("action", "").startswith("fb") else "ig")
+    field = "caption" if "caption" in item else "text"
+    if not item.get(field):
+        return item
+    r = post_qc.review(item, plat, recent=post_qc.recent_texts(queue, item.get("at", ""), exclude=item["ref"]))
+    print(f"QC {ch} {item['ref']}: score {r['score']} {r['parts']}" + (f" ERRORS {'; '.join(r['errors'])}" if r["errors"] else ""))
+    if r["fixed"]:
+        print(f"QC {item['ref']}: cleaned automatically")
+        item = {**item, field: r["fixed"]["text"], "replies": r["fixed"]["replies"]} if field == "text" else \
+            {**item, field: r["fixed"]["text"]}
+    if r["ok"]:
+        return item
+    entry = {"stage": "publish", "p": ch, "ref": item["ref"], "ok": False, "score": r["score"], "errors": r["errors"],
+             "at": int(time.time())}
+    if ch != "threads":
+        if not dry:
+            post_qc.log(entry)
+        return None
+    import threads_build
+    from datetime import datetime
+    day = datetime.strptime(item["at"][:10], "%Y-%m-%d")
+    try:
+        alt = threads_build.data_post(day, queue)
+    except Exception as e:  # noqa: BLE001  (fact sheet unreachable)
+        print(f"QC reserve post not available ({type(e).__name__})")
+        alt = None
+    if alt:
+        alt["at"] = item["at"]
+        ra = post_qc.review(alt, "threads", "data", recent=post_qc.recent_texts(queue, item["at"]))
+        alt = alt if ra["ok"] else None
+    entry["reserve"] = alt["ref"] if alt else None
+    if not dry:
+        post_qc.log(entry)
+    print(f"QC {item['ref']} blocked: " + (f"reserve post {alt['ref']} instead" if alt else "skipped, no reserve post"))
+    return alt
 
 
 def has_creds(ch):
@@ -78,7 +123,7 @@ def run(ch, item, go):
 def commit(msg):
     if not os.environ.get("GITHUB_ACTIONS"):
         return
-    subprocess.run(["git", "add", "logs"], check=True)
+    subprocess.run(["git", "add", "logs"], check=True)  # qc-log.jsonl too
     if subprocess.run(["git", "diff", "--cached", "--quiet"]).returncode == 0:
         return
     subprocess.run(["git", "commit", "-q", "-m", msg], check=True)
@@ -121,8 +166,20 @@ def main():
             creds.append("missed-log.jsonl", {"p": ch, "ref": ref, "due": at, "at": int(now)})
     if missed and not dry:
         commit("log: missed items")
+    queues = {ch: json.loads((creds.QUEUES / QUEUE[ch]).read_text("utf-8")) for ch in only
+              if (creds.QUEUES / QUEUE[ch]).exists()}
     for t, ch, it in due:
         label = f"{ch} {it['ref']} ({it['at']})"
+        if enabled(ch):
+            checked = qc_gate(ch, it, queues.get(ch, []), dry)
+            if checked is None:
+                problems.append(f"QC-BLOCKED {label}: not published, see logs/qc-log.jsonl")
+                if not dry:
+                    commit(f"log: qc {ch} {it['ref']}")
+                continue
+            if checked["ref"] != it["ref"]:
+                label = f"{ch} {checked['ref']} (reserve for {it['ref']}, {it['at']})"
+            it = checked
         if not enabled(ch):
             print(f"SKIP {label}: {ch.upper()}_ENABLED is false")
             continue

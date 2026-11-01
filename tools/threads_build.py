@@ -31,6 +31,7 @@ import requests
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "video" / "ytf"))
 import creds  # noqa: E402
+import post_qc  # noqa: E402
 
 QUEUE = creds.QUEUES / "threads-queue.json"
 REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
@@ -198,10 +199,16 @@ def apod_item(day: datetime, it: dict) -> dict | None:
         print(f"  APOD skipped {it['url']}: {'no clean text' if not a else bad_text(a['explanation']) or 'no title'}")
         return None
     ss = sentences(a["explanation"])
-    n = 3 if ss and ss[0].endswith("?") else 2  # an opening question gets two sentences of answer
-    src = f"Source: NASA APOD ({it['date'].day} {it['date']:%b %Y}).\n{it['url']}"
-    head = f"{a['title']} (NASA Astronomy Picture of the Day)" + (" 🎬" if a["media_type"] == "video" else "")
-    text = fit([head, " ".join(ss[:n]), src], 500)
+    film = " 🎬" if a["media_type"] == "video" else ""
+    if ss and ss[0].endswith("?") and len(ss[0]) <= 80 and len(ss) > 2:
+        # hook (post_qc): the explanation's own opening question is the first line, the title goes to the source
+        head, body, ss = ss[0] + film, ss[1:3], ss[1:]
+        src = f"Source: NASA Astronomy Picture of the Day, \"{a['title']}\" ({it['date'].day} {it['date']:%b %Y}).\n{it['url']}"
+    else:
+        n = 3 if ss and ss[0].endswith("?") else 2  # an opening question gets two sentences of answer
+        head, body = f"{a['title']} (NASA Astronomy Picture of the Day){film}", ss[:n]
+        src = f"Source: NASA APOD ({it['date'].day} {it['date']:%b %Y}).\n{it['url']}"
+    text = fit([head, " ".join(body), src], 500)
     used = [s for s in ss if s in text]
     if len(used) < 1 or bad_text(" ".join(used)):
         print(f"  APOD skipped {it['url']}: explanation does not fit")
@@ -215,7 +222,7 @@ def apod_item(day: datetime, it: dict) -> dict | None:
     print(f"  APOD via {a['via']}: {a['title']!r}")
     return {"ref": f"th-news-{day:%m%d}-apod-{slug(a['title'])}", "at": f"{day:%Y-%m-%d} {SLOTS['news']}",
             "tag": tag_for(a["title"] + " " + text), "text": text, "replies": [reply] if reply else [],
-            "news_title": it["title"]}
+            "news_title": it["title"], "_source": a["explanation"] + " " + a["title"]}
 
 
 def news(day: datetime, queue: list[dict], short_urls: set[str]) -> dict | None:
@@ -235,12 +242,37 @@ def news(day: datetime, queue: list[dict], short_urls: set[str]) -> dict | None:
         if lead or APOD_PAGE.search(it["url"]):
             cands.append((0 if a.numbers(" ".join(lead[:2])) else 1, it, lead))
     cands.sort(key=lambda c: (c[0], -c[1]["date"].timestamp()))
+    best, recent = [], post_qc.recent_texts(queue, f"{day:%Y-%m-%d} {SLOTS['news']}")
+    for item in news_items(day, cands, a):
+        r = post_qc.review(item, "threads", "news", recent=recent, source_text=item.pop("_source", None))
+        print(f"  QC {item['ref']}: score {r['score']} {r['parts']}{' ERRORS ' + '; '.join(r['errors']) if r['errors'] else ''}")
+        post_qc.log({"stage": "build", "p": "threads", "ref": item["ref"], "ok": r["ok"], "score": r["score"],
+                     "errors": r["errors"]})
+        if r["ok"] and r["score"] >= post_qc.MIN_SCORE:
+            best.append((r["score"], item | (r["fixed"] or {})))
+        if len(best) >= 3:  # 3 good candidates are enough to choose from (each costs page fetches)
+            break
+    if best:
+        best.sort(key=lambda b: -b[0])
+        print(f"  news chosen by QC score: {best[0][1]['ref']} ({best[0][0]})")
+        return best[0][1]
+    print("No recent feed item passed QC: fact-sheet data post instead.")
+    item = data_post(day, queue)
+    r = post_qc.review(item, "threads", "data", recent=recent) if item else None
+    if r and r["ok"]:
+        return item | (r["fixed"] or {})
+    print(f"  data post not usable: {r['errors'] if r else 'no fact-sheet row'}")
+    return None
+
+
+def news_items(day: datetime, cands: list, a):
+    """Every publishable news item of the candidates, best first by number content and recency."""
     for _, it, lead in cands:
         url = it["url"]
         if APOD_PAGE.search(url):  # the APOD page has no article lead: its explanation, cleaned
             item = apod_item(day, it)
             if item:
-                return item
+                yield item
             continue
         agency = next((n for d, n in AGENCY if d in url), "NASA")
         title = it["title"]
@@ -261,9 +293,54 @@ def news(day: datetime, queue: list[dict], short_urls: set[str]) -> dict | None:
         if missing or problems:
             print(f"  news skipped {url}: missing {missing}, {problems}")
             continue
-        return {"ref": f"th-news-{day:%m%d}-{slug(title)}", "at": f"{day:%Y-%m-%d} {SLOTS['news']}",
-                "tag": tag_for(title + " " + text), "text": text, "replies": [reply], "news_title": title}
-    print("No recent feed item usable for the news post.")
+        yield {"ref": f"th-news-{day:%m%d}-{slug(title)}", "at": f"{day:%Y-%m-%d} {SLOTS['news']}",
+               "tag": tag_for(title + " " + text), "text": text, "replies": [reply], "news_title": title}
+
+
+# ---------- reserve: data post from the NASA Planetary Fact Sheet ----------
+
+# row label prefix, what it measures, unit, emoji
+DATA = [("Mass", "mass", "× 10^24 kg", "⚖️"), ("Diameter", "diameter", "km", "📏"),
+        ("Gravity", "surface gravity", "m/s²", "🏋️"), ("Length of Day", "day", "hours", "🕰️"),
+        ("Orbital Period", "year", "Earth days", "📅"), ("Escape Velocity", "escape velocity", "km/s", "🚀")]
+
+
+def data_post(day: datetime, queue: list[dict], sheet: dict | None = None) -> dict | None:
+    """Reserve post for the 12:00 slot when no news passes QC (and for run_slot.py when a queued post is blocked):
+    one planet against Earth from the NASA Planetary Fact Sheet, both values as NASA lists them, ratio computed."""
+    sheet = sheet or factsheet()
+    used = {i["ref"].split("-", 3)[-1] for i in queue if i.get("ref", "").startswith("th-data-")}
+    rnd = random.Random(f"data{day:%Y%m%d}")
+    opts = [(d, p) for d in DATA for p in PLANETS if p != "EARTH"]
+    rnd.shuffle(opts)
+    for (label, noun, unit, emo), planet in opts:
+        key = slug(f"{planet} {label}", 4)
+        row = next((v for k, v in sheet.items() if k.startswith(label)), None)
+        if key in used or not row:
+            continue
+        pv, ev = value(row.get(planet, "")), value(row.get("EARTH", ""))
+        if not pv or not ev:
+            continue
+        pv, ev = abs(pv), abs(ev)
+        name, ratio = planet.title(), pv / ev
+        if 0.8 < ratio < 1.25:  # too close to Earth to make a point
+            continue
+        if ratio >= 1:
+            r = f"{ratio:.0f}" if ratio >= 10 else f"{ratio:.1f}".rstrip("0").rstrip(".")
+            head = f"{emo} {name}'s {noun} is {r} times Earth's."
+        else:
+            head = f"{emo} {name}'s {noun} is only {ratio * 100:.0f}% of Earth's."
+        context = {"Mass": "That is how much matter the planet holds.",
+                   "Diameter": "Measured across the equator.",
+                   "Gravity": f"Someone who weighs 70 kg on Earth would feel like {70 * ratio:.0f} kg there.",
+                   "Length of Day": "Measured from one sunrise to the next.",
+                   "Orbital Period": "That is how long one trip around the Sun takes.",
+                   "Escape Velocity": "That is the speed a rocket needs to leave the planet for good."}[label]
+        body = (f"NASA lists {row[planet].rstrip('*')} {unit} for {name} and {row['EARTH'].rstrip('*')} {unit} "
+                f"for Earth. {context}")
+        text = f"{head}\n\n{body}\n\nData: NASA Planetary Fact Sheet.\n{FACTSHEET}"
+        return {"ref": f"th-data-{day:%m%d}-{key}", "at": f"{day:%Y-%m-%d} {SLOTS['news']}", "tag": tag_for(name),
+                "text": text, "replies": []}
     return None
 
 
@@ -433,6 +510,16 @@ def main():
             if DRY:
                 print(json.dumps(item, ensure_ascii=False, indent=1))
             continue
+        if item and kind != "news":  # news are reviewed (and chosen by score) inside news()
+            r = post_qc.review(item, "threads", kind, recent=post_qc.recent_texts(queue, item["at"], exclude=item["ref"]))
+            post_qc.log({"stage": "build", "p": "threads", "ref": item["ref"], "ok": r["ok"], "score": r["score"],
+                         "errors": r["errors"]})
+            print(f"  QC {item['ref']}: score {r['score']}{' ERRORS ' + '; '.join(r['errors']) if r['errors'] else ''}")
+            if r["fixed"]:
+                item |= r["fixed"]
+            if not r["ok"]:
+                print(f"{kind}: {item['ref']} blocked by QC, not queued")
+                continue
         if item:
             if len(item["text"]) > 500 or any(len(r) > 500 for r in item["replies"]) or any(len(o) > 25 for o in item.get("poll", [])):
                 sys.exit(f"{item['ref']}: text, reply or poll option too long")

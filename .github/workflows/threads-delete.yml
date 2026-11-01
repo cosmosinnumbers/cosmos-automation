@@ -1,0 +1,54 @@
+# Cosmos in Numbers: delete one published Threads thread (main post, then its replies), by queue ref, manual only.
+# Added 1/11/2026 for the 12:00 APOD post made of site-menu text. The ids come from logs/threads-publish-log.jsonl,
+# each post is read back first (it must be on @cosmos.innumbers). Dry run by default: it only lists the posts and
+# the token permissions. A replacement goes out with publish.yml (input ref) and keeps the slot of the deleted post.
+name: threads-delete
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Queue ref of the published thread to delete (e.g. th-news-1101-apod-2026-november)"
+        required: true
+      go:
+        description: "Really delete (otherwise dry run)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      THREADS_JSON: ${{ secrets.THREADS_JSON }}
+      IN_REF: ${{ inputs.ref }}
+      IN_GO: ${{ inputs.go }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.12"}
+      - run: pip install -q -r requirements.txt
+      - name: Token permissions
+        run: python tools/threads_api.py perms
+      - name: Delete
+        run: |
+          args=(delete "$IN_REF")
+          [ "$IN_GO" = "true" ] && args+=(--go)
+          python tools/threads_api.py "${args[@]}"
+      - name: Commit the log
+        if: always() && inputs.go
+        run: |
+          git config user.name "cosmos-automation[bot]"; git config user.email "cosmos-automation@users.noreply.github.com"
+          git add logs/threads-publish-log.jsonl
+          git diff --cached --quiet && exit 0
+          git commit -m "log: threads deleted $IN_REF"
+          for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 5; done; exit 1

@@ -3,6 +3,9 @@
   python threads_api.py check                           show the profile linked to the token
   python threads_api.py refresh                         extend the long-lived token another 60 days (token must be >24h old)
   python threads_api.py next [--go]                     publish the next due item of queues/threads-queue.json
+  python threads_api.py perms                           permissions of the token (is threads_delete granted?)
+  python threads_api.py delete REF [--go]               delete a published thread (main post + its replies), found
+                                                        by queue ref in the log; without --go only shows it
 
 Rebuilt on 26/10/2026 after the 24/10 version was overwritten by mistake: same interface as x_api.py
 (run_item for run_slot.py, credentials via creds.py). OAuth setup (auth-url, setup) stays in
@@ -49,10 +52,20 @@ def events():
     return creds.events(LOG.name)
 
 
+def main_posts():
+    """Main posts still online, for pacing. A deleted post (k "deleted") no longer counts; a post that replaces a
+    deleted one ("replaces": ref) keeps the time of the post it replaces, so a correction does not shift the slots."""
+    ev = events()
+    gone = {e["id"] for e in ev if e.get("k") == "deleted"}
+    first = {e.get("ref"): e["at"] for e in ev if e.get("k") not in ("reply", "deleted")}
+    return [{**e, "at": first.get(e.get("replaces"), e["at"])} for e in ev
+            if e.get("k") not in ("reply", "deleted") and e.get("id") not in gone]
+
+
 def guard():
     """Return None if a main post now is allowed, else the reason."""
     now = int(time.time())
-    main = [e for e in events() if e.get("k") != "reply"]
+    main = main_posts()
     if len([e for e in main if creds.day(e["at"]) == creds.day(now)]) >= MAX_PER_DAY:
         return f"PACING: already {MAX_PER_DAY} Threads posts today."
     if any(now - e["at"] < MIN_GAP_H * 3600 for e in main):
@@ -73,6 +86,48 @@ def cmd_check():
     me = call("GET", "/v1.0/me", fields="id,username", access_token=c["token"])
     age = (time.time() - c.get("token_at", 0)) / 86400
     print(f"@{me.get('username')} token age {age:.0f} days (refresh before 60)")
+
+
+def cmd_perms():
+    """Scopes of the token through debug_token; prints whether deleting posts (threads_delete) is allowed."""
+    c = cfg()
+    r = requests.get(f"{G}/v1.0/debug_token", params={"input_token": c["token"], "access_token": c["token"]}, timeout=60)
+    data = (r.json() if r.headers.get("content-type", "").startswith("application/json") else {}).get("data") or {}
+    scopes = data.get("scopes")
+    if scopes is None:
+        print(f"debug_token not available (HTTP {r.status_code}): permissions unknown, a delete attempt will tell")
+        return
+    print("scopes:", ", ".join(scopes))
+    print("threads_delete:", "YES" if "threads_delete" in scopes else "NO (re-authorise the app with threads_delete)")
+
+
+def cmd_delete(ref, go):
+    """Delete the thread published for queue ref REF: main post first, then its replies (REF-r1, REF-r2...).
+    The ids come only from the log, and each post is read back first: it must belong to this profile."""
+    c = cfg()
+    ev = events()
+    gone = {e["id"] for e in ev if e.get("k") == "deleted"}
+    posts = [e for e in ev if e.get("k") != "deleted" and e.get("id") not in gone
+             and (e.get("ref") == ref or (e.get("ref") or "").startswith(f"{ref}-r"))]
+    posts.sort(key=lambda e: (e.get("ref") != ref, e.get("ref")))
+    if not posts or posts[0].get("ref") != ref:
+        sys.exit(f"No online main post with ref {ref} in {LOG.name}.")
+    me = call("GET", "/v1.0/me", fields="id,username", access_token=c["token"])
+    for e in posts:
+        p = call("GET", f"/v1.0/{e['id']}", fields="id,username,text,timestamp,permalink", access_token=c["token"])
+        if p.get("username") != me.get("username"):
+            sys.exit(f"{e['id']} belongs to @{p.get('username')}, not @{me.get('username')}: nothing deleted.")
+        print(f"{e['ref']}  {e['id']}  {p.get('timestamp')}  {p.get('permalink')}\n    {(p.get('text') or '')[:120]!r}")
+    if not go:
+        print("DRY-RUN: nothing deleted.")
+        return
+    for e in posts:
+        r = requests.delete(f"{G}/v1.0/{e['id']}", params={"access_token": c["token"]}, timeout=60)
+        j = r.json() if r.content else {}
+        if r.status_code != 200 or "error" in j:
+            sys.exit(f"Delete {e['ref']} ({e['id']}) failed: HTTP {r.status_code} {j.get('error', j)}")
+        creds.append(LOG.name, {"p": "threads", "k": "deleted", "at": int(time.time()), "id": e["id"], "ref": e["ref"]})
+        print(f"Deleted {e['ref']} ({e['id']})")
 
 
 def fb_video_url(video_id):
@@ -125,7 +180,7 @@ def build(text, image=None, video=None, link=None, tag=None, poll=None, reply_to
     return body
 
 
-def publish(body, ref):
+def publish(body, ref, replaces=None):
     """Create the container, wait until Threads has processed it, publish, log. Returns (id, permalink)."""
     c = cfg()
     cont = call("POST", f"/v1.0/{c['user_id']}/threads", access_token=c["token"], **body)
@@ -141,7 +196,8 @@ def publish(body, ref):
     pub = call("POST", f"/v1.0/{c['user_id']}/threads_publish", creation_id=cont["id"], access_token=c["token"])
     link = call("GET", f"/v1.0/{pub['id']}", fields="permalink", access_token=c["token"]).get("permalink", "")
     creds.append(LOG.name, {"p": "threads", "k": "reply" if body.get("reply_to_id") else body["media_type"].lower(),
-                            "at": int(time.time()), "id": pub["id"], "ref": ref, "url": link})
+                            "at": int(time.time()), "id": pub["id"], "ref": ref, "url": link,
+                            **({"replaces": replaces} if replaces else {})})
     return pub["id"], link
 
 
@@ -174,7 +230,7 @@ def run_item(item, go):
     else:
         if verdict:
             sys.exit(verdict)
-        pid, link = publish(body, item["ref"])
+        pid, link = publish(body, item["ref"], replaces=item.get("replaces"))
         print(f"Published: {link}")
     for n, r in enumerate(bodies, 1):  # chain: each reply under the previous one
         rr = f"{item['ref']}-r{n}"
@@ -201,4 +257,5 @@ if __name__ == "__main__":
     a = sys.argv[1:]
     if not a:
         sys.exit(__doc__)
-    {"refresh": cmd_refresh, "check": cmd_check, "next": lambda: cmd_next("--go" in a)}.get(a[0], lambda: sys.exit(__doc__))()
+    {"refresh": cmd_refresh, "check": cmd_check, "perms": cmd_perms, "next": lambda: cmd_next("--go" in a),
+     "delete": lambda: cmd_delete(a[1], "--go" in a)}.get(a[0], lambda: sys.exit(__doc__))()

@@ -254,7 +254,20 @@
   "replies": [
    "The featured image highlights a collection of apparent colors of the full moon on Earth, documented by one astrophotographer over 10 years from different locations across Italy.\n\nhttps://science.nasa.gov/image-article/apod-2026-november-1-colors-of-the-moon/"
   ],
-  "news_title": "APOD: 2026 November 1 – Colors of the Moon"
+  "news_title": "APOD: 2026 November 1 – Colors of the Moon",
+  "note": "menu text of science.nasa.gov/apod published by mistake; replaced by th-news-1101-apod-colors-moon (1/11/2026)"
+ },
+ {
+  "ref": "th-news-1101-apod-colors-moon",
+  "at": "2026-11-01 12:00",
+  "tag": "Moon",
+  "text": "Colors of the Moon (NASA Astronomy Picture of the Day)\n\nWhat color is the Moon? It depends on the night – and the time. Outside of the Earth's atmosphere, the dark Moon, which shines by reflected sunlight, appears a magnificently brown-tinged gray.\n\nSource: NASA APOD (1 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-1-colors-of-the-moon/",
+  "replies": [
+   "If you like these numbers, you'll like LOOK UP: what to see, when, and how to find it. https://cosmosinnumbers.gumroad.com/l/look-up\nCode COSMOS9 → $9 until Nov 30.",
+   "The featured image highlights a collection of apparent colors of the full moon on Earth, documented by one astrophotographer over 10 years from different locations across Italy. A red- or yellow-colored moon usually indicates a moon seen near the horizon.\n\nImage: Marcella Giulia Pace."
+  ],
+  "news_title": "APOD: 2026 November 1 – Colors of the Moon",
+  "replaces": "th-news-1101-apod-2026-november"
  },
  {
   "ref": "th-quiz-1101-density-min",

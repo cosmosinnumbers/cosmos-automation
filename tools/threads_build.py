@@ -108,6 +108,116 @@ def lead_of(url: str, summary: str) -> list[str]:
     return [s for s in sentences(text) if len(s) > 40 and not JUNK.search(s)]
 
 
+# ---------- quality filter and APOD ----------
+
+# site menus scraped as text (1/11/2026: the APOD post carried the whole science.nasa.gov/apod navigation bar)
+MENU_PHRASE = re.compile(r"astronomy picture of the day|discover the cosmos|today[’']s apod|apod archive|"
+                         r"each day a different image|tomorrow[’']s picture", re.I)
+MENU_WORD = re.compile(r"\b(Archive|Submissions|Index|Search|Calendar|RSS|Discuss)\b")
+
+
+def bad_text(text: str) -> str | None:
+    """Why a post body is not publishable (menu text, too short, cut mid-sentence), or None if it is fine.
+    Single menu words count only in pairs, so a real sentence with 'search' or 'index' still passes."""
+    t = " ".join(text.split())
+    if MENU_PHRASE.search(t):
+        return f"menu text ({MENU_PHRASE.search(t).group()!r})"
+    if len(set(MENU_WORD.findall(t))) >= 2:
+        return f"menu words {sorted(set(MENU_WORD.findall(t)))}"
+    if len(t) < 80:
+        return f"too short ({len(t)} chars)"
+    if not re.search(r"[.!?][\"'”’)]?$", t):
+        return "does not end with a full sentence"
+    return None
+
+
+APOD_PAGE = re.compile(r"science\.nasa\.gov/image-article/apod-|apod\.nasa\.gov/apod/ap\d{6}", re.I)
+APOD_API = "https://api.nasa.gov/planetary/apod"
+
+
+def plain(fragment: str) -> str:
+    """HTML to text; inline tags (links in the APOD explanation) vanish without leaving a space inside words."""
+    import html
+    t = re.sub(r"</?(a|i|b|em|strong|span|sup|sub)\b[^>]*>", "", fragment, flags=re.I)
+    t = html.unescape(re.sub(r"<[^>]+>", " ", t))
+    return re.sub(r"\s+([,.;:!?])", r"\1", " ".join(t.split()))
+
+
+def apod_explanation(text: str) -> str:
+    """Only the explanation: after 'Explanation:', up to "Tomorrow's picture"; '--' becomes a dash."""
+    text = re.split(r"Explanation:\s*", text, maxsplit=1)[-1]
+    text = re.split(r"Tomorrow[’']s picture", text, maxsplit=1)[0]
+    return " ".join(text.replace(" -- ", " – ").replace("--", " – ").split())
+
+
+def apod(day: datetime, page_url: str) -> dict | None:
+    """Today's APOD: title, explanation, credit. 1) the official API (key from NASA_API_KEY, else DEMO_KEY),
+    accepted only if it answers for that date with a real title and a clean explanation (on 1/11/2026 it
+    returned 'NASA Science' and the NASA logo); 2) the APOD page itself, text between 'Explanation:' and
+    "Tomorrow's picture". Returns None if neither is clean."""
+    key = os.environ.get("NASA_API_KEY") or "DEMO_KEY"
+    try:
+        j = requests.get(APOD_API, params={"api_key": key, "date": f"{day:%Y-%m-%d}", "thumbs": "true"}, timeout=60).json()
+        ex = apod_explanation(j.get("explanation", ""))
+        if j.get("date") == f"{day:%Y-%m-%d}" and j.get("title") and "nasa science" not in j["title"].lower() \
+                and not bad_text(ex):
+            return {"title": j["title"].strip(), "explanation": ex, "credit": (j.get("copyright") or "").strip(),
+                    "media_type": j.get("media_type", "image"), "via": "api"}
+        print(f"  APOD API unusable for {day:%Y-%m-%d} (title {j.get('title')!r}, date {j.get('date')}): page instead")
+    except (requests.RequestException, ValueError) as e:
+        print(f"  APOD API failed ({type(e).__name__}): page instead")
+    try:
+        page = requests.get(page_url, headers=UA, timeout=60).text
+    except requests.RequestException as e:
+        print(f"  APOD page failed ({type(e).__name__})")
+        return None
+    body = re.sub(r"<(script|style|noscript)\b[^>]*>.*?</\1>", " ", page, flags=re.S | re.I)
+    text = plain(body)
+    if "Explanation:" not in text:
+        print("  APOD page without 'Explanation:'")
+        return None
+    m = re.search(r"Explanation:", text)
+    title = re.search(r"([^.!?]{3,80}?)\s+Explanation:", text[max(0, m.start() - 200):m.end()])
+    og = re.search(r'<meta[^>]+property="og:title"[^>]+content="([^"]+)"', page, re.I)
+    if og:  # "APOD: 2026 November 1 – Colors of the Moon - NASA Science"
+        name = re.sub(r"\s+-\s+NASA Science$", "", plain(og.group(1)))
+        name = re.sub(r"^APOD:\s*\d{4} \w+ \d{1,2}\s*[–-]\s*", "", name)
+    else:
+        name = title.group(1).split(".")[-1].strip() if title else ""
+    credit = re.search(r"Credit(?: & Copyright)?:\s*(.+?)\s+(?:Authors|A service of|Explanation)", text)
+    return {"title": name, "explanation": apod_explanation(text), "credit": credit.group(1).strip() if credit else "",
+            "media_type": "video" if re.search(r"<iframe[^>]+(youtube|vimeo)", page, re.I) else "image", "via": "page"}
+
+
+def apod_item(day: datetime, it: dict) -> dict | None:
+    """12:00 post from the APOD of the day: title, the first sentences of the explanation (whole sentences only,
+    max 500 chars), 'Source: NASA APOD (date)' and the link. Text only: APOD images are often copyrighted by the
+    photographer, and a video APOD needs no thumbnail this way. The next sentence of the explanation is the reply."""
+    a = apod(it["date"].replace(tzinfo=None), it["url"])
+    if not a or not a["title"] or bad_text(a["explanation"]):
+        print(f"  APOD skipped {it['url']}: {'no clean text' if not a else bad_text(a['explanation']) or 'no title'}")
+        return None
+    ss = sentences(a["explanation"])
+    n = 3 if ss and ss[0].endswith("?") else 2  # an opening question gets two sentences of answer
+    src = f"Source: NASA APOD ({it['date'].day} {it['date']:%b %Y}).\n{it['url']}"
+    head = f"{a['title']} (NASA Astronomy Picture of the Day)" + (" 🎬" if a["media_type"] == "video" else "")
+    text = fit([head, " ".join(ss[:n]), src], 500)
+    used = [s for s in ss if s in text]
+    if len(used) < 1 or bad_text(" ".join(used)):
+        print(f"  APOD skipped {it['url']}: explanation does not fit")
+        return None
+    rest = [s for s in ss[len(used):] if not s.endswith("?")][:2]
+    reply = " ".join(rest)
+    while len(reply) > 420 and len(rest) > 1:
+        rest.pop()
+        reply = " ".join(rest)
+    reply = (reply + (f"\n\nImage: {a['credit']}." if a["credit"] else "")).strip()
+    print(f"  APOD via {a['via']}: {a['title']!r}")
+    return {"ref": f"th-news-{day:%m%d}-apod-{slug(a['title'])}", "at": f"{day:%Y-%m-%d} {SLOTS['news']}",
+            "tag": tag_for(a["title"] + " " + text), "text": text, "replies": [reply] if reply else [],
+            "news_title": it["title"]}
+
+
 def news(day: datetime, queue: list[dict], short_urls: set[str]) -> dict | None:
     import auto_short as a
     used = {u.rstrip("/") for i in queue for u in re.findall(r"https?://\S+", " ".join([i["text"], *i.get("replies", [])]))}
@@ -122,14 +232,23 @@ def news(day: datetime, queue: list[dict], short_urls: set[str]) -> dict | None:
             continue
         it["title"] = title
         lead = lead_of(it["url"], it["summary"])
-        if lead:
+        if lead or APOD_PAGE.search(it["url"]):
             cands.append((0 if a.numbers(" ".join(lead[:2])) else 1, it, lead))
     cands.sort(key=lambda c: (c[0], -c[1]["date"].timestamp()))
     for _, it, lead in cands:
         url = it["url"]
+        if APOD_PAGE.search(url):  # the APOD page has no article lead: its explanation, cleaned
+            item = apod_item(day, it)
+            if item:
+                return item
+            continue
         agency = next((n for d, n in AGENCY if d in url), "NASA")
         title = it["title"]
         src = f"Source: {agency} ({it['date']:%d %b %Y})."
+        why = bad_text(" ".join(lead[:3]))
+        if why:
+            print(f"  news skipped {url}: {why}")
+            continue
         text = fit([title, " ".join(lead[:3]), src], 500)
         if len(text) < 120:
             continue
@@ -299,9 +418,11 @@ def main():
     added = []
     for kind in only:
         at = f"{day:%Y-%m-%d} {SLOTS[kind]}"
-        if at in taken:
+        if at in taken and not DRY:
             print(f"{kind}: slot {at} already has an item, left alone")
             continue
+        if at in taken:  # dry run: build it anyway, to show what the generator would post
+            print(f"{kind}: slot {at} already has an item; dry run builds it anyway")
         if kind == "video" and not short:
             print(f"video: no Short release a{day:%m%d}-* yet")
             continue
@@ -309,6 +430,8 @@ def main():
                 "video": lambda: video(day, short)}[kind]()
         if item and any(i["ref"] == item["ref"] for i in queue):
             print(f"{kind}: {item['ref']} already queued")
+            if DRY:
+                print(json.dumps(item, ensure_ascii=False, indent=1))
             continue
         if item:
             if len(item["text"]) > 500 or any(len(r) > 500 for r in item["replies"]) or any(len(o) > 25 for o in item.get("poll", [])):

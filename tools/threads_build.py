@@ -286,7 +286,8 @@ def news_items(day: datetime, cands: list, a):
             continue
         lead_nums = set(a.numbers(text))
         extra = next((s for s in sentences(it["text"]) if s not in text and 40 < len(s) < 300 and a.numbers(s)
-                      and set(a.numbers(s)) - lead_nums and not JUNK.search(s) and not re.search(r"image:|photo:", s, re.I)), None)
+                      and set(a.numbers(s)) - lead_nums and not JUNK.search(s) and not re.search(r"image:|photo:", s, re.I)
+                      and not post_qc.CREDIT_GLUE.search(s)), None)
         reply = f"{extra}\n\n{url}" if extra and len(extra) + len(url) < 480 else f"Read more: {url}"
         missing, problems, _ = a.check({"narration": text + " " + reply, "sources": [{"url": url}]})
         problems = [p for p in problems if "words" not in p and "real numbers" not in p]

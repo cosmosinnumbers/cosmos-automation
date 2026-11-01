@@ -45,6 +45,8 @@ MENU_WORD = re.compile(r"\b(Archive|Submissions|Index|Search|Calendar|RSS|Discus
                        r"Contact|Careers|Sitemap)\b")
 PLACEHOLDER = re.compile(r"\{[a-z_]+\}|\bTODO\b|\bTBD\b|lorem ipsum|\bundefined\b|\bNone\b|\bnan\b|\[object|\$\{|"
                          r"<[a-z/][^>]*>|&(amp|nbsp|quot|lt|gt|#\d+);", re.I)
+# image credit or section heading glued to a sentence ("NASA/JPL-Caltech Twin Travelers In 1977, NASA launched...")
+CREDIT_GLUE = re.compile(r"(^|[.!?]\s+)(NASA|ESA|ESO|JPL|STScI|CSA|JAXA)(/[\w.&-]+)+\s+[A-Z]")
 CUT_END = re.compile(r"(…|\.\.\.|\b(and|or|the|a|an|of|to|in|with|by|for|from|that|which|is|are|was|at|on|as))$", re.I)
 SENT_END = re.compile(r"[.!?…][\"'”’)\]]?$|[\U0001F300-\U0001FAFF☀-➿]$")
 SUPERLATIVE = re.compile(r"\b(biggest|largest|smallest|fastest|slowest|hottest|coldest|oldest|youngest|farthest|"
@@ -177,6 +179,9 @@ def errors_of(platform: str, kind: str, text: str, replies: list[str] | None = N
     m = PLACEHOLDER.search(allt)
     if m:
         errs.append(f"leftover placeholder or HTML ({m.group()!r})")
+    m = CREDIT_GLUE.search(allt)
+    if m:
+        errs.append(f"image credit or heading glued to the text ({m.group().strip()!r})")
     if re.search(r"\bLAUNCH9\b", allt, re.I):
         errs.append("LAUNCH9 does not exist on Gumroad: the code is COSMOS9")
     gum = [p for p in [text, *replies] if "gumroad.com" in p]

@@ -57,6 +57,14 @@ def test_cut_sentence_and_truncated_link_blocked():
     assert any("truncated" in x for x in errs(GOOD.replace("colors-of-the-moon/", "colors-of…")))
 
 
+def test_credit_glued_to_text_blocked():
+    # dry run of 2/11/2026: the reply carried the image credit and a heading before the sentence
+    reply = ("NASA/JPL-Caltech Twin Travelers In 1977, NASA launched twin spacecraft Voyager 1 and 2.\n\n"
+             "https://science.nasa.gov/solar-system/skywatching/night-sky-network/")
+    assert any("credit" in x for x in errs(GOOD, replies=[reply]))
+    assert errs(GOOD, replies=["In 1977, NASA launched twin spacecraft Voyager 1 and 2."]) == []
+
+
 def test_html_and_placeholders_blocked_then_cleaned():
     dirty = GOOD.replace("brown-tinged", "brown&amp;tinged")
     assert any("HTML" in x for x in errs(dirty))

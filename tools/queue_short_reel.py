@@ -95,6 +95,51 @@ def caption(title: str, now: datetime, fb: bool = False) -> str:
             "Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science")
 
 
+TT_QUEUE = ROOT / "queues" / "tiktok-queue.json"
+
+
+def ensure_video(rel: dict, tag: str):
+    """media/shorts/<tag>.mp4 from the release (Reels and TikTok upload it from the repo)."""
+    video = f"media/shorts/{tag}.mp4"
+    mp4 = next((a for a in rel["assets"] if a["name"].endswith(".mp4")), None)
+    if not mp4:
+        sys.exit(f"{tag}: no mp4 in the release.")
+    MEDIA.mkdir(parents=True, exist_ok=True)
+    if not (ROOT / video).exists():
+        with tempfile.TemporaryDirectory() as d:
+            gh("release", "download", tag, "--repo", REPO, "-p", mp4["name"], "-D", d)
+            (ROOT / video).write_bytes((Path(d) / mp4["name"]).read_bytes())
+
+
+def tiktok_caption(title: str) -> str:
+    """Owner rule 26/10/2026: only "Full video on YouTube", no product, link, code or "link in bio"."""
+    return (f"{title.replace(' #shorts', '').replace('#shorts', '').strip()}\n\nFull video on YouTube: @CosmosinNumbers\n\n"
+            "Sources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n"
+            "#space #astronomy #science")
+
+
+def queue_tiktok(rel: dict, now: datetime, video: str) -> dict | None:
+    """tt-<tag> in queues/tiktok-queue.json at 21:00 (Rome) of the Short's day, only with TIKTOK_ENABLED=true.
+    tiktok_api.pacing() keeps max 2 a day, 3 h apart; post_qc checks the caption again at publish time."""
+    if os.environ.get("TIKTOK_ENABLED", "false").lower() != "true":
+        print("tiktok: TIKTOK_ENABLED is not true, not queued")
+        return None
+    q = json.loads(TT_QUEUE.read_text("utf-8")) if TT_QUEUE.exists() else []
+    ref = f"tt-{rel['tag_name']}"
+    if any(i.get("ref") == ref for i in q):
+        print(f"tiktok: {ref} already queued")
+        return None
+    day = now.date() if now.hour * 60 + now.minute < 21 * 60 - 20 else (now + timedelta(days=1)).date()
+    item = {"ref": ref, "at": f"{day:%Y-%m-%d} 21:00", "video_url": video, "caption": tiktok_caption(rel["name"])}
+    print(json.dumps(item, ensure_ascii=False, indent=1))
+    if DRY:
+        return None
+    q.append(item)
+    q.sort(key=lambda i: i["at"])
+    TT_QUEUE.write_text(json.dumps(q, ensure_ascii=False, indent=1) + "\n", "utf-8")
+    return item
+
+
 def main():
     now = datetime.now(TZ)
     rel = release(now)
@@ -102,8 +147,11 @@ def main():
     queue = json.loads(QUEUE.read_text("utf-8")) if QUEUE.exists() else []
     kinds = [k for k in os.environ.get("SHORT_META_KINDS", ",".join(KINDS)).split(",") if k in KINDS]
     todo = [k for k in kinds if not any(i.get("ref") == f"{KINDS[k][2]}-{tag}" for i in queue)]
+    tt = queue_tiktok(rel, now, f"media/shorts/{tag}.mp4")
     if not todo:
         print(f"{tag}: already queued ({', '.join(kinds)}).")
+        if tt:
+            ensure_video(rel, tag)
         return
     mp4 = next((a for a in rel["assets"] if a["name"].endswith(".mp4")), None)
     if not mp4:
@@ -122,12 +170,10 @@ def main():
             continue
         new.append(item)
     if DRY or not new:
+        if tt:
+            ensure_video(rel, tag)
         return
-    MEDIA.mkdir(parents=True, exist_ok=True)
-    if not (ROOT / video).exists():
-        with tempfile.TemporaryDirectory() as d:
-            gh("release", "download", tag, "--repo", REPO, "-p", mp4["name"], "-D", d)
-            (ROOT / video).write_bytes((Path(d) / mp4["name"]).read_bytes())
+    ensure_video(rel, tag)
     if any(i["action"].endswith("story") for i in new) and not (ROOT / story).exists():
         sys.path.insert(0, str(ROOT / "tools"))
         import meta_api

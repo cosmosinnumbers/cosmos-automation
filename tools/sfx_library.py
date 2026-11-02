@@ -66,6 +66,44 @@ def search(q: str, n: int = 20) -> list[dict]:
     return r.json().get("results", [])
 
 
+def search_commons(q: str, n: int = 20) -> list[dict]:
+    """Wikimedia Commons (no key): audio files whose licence is CC0 or public domain, in the same shape as Openverse."""
+    params = {"action": "query", "generator": "search", "gsrnamespace": 6, "gsrlimit": n, "format": "json",
+              "gsrsearch": f"{q} filetype:audio", "prop": "imageinfo", "iiprop": "url|extmetadata|size|mime"}
+    r = requests.get("https://commons.wikimedia.org/w/api.php", params=params, headers=HEAD, timeout=30)
+    r.raise_for_status()
+    out = []
+    for pg in (r.json().get("query", {}).get("pages") or {}).values():
+        ii = (pg.get("imageinfo") or [{}])[0]
+        meta = ii.get("extmetadata") or {}
+        lic = (meta.get("LicenseShortName", {}).get("value") or "").lower()
+        if not (lic.startswith("cc0") or lic in ("public domain", "pd")) or not ii.get("url"):
+            continue
+        out.append({"id": f"commons{pg['pageid']}", "title": pg["title"].removeprefix("File:"), "license": "cc0",
+                    "creator": re.sub(r"<[^>]+>", "", meta.get("Artist", {}).get("value", "") or "")[:80] or None,
+                    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+                    "foreign_landing_url": ii.get("descriptionurl"), "url": ii["url"], "source": "wikimedia commons",
+                    "duration": 0})
+    return out
+
+
+def search_freesound(q: str, n: int = 20) -> list[dict]:
+    """Freesound (free key FREESOUND_API_KEY): only licence 'Creative Commons 0'; the HQ preview is downloaded."""
+    key = os.environ.get("FREESOUND_API_KEY")
+    if not key:
+        return []
+    params = {"query": q, "filter": 'license:"Creative Commons 0" duration:[0 TO 10]', "page_size": n, "token": key,
+              "fields": "id,name,username,license,duration,url,previews"}
+    r = requests.get("https://freesound.org/apiv2/search/text/", params=params, headers=HEAD, timeout=30)
+    if r.status_code == 429:
+        raise Throttled(r.headers.get("Retry-After", "?"))
+    r.raise_for_status()
+    return [{"id": f"freesound{it['id']}", "title": it["name"], "license": "cc0", "creator": it.get("username"),
+             "license_url": "https://creativecommons.org/publicdomain/zero/1.0/", "foreign_landing_url": it.get("url"),
+             "url": it["previews"]["preview-hq-mp3"], "source": "freesound", "duration": int(it["duration"] * 1000)}
+            for it in r.json().get("results", []) if (it.get("previews") or {}).get("preview-hq-mp3")]
+
+
 def convert(raw: bytes, kind: str) -> np.ndarray | None:
     r = subprocess.run([ffmpeg_exe(), "-loglevel", "error", "-i", "pipe:0", "-ac", "1", "-ar", str(sfx.SR),
                         "-f", "f32le", "pipe:1"], input=raw, capture_output=True, timeout=120)
@@ -102,6 +140,7 @@ def main():
     else:
         print("Openverse: anonymous (very low rate limit: add OPENVERSE_CLIENT_ID / OPENVERSE_CLIENT_SECRET)", flush=True)
     throttled = False
+    ov_down = False
     # kinds with the fewest sounds first, so repeated runs fill the gaps even when throttled
     order = sorted(QUERIES, key=lambda k: sum(1 for it in reg if it["kind"] == k))
     for kind in order:
@@ -112,16 +151,22 @@ def main():
         for q in qs:
             if got >= per:
                 break
-            try:
-                res = search(q)
-            except Throttled as e:
-                print(f"{kind}: Openverse 429 (retry-after {e}): stopping, run again later or add the API key", flush=True)
-                throttled = True
-                break
-            except Exception as e:  # noqa: BLE001
-                print(f"{kind}: search '{q}' failed: {e}", flush=True)
-                continue
-            print(f"{kind}: '{q}' -> {len(res)} CC0 results", flush=True)
+            res = []
+            for name, fn in (("Openverse", search), ("Commons", search_commons), ("Freesound", search_freesound)):
+                if name == "Openverse" and ov_down:
+                    continue
+                try:
+                    found = fn(q)
+                except Throttled as e:
+                    print(f"{kind}: {name} 429 (retry-after {e}): skipping it for this run", flush=True)
+                    if name == "Openverse":
+                        ov_down = True
+                    continue
+                except Exception as e:  # noqa: BLE001
+                    print(f"{kind}: {name} search '{q}' failed: {str(e)[:100]}", flush=True)
+                    continue
+                print(f"{kind}: {name} '{q}' -> {len(found)} CC0 results", flush=True)
+                res += found
             for it in res:
                 if got >= per:
                     break

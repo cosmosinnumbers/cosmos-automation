@@ -1,4 +1,4 @@
-# Sound-effects library from Openverse, CC0 only (owner 02/11/2026: "search Openverse first, let Real SFX place the
+# Sound-effects library from Openverse + Wikimedia Commons + Freesound (key optional), CC0 only (owner 02/11/2026: "search Openverse first, let Real SFX place the
 # hits, generate what is missing"). tools/sfx_library.py searches api.openverse.org (no key), downloads up to
 # `per_kind` CC0 sounds for every kind used by video/ytf/sfx.py, normalises them into assets/sfx/openverse/ and
 # records title, author, page and licence in assets/sfx/library.json. The renders pick from it; kinds with no
@@ -40,6 +40,7 @@ jobs:
         env:
           OPENVERSE_CLIENT_ID: ${{ secrets.OPENVERSE_CLIENT_ID }}
           OPENVERSE_CLIENT_SECRET: ${{ secrets.OPENVERSE_CLIENT_SECRET }}
+          FREESOUND_API_KEY: ${{ secrets.FREESOUND_API_KEY }}
           PER: ${{ inputs.per_kind || '4' }}
           DRY: ${{ inputs.dry_run }}
         run: |

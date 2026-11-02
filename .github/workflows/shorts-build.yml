@@ -98,6 +98,8 @@ jobs:
           BACKUP_LLM_MODELS: ${{ secrets.BACKUP_LLM_MODELS }}
           GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
           LLM_FIRST: ${{ vars.LLM_FIRST }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
           GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
           GLM_BASE_URL: ${{ secrets.GLM_BASE_URL }}
           GLM_MODELS: ${{ secrets.GLM_MODELS }}

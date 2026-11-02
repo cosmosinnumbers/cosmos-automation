@@ -57,6 +57,7 @@ jobs:
       TIKTOK_AIGC_LABEL: ${{ vars.TIKTOK_AIGC_LABEL || 'false' }}
     steps:
       - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}  # tip of the branch: a re-run sees the logs of the attempt before (self-heal)
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
@@ -93,6 +94,7 @@ jobs:
       YT_ENABLED: "true"
     steps:
       - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}  # tip of the branch: a re-run sees the logs of the attempt before (self-heal)
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"

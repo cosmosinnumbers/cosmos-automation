@@ -41,6 +41,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}  # tip of the branch: a re-run sees the logs of the attempt before (self-heal)
       - uses: actions/setup-python@v7
         with: {python-version: "3.13", cache: pip}
       - run: pip install -q requests PyYAML pillow numpy scipy imageio-ffmpeg tzdata
@@ -75,7 +76,7 @@ jobs:
           for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
           gh workflow run longform-build.yml -f id="$ID"
       - name: Issue if the checks failed
-        if: failure() && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+        if: failure() && !(github.event_name == 'workflow_dispatch' && inputs.dry_run) && (vars.SELF_HEAL == 'false' || github.event_name == 'workflow_dispatch')  # else self-heal.yml retries, fixes, then alerts
         run: |
           gh label create alert --color B60205 --description "Automazione fallita" 2>/dev/null || true
           gh issue create --title "Video lungo della settimana non approvato $(date +%d/%m/%Y)" --label alert \

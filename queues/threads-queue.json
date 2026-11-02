@@ -284,5 +284,15 @@
   ],
   "quiz": "Density-1",
   "answer": "Uranus, 1270 kg per cubic meter (NASA Planetary Fact Sheet)"
+ },
+ {
+  "ref": "th-a1102-mars-elongated-cloud",
+  "at": "2026-11-02 21:00",
+  "tag": "Mars",
+  "text": "This Martian Cloud Stretches 1500 Kilometers\n\nA water-ice cloud on Mars can stretch over 1500 kilometers in length. NASA’s Viking Orbiter 2 first recorded this strange atmospheric feature in 1977. Later, ESA’s Mars Express captured detailed images of it in 2018. The cloud forms high above the giant volcano Arsia Mons.\n\nSource: NASA.\nNarration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers",
+  "replies": [
+   "Source: APOD: 2026 November 2 – A Long Cloud on Mars: https://science.nasa.gov/image-article/apod-2026-november-2-a-long-cloud-on-mars/"
+  ],
+  "short": "a1102-mars-elongated-cloud"
  }
 ]

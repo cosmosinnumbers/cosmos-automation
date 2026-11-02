@@ -116,5 +116,31 @@
   "action": "fb-reel",
   "video_url": "media/shorts/a1102-mars-elongated-cloud.mp4",
   "caption": "This Martian Cloud Stretches 1500 Kilometers\n\nFull video on YouTube: @CosmosinNumbers\n📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "sr-a1103-voyager-1-light-day",
+  "at": "2026-11-05 20:48",
+  "action": "ig-reel",
+  "video_url": "media/shorts/a1103-voyager-1-light-day.mp4",
+  "caption": "Voyager 1 Is Now 24 Hours of Light Away\n\nFull video on YouTube: @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "si-a1103-voyager-1-light-day",
+  "at": "2026-11-05 20:52",
+  "action": "ig-story",
+  "video_url": "media/shorts/a1103-voyager-1-light-day_story.mp4"
+ },
+ {
+  "ref": "sf-a1103-voyager-1-light-day",
+  "at": "2026-11-05 20:52",
+  "action": "fb-story",
+  "video_url": "media/shorts/a1103-voyager-1-light-day_story.mp4"
+ },
+ {
+  "ref": "fr-a1103-voyager-1-light-day",
+  "at": "2026-11-05 21:08",
+  "action": "fb-reel",
+  "video_url": "media/shorts/a1103-voyager-1-light-day.mp4",
+  "caption": "Voyager 1 Is Now 24 Hours of Light Away\n\nFull video on YouTube: @CosmosinNumbers\n📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
  }
 ]

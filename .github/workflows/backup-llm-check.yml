@@ -23,12 +23,15 @@ jobs:
           BACKUP_LLM_KEY: ${{ secrets.BACKUP_LLM_KEY }}
           BACKUP_LLM_MODELS: ${{ secrets.BACKUP_LLM_MODELS }}
           GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+          GLM_BASE_URL: ${{ secrets.GLM_BASE_URL }}
+          GLM_MODELS: ${{ secrets.GLM_MODELS }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          for v in BACKUP_LLM_URL BACKUP_LLM_KEY BACKUP_LLM_MODELS GROK_API_KEY; do [ -n "${!v}" ] && echo "$v: set" || echo "$v: MISSING"; done
+          for v in BACKUP_LLM_URL BACKUP_LLM_KEY BACKUP_LLM_MODELS GROK_API_KEY GLM_API_KEY; do [ -n "${!v}" ] && echo "$v: set" || echo "$v: MISSING"; done
           cd video/ytf && python -c "
           import sys; sys.argv=['x']
           import auto_short as a
           r = a.backup_llm([{'role': 'user', 'parts': [{'text': 'Answer with JSON only: {\"ok\": true}'}]}])
-          print('backup writer:', 'OK' if r and r[1].get('ok') else 'FAIL')
+          print('backup writer (GLM first when GLM_API_KEY is set):', 'OK' if r and r[1].get('ok') else 'FAIL')
           sys.exit(0 if r else 1)"

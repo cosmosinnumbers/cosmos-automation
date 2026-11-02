@@ -49,6 +49,10 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINIAPIKEY3 }}
           GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+          LLM_FIRST: ${{ vars.LLM_FIRST }}
+          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+          GLM_BASE_URL: ${{ secrets.GLM_BASE_URL }}
+          GLM_MODELS: ${{ secrets.GLM_MODELS }}
           IN_TOPIC: ${{ inputs.topic }}
           IN_MIN: ${{ inputs.minutes }}
           IN_SRC: ${{ inputs.sources }}

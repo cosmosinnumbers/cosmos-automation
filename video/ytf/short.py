@@ -232,6 +232,7 @@ def main():
     plan = director.plan_short({**spec, "sources_full": sources_full}, timings, brand,
                                cut_times=[k * per for k in range(1, len(vis))]) if spec.get("motion", True) else \
         {"inserts": [], "transitions": [], "tail": 0.0, "events": []}
+    plan = director.creative_pass(spec["narration"], plan)
     srcs = [(src_dir / assets[v["src"]]["file"], "video" if assets[v["src"]]["type"] == "video" else "image",
              v.get("start", 0.0)) for v in spec["visuals"] if assets[v["src"]]["type"] in ("video", "image")]
     tiles = motion.tiles(srcs) if plan["inserts"] and motion.available() else []

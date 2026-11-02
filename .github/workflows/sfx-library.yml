@@ -27,6 +27,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # no key: Openverse allows only a few anonymous searches an hour, so each run fills what it can and stops
     env:
       PYTHONIOENCODING: utf-8
     steps:
@@ -37,6 +38,8 @@ jobs:
       - run: pip install -q numpy scipy soundfile imageio-ffmpeg PyYAML requests
       - name: Search and download CC0 sounds
         env:
+          OPENVERSE_CLIENT_ID: ${{ secrets.OPENVERSE_CLIENT_ID }}
+          OPENVERSE_CLIENT_SECRET: ${{ secrets.OPENVERSE_CLIENT_SECRET }}
           PER: ${{ inputs.per_kind || '4' }}
           DRY: ${{ inputs.dry_run }}
         run: |

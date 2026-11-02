@@ -182,7 +182,10 @@ def main():
         c = cfg()
         q = {"client_key": c["client_key"], "scope": SCOPES, "response_type": "code",
              "redirect_uri": c["redirect_uri"], "state": pysecrets.token_urlsafe(16)}
-        print(f"{AUTH}?{urllib.parse.urlencode(q)}")
+        # Every character percent-encoded: the client key and redirect URI are Actions secrets, and the log would
+        # mask them as *** in a plain link. TikTok decodes the query string, so this link works the same.
+        enc = lambda v: "".join(f"%{b:02X}" for b in str(v).encode("utf-8"))  # noqa: E731
+        print(f"{AUTH}?" + "&".join(f"{k}={enc(v)}" for k, v in q.items()))
         print("Open it logged in as @cosmosinnumbers, approve, then copy 'code' from the redirect URL.")
     elif cmd == "setup":
         c = cfg()

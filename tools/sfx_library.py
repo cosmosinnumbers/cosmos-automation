@@ -66,6 +66,8 @@ def search(q: str, n: int = 20) -> list[dict]:
     return r.json().get("results", [])
 
 
+# NOT used by default: on 02/11/2026 Commons returned mostly spoken words (Lingua Libre) and speeches for sound-effect
+# queries, and rate-limits after ~10 requests. Kept for hand-picked queries only.
 def search_commons(q: str, n: int = 20) -> list[dict]:
     """Wikimedia Commons (no key): audio files whose licence is CC0 or public domain, in the same shape as Openverse."""
     params = {"action": "query", "generator": "search", "gsrnamespace": 6, "gsrlimit": n, "format": "json",
@@ -152,7 +154,7 @@ def main():
             if got >= per:
                 break
             res = []
-            for name, fn in (("Openverse", search), ("Commons", search_commons), ("Freesound", search_freesound)):
+            for name, fn in (("Openverse", search), ("Freesound", search_freesound)):
                 if name == "Openverse" and ov_down:
                     continue
                 try:

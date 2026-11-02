@@ -31,6 +31,13 @@ COSMOS9_UNTIL = datetime(2026, 12, 1, tzinfo=TZ)
 DRY = "--dry-run" in sys.argv
 
 
+def social_or_main(rel: dict) -> dict | None:
+    """The social variant (<tag>_social.mp4, trending sound from assets/social/) when the release has it, else the
+    main mp4. YouTube never takes the social file."""
+    mp4s = [a for a in rel["assets"] if a["name"].endswith(".mp4")]
+    return next((a for a in mp4s if a["name"].endswith("_social.mp4")), None) or next(iter(mp4s), None)
+
+
 def gh(*a) -> str:
     r = subprocess.run(["gh", *a], capture_output=True, text=True)
     if r.returncode:
@@ -101,7 +108,7 @@ TT_QUEUE = ROOT / "queues" / "tiktok-queue.json"
 def ensure_video(rel: dict, tag: str):
     """media/shorts/<tag>.mp4 from the release (Reels and TikTok upload it from the repo)."""
     video = f"media/shorts/{tag}.mp4"
-    mp4 = next((a for a in rel["assets"] if a["name"].endswith(".mp4")), None)
+    mp4 = social_or_main(rel)
     if not mp4:
         sys.exit(f"{tag}: no mp4 in the release.")
     MEDIA.mkdir(parents=True, exist_ok=True)
@@ -153,7 +160,7 @@ def main():
         if tt:
             ensure_video(rel, tag)
         return
-    mp4 = next((a for a in rel["assets"] if a["name"].endswith(".mp4")), None)
+    mp4 = social_or_main(rel)
     if not mp4:
         sys.exit(f"{tag}: no mp4 in the release.")
     video, story = f"media/shorts/{tag}.mp4", f"media/shorts/{tag}_story.mp4"

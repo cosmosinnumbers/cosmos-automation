@@ -45,6 +45,20 @@ jobs:
           cache: pip
       - if: steps.full.outputs.full != 'true'
         run: pip install -q kokoro-onnx espeakng-loader phonemizer-fork onnxruntime soundfile numpy scipy pillow matplotlib fonttools imageio-ffmpeg PyYAML requests tzdata
+      # motion graphics: the 11 Remotion scenes in motion/ (video/ytf/motion.py). If this step fails the video is
+      # still built, with plain footage and synthesised sounds (owner 02/11/2026: "devono essere bellissimi").
+      - uses: actions/setup-node@v5
+        if: steps.full.outputs.full != 'true'
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: motion/package-lock.json
+      - name: Motion graphics (Remotion + headless Chrome)
+        if: steps.full.outputs.full != 'true'
+        continue-on-error: true
+        run: |
+          cd motion && npm ci --no-audit --no-fund
+          node -e "import('@remotion/renderer').then(m => m.ensureBrowser()).then(() => console.log('chrome ok'))"
       - name: Kokoro voice model (cached)
         if: steps.full.outputs.full != 'true'
         uses: actions/cache@v6

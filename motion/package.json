@@ -1,0 +1,18 @@
+{
+  "name": "cosmos-motion",
+  "private": true,
+  "description": "Remotion motion-graphics scenes for the Cosmos in Numbers / Companies in Numbers videos (rendered in GitHub Actions by video/ytf/motion.py)",
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs",
+    "studio": "remotion studio src/index.jsx"
+  },
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "5.2.8",
+    "@remotion/bundler": "4.0.536",
+    "@remotion/renderer": "4.0.536",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.536"
+  }
+}

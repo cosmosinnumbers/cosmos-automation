@@ -15,7 +15,10 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
+import director
+import motion
 import music
+import sfx
 from common import BRAND, FPS, H, W, ffmpeg_exe, font, load_json, run, save_json
 
 ZMAX = 1.12
@@ -423,6 +426,8 @@ class Shot:
             self.reader = VideoReader(video / a["file"], W, H, self.v.get("start", 0.0))
             label = self.v.get("label") or ("Artist's concept" if a.get("kind") == "illustration" else None)
             self.overlays = credit_overlay(a.get("credit", ""), label, "Video")
+        elif kind == "fx":   # one of the 11 Remotion scenes, already rendered to an mp4 by render_video
+            self.reader = VideoReader(Path(self.v["file"]), W, H, 0.0, grade=False)
         elif kind in ("counter", "kinetic", "bars", "scale", "timer", "compare"):
             bg = self.v.get("bg")
             self.canvas = (dim_image(str(video / assets[bg]["file"]), self.v.get("dim", 0.62)) if bg
@@ -452,7 +457,7 @@ class Shot:
     def frame(self, i: int) -> Image.Image:
         t = i / FPS
         kind, dur = self.v["type"], self.n / FPS
-        if kind == "video":
+        if kind in ("video", "fx"):
             f = self.reader.next()
             if i == self.n - 1:
                 self.reader.close()
@@ -500,6 +505,7 @@ def render_video(script: dict, video: Path, assets: dict, timings: dict) -> list
     build = video / "build"
     shots = build_shots(script, timings)
     save_json(build / "shots.json", shots)
+    plan = motion_plan(script, video, assets, shots, timings)
     total_frames = round(timings["duration"] * FPS)
     cmd = [ffmpeg_exe(), "-hide_banner", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
            "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-preset", "veryfast",
@@ -513,11 +519,19 @@ def render_video(script: dict, video: Path, assets: dict, timings: dict) -> list
             num = None if sh["chapter"].lower().startswith("step ") else chapter_no
         else:
             num = None
-        shot = Shot(sh, video, assets, num)
+        fxv = plan["fx"].get(str(k))
+        shot = Shot({**sh, "visual": fxv} if fxv else sh, video, assets, num)
         n = shot.n if k < len(shots) - 1 else total_frames - written
+        trans = plan["transitions"].get(str(k))
         for i in range(n):
             f = shot.frame(i)
-            if prev_last is not None and i < XFADE:
+            if plan["hook"] is not None and written + i < plan["hook_frames"]:
+                f = plan["hook"].next()   # 01 Orbit over the first second and a half
+            if trans == "glitch" and i < 8:
+                f = motion.glitch(f, i, 8, seed=k)
+            elif trans == "zoomthrough" and i < 7:
+                f = motion.zoom_into(f, (i + 1) / 7)
+            elif prev_last is not None and i < XFADE:
                 f = Image.blend(prev_last, f, ease((i + 1) / XFADE))
             if script.get("progress_bar"):  # thin progress line at the bottom (retention cue)
                 ImageDraw.Draw(f).rectangle((0, H - 6, int(W * (written + i) / total_frames), H), fill=BRAND["cyan"])
@@ -529,15 +543,65 @@ def render_video(script: dict, video: Path, assets: dict, timings: dict) -> list
     proc.stdin.close()
     if proc.wait() != 0:
         raise SystemExit("ffmpeg video encode failed")
+    if plan["hook"] is not None:
+        plan["hook"].close()
     return shots
 
 
-def render_audio(script: dict, video: Path, timings: dict, shots: list[dict]):
+def motion_plan(script: dict, video: Path, assets: dict, shots: list[dict], timings: dict) -> dict:
+    """The director's choices for a long video, rendered with Remotion. Saves build/motion_plan.json (the sound
+    events, read again by render_audio). Without Remotion, or with `motion: false` in script.yaml: no effects."""
     build = video / "build"
-    dur = timings["duration"]
+    empty = {"fx": {}, "transitions": {}, "hook": None, "hook_frames": 0}
+    if script.get("motion") is False:
+        save_json(build / "motion_plan.json", {"events": []})
+        return empty
+    p = director.plan_long(script, shots, timings, script.get("brand", "cosmos"))
+    srcs = []
+    for a in assets.values():
+        if a.get("type") in ("video", "image") and (video / a["file"]).exists():
+            srcs.append((video / a["file"], a["type"], 2.0))
+    tiles = motion.tiles(srcs[:6], per_clip=2) if motion.available() else []
+    brand = script.get("brand", "cosmos")
+    jobs = []
+    for k, f in p["fx"].items():
+        frames = max(8, round((shots[k]["end"] - shots[k]["start"]) * FPS))
+        props = {"brand": brand, "tiles": tiles, **f["props"], "width": W, "height": H, "fps": FPS, "frames": frames}
+        if f["effect"] == "framebreak" and f.get("src") in assets and assets[f["src"]]["type"] == "image":
+            props["poster"] = motion._uri(Image.open(video / assets[f["src"]]["file"]), 720)
+        jobs.append({"effect": f["effect"], "out": str(build / f"fx_{k:03d}_{f['effect']}.mp4"), "props": props, "k": k})
+    hook_out = str(build / "fx_hook_orbit.mp4")
+    jobs.append({"effect": "orbit", "out": hook_out, "k": -1,
+                 "props": {"brand": brand, "tiles": tiles, **p["hook"]["props"], "width": W, "height": H, "fps": FPS,
+                           "frames": round(p["hook"]["t1"] * FPS)}})
+    done = motion.render_jobs([{kk: j[kk] for kk in ("effect", "out", "props")} for j in jobs], build)
+    fx = {str(j["k"]): {"type": "fx", "file": j["out"], "effect": j["effect"]} for j in jobs if j["k"] >= 0 and j["out"] in done}
+    events = list(p["events"]) if done else [e for e in p["events"] if e[1] in ("glitch", "whoosh", "impact")]
+    save_json(build / "motion_plan.json", {"events": events, "fx": fx, "transitions": p["transitions"]})
+    hook = VideoReader(Path(hook_out), W, H, 0.0, grade=False) if hook_out in done else None
+    return {"fx": fx, "transitions": {str(k): v for k, v in p["transitions"].items()}, "hook": hook,
+            "hook_frames": round(p["hook"]["t1"] * FPS) if hook else 0}
+
+
+def render_audio(script: dict, video: Path, timings: dict, shots: list[dict], total: float | None = None,
+                 events: list | None = None, music_file: Path | None = None, out: str = "mix.wav"):
+    """Voice + ducked score + effects. `total` > narration length pads the voice with silence (Shorts' CTA tail);
+    `events` are extra sound events (Shorts); long videos read build/motion_plan.json written by render_video.
+    `music_file` replaces the generated score (the social variant's trending sound, looped); `out` is the mix name."""
+    build = video / "build"
+    dur = total or timings["duration"]
     m = script.get("music", {})
-    music.write(build / "music.wav", music.ambient_track(dur, m.get("seed", 7), m.get("mood", "calm")))
-    events = []
+    music_wav = build / ("music.wav" if music_file is None else "music_social.wav")
+    if music_file is None:
+        music.write(music_wav, music.ambient_track(dur, m.get("seed", 7), m.get("mood", "calm")))
+    else:
+        run([ffmpeg_exe(), "-hide_banner", "-loglevel", "error", "-y", "-stream_loop", "-1", "-i", music_file,
+             "-t", f"{dur:.3f}", "-ac", "2", "-ar", "48000", "-af", f"afade=t=out:st={max(0.0, dur - 1.0):.3f}:d=1",
+             music_wav])
+    events = [tuple(e) for e in (events or [])]
+    mp = build / "motion_plan.json"
+    if events == [] and mp.exists():
+        events = [tuple(e) for e in load_json(mp).get("events", [])]
     for sh in shots:
         if sh.get("chapter") and sh["start"] > 1:
             events.append((sh["start"], "whoosh"))
@@ -548,11 +612,11 @@ def render_audio(script: dict, video: Path, timings: dict, shots: list[dict]):
             events.append((sh["start"] + 0.2, "ping"))
         if sh["visual"]["type"] == "timer":
             events.append((sh["start"] + min(sh["visual"].get("count", 3.0), (sh["end"] - sh["start"]) * 0.7), "ping"))
-    music.write(build / "sfx.wav", music.sfx_track(dur, events))
-    graph = ("[0:a]aresample=48000,aformat=channel_layouts=stereo,asplit=2[v][vsc];"
+    music.write(build / "sfx.wav", sfx.track(dur, events, seed=m.get("seed", 7)))
+    graph = (f"[0:a]aresample=48000,aformat=channel_layouts=stereo,apad=whole_dur={dur:.3f},asplit=2[v][vsc];"
              "[1:a]volume=0.32[m];[m][vsc]sidechaincompress=threshold=0.02:ratio=8:attack=40:release=700[md];"
              "[2:a]volume=0.7[s];[v][md][s]amix=inputs=3:normalize=0:duration=first[mx]")
-    base = [ffmpeg_exe(), "-hide_banner", "-y", "-i", build / "narration.wav", "-i", build / "music.wav",
+    base = [ffmpeg_exe(), "-hide_banner", "-y", "-i", build / "narration.wav", "-i", music_wav,
             "-i", build / "sfx.wav"]
     r = run(base + ["-filter_complex", graph + ";[mx]loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json[a]",
                     "-map", "[a]", "-f", "null", "-"])
@@ -561,7 +625,7 @@ def render_audio(script: dict, video: Path, timings: dict, shots: list[dict]):
     ln = (f"loudnorm=I=-14:TP=-1.5:LRA=11:measured_I={meas['input_i']}:measured_TP={meas['input_tp']}:"
           f"measured_LRA={meas['input_lra']}:measured_thresh={meas['input_thresh']}:"
           f"offset={meas['target_offset']}:linear=true")
-    run(base + ["-filter_complex", graph + f";[mx]{ln}[a]", "-map", "[a]", "-ar", "48000", build / "mix.wav"])
+    run(base + ["-filter_complex", graph + f";[mx]{ln}[a]", "-map", "[a]", "-ar", "48000", build / out])
     return meas
 
 
@@ -579,12 +643,13 @@ class VideoReader:
     """Frames of a stock clip, scaled and cropped to fill w x h at the project frame rate, looped
     if the shot is longer than the clip. Audio of the clip is never used."""
 
-    def __init__(self, path: Path, w: int, h: int, start: float = 0.0):
+    def __init__(self, path: Path, w: int, h: int, start: float = 0.0, grade: bool = True):
         self.w, self.h = w, h
-        self.cmd = [ffmpeg_exe(), "-hide_banner", "-loglevel", "error", "-stream_loop", "-1", "-ss", str(start),
-                    "-i", str(path), "-an", "-vf",
-                    f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},fps={FPS},"
-                    "eq=saturation=0.85:brightness=-0.03",   # a touch darker and calmer, so it sits with the brand
+        vf = f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},fps={FPS}"
+        if grade:   # stock footage: a touch darker and calmer, so it sits with the brand (not our own graphics)
+            vf += ",eq=saturation=0.85:brightness=-0.03"
+        self.cmd = [ffmpeg_exe(), "-hide_banner", "-loglevel", "error"] + (["-stream_loop", "-1"] if grade else []) + [
+                    "-ss", str(start), "-i", str(path), "-an", "-vf", vf,
                     "-f", "rawvideo", "-pix_fmt", "rgb24", "-"]
         self.proc = subprocess.Popen(self.cmd, stdout=subprocess.PIPE)
         self.last = None

@@ -50,7 +50,7 @@ def token() -> str | None:
     cid, sec = os.environ.get("OPENVERSE_CLIENT_ID"), os.environ.get("OPENVERSE_CLIENT_SECRET")
     if not (cid and sec):
         return None
-    r = requests.post("https://api.openverse.org/v1/auth_tokens/token/", headers=HEAD, timeout=30,
+    r = requests.post("https://api.openverse.org/v1/auth_tokens/token/", headers=HEAD, timeout=45,
                       data={"grant_type": "client_credentials", "client_id": cid, "client_secret": sec})
     r.raise_for_status()
     return r.json()["access_token"]
@@ -90,7 +90,12 @@ def main():
     reg = json.loads(reg_path.read_text("utf-8")) if reg_path.exists() else []
     have = {it["id"] for it in reg}
     (OUT / "openverse").mkdir(parents=True, exist_ok=True)
-    tok = token()
+    try:
+        tok = token()
+    except Exception as e:  # noqa: BLE001 - Openverse is down or the key is not confirmed yet
+        print(f"Openverse: token request failed ({type(e).__name__}): nothing downloaded this run, try again later "
+              "(registration mail confirmed? key valid?)", flush=True)
+        return
     if tok:
         HEAD["Authorization"] = f"Bearer {tok}"
         print("Openverse: authenticated (OPENVERSE_CLIENT_ID/SECRET)", flush=True)

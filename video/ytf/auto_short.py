@@ -31,6 +31,7 @@ from pathlib import Path
 import requests
 
 sys.path.insert(0, str(Path(__file__).parent))
+import glm  # noqa: E402
 import stock  # noqa: E402
 from common import ROOT, media_duration, save_yaml  # noqa: E402
 
@@ -132,6 +133,10 @@ def gemini_models(key) -> list[str]:
 
 def gemini(messages, search=True):
     """(raw text, parsed JSON). search=True uses Google Search grounding; a 429 there means no grounding quota."""
+    if not search and os.environ.get("LLM_FIRST") == "glm" and glm.available():
+        out = glm.chat(messages)   # repo variable LLM_FIRST=glm: GLM writes first, Gemini and Groq are the fallbacks
+        if out:
+            return out
     key = os.environ.get("GEMINI_API_KEY")
     if not key:
         sys.exit("No GEMINI_API_KEY secret.")
@@ -200,7 +205,12 @@ def backup_llm(messages):
     extracted by the code and its draft goes through the same check() as Gemini's. Any OpenAI-compatible
     chat endpoint: secrets BACKUP_LLM_URL / BACKUP_LLM_KEY / BACKUP_LLM_MODELS (e.g. Groq or OpenRouter free tier);
     without them, GitHub Models with the repo token (on 30/10/2026 it answered a bare "OK": treated as unavailable).
-    (raw text, parsed JSON) or None."""
+    (raw text, parsed JSON) or None.
+    GLM (secret GLM_API_KEY, video/ytf/glm.py) comes first when the key exists: the strongest writer of the backups."""
+    if glm.available():
+        out = glm.chat(messages)
+        if out:
+            return out
     # GROK_API_KEY (the name the owner used on 30/10/2026): provider from the key prefix, model from its /models list
     key = os.environ.get("BACKUP_LLM_KEY") or os.environ.get("GROK_API_KEY") or os.environ.get("GROQ_API_KEY") or ""
     provider = {"gsk_": "groq", "xai-": "xai"}.get(key[:4], "")

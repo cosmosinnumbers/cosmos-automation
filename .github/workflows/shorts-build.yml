@@ -96,6 +96,10 @@ jobs:
           BACKUP_LLM_KEY: ${{ secrets.BACKUP_LLM_KEY }}
           BACKUP_LLM_MODELS: ${{ secrets.BACKUP_LLM_MODELS }}
           GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+          LLM_FIRST: ${{ vars.LLM_FIRST }}
+          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+          GLM_BASE_URL: ${{ secrets.GLM_BASE_URL }}
+          GLM_MODELS: ${{ secrets.GLM_MODELS }}
           IN_TOPIC: ${{ inputs.topic }}
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
         run: |

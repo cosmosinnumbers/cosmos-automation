@@ -330,3 +330,49 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
     hook = {"effect": "orbit", "t0": 0.0, "t1": 1.8, "props": {"label": agency(srcs) + " · REAL DATA"}}
     events += effect_sounds("orbit", 1.8, {})
     return {"fx": fx, "transitions": transitions, "events": sorted(events), "hook": hook}
+
+
+# ---------- optional creative pass by GLM (secret GLM_API_KEY) ----------
+CREATIVE = """You direct a vertical space-news Short of "Cosmos in Numbers". Narration (the only facts you may use):
+{narration}
+
+Answer JSON only: {{"hook_label": "2-4 words, UPPERCASE, a punchy tag for the opening card (e.g. 'NASA · NEW', 'HUGE NUMBER')",
+"accent_words": ["up to 3 words copied from the narration that deserve emphasis"]}}
+No invented facts, no numbers that are not in the narration, no discount codes, no emojis."""
+
+
+def creative_pass(narration: str, plan: dict) -> dict:
+    """Let GLM pick the hook tag and the emphasised words; the answer is validated, anything odd keeps the
+    deterministic plan. Returns the (possibly updated) plan. Never raises."""
+    try:
+        import glm
+        if not glm.available():
+            return plan
+
+        def check(j):
+            lab = str(j.get("hook_label", ""))
+            bad = []
+            if not 2 <= len(lab) <= 28 or not re.fullmatch(r"[A-Za-z0-9 ·\-/&']+", lab):
+                bad.append("hook_label")
+            if re.search(r"code|cosmos9|discount|free", lab, re.I):
+                bad.append("hook_label mentions a code")
+            if any(n not in narration for n in re.findall(r"\d+", lab)):
+                bad.append("hook_label number not in narration")
+            words = j.get("accent_words", [])
+            if not isinstance(words, list) or any(str(w).strip(".,!?") not in narration for w in words):
+                bad.append("accent_words not in narration")
+            return bad
+
+        out = glm.chat([{"role": "user", "parts": [{"text": CREATIVE.format(narration=narration)}]}],
+                       check=check, temperature=0.7, max_tokens=400)
+        if not out:
+            return plan
+        j = out[1]
+        for ins in plan["inserts"]:
+            if ins["effect"] == "orbit":
+                ins["props"]["label"] = j["hook_label"].upper()
+            if ins["effect"] == "papercut" and j.get("accent_words"):
+                ins["props"]["accent"] = [str(w).strip(".,!?") for w in j["accent_words"]][:3]
+    except Exception as e:  # noqa: BLE001 - the director must never stop a video
+        print("  creative pass skipped:", type(e).__name__, flush=True)
+    return plan

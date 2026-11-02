@@ -43,3 +43,5 @@ questo repo (non leggerli: GitHub non restituisce mai i valori), e scade da solo
 
 Senza questo token il workflow pubblica lo stesso, ma il rinnovo di Threads fallisce con un messaggio chiaro
 ("GH_SECRETS_TOKEN not configured") e il token andrebbe rinnovato a mano dal PC entro il 15/12/2026.
+
+- `GLM_API_KEY` (+ facoltativi `GLM_BASE_URL`, `GLM_MODELS`): modello GLM di Z.ai come scrittore/revisore/regista, vedi docs/glm.md

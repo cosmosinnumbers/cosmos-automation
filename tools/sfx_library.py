@@ -58,12 +58,26 @@ def token() -> str | None:
 
 
 def search(q: str, n: int = 20) -> list[dict]:
-    params = {"q": q, "license": "cc0", "category": "sound_effect", "page_size": n, "mature": "false"}
-    r = requests.get(API, params=params, headers=HEAD, timeout=20)
-    if r.status_code == 429:
-        raise Throttled(r.headers.get("Retry-After", "?"))
-    r.raise_for_status()
-    return r.json().get("results", [])
+    """Openverse audio, CC0 only. Many sound effects have no category label, so when the labelled search finds nothing
+    the same query is repeated without the category (the loop below still drops anything longer than 12 s)."""
+    for category in ("sound_effect", None):
+        params = {"q": q, "license": "cc0", "page_size": n, "mature": "false"}
+        if category:
+            params["category"] = category
+        for attempt in range(2):
+            try:
+                r = requests.get(API, params=params, headers=HEAD, timeout=40)
+                break
+            except requests.Timeout:
+                if attempt:
+                    raise
+        if r.status_code == 429:
+            raise Throttled(r.headers.get("Retry-After", "?"))
+        r.raise_for_status()
+        res = r.json().get("results", [])
+        if res:
+            return res
+    return []
 
 
 # NOT used by default: on 02/11/2026 Commons returned mostly spoken words (Lingua Libre) and speeches for sound-effect
@@ -99,6 +113,8 @@ def search_freesound(q: str, n: int = 20) -> list[dict]:
     r = requests.get("https://freesound.org/apiv2/search/text/", params=params, headers=HEAD, timeout=30)
     if r.status_code == 429:
         raise Throttled(r.headers.get("Retry-After", "?"))
+    if r.status_code in (401, 403):
+        raise RuntimeError("Freesound rejects the key: use the 'Client secret' (API key) from freesound.org/apps, not the Client id")
     r.raise_for_status()
     return [{"id": f"freesound{it['id']}", "title": it["name"], "license": "cc0", "creator": it.get("username"),
              "license_url": "https://creativecommons.org/publicdomain/zero/1.0/", "foreign_landing_url": it.get("url"),

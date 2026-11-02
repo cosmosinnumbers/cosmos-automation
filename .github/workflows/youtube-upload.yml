@@ -41,6 +41,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}  # tip of the branch: a re-run sees the logs of the attempt before (self-heal)
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
@@ -64,7 +65,7 @@ jobs:
           git commit -q -m "log: youtube"
           for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done; exit 1
       - name: Open an issue if the upload failed
-        if: failure() && github.event_name != 'workflow_dispatch'
+        if: failure() && github.event_name != 'workflow_dispatch' && vars.SELF_HEAL == 'false'  # else self-heal.yml retries, fixes, then alerts
         run: |
           gh label create alert --color B60205 --description "Automazione fallita" 2>/dev/null || true
           gh issue create --title "YouTube: Short non caricato $(date +%d/%m/%Y)" --label alert --assignee Redwraith \

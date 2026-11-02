@@ -46,6 +46,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}  # tip of the branch: a re-run sees the logs of the attempt before (self-heal)
       - name: Today's Short already out?
         id: today
         run: |
@@ -135,6 +136,10 @@ jobs:
           fi
           title="Short non uscito $(date +%d/%m/%Y)"
           body="Tutti i tentativi di oggi sono falliti e la riserva è vuota. Log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          gh label create alert --color B60205 --description "Automazione fallita" 2>/dev/null || true
-          gh issue create --title "$title" --body "$body" --label alert --assignee Redwraith || gh issue create --title "$title" --body "$body" --label alert
+          if [ "${{ vars.SELF_HEAL }}" = "false" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            gh label create alert --color B60205 --description "Automazione fallita" 2>/dev/null || true
+            gh issue create --title "$title" --body "$body" --label alert --assignee Redwraith || gh issue create --title "$title" --body "$body" --label alert
+          else
+            echo "$title: self-heal.yml re-runs it once, then tries a fix and opens the issue if nothing works."
+          fi
           exit 1

@@ -1,0 +1,35 @@
+{
+  "_note": "Self-heal (owner request 02/11/2026): retries = automatic re-runs of a failed run (only its failed jobs), after waits of backoff_s[0], backoff_s[1] seconds. Then autofix: an LLM reads the log and proposes a code fix (PR, merged only if safe). Workflows not listed here are never re-run nor fixed (launch9, threads-delete, tiktok-auth, backup-llm-check: one-off, interactive or destructive). The list must match 'workflows:' in .github/workflows/self-heal.yml.",
+  "backoff_s": [120, 360],
+  "workflows": {
+    "publish":          {"retries": 2, "autofix": true},
+    "youtube-upload":   {"retries": 2, "autofix": true},
+    "threads-build":    {"retries": 2, "autofix": true},
+    "queue-short-reel": {"retries": 2, "autofix": true},
+    "shorts-build":     {"retries": 1, "autofix": true, "after_recovery": [
+                          ["queue-short-reel.yml", {"dry_run": "false"}],
+                          ["threads-build.yml", {"dry_run": "false", "only": "video"}]]},
+    "reserve-build":    {"retries": 1, "autofix": true},
+    "longform-auto":    {"retries": 1, "autofix": true},
+    "longform-build":   {"retries": 1, "autofix": true},
+    "metrics":          {"retries": 2, "autofix": true},
+    "research":         {"retries": 1, "autofix": true},
+    "strategy":         {"retries": 1, "autofix": true},
+    "tokens":           {"retries": 2, "autofix": true},
+    "health":           {"retries": 1, "autofix": true},
+    "engage":           {"retries": 0, "autofix": true},
+    "sfx-library":      {"retries": 1, "autofix": true}
+  },
+  "autofix": {
+    "max_per_workflow_hours": 20,
+    "max_per_day": 4,
+    "max_changed_lines": 80,
+    "risky_paths": [
+      "tools/run_slot.py", "tools/creds.py", "tools/meta_api.py", "tools/threads_api.py", "tools/x_api.py",
+      "tools/tiktok_api.py", "tools/yt_short_upload.py", "tools/yt_publish.py", "tools/media_cleanup.py",
+      "tools/autofix.py", "tools/self_heal.py", "video/gumroad_launch9.py", "video/ci_secrets.py",
+      "video/ytf/yt_api.py", "video/ytf/meta_api.py", "queues/", "logs/", "config/self-heal.json", ".github/", "secrets/"
+    ],
+    "risky_words": "\\.delete\\(|requests\\.delete|rmtree|os\\.remove|unlink\\(|secret|token|password|api_key|--force|release delete|gh issue close"
+  }
+}

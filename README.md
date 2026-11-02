@@ -49,6 +49,16 @@ l'app e un post pubblico di prova non è verificato), `TIKTOK_AIGC_LABEL` (false
 (token fine-grained solo per questo repo, permesso "Secrets: read and write", serve a salvare i token rinnovati).
 Mai stampati: il workflow non fa echo e GitHub li maschera nei log. Istruzioni in `docs/segreti.md`.
 
+## Auto-riparazione (self-heal.yml)
+Se un workflow automatico fallisce, `self-heal.yml` lo rilancia (solo i job falliti, 0-2 volte dopo 2 e 6 minuti,
+vedi `config/self-heal.json`). Se fallisce ancora, `tools/self_heal.py` legge il log e chiede una correzione a un
+LLM gratuito (Gemini, Groq, GLM, GitHub Models) e, solo se esiste il segreto `ANTHROPIC_API_KEY` o
+`CLAUDE_CODE_OAUTH_TOKEN`, a Claude. La correzione deve compilare e non far fallire nuovi test: diventa una PR, unita
+da sola solo se non tocca publisher, token, code, log, cancellazioni o workflow; poi il run viene rilanciato per
+verifica. Issue con etichetta `alert` solo se non si ripara. Niente doppi post: i rilanci leggono i log dalla cima di
+main. Limiti: 1 autofix per workflow ogni 20 ore, 4 al giorno (`logs/autofix-log.jsonl`). Spegnere: variabile
+`SELF_HEAL=false` (tutto) o `AUTOFIX=false` (solo la correzione con LLM).
+
 ## Spegnere tutto (reversibile)
 Actions → publish → "Disable workflow" (oppure `gh workflow disable publish --repo cosmosinnumbers/cosmos-automation`).
 

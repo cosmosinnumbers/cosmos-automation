@@ -26,6 +26,7 @@ jobs:
       TIKTOK_JSON: ${{ secrets.TIKTOK_JSON }}
       TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
       TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+      TIKTOK_REDIRECT_URI: ${{ secrets.TIKTOK_REDIRECT_URI }}
       GH_SECRETS_TOKEN: ${{ secrets.GH_SECRETS_TOKEN }}
     steps:
       - uses: actions/checkout@v7

@@ -32,7 +32,7 @@ def load(name: str) -> dict:
     if name == "tiktok" and os.environ.get("TIKTOK_CLIENT_KEY"):  # first setup: two plain secrets, no JSON to type
         return {"client_key": os.environ["TIKTOK_CLIENT_KEY"].strip(),
                 "client_secret": os.environ.get("TIKTOK_CLIENT_SECRET", "").strip(),
-                "redirect_uri": os.environ.get("TIKTOK_REDIRECT_URI", "https://cosmosinnumbers.github.io/tiktok-callback.html")}
+                "redirect_uri": (os.environ.get("TIKTOK_REDIRECT_URI") or "https://cosmosinnumbers.github.io/tiktok-callback.html").strip()}
     p = LOCAL_SECRETS / f"{name}.json"
     if not p.exists():
         sys.exit(f"Missing credentials: secret {name.upper()}_JSON or file {p}")

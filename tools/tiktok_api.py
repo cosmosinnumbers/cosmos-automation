@@ -5,14 +5,16 @@
   python tiktok_api.py refresh                        new access token (24 h) from the refresh token (365 days, may rotate)
   python tiktok_api.py check                          creator info: nickname, allowed privacy levels, max video length
   python tiktok_api.py post <mp4|url> "<caption>" [--ref NAME] [--go]
-                                                      DRY-RUN by default. Public, comments/duet/stitch on,
-                                                      commercial disclosure "Your brand" (brand_organic_toggle).
+                                                      DRY-RUN by default. Public, comments/duet/stitch on, NO
+                                                      commercial content disclosure (owner rule 26/10/2026), AI label on.
   python tiktok_api.py next [--go]                    publish the next due item of queues/tiktok-queue.json
 
 Credentials: secret TIKTOK_JSON or secrets/tiktok.json (client_key, client_secret, redirect_uri, open_id,
 access_token, expires_at, refresh_token, refresh_expires_at), see creds.py. Never printed.
-AI label: off by default (owner decision 24/10/2026). TIKTOK_AIGC_LABEL=true (env) or "aigc_label": true in the
-config sets is_aigc. The text disclosure in every caption (synthetic voice, AI-assisted script, human review) stays.
+Owner rules (26/10/2026, CLAUDE.md): never "commercial content" / "Your brand" (brand_organic_toggle and
+brand_content_toggle always false: with them on, posts can no longer be edited or deleted from desktop); AI label ON
+(is_aigc true; TIKTOK_AIGC_LABEL=false is the only way to turn it off); caption with "Full video on YouTube" and no
+product, link or code (tools/post_qc.py blocks it). The text disclosure in every caption stays.
 Docs (checked 24/10/2026, pages updated 4/08/2026): developers.tiktok.com/doc/content-posting-api-reference-direct-post,
 /doc/oauth-user-access-token-management. Unaudited clients can only post SELF_ONLY to private accounts.
 Pacing: max 2 posts per day (13:00 data Short + 21:00 news Short), at least 3 h apart. Log logs/tiktok-publish-log.jsonl.
@@ -45,8 +47,8 @@ def cfg():
 
 
 def aigc(c):
-    env = os.environ.get("TIKTOK_AIGC_LABEL")
-    return (env.lower() == "true") if env else bool(c.get("aigc_label", False))
+    env = os.environ.get("TIKTOK_AIGC_LABEL", "").strip()
+    return (env.lower() != "false") if env else bool(c.get("aigc_label", True))
 
 
 def oauth(data):
@@ -108,10 +110,11 @@ def post(src, caption, ref, go):
     info = creator()
     print("account:", info.get("creator_nickname"), "| privacy options:", info.get("privacy_level_options"))
     if "PUBLIC_TO_EVERYONE" not in info.get("privacy_level_options", []):
-        sys.exit("PUBLIC_TO_EVERYONE not allowed for this client/account (unaudited client or private account).")
+        sys.exit("PUBLIC_TO_EVERYONE not allowed for this client/account: the TikTok app is not audited yet (unaudited "
+                 "clients can only post privately to private accounts). Nothing sent.")
     post_info = {"title": caption, "privacy_level": "PUBLIC_TO_EVERYONE", "disable_comment": False,
                  "disable_duet": False, "disable_stitch": False, "brand_content_toggle": False,
-                 "brand_organic_toggle": True, "is_aigc": aigc(c)}
+                 "brand_organic_toggle": False, "is_aigc": aigc(c)}
     verdict = pacing()
     print(json.dumps({k: v for k, v in post_info.items() if k != "title"}), "|", caption[:80].replace("\n", " "))
     print(verdict or "Pacing: OK")
@@ -186,15 +189,24 @@ def main():
         store(c, oauth({"client_key": c["client_key"], "client_secret": c["client_secret"], "grant_type": "authorization_code",
                         "code": urllib.parse.unquote(a[1]), "redirect_uri": c["redirect_uri"]}))
         print("TikTok tokens saved (access 24 h, refresh 365 days).")
+        sys.argv[1:] = ["check"]
+        main()
     elif cmd == "refresh":
         c = cfg()
         store(c, oauth({"client_key": c["client_key"], "client_secret": c["client_secret"],
                         "grant_type": "refresh_token", "refresh_token": c["refresh_token"]}))
         print("TikTok access token refreshed.")
     elif cmd == "check":
+        c = cfg()
+        if not c.get("refresh_token"):
+            print("TikTok: app keys present, account not authorised yet (run tiktok-auth without a code for the link).")
+            return
         i = creator()
         print({k: i.get(k) for k in ("creator_nickname", "creator_username", "privacy_level_options",
                                      "max_video_post_duration_sec", "comment_disabled", "duet_disabled", "stitch_disabled")})
+        public = "PUBLIC_TO_EVERYONE" in i.get("privacy_level_options", [])
+        print(f"public posts via API: {'YES (app audited)' if public else 'NO (app not audited: private only)'}")
+        print(f"refresh token valid until {time.strftime('%Y-%m-%d', time.gmtime(c.get('refresh_expires_at', 0)))}")
     elif cmd == "post":
         go = "--go" in a
         rest = [x for x in a[1:] if x != "--go"]

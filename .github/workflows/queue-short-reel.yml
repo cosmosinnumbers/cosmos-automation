@@ -1,4 +1,5 @@
 # The daily Short (shorts-build release) becomes IG Reel, FB Reel, IG Story and FB Story in the Meta queue (30/10/2026);
+# and, with TIKTOK_ENABLED=true, the TikTok post at 21:00 (queues/tiktok-queue.json, 1/11/2026);
 # publish.yml publishes them at the minute, meta_api.guard() keeps the anti-ban limits. No Claude, no PC. Switch off with the repo variable SHORT_REEL_ENABLED=false.
 name: queue-short-reel
 
@@ -34,6 +35,7 @@ jobs:
       - name: Queue the Reel
         env:
           GH_TOKEN: ${{ github.token }}
+          TIKTOK_ENABLED: ${{ vars.TIKTOK_ENABLED || 'false' }}
         run: |
           args=()
           [ -n "${{ inputs.tag }}" ] && args+=(--tag "${{ inputs.tag }}")
@@ -45,7 +47,7 @@ jobs:
       - name: Commit the queue
         run: |
           git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
-          git add queues/meta-queue.json
+          git add queues/meta-queue.json queues/tiktok-queue.json
           git add -A media
           git diff --cached --quiet && exit 0
           git commit -m "coda Meta: Reel IG e FB e Storie dello Short del giorno"

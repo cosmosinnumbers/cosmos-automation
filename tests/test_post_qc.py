@@ -133,6 +133,21 @@ def test_data_post_reserve_is_valid():
     assert t.data_post(datetime(2026, 11, 1), used, SHEET)["ref"] != used[0]["ref"]  # never the same pair twice
 
 
+def test_tiktok_caption_and_flags():
+    import os
+    import queue_short_reel
+    import tiktok_api
+    cap = queue_short_reel.tiktok_caption("Saturn Would Float in a Bathtub #shorts")
+    assert errs(cap, platform="tiktok", kind="reel") == [] and "#shorts" not in cap
+    os.environ.pop("TIKTOK_AIGC_LABEL", None)
+    assert tiktok_api.aigc({}) is True  # AI label on unless switched off explicitly
+    os.environ["TIKTOK_AIGC_LABEL"] = "false"
+    assert tiktok_api.aigc({}) is False
+    os.environ.pop("TIKTOK_AIGC_LABEL")
+    src = Path(tiktok_api.__file__).read_text("utf-8")
+    assert '"brand_organic_toggle": True' not in src and '"brand_content_toggle": True' not in src
+
+
 def test_kind_of():
     assert q.kind_of({"ref": "th-quiz-1101-density-min", "poll": ["a", "b"]}, "threads") == "quiz"
     assert q.kind_of({"ref": "th-a1031-iss"}, "threads") == "video"

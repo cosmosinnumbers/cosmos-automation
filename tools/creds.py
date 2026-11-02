@@ -29,6 +29,10 @@ def load(name: str) -> dict:
     env = os.environ.get(f"{name.upper()}_JSON")
     if env:
         return json.loads(env)
+    if name == "tiktok" and os.environ.get("TIKTOK_CLIENT_KEY"):  # first setup: two plain secrets, no JSON to type
+        return {"client_key": os.environ["TIKTOK_CLIENT_KEY"].strip(),
+                "client_secret": os.environ.get("TIKTOK_CLIENT_SECRET", "").strip(),
+                "redirect_uri": (os.environ.get("TIKTOK_REDIRECT_URI") or "https://cosmosinnumbers.github.io/tiktok-callback.html").strip()}
     p = LOCAL_SECRETS / f"{name}.json"
     if not p.exists():
         sys.exit(f"Missing credentials: secret {name.upper()}_JSON or file {p}")
@@ -37,7 +41,7 @@ def load(name: str) -> dict:
 
 def save(name: str, data: dict):
     var = f"{name.upper()}_JSON"
-    if os.environ.get(var):
+    if os.environ.get(var) or os.environ.get("GITHUB_ACTIONS"):  # in Actions the secret is created if missing
         tok, repo = os.environ.get("GH_SECRETS_TOKEN"), os.environ.get("GITHUB_REPOSITORY")
         if not (tok and repo):
             sys.exit(f"Refreshed {name} token could not be saved: GH_SECRETS_TOKEN not configured.")

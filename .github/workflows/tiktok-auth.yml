@@ -1,0 +1,53 @@
+# TikTok: connect @cosmosinnumbers once, then check what the app may do (1/11/2026). Manual only.
+# 1) Run with "code" empty: prints the authorisation link (needs secrets TIKTOK_CLIENT_KEY and TIKTOK_CLIENT_SECRET).
+# 2) Open the link on the phone logged in as @cosmosinnumbers, approve: the page tiktok-callback.html shows a code.
+# 3) Run again with that code (valid a few minutes): tokens are saved in the secret TIKTOK_JSON (GH_SECRETS_TOKEN),
+#    then "check" says whether public posts are allowed (only after TikTok's audit of the app).
+# Never prints tokens or keys.
+name: tiktok-auth
+
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: "Code shown by tiktok-callback.html (empty = print the link, or check if already connected)"
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  auth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONIOENCODING: utf-8
+      TZ: Europe/Rome
+      TIKTOK_JSON: ${{ secrets.TIKTOK_JSON }}
+      TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+      TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+      TIKTOK_REDIRECT_URI: ${{ secrets.TIKTOK_REDIRECT_URI }}
+      GH_SECRETS_TOKEN: ${{ secrets.GH_SECRETS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.12"}
+      - run: pip install -q -r requirements.txt
+      - name: Link, connection or check
+        env:
+          IN_CODE: ${{ inputs.code }}
+        run: |
+          if [ -z "$TIKTOK_JSON" ] && [ -z "$TIKTOK_CLIENT_KEY" ]; then
+            echo "Missing secrets TIKTOK_CLIENT_KEY and TIKTOK_CLIENT_SECRET (developers.tiktok.com -> app -> Credentials)."
+            exit 1
+          fi
+          if [ -n "$IN_CODE" ]; then
+            echo "::add-mask::$IN_CODE"
+            python tools/tiktok_api.py setup "$IN_CODE"   # saves TIKTOK_JSON, then runs the check
+            exit 0
+          fi
+          if [ -n "$TIKTOK_JSON" ]; then
+            python tools/tiktok_api.py check
+          else
+            python tools/tiktok_api.py auth-url
+          fi

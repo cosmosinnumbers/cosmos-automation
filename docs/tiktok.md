@@ -1,5 +1,21 @@
 # TikTok: Content Posting API (Direct Post), verifica del 24/10/2026
 
+## Stato e collegamento (1/11/2026)
+- Il sito ha il file di verifica TikTok del dominio (`tiktok…txt` su cosmosinnumbers.github.io); nel repo il segreto
+  `TIKTOK_JSON` è ancora vuoto e `TIKTOK_ENABLED` è false.
+- Regole del Titolare (26/10/2026) ora nel codice: `brand_organic_toggle` e `brand_content_toggle` sempre false
+  (mai "contenuti commerciali"), etichetta IA attiva (`is_aigc`), didascalia con "Full video on YouTube" e senza
+  prodotto/link/codici (`post_qc.py` la blocca altrimenti).
+- Collegamento, tutto da telefono:
+  1. developers.tiktok.com → app → Login Kit: Redirect URI `https://cosmosinnumbers.github.io/tiktok-callback.html`;
+     prodotto Content Posting API con Direct Post attivo, scope `video.publish`.
+  2. Segreti del repo (Settings → Secrets → Actions): `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`.
+  3. Actions → tiktok-auth → Run workflow senza codice: stampa il link. Aprirlo come @cosmosinnumbers e approvare;
+     la pagina mostra un codice. Di nuovo tiktok-auth, con il codice: salva `TIKTOK_JSON` e dice se i post pubblici
+     sono permessi (solo con app revisionata da TikTok).
+  4. Poi variabile `TIKTOK_ENABLED=true`: lo Short del giorno entra in `queues/tiktok-queue.json` alle 21:00
+     (queue_short_reel.py) e publish.yml lo pubblica, con controllo qualità e pacing (max 2 al giorno, 3 h).
+
 Fonti (tutte con "Last updated August 4, 2026"):
 - https://developers.tiktok.com/doc/content-posting-api-get-started
 - https://developers.tiktok.com/doc/content-posting-api-reference-direct-post

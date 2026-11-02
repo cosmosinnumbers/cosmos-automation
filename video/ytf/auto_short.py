@@ -31,6 +31,7 @@ from pathlib import Path
 import requests
 
 sys.path.insert(0, str(Path(__file__).parent))
+import claude_cli  # noqa: E402
 import glm  # noqa: E402
 import stock  # noqa: E402
 from common import ROOT, media_duration, save_yaml  # noqa: E402
@@ -133,6 +134,10 @@ def gemini_models(key) -> list[str]:
 
 def gemini(messages, search=True):
     """(raw text, parsed JSON). search=True uses Google Search grounding; a 429 there means no grounding quota."""
+    if not search and os.environ.get("LLM_FIRST") == "claude" and claude_cli.available():
+        out = claude_cli.chat(messages)   # repo variable LLM_FIRST=claude: Claude (subscription) writes first
+        if out:
+            return out
     if not search and os.environ.get("LLM_FIRST") == "glm" and glm.available():
         out = glm.chat(messages)   # repo variable LLM_FIRST=glm: GLM writes first, Gemini and Groq are the fallbacks
         if out:
@@ -207,6 +212,10 @@ def backup_llm(messages):
     without them, GitHub Models with the repo token (on 30/10/2026 it answered a bare "OK": treated as unavailable).
     (raw text, parsed JSON) or None.
     GLM (secret GLM_API_KEY, video/ytf/glm.py) comes first when the key exists: the strongest writer of the backups."""
+    if claude_cli.available():
+        out = claude_cli.chat(messages)
+        if out:
+            return out
     if glm.available():
         out = glm.chat(messages)
         if out:

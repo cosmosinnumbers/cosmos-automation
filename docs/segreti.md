@@ -45,3 +45,12 @@ Senza questo token il workflow pubblica lo stesso, ma il rinnovo di Threads fall
 ("GH_SECRETS_TOKEN not configured") e il token andrebbe rinnovato a mano dal PC entro il 15/12/2026.
 
 - `GLM_API_KEY` (+ facoltativi `GLM_BASE_URL`, `GLM_MODELS`): modello GLM di Z.ai come scrittore/revisore/regista, vedi docs/glm.md
+
+## Claude per scrivere e controllare i testi (abbonamento)
+- `CLAUDE_CODE_OAUTH_TOKEN`: lo crei sul tuo PC con `claude setup-token` (serve l'abbonamento Pro/Max) e lo metti con
+  `gh secret set CLAUDE_CODE_OAUTH_TOKEN -R cosmosinnumbers/cosmos-automation`. Consuma i limiti del tuo abbonamento.
+  In alternativa `ANTHROPIC_API_KEY` (a consumo).
+- Facoltativo: variabile `CLAUDE_MODEL` (default `sonnet`) e variabile `LLM_FIRST=claude` per farlo scrivere prima di Gemini.
+- Come funziona: `video/ytf/claude_cli.py` usa la CLI di Claude Code (si installa da sola al primo uso). Ordine dei
+  fornitori senza `LLM_FIRST`: Gemini (con ricerca) → Claude → GLM → Groq/xAI. Il revisore dei video lunghi è Claude,
+  poi GLM, poi Groq. Senza il secret non cambia nulla. Prova: lancia il workflow `backup-llm-check`.

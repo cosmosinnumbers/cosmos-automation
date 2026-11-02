@@ -30,6 +30,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 import auto_short as a  # noqa: E402
+import claude_cli  # noqa: E402
 import glm  # noqa: E402
 import qc  # noqa: E402
 import stock  # noqa: E402
@@ -142,7 +143,8 @@ def llm(msgs: list) -> tuple[str, dict]:
                 return text, json.loads(text[text.index("{"): text.rindex("}") + 1])
             except (ValueError, KeyError, IndexError, requests.RequestException) as e:
                 print(f"  Gemini {m}: unusable answer ({type(e).__name__})", flush=True)
-    out = (glm.chat(msgs, max_tokens=32000, timeout=600) if glm.available() else None) or a.backup_llm(msgs)
+    out = ((claude_cli.chat(msgs, timeout=900) if claude_cli.available() else None)
+           or (glm.chat(msgs, max_tokens=32000, timeout=600) if glm.available() else None) or a.backup_llm(msgs))
     if not out:
         sys.exit("No writer available (Gemini, GLM and backup).")
     return out
@@ -335,7 +337,9 @@ def review(spec: dict, sources: list[dict]) -> list[str]:
     msgs = [{"role": "user", "parts": [{"text": REVIEW.format(sources=src, script=scr)}]}]
     # the reviewer is GLM with reasoning on (the strongest model, and not the Gemini that wrote the script) when
     # GLM_API_KEY exists; else Groq/xAI as before
-    out = (glm.chat(msgs, thinking=True, temperature=0.2, timeout=300) if glm.available() else None) or a.backup_llm(msgs)
+    out = ((claude_cli.chat(msgs, timeout=600) if claude_cli.available() else None)
+           or (glm.chat(msgs, thinking=True, temperature=0.2, timeout=300) if glm.available() else None)
+           or a.backup_llm(msgs))
     if not out:
         _, j = a.gemini(msgs, search=False)
     else:

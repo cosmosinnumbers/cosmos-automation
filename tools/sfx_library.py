@@ -52,7 +52,8 @@ def token() -> str | None:
         return None
     r = requests.post("https://api.openverse.org/v1/auth_tokens/token/", headers=HEAD, timeout=45,
                       data={"grant_type": "client_credentials", "client_id": cid, "client_secret": sec})
-    r.raise_for_status()
+    if r.status_code != 200:
+        raise RuntimeError(f"HTTP {r.status_code}: {r.text[:200]}")
     return r.json()["access_token"]
 
 
@@ -93,7 +94,7 @@ def main():
     try:
         tok = token()
     except Exception as e:  # noqa: BLE001 - Openverse is down or the key is not confirmed yet
-        print(f"Openverse: token request failed ({type(e).__name__}): nothing downloaded this run, try again later "
+        print(f"Openverse: token request failed ({type(e).__name__}: {str(e)[:220]}): nothing downloaded this run, try again later "
               "(registration mail confirmed? key valid?)", flush=True)
         return
     if tok:

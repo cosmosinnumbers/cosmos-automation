@@ -207,7 +207,7 @@ def main():
                 if x is None:
                     print("   unusable audio")
                     continue
-                name = f"openverse/{kind}_{re.sub(r'[^a-z0-9]', '', it['id'].lower())[:12]}.wav"
+                name = f"openverse/{kind}_{re.sub(r'[^a-z0-9]', '', it['id'].lower())[:24]}.wav"
                 sf.write(str(OUT / name), x, sfx.SR, subtype="PCM_16")
                 reg.append({"id": it["id"], "kind": kind, "file": name, "title": it["title"],
                             "creator": it.get("creator"), "license": "cc0",

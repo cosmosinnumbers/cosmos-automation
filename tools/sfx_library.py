@@ -93,10 +93,9 @@ def main():
     (OUT / "openverse").mkdir(parents=True, exist_ok=True)
     try:
         tok = token()
-    except Exception as e:  # noqa: BLE001 - Openverse is down or the key is not confirmed yet
-        print(f"Openverse: token request failed ({type(e).__name__}: {str(e)[:220]}): nothing downloaded this run, try again later "
-              "(registration mail confirmed? key valid?)", flush=True)
-        return
+    except Exception as e:  # noqa: BLE001 - Openverse's token service is down (HTTP 500) or the key is not confirmed
+        print(f"Openverse: token request failed ({type(e).__name__}: {str(e)[:120]}): trying anonymous searches", flush=True)
+        tok = None
     if tok:
         HEAD["Authorization"] = f"Bearer {tok}"
         print("Openverse: authenticated (OPENVERSE_CLIENT_ID/SECRET)", flush=True)

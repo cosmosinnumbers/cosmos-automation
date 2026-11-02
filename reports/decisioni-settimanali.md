@@ -1,5 +1,22 @@
 # Decisioni settimanali (GitHub Actions)
 
+## 02/11/2026: scorecard `reports/scorecard-2026-11-02.md`
+### Interpretazione
+- Dal 2026-10-27 al 2026-11-02, le visite e le vendite su Gumroad per il prodotto LOOK UP non sono state misurate.
+- I clic sul sito web da Instagram sono stati 0 tra il 2026-10-27 e il 2026-11-02, su un campione piccolo di 4 follower e 172 di copertura dell'account.
+- Su YouTube, i video Short hanno generato 1.742 visualizzazioni nella settimana (su 5.200 totali), ma i clic verso link esterni non sono esposti dalle API.
+- Su Threads, i post di testo hanno ottenuto 465 visualizzazioni nella settimana su un totale di 19 post pubblicati, ma la conversione verso il prodotto non è tracciata.
+
+### Decisioni (ipotesi da testare)
+- Nessuna decisione: Le visite e le vendite di LOOK UP su Gumroad non sono misurate e i clic sul sito da Instagram sono stati 0 dal 2026-10-27 al 2026-11-02. Non ci sono dati di traffico o conversione sufficienti per guidare decisioni di business.
+
+### Prossimo test utile
+- Inserire un link per il prodotto LOOK UP nei commenti in evidenza dei prossimi 5 YouTube Shorts per verificare se genera almeno 1 visita o vendita su Gumroad entro 7 giorni.
+
+### Idee dai competitor
+- Aprire uno Short nei primi 3 secondi con un confronto grafico di dimensioni o distanze spaziali basato su dati numerici per fermare lo scorrimento.
+- Strutturare un contenuto breve attorno a un paradosso ingegneristico dello spazio (come una sonda o un contenitore bloccato) usando solo animazioni di dati e testo a schermo.
+
 ## 30/10/2026: scorecard `reports/scorecard-2026-10-30.md`
 ### Interpretazione
 - I risultati di business non sono misurabili: al 2026-10-30 le vendite e i ricavi di LOOK UP su Gumroad non sono misurati per mancanza di token, le visite non sono esposte dalle API e i click al sito da Instagram sono fermi a 0 sia il 2026-10-27 sia il 2026-10-30.

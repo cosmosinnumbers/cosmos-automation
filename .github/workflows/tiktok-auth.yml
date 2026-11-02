@@ -1,6 +1,6 @@
 # TikTok: connect @cosmosinnumbers once, then check what the app may do (1/11/2026). Manual only.
 # 1) Run with "code" empty: prints the authorisation link (needs secrets TIKTOK_CLIENT_KEY and TIKTOK_CLIENT_SECRET).
-# 2) Open the link on the phone logged in as @cosmosinnumbers, approve: the page tiktok-callback.html shows a code.
+# 2) Open the link on the phone logged in as @cosmosinnumbers, approve: the page tiktok-callback.html shows the redirect URL with code= and state=.
 # 3) Run again with that code (valid a few minutes): tokens are saved in the secret TIKTOK_JSON (GH_SECRETS_TOKEN),
 #    then "check" says whether public posts are allowed (only after TikTok's audit of the app).
 # Never prints tokens or keys.

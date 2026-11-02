@@ -105,12 +105,13 @@ def search_commons(q: str, n: int = 20) -> list[dict]:
 
 def search_freesound(q: str, n: int = 20) -> list[dict]:
     """Freesound (free key FREESOUND_API_KEY): only licence 'Creative Commons 0'; the HQ preview is downloaded."""
-    key = os.environ.get("FREESOUND_API_KEY")
+    key = (os.environ.get("FREESOUND_API_KEY") or "").strip().strip("\"'")
     if not key:
         return []
-    params = {"query": q, "filter": 'license:"Creative Commons 0" duration:[0 TO 10]', "page_size": n, "token": key,
+    params = {"query": q, "filter": 'license:"Creative Commons 0" duration:[0 TO 10]', "page_size": n,
               "fields": "id,name,username,license,duration,url,previews"}
-    r = requests.get("https://freesound.org/apiv2/search/text/", params=params, headers=HEAD, timeout=30)
+    r = requests.get("https://freesound.org/apiv2/search/text/", params=params,
+                     headers={**HEAD, "Authorization": f"Token {key}"}, timeout=30)
     if r.status_code == 429:
         raise Throttled(r.headers.get("Retry-After", "?"))
     if r.status_code in (401, 403):

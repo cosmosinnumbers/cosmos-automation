@@ -286,6 +286,32 @@
   "answer": "Uranus, 1270 kg per cubic meter (NASA Planetary Fact Sheet)"
  },
  {
+  "ref": "th-news-1102-november-night-sky",
+  "at": "2026-11-02 12:00",
+  "tag": "NASA",
+  "text": "November’s Night Sky Notes: Light-Day Away\n\nOn November 18, 2026, the Voyager 1 spacecraft will reach a historic milestone: one light-day from Earth, the farthest humanity has ever explored.\n\nSource: NASA (30 Oct 2026).",
+  "replies": [
+   "By the 1980s, the two probes went their separate ways at Saturn.\n\nhttps://science.nasa.gov/solar-system/skywatching/night-sky-network/novembers-night-sky-notes-light-day-away/"
+  ],
+  "news_title": "November’s Night Sky Notes: Light-Day Away"
+ },
+ {
+  "ref": "th-quiz-1102-mean-temperature-max",
+  "at": "2026-11-02 16:00",
+  "tag": "Astronomy",
+  "poll": [
+   "Saturn",
+   "Mars",
+   "Neptune"
+  ],
+  "text": "Yesterday's answer: Uranus, 1270 kg per cubic meter (NASA Planetary Fact Sheet).\n\nToday's quiz 🌡️ Which of these planets is the hottest on average?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Mean Temperature-0",
+  "answer": "Mars, -65 °C on average (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-a1102-mars-elongated-cloud",
   "at": "2026-11-02 21:00",
   "tag": "Mars",

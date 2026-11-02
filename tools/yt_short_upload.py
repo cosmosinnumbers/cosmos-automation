@@ -71,7 +71,7 @@ def main():
     with tempfile.TemporaryDirectory() as d:
         gh("release", "download", ref, "--repo", REPO, "-p", "*.mp4", "-p", "upload.md", "-D", d)
         md = (Path(d) / "upload.md").read_text("utf-8")
-        mp4 = next(Path(d).glob("*.mp4"))
+        mp4 = next(p for p in Path(d).glob("*.mp4") if not p.name.endswith("_social.mp4"))  # YouTube: never the social variant
         title = section(md, "Title").splitlines()[0].strip()
         desc = section(md, "Description")
         if not title or "LOOK UP" not in desc:

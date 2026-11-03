@@ -678,8 +678,8 @@ def main():
                      {"role": "user", "parts": [{"text": FIX.format(missing=", ".join(missing) or "none") +
                                                  (" Source problems: " + "; ".join(problems) if problems else "")}]}]
             raw, spec = gemini(msgs, search=search)
-            if not spec:
-                sys.exit("Gemini unavailable for the correction: no Short today.")
+            if not spec or not spec.get("narration"):
+                sys.exit("the rewrite came back without a narration (" + str((spec or {}).get("skip", "no JSON"))[:120] + "): no Short today.")
             missing, problems, report = check(spec)
             if "--reserve" in a:
                 problems += reserve_problems(spec)

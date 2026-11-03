@@ -30,6 +30,7 @@ TZ = ZoneInfo("Europe/Rome")
 LOG = "youtube-publish-log.jsonl"
 REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
 UPLOAD_AT = os.environ.get("UPLOAD_AT", "21:00")
+PREFIX = os.environ.get("SHORT_PREFIX", "a")   # "b" = second Short of the day (hot news), public at 15:00
 DRY = "--dry-run" in sys.argv
 
 
@@ -42,7 +43,7 @@ def gh(*a) -> str:
 
 def release(now, tag):
     rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=20"))
-    return next((r for r in rels if (r["tag_name"] == tag if tag else r["tag_name"].startswith(f"a{now:%m%d}-"))), None)
+    return next((r for r in rels if (r["tag_name"] == tag if tag else r["tag_name"].startswith(f"{PREFIX}{now:%m%d}-"))), None)
 
 
 def section(md, name):
@@ -66,7 +67,7 @@ def main():
     h, m = map(int, UPLOAD_AT.split(":"))
     target = now.replace(hour=h, minute=m, second=0, microsecond=0)
     if not (tag or "--now" in a) and now < target - timedelta(minutes=25):
-        print(f"{ref}: ready, upload at {UPLOAD_AT} (slot 20:45).")
+        print(f"{ref}: ready, upload at {UPLOAD_AT}.")
         return
     with tempfile.TemporaryDirectory() as d:
         gh("release", "download", ref, "--repo", REPO, "-p", "*.mp4", "-p", "upload.md", "-D", d)

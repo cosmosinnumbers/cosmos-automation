@@ -1,0 +1,60 @@
+# Weekly running order for the owner (03/11/2026: "devo avere ogni settimana la scaletta di cosa pubblichiamo").
+# Sunday 18:00 Italian time (winter; summer time from 28/03/2027: "0 16 * * 0"): tools/scaletta.py writes
+# reports/scaletta-<YYYY-Www>.md for the week starting the next day and opens a GitHub issue "Scaletta ..." assigned
+# to Redwraith (notification on the phone); the previous scaletta issue is closed. Publishes nothing.
+# Run workflow by hand with a start date (YYYY-MM-DD) to get the running order of any week. Off switch: SCALETTA=false.
+name: scaletta
+
+on:
+  schedule:
+    - cron: "0 17 * * 0"
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "First day of the week (YYYY-MM-DD, empty = next Monday)"
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: scaletta
+
+jobs:
+  scaletta:
+    if: vars.SCALETTA != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.12"}
+      - name: Running order of the week
+        id: s
+        env:
+          IN_START: ${{ inputs.start }}
+        run: |
+          args=(); [ -n "$IN_START" ] && args+=(--start "$IN_START")
+          python tools/scaletta.py "${args[@]}" | tee /tmp/out.txt
+          f=$(grep '^written ' /tmp/out.txt | cut -d' ' -f2); echo "file=$f" >> "$GITHUB_OUTPUT"
+      - name: Issue for the owner (phone notification)
+        env:
+          F: ${{ steps.s.outputs.file }}
+        run: |
+          title=$(head -1 "$F" | sed 's/^# //')
+          gh label create scaletta --color 1D76DB --description "Scaletta settimanale delle pubblicazioni" 2>/dev/null || true
+          for n in $(gh issue list --label scaletta --state open --json number --jq '.[].number'); do gh issue close "$n" -c "Sostituita dalla scaletta nuova." || true; done
+          gh issue create --title "$title" --body-file "$F" --label scaletta --assignee Redwraith || gh issue create --title "$title" --body-file "$F" --label scaletta
+      - name: Save the report
+        run: |
+          git config user.name "cosmos-automation[bot]"; git config user.email "cosmos-automation@users.noreply.github.com"
+          git add reports; git diff --cached --quiet && exit 0
+          git commit -q -m "scaletta: settimana $(date +%G-W%V -d '+1 day')"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done; exit 1

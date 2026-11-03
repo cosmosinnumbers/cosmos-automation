@@ -119,6 +119,11 @@ jobs:
           title=$(python -c "import json,os;print(json.load(open(os.environ['DIR']+'/result.json'))['title'])")
           cp "$DIR/short/short.yaml" "$DIR/material/assets.yaml" "$DIR/material/script.yaml" "$DIR/"
           mv "$DIR/assets.yaml" "$DIR/material-assets.yaml"; mv "$DIR/script.yaml" "$DIR/material-script.yaml"
+          # Phase D of the viral plan: automatic video QC. Hard errors stop the release (variable QC_BLOCK=false only reports).
+          qc=0
+          python tools/video_qc.py "$DIR/short/out/$ID.mp4" --kind short --script "$DIR/result.json" --md "$DIR/qc.md" || qc=$?
+          cat "$DIR/qc.md" >> "$DIR/factcheck.md" || true
+          if [ "$qc" != "0" ] && [ "${{ vars.QC_BLOCK }}" != "false" ]; then echo "::error::video QC failed, no release"; exit 1; fi
           python tools/phone_notes.py "$DIR/short/out/upload.md" "$DIR/factcheck.md" "$DIR/phone.md"
           social=(); [ -f "$DIR/short/out/${ID}_social.mp4" ] && social=("$DIR/short/out/${ID}_social.mp4")
           gh release create "$ID" --title "$title" --notes-file "$DIR/phone.md" \

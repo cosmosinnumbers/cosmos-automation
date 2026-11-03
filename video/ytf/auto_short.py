@@ -699,7 +699,7 @@ def main():
     dur = media_duration(mp4)
     if not 20 <= dur <= (45 if "--reserve" in a else 60):
         sys.exit(f"QC: duration {dur:.1f}s outside 20-60 s")
-    meta = {"id": sid, "title": title, "duration": round(dur, 1), "mp4": str(mp4),
+    meta = {"id": sid, "title": title, "duration": round(dur, 1), "mp4": str(mp4), "narration": spec["narration"],
             "upload": str(short_dir / "out" / "upload.md"), "factcheck": str(base / "factcheck.md")}
     (base / "result.json").write_text(json.dumps(meta, indent=1, ensure_ascii=False), "utf-8")
     gh_out = os.environ.get("GITHUB_OUTPUT")

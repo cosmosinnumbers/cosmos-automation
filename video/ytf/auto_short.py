@@ -72,6 +72,7 @@ def format_rules(fmt: str, hook: str) -> str:
     if not lines:
         return ""
     return ("Variant under test today (follow it, it is how we learn what works):\n- " + "\n- ".join(lines) +
+            "\n- Whatever the hook, a measured number from the sources must be in the first or second sentence." +
             '\n- If the sources cannot fit this format, write the best Short you can and add "format_fit": false to the JSON.\n')
 
 
@@ -741,6 +742,28 @@ def footage(spec, news_dir) -> list[dict]:
     return visuals
 
 
+def write_checked(a, today, hint):
+    """Write the Short, fact-check it, one rewrite if needed: (spec, missing numbers, problems, report)."""
+    msgs, raw, spec, search = write_reserve_spec(today) if "--reserve" in a else write_spec(today, hint)
+    if spec.get("skip"):
+        return spec, [], [], ""
+    missing, problems, report = check(spec)
+    if "--reserve" in a:
+        problems += reserve_problems(spec)
+    if missing or problems:
+        print("first draft rejected:", missing, problems)
+        msgs += [{"role": "model", "parts": [{"text": raw}]},
+                 {"role": "user", "parts": [{"text": FIX.format(missing=", ".join(missing) or "none") +
+                                             (" Source problems: " + "; ".join(problems) if problems else "")}]}]
+        raw, spec = gemini(msgs, search=search)
+        if not spec or not spec.get("narration"):
+            return {"skip": "the rewrite came back without a narration (" + str((spec or {}).get("skip", "no JSON"))[:120] + ")"}, [], [], ""
+        missing, problems, report = check(spec)
+        if "--reserve" in a:
+            problems += reserve_problems(spec)
+    return spec, missing, problems, report
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)  # log lines in order in Actions
     global FORMAT_RULES
@@ -756,23 +779,16 @@ def main():
         missing, problems, report = check(spec)
     else:
         hint = f"Prefer this topic if there is fresh news on it: {a[a.index('--topic') + 1]}." if "--topic" in a else ""
-        msgs, raw, spec, search = write_reserve_spec(today) if "--reserve" in a else write_spec(today, hint)
+        spec, missing, problems, report = write_checked(a, today, hint)
+        if (missing or problems or spec.get("skip")) and FORMAT_RULES:
+            # the variant under test did not fit today's material: one plain attempt, never a lost day for a test
+            print("variant failed, plain Short instead:", missing, problems, spec.get("skip", ""))
+            FORMAT_RULES = ""
+            opt = {"source": "fallback", "tried": opt.get("format", "")}   # counted by the weekly cap, never as a result
+            hint = ""
+            spec, missing, problems, report = write_checked(a, today, hint)
         if spec.get("skip"):
             sys.exit(f"Gemini found no space news with real data today: {spec['skip']}")
-        missing, problems, report = check(spec)
-        if "--reserve" in a:
-            problems += reserve_problems(spec)
-        if missing or problems:
-            print("first draft rejected:", missing, problems)
-            msgs += [{"role": "model", "parts": [{"text": raw}]},
-                     {"role": "user", "parts": [{"text": FIX.format(missing=", ".join(missing) or "none") +
-                                                 (" Source problems: " + "; ".join(problems) if problems else "")}]}]
-            raw, spec = gemini(msgs, search=search)
-            if not spec or not spec.get("narration"):
-                sys.exit("the rewrite came back without a narration (" + str((spec or {}).get("skip", "no JSON"))[:120] + "): no Short today.")
-            missing, problems, report = check(spec)
-            if "--reserve" in a:
-                problems += reserve_problems(spec)
     timing["write_s"] = round(time.time() - t0)
     print(report)
     if missing or problems:

@@ -77,7 +77,8 @@ def recent_formats(log: list[dict], today: date, days: int = 7) -> dict:
         except (KeyError, ValueError):
             continue
         if 0 <= (today - d).days < days:
-            f = r.get("labels", {}).get("format")
+            lb = r.get("labels", {})
+            f = lb.get("tried") or lb.get("format")   # a variant that fell back still used its slot
             out[f] = out.get(f, 0) + 1
     return out
 

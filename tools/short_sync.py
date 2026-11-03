@@ -24,7 +24,7 @@ import day_short  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
 DRY = "--dry-run" in sys.argv
-META_KINDS = {"fr": "Reel FB", "si": "Storia IG", "sf": "Storia FB"}  # Reel IG: long-video clips only (owner 03/11/2026)
+META_KINDS = {"sr": "Reel IG", "fr": "Reel FB", "si": "Storia IG", "sf": "Storia FB"}  # compared only for clips (c<MMDD>)
 
 
 def gh(*a) -> str:
@@ -60,6 +60,7 @@ def main():
         print(f"{k}: no Short release for {day:%d/%m}: nothing to compare.")
         return
     want = rel["tag_name"]
+    k = want.split("-", 1)[0]  # a<MMDD> (news Short) or c<MMDD> (clip of a long video)
     of_day = lambda ref: ref.split("-", 1)[1] if ref.startswith(("sr-", "fr-", "si-", "sf-", "th-")) else ref  # noqa: E731
     seen: dict[str, set[str]] = {}
 
@@ -69,7 +70,7 @@ def main():
     th += [of_day(e.get("ref", "")) for e in jsonl("threads-publish-log.jsonl") if e.get("ref", "").startswith(f"th-{k}-") and e.get("k") != "reply"]
     seen["Threads"] = {t for t in th if t.startswith(f"{k}-")}
     meta_refs = [i.get("ref", "") for i in queue("meta-queue.json")] + [e.get("item", "") for e in jsonl("meta-publish-log.jsonl")]
-    for pre, name in META_KINDS.items():
+    for pre, name in (META_KINDS if k.startswith("c") else {}).items():  # news Shorts: Meta is off (owner 03/11/2026)
         seen[name] = {of_day(r) for r in meta_refs if r.startswith(f"{pre}-{k}-")}
 
     problems = []

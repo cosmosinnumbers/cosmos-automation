@@ -24,7 +24,7 @@ import day_short  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
 DRY = "--dry-run" in sys.argv
-META_KINDS = {"fr": "Reel FB", "si": "Storia IG", "sf": "Storia FB"}  # Reel IG: long-video clips only (owner 03/11/2026)
+META_KINDS: dict[str, str] = {}  # Meta (Reel IG/FB, Storie): long-video clips only, not the Short (owner 03/11/2026)
 
 
 def gh(*a) -> str:

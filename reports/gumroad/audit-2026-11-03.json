@@ -1,0 +1,81 @@
+{
+ "user": {
+  "name": "cosmosinnumbers",
+  "bio": "**The universe is stranger than fiction.**\n\nCosmos in Numbers explores space through real NASA and ESA images, verified scientific data, and fascinating discoveries about exoplanets, black holes, and distant worlds.\n\nReal images. Reliable sources. No cosmic fiction.\n\n**Explore our ebooks, digital guides, and educational products to discover the universe beyond the videos.**\n\nReal space. Real data. Infinite discovery.",
+  "url": "https://cosmosinnumbers.gumroad.com",
+  "profile_url": "https://public-files.gumroad.com/ed5bp93qnqkgb8pzczhc23s4k11q",
+  "twitter_handle": null,
+  "display_name": "cosmosinnumbers"
+ },
+ "products": [
+  {
+   "name": "LOOK UP: The Beginner's Stargazing Guide by the Numbers + 2027 Sky Calendar",
+   "description": "<p><strong>You don't need a telescope. You need to know where to look.</strong></p><p>Most people who say \"I can't see anything up there\" never learned where and how to look. LOOK UP is a practical 173-page guide that takes complete beginners from their first night outside to finding another galaxy with binoculars, with every number linked to its source.</p><p><strong>Launch price: $9 instead of $14 with code LAUNCH9, until 30 November 2026.</strong></p><h3>What you'll be able to do</h3><ul>\n<li>Find the planets, the brightest stars and the main constellations on any clear night</li>\n<li>Plan the best nights using the Moon phase, light pollution (Bortle scale) and the weather</li>\n<li>Catch the best meteor showers of 2027 when the Moon won't spoil them</li>\n<li>Watch the total solar eclipse of 2 August 2027 (up to 6 min 23 s of totality) safely</li>\n<li>Photograph the Moon and the stars with the phone you already have</li>\n<li>Choose your first binoculars without wasting money</li>\n</ul><h3>What's inside</h3><ul>\n<li>10 chapters, from your first night out to phone astrophotography</li>\n<li>More than 30 field exercises you do outside, each with the time, kit, steps and the result you should expect</li>\n<li>36 practical tables you can read by red light, plus diagrams</li>\n<li>A month-by-month 2027 sky calendar computed from NASA/JPL ephemeris data: Moon phases, the oppositions of Jupiter and Mars, Mercury's best dates for each hemisphere, and meteor showers ranked with the Moon taken into account</li>\n<li>The 30-Night Challenge: a checklist that takes you from beginner to confident observer</li>\n<li>A printable observing log</li>\n<li>\n<strong>Bonus:</strong> 14 print-ready data posters (planets, exoplanets, the spacecraft leaving our Solar System)</li>\n</ul><h3>Who it's for</h3><p>Curious beginners, parents who want a clear-sky activity with their kids, and anyone who has just bought (or is about to buy) binoculars or a first telescope. If you already run a 10-inch Dobsonian, this book is too basic for you.</p><h3>FAQ</h3><p><strong>Do I need a telescope?</strong> No. Most of the book is naked eye; a chapter helps you choose binoculars if you want them.</p><p><strong>I live in a city. Will it work?</strong> Yes. The Moon, the planets and the bright stars show through light pollution, and the book tells you what to expect at each level of the Bortle scale.</p><p><strong>Southern Hemisphere?</strong> Yes. The book covers both hemispheres where the sky differs.</p><p><strong>What format?</strong> PDF (6×9 in, selectable text) and EPUB, instant download. Read it on your phone outside.</p><p><strong>Not sure yet?</strong> Read Chapter 1 free: <a href=\"http://cosmosinnumbers.github.io/look-up.html\" target=\"_blank\" rel=\"noopener noreferrer nofollow\">cosmosinnumbers.github.io/look-up.htm</a>l</p><p>Written with the help of AI tools and checked against the cited sources (NASA, JPL, IMO, peer-reviewed research). Photos credited (Unsplash License). NASA and the other organisations cited do not endorse this book.</p><p>By Cosmos in Numbers: real space, real data. youtube.com/@CosmosinNumbers</p>",
+   "require_shipping": false,
+   "preview_url": "https://public-files.gumroad.com/gd7cy7axd85s4gy3c5eud7lwbw60",
+   "custom_receipt": null,
+   "customizable_price": false,
+   "custom_permalink": "look-up",
+   "subscription_duration": null,
+   "id": "8WWxtDd6lRqA7wWZ9hkvQg==",
+   "url": null,
+   "price": 1400,
+   "currency": "usd",
+   "taxonomy_id": 266,
+   "category": "other",
+   "category_label": "Other",
+   "short_url": "https://cosmosinnumbers.gumroad.com/l/look-up",
+   "landing_url": "https://cosmosinnumbers.gumroad.com/l/look-up",
+   "thumbnail_url": "https://public-files.gumroad.com/odxcln76suiofperk2whztdkhckw",
+   "tags": [],
+   "formatted_price": "$14",
+   "published": true,
+   "file_info": {},
+   "max_purchase_count": null,
+   "deleted": false,
+   "custom_fields": [],
+   "custom_summary": "173 pages · 30+ outdoor exercises · 2027 sky calendar · 14 bonus posters · no telescope needed",
+   "is_tiered_membership": false,
+   "recurrences": null,
+   "covers": [
+    {
+     "url": "https://public-files.gumroad.com/gd7cy7axd85s4gy3c5eud7lwbw60",
+     "original_url": "https://public-files.gumroad.com/8zeqp4mbzirfvi0t6dmbho6iu47i",
+     "thumbnail": null,
+     "id": "d95e343896e10e263ace2428b484f6a5",
+     "type": "image",
+     "filetype": "png",
+     "width": 670,
+     "height": 1005,
+     "native_width": 1800,
+     "native_height": 2700
+    }
+   ],
+   "main_cover_id": "d95e343896e10e263ace2428b484f6a5",
+   "bundle_products": [],
+   "variants": [],
+   "custom_delivery_url": null,
+   "sales_count": 0,
+   "sales_usd_cents": 0.0,
+   "offer_codes": [
+    {
+     "id": "iB9qUJ0SZfq7X59OYJfmNA==",
+     "name": "COSMOS9",
+     "max_purchase_count": null,
+     "minimum_amount_cents": null,
+     "universal": false,
+     "auto_apply": false,
+     "sale_label": null,
+     "valid_at": "2026-10-23T12:46:44Z",
+     "expires_at": "2026-11-30T14:46:00Z",
+     "currency_type": "usd",
+     "times_used": 0,
+     "amount_cents": 659
+    }
+   ],
+   "variant_categories": [],
+   "custom_fields_api": []
+  }
+ ],
+ "sales_90d": []
+}

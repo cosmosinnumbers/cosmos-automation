@@ -1,0 +1,32 @@
+# Recreate the LOOK UP offer code COSMOS9 with a new discount (tools/gumroad_offer.py). Manual only: it changes a
+# public price, so it runs only from the Actions tab after the owner chose the amount. Default = dry run.
+name: gumroad-offer
+
+on:
+  workflow_dispatch:
+    inputs:
+      off_cents:
+        description: "Discount in cents (500 = $5 off: $14 -> $9)"
+        default: "500"
+      dry_run:
+        description: "Only show what would change"
+        type: boolean
+        default: true
+
+jobs:
+  offer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: pip install -q requests
+      - env:
+          GUMROAD_JSON: ${{ secrets.GUMROAD_JSON }}
+        run: python video/ci_secrets.py
+      - env:
+          OFF: ${{ inputs.off_cents }}
+          DRY: ${{ inputs.dry_run }}
+        run: python tools/gumroad_offer.py --off-cents "$OFF" $([ "$DRY" = "true" ] && echo --dry-run)

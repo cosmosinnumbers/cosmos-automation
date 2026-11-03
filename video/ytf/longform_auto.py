@@ -336,15 +336,20 @@ def script_check(spec: dict) -> list[str]:
     words = len(text.split())
     wmin, wmax = LEN["wmin"], LEN["wmax"]
     if not wmin - 30 <= words <= wmax + 100:
-        p.append(f"narration has {words} words (need {wmin:,}-{wmax:,}: the video must last {LEN['mmin']}-{LEN['mmax']} minutes)")
+        msg = f"narration has {words} words (need {wmin:,}-{wmax:,}: the video must last {LEN['mmin']}-{LEN['mmax']} minutes)"
+        if words < wmin and chs:   # models write short: say exactly how much to add, act by act
+            per = -(-(wmin + 60 - words) // len(chs))
+            acts = ", ".join(f"act {i + 1} {sum(len(b.get('say', '').split()) for b in ch.get('beats', []))} words"
+                             for i, ch in enumerate(chs))
+            msg += (f". ADD about {wmin + 60 - words} words: about {per} more words in EVERY act, i.e. "
+                    f"{max(1, round(per / 22))} new beats of ~22 words each per act, with new facts from the sources "
+                    f"(no padding). Now: {acts}")
+        p.append(msg)
     if not LEN["cmin"] <= len(chs) <= LEN["cmax"]:
         p.append(f"{len(chs)} acts (need {LEN['cmin']}-{LEN['cmax']})")
     recaps = sum(1 for _, b in bs if b.get("recap"))
     if recaps < max(2, LEN["mmin"] // 2 - 1):
         p.append(f"{recaps} recap beats (need one every ~2 minutes: at least {max(2, LEN['mmin'] // 2 - 1)})")
-    sticks = sum(1 for _, b in bs if (b.get("show") or {}).get("stickman"))
-    if sticks < 6:
-        p.append(f"stick man on {sticks} beats (need at least 6, spread through the video)")
     first75 = " ".join(text.split()[:75])
     if "?" not in first75:
         p.append("no question in the first 30 seconds")
@@ -498,6 +503,19 @@ def nasa_asset(query: str, media: str, vdir: Path, key: str, taken: set) -> str 
     return None
 
 
+def add_stickmen(segments: list[dict], want: int = 6) -> int:
+    """The stick man (human scale) on at least `want` image/footage beats, spread through the video: the code adds the
+    missing ones itself (the writers often forget the field), on the beats whose narration talks about size."""
+    have = sum(1 for seg in segments for v in seg["visuals"] if v.get("stickman"))
+    cands = [v for seg in segments for v in seg["visuals"] if v["type"] in ("image", "video") and not v.get("stickman")]
+    need = max(0, want - have)
+    if need and cands:
+        step = len(cands) / need
+        for k in range(min(need, len(cands))):
+            cands[int(k * step)]["stickman"] = {"label": "YOU", "size": "tiny"}
+    return sum(1 for seg in segments for v in seg["visuals"] if v.get("stickman"))
+
+
 def build_folder(spec: dict, sources: list[dict], report: str) -> Path:
     vid = re.sub(r"[^a-z0-9-]", "", spec["id"].lower())[:40] or "video"
     vid = f"{datetime.now():%y%m%d}-{vid}"
@@ -564,6 +582,7 @@ def build_folder(spec: dict, sources: list[dict], report: str) -> Path:
                          "narration": " ".join(says), "visuals": visuals, "weights": weights})
     if real < 6:
         sys.exit(f"Only {real} real NASA visuals found: no long video this week.")
+    add_stickmen(segments)
     thumbs = {}
     for name, t in zip("ABC", spec.get("thumbs", [])[:3]):
         k = nasa_asset(t.get("query", spec["id"]), "image", vdir, f"thumb_{name}", taken) or last_img
@@ -607,12 +626,12 @@ def main():
         topic=p.get("topic"), angle=p.get("angle"), sources=src_block, recap_every=330, wmin=LEN["wmin"], wmax=LEN["wmax"],
         mmin=LEN["mmin"], mmax=LEN["mmax"], chapters=f"{LEN['cmin']} to {LEN['cmax']}", trend_titles=trend_titles())}]}]
     history, scores = [], {}
-    for rnd in range(3):
+    for rnd in range(4):
         raw, spec = llm(msgs)
         problems = fact_check(spec, sources) + script_check(spec)
         if not [x for x in problems if x.startswith("number")]:  # the reviewer only on drafts whose numbers are clean
             problems += review(spec, sources)
-            if rnd < 2 and not problems:   # last round: the critic's score is reported, not a reason to throw the script away
+            if rnd < 3 and not problems:   # last round: the critic's score is reported, not a reason to throw the script away
                 rprobs, scores = retention_review(spec)
                 problems += rprobs
             elif not problems:
@@ -624,7 +643,7 @@ def main():
         msgs += [{"role": "model", "parts": [{"text": raw}]},
                  {"role": "user", "parts": [{"text": FIX.format(problems="\n".join(f"- {x}" for x in problems))}]}]
     else:
-        sys.exit("CHECKS FAILED after 3 drafts: no long video this week.\n" + "\n".join(history))
+        sys.exit("CHECKS FAILED after 4 drafts: no long video this week.\n" + "\n".join(history))
     words = sum(len(b.get("say", "").split()) for _, b in beats(spec))
     report = "\n".join([f"# Controlli automatici ({datetime.now():%Y-%m-%d %H:%M})", "",
                         f"Argomento: {p.get('topic')} ({p.get('angle')})", f"Parole: {words}; capitoli: {len(spec['chapters'])}; "

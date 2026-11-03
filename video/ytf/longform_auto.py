@@ -669,8 +669,9 @@ SOURCES:
 Answer JSON only: {{"beats": [{{"say": "", "show": {{}}}}]}}"""
 
 
-def extend_act(act: dict, short: int, src: list[dict]) -> dict:
-    """Free models write 150-190 words an answer: instead of rewriting a short act, add the missing beats."""
+def extend_act(act: dict, short: int, src: list[dict], sources: list[dict]) -> dict:
+    """Free models write 150-190 words an answer: instead of rewriting a short act, add the missing beats. A new
+    beat is kept only if it passes the fact check on its own and uses a known visual type."""
     k = max(2, -(-short // 22) + 1)
     _, out = llm([{"role": "user", "parts": [{"text": EXTEND.format(
         short=short, k=k, act=json.dumps({"beats": act["beats"]}, ensure_ascii=False),
@@ -679,6 +680,11 @@ def extend_act(act: dict, short: int, src: list[dict]) -> dict:
     for b in new:
         for k2 in ("ask", "spot", "recap"):
             b.pop(k2, None)
+    good = [b for b in new if (b.get("show") or {}).get("type") in MOTION | REAL and len(str(b["say"]).split()) <= 32
+            and "LOOK UP" not in str(b["say"]) and not fact_check({"chapters": [{"beats": [b]}]}, sources)]
+    print(f"  extend: {len(new)} new beats, {len(good)} kept "
+          f"(+{sum(len(str(b['say']).split()) for b in good)} words)", flush=True)
+    new = good
     bs = act["beats"]
     return {**act, "beats": bs[:-2] + new + bs[-2:] if len(bs) > 2 else bs + new}
 
@@ -717,9 +723,9 @@ def write_by_acts(p: dict, sources: list[dict]) -> tuple[dict, list[str]]:
                 m = re.match(r"this act has (\d+) words", probs[0]) if probs else None
                 if not m or int(m.group(1)) >= words:
                     break
-                longer = clean_flags(extend_act(act, words + 15 - int(m.group(1)), src))
+                longer = clean_flags(extend_act(act, words + 15 - int(m.group(1)), src, sources))
                 lp = act_check(longer, rules[i], words, sources)
-                if len(lp) > len(probs):
+                if len(lp) > len(probs) or len(longer["beats"]) == len(act["beats"]):
                     break
                 act, probs = longer, lp
             history.append(f"Act {i + 1}, draft {rnd + 1}: {len(probs)} problem(s)" + "".join(f"\n  - {q}" for q in probs))

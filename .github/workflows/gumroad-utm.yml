@@ -1,0 +1,44 @@
+# Gumroad UTM links per channel (tools/gumroad_utm.py): create them once, read the clicks every day after the metrics.
+name: gumroad-utm
+
+on:
+  schedule:
+    - cron: "40 7 * * *"
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "create or stats"
+        default: "create"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-commits
+  cancel-in-progress: false
+
+jobs:
+  utm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: pip install -q requests
+      - env:
+          GUMROAD_JSON: ${{ secrets.GUMROAD_JSON }}
+        run: python video/ci_secrets.py
+      - env:
+          ACTION: ${{ inputs.action || 'stats' }}
+        run: python tools/gumroad_utm.py "$ACTION"
+      - name: Save
+        run: |
+          git config user.name "cosmos-metrics[bot]"
+          git config user.email "cosmos-metrics@users.noreply.github.com"
+          git add config/gumroad-utm.json 07-analytics/metrics/gumroad-utm.jsonl
+          git diff --cached --quiet && exit 0
+          git commit -q -m "gumroad: utm $(date +%F)"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep $((i * 10)); done
+          exit 1

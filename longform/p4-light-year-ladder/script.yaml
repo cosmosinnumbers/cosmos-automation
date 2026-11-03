@@ -1,0 +1,583 @@
+﻿# speed 1.15: owner's feedback 26/10/2026, faster voice (P1-P3 used 0.9; Shorts use 1.2)
+id: p4-light-year-ladder
+title: How Far Is a Light-Year? From the Moon to the Edge of the Universe, in Real Numbers
+alt_titles:
+- Voyager 1 Is About to Be One Light-Day Away. The Nearest Star Is 1,500 Times Farther
+- A Light-Year Is So Big It Breaks Your Brain. Here Is Every Step, Measured
+voice: af_heart
+speed: 1.15
+music:
+  seed: 41
+  mood: wonder
+hashtags:
+- space
+- lightyear
+- voyager1
+tags:
+- how far is a light year
+- light year explained
+- Voyager 1 one light-day
+- Voyager 1 November 2026
+- distance to the nearest star
+- Proxima Centauri
+- how far is Andromeda
+- farthest thing you can see with your eyes
+- Andromeda galaxy naked eye
+- speed of light
+- scale of the universe
+- most distant galaxy
+- MoM-z14
+- James Webb Space Telescope
+- Parker Solar Probe
+- space documentary
+- real space data
+description_intro: 'On Nov 18, 2026, NASA''s Voyager 1 becomes the first human-made object one light-day from Earth.
+  We climb the whole distance ladder, from the Moon to the most distant galaxy Webb has confirmed. Travel times are
+  our own arithmetic from the sources below.
+
+  '
+sources:
+- id: S1
+  title: 'NASA: Where Are Voyager 1 and Voyager 2 Now?'
+  url: https://science.nasa.gov/mission/voyager/where-are-voyager-1-and-voyager-2-now/
+- id: S2
+  title: 'NASA: Voyager 1 mission page'
+  url: https://science.nasa.gov/mission/voyager/voyager-1/
+- id: S3
+  title: 'BIPM: SI base unit, the metre'
+  url: https://www.bipm.org/en/si-base-units/metre
+- id: S4
+  title: 'IAU: light-year and astronomical unit'
+  url: https://www.iau.org/public/themes/measuring/
+- id: S5
+  title: NASA Planetary Fact Sheets (retrieved 26 Oct 2026)
+  url: https://nssdc.gsfc.nasa.gov/planetary/factsheet/
+- id: S6
+  title: 'NASA, Dec 2024: Parker''s record pass'
+  url: https://science.nasa.gov/science-research/heliophysics/nasas-parker-solar-probe-makes-history-with-closest-pass-to-sun/
+- id: S7
+  title: 'NASA APOD 2005: Proxima Centauri'
+  url: https://science.nasa.gov/image-article/apod-2005-december-4-proxima-centauri-the-closest-star/
+- id: S8
+  title: 'NASA/ESA Hubble heic0516: the Sirius system'
+  url: https://esahubble.org/news/heic0516/
+- id: S9
+  title: 'NASA Hubble Messier catalog: M42, Orion Nebula'
+  url: https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-42/
+- id: S10
+  title: 'NASA Imagine the Universe: the Milky Way'
+  url: https://imagine.gsfc.nasa.gov/science/featured_science/milkyway
+- id: S11
+  title: 'NASA Hubble Messier catalog: M31, Andromeda Galaxy'
+  url: https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-31/
+- id: S12
+  title: 'Smithsonian Human Origins: Homo sapiens'
+  url: https://humanorigins.si.edu/evidence/human-fossils/species/homo-sapiens
+- id: S13
+  title: 'NASA, 28 Jan 2026: Webb pushes boundaries closer to the Big Bang (MoM-z14)'
+  url: https://science.nasa.gov/missions/webb/nasa-webb-pushes-boundaries-of-observable-universe-closer-to-big-bang/
+- id: S14
+  title: 'Naidu et al. 2026, Open Journal of Astrophysics: MoM-z14 at z = 14.44'
+  url: https://arxiv.org/abs/2505.11263
+- id: S15
+  title: 'NASA Exoplanet Catalog: Proxima Centauri b'
+  url: https://science.nasa.gov/exoplanet-catalog/proxima-centauri-b/
+- id: S16
+  title: 'ESO 2016: Proxima b in the habitable zone'
+  url: https://www.eso.org/public/news/eso1629/
+segments:
+- id: hook
+  chapter: Intro
+  sources:
+  - S1
+  - S2
+  - S7
+  - S11
+  narration: 'Twenty-five point nine billion kilometers. On November 18th, 2026, NASA''s Voyager 1 will reach that
+    distance from Earth, and become the first human-made object ever to be one light-day away.
+
+
+    It has been flying for 49 years. A command sent to it now takes almost a full day just to arrive.
+
+
+    And on the scale of the universe, that is nothing. The nearest star is more than four light-years away. The
+    most distant thing you can see with your own eyes is two and a half million light-years away.
+
+
+    So today we climb the whole ladder, one step at a time, with real numbers. From the Moon, to the most distant
+    galaxy ever confirmed.
+
+    '
+  visuals:
+  - type: counter
+    value: 25902000000
+    suffix: ' km'
+    label: Voyager 1 · 18 Nov 2026
+    sub: one light-day from Earth (NASA)
+    count: 2.2
+  - type: video
+    src: vid_voyager_team
+  - type: kinetic
+    text: AND THAT IS NOTHING.
+    accent:
+    - NOTHING
+  - type: video
+    src: vid_starry_timelapse
+- id: lightyear
+  chapter: What a light-year is
+  sources:
+  - S3
+  - S4
+  - S5
+  narration: 'First, the ruler. Light in empty space moves at exactly 299,792,458 meters per second. That is no
+    longer a measurement. Since 1983, it is a definition: the meter itself is defined by how far light travels in
+    a fraction of a second.
+
+
+    In one second, light could go around the Earth about seven and a half times.
+
+
+    A light-year is simply how far light goes in one year. The International Astronomical Union puts it at about
+    9.46 trillion kilometers. Write that out, and it is a nine followed by twelve more digits.
+
+
+    It is a distance, not a time. But it hides a time inside it: when you see something one light-year away, you
+    see it as it was one year ago. Hold on to that. It matters more with every step.
+
+
+    Why not just use kilometers? Because the numbers stop meaning anything. The Andromeda Galaxy, near the top of
+    our ladder, is about 24 quintillion kilometers away. In light-years, it is two and a half million. Still huge,
+    but at least you can say it.
+
+    '
+  visuals:
+  - type: counter
+    value: 299792
+    suffix: ' km/s'
+    label: Speed of light
+    sub: exact, by definition (BIPM)
+    count: 1.8
+  - type: image
+    src: img_earth
+    motion: zoom_out
+    label: 7.5 laps of Earth per second
+  - type: counter
+    value: 9.46
+    decimals: 2
+    suffix: ' trillion km'
+    label: 1 light-year
+    sub: 9,460,730,472,580.8 km (IAU)
+    count: 1.6
+- id: moon
+  chapter: 'Step 1: the Moon'
+  sources:
+  - S3
+  - S5
+  narration: 'Step one: the Moon. On average it orbits 384,400 kilometers from Earth. At the speed of light, that
+    is just under 1.3 seconds.
+
+
+    So the Moon you see tonight is the Moon of 1.3 seconds ago. And if you ever talked to someone standing on it,
+    every answer would come back about two and a half seconds late: 1.3 seconds for your voice to get there, 1.3
+    seconds for the reply to come home.
+
+    '
+  visuals:
+  - type: video
+    src: vid_moon_full
+  - type: counter
+    value: 1.28
+    decimals: 2
+    suffix: ' s'
+    label: Light from the Moon
+    sub: 384,400 km (NASA fact sheet)
+    count: 1.4
+- id: sun
+  chapter: 'Step 2: the Sun'
+  sources:
+  - S4
+  narration: 'Step two: the Sun. The average distance between Earth and the Sun is so useful that astronomers gave
+    it its own unit, the astronomical unit, fixed by the IAU in 2012 at 149,597,870.7 kilometers.
+
+
+    Light covers it in 499 seconds. That is 8 minutes and 19 seconds. The Sun you see is always the Sun of eight
+    minutes ago. If it somehow vanished right now, the sky would stay bright, and you would feel nothing, for another
+    eight minutes.
+
+    '
+  visuals:
+  - type: video
+    src: vid_sun
+    start: 20
+  - type: counter
+    value: 499
+    suffix: ' s'
+    label: Light from the Sun
+    sub: 8 min 19 s for 1 astronomical unit (IAU)
+    count: 1.6
+- id: mars
+  chapter: 'Step 3: Mars'
+  sources:
+  - S5
+  narration: 'Step three: Mars. Its distance from us changes all the time, because both planets are moving around
+    the Sun. NASA''s fact sheet gives a minimum of 54.6 million kilometers, and a maximum of 401.4 million.
+
+
+    So a radio signal takes between 3 and 22 minutes to get there, one way. That is why nobody drives a Mars rover
+    with a joystick. By the time the rover heard "stop", it could already be in the crater. Commands are planned,
+    sent ahead, and carried out by the rover on its own.
+
+    '
+  visuals:
+  - type: image
+    src: img_mars
+    motion: zoom_in
+    fit: contain
+  - type: bars
+    title: Radio signal, Earth to Mars, one way
+    note: 'Source: NASA Mars fact sheet (min 54.6, max 401.4 million km) / speed of light'
+    items:
+    - label: Closest
+      value: 3.0
+      display: 3.0 min
+    - label: Farthest
+      value: 22.3
+      display: 22.3 min
+      hi: true
+  - type: video
+    src: vid_percy_autonav
+- id: neptune
+  chapter: 'Step 4: Neptune'
+  sources:
+  - S5
+  narration: 'Step four: the edge of the planets. Neptune orbits about 4.5 billion kilometers from the Sun. Sunlight
+    needs about four hours and ten minutes to get there.
+
+
+    Here is the ladder so far. The Moon at 1.3 seconds. The Sun at 8 minutes. Mars, up to 22 minutes. Neptune, four
+    hours. Each step is a big jump. But we have not even left the solar system yet.
+
+    '
+  visuals:
+  - type: video
+    src: vid_neptune_cast
+  - type: bars
+    title: How long light takes to get there
+    note: Light-time from NASA fact-sheet distances (logarithmic scale)
+    log: true
+    items:
+    - label: Moon
+      value: 1.28
+      display: 1.3 s
+    - label: Sun
+      value: 499
+      display: 8 min 19 s
+    - label: Mars (max)
+      value: 1339
+      display: 22 min
+    - label: Neptune
+      value: 15060
+      display: 4 h 11 min
+      hi: true
+- id: voyager
+  chapter: 'Step 5: Voyager 1'
+  sources:
+  - S1
+  - S2
+  narration: 'Step five: Voyager 1. It launched on September 5th, 1977, flew past Jupiter and Saturn, and kept going.
+    NASA''s mission page gives its speed as about 17 kilometers per second relative to the Sun. That is more than
+    61,000 kilometers per hour.
+
+
+    On November 18th, at 2:16 in the morning, Pacific time, it reaches 25.902 billion kilometers from Earth. One
+    light-day. A radio command from Earth takes a whole day to reach it, and the reply takes another day to come
+    back.
+
+
+    Back in August 2012, it became the first spacecraft to cross into interstellar space, the region beyond the
+    bubble of particles blown out by the Sun. It is still sending data home today.
+
+
+    It is the farthest and one of the fastest things we have ever sent. And after 49 years, it has covered one light-day.
+
+    '
+  visuals:
+  - type: image
+    src: img_v1launch
+    motion: zoom_in
+  - type: counter
+    value: 17.0
+    decimals: 1
+    suffix: ' km/s'
+    label: Voyager 1 speed
+    sub: 61,200 km/h, relative to the Sun (NASA)
+    count: 1.4
+  - type: image
+    src: img_paleblue
+    motion: zoom_in
+- id: gap
+  chapter: The jump to a light-year
+  sources:
+  - S1
+  - S2
+  - S4
+  narration: 'Now stretch that. One light-year is 365 light-days. So a single light-year is 365 times farther than
+    everything Voyager has managed in 49 years.
+
+
+    At 17 kilometers per second, Voyager would need about 17,600 years to cover one light-year. Just one.
+
+    '
+  visuals:
+  - type: kinetic
+    text: 1 LIGHT-YEAR = 365 VOYAGER JOURNEYS
+    accent:
+    - '365'
+  - type: counter
+    value: 17600
+    suffix: ' years'
+    label: Voyager 1 to cover 1 light-year
+    sub: 9.46 trillion km at 17 km/s (our arithmetic)
+    count: 1.8
+- id: proxima
+  chapter: 'Step 6: the nearest star'
+  sources:
+  - S2
+  - S6
+  - S7
+  - S15
+  - S16
+  narration: 'Step six: the nearest star, Proxima Centauri. Its light takes about 4.22 years to reach us.
+
+
+    If Voyager 1 were pointed straight at it, which it is not, the trip would take roughly 74,000 years. Even NASA''s
+    Parker Solar Probe, which reaches about 700,000 kilometers per hour when it swings closest to the Sun, the fastest
+    object humans have ever built, would need around 6,500 years at that speed.
+
+
+    And here is the twist: you cannot see Proxima at all. It is too faint for the naked eye. It was only discovered
+    in 1915, with a telescope.
+
+
+    It does have company. A planet called Proxima b orbits it, found in 2016, in the zone where the temperature
+    could allow liquid water. The closest known planet outside our solar system, and still out of reach for any
+    spacecraft we know how to build.
+
+    '
+  visuals:
+  - type: image
+    src: img_alphacen
+    motion: zoom_in
+  - type: bars
+    title: Travel time to Proxima Centauri (4.22 light-years)
+    note: 'Our arithmetic: distance from NASA APOD, speeds from NASA mission pages; light for comparison'
+    log: true
+    items:
+    - label: Light
+      value: 4.22
+      display: 4.2 years
+    - label: Parker Solar Probe
+      value: 6500
+      display: ~6,500 years
+    - label: Voyager 1
+      value: 74000
+      display: ~74,000 years
+      hi: true
+- id: visible
+  chapter: 'Step 7: the stars you can see'
+  sources:
+  - S8
+  - S9
+  narration: 'Step seven: the stars you can actually see. Sirius, the brightest star in the night sky, is about
+    8.6 light-years away. The light reaching your eyes from it tonight left around eight and a half years ago.
+
+
+    Now look just below the three stars of Orion''s belt. There is a faint, fuzzy patch. That is the Orion Nebula,
+    a vast cloud where new stars are being born. NASA notes it is visible to the unaided eye from a dark site, and
+    puts it at about 1,500 light-years away. The light you see from it left fifteen centuries ago.
+
+    '
+  visuals:
+  - type: image
+    src: img_sirius
+    motion: zoom_in
+    fit: contain
+  - type: image
+    src: img_orion_wise
+    motion: pan_right
+  - type: counter
+    value: 1500
+    suffix: ' light-years'
+    label: Orion Nebula
+    sub: visible to the naked eye from a dark site (NASA)
+    count: 1.6
+    bg: img_m42_ir
+- id: milkyway
+  chapter: 'Step 8: the Milky Way'
+  sources:
+  - S10
+  narration: 'Step eight: our galaxy. The Milky Way is about 100,000 light-years across. Our solar system sits about
+    26,000 light-years from its center.
+
+
+    Practically every individual star you have ever seen in the night sky belongs to it. And the whole thing, all
+    those stars, is still just one galaxy, one step on the ladder.
+
+    '
+  visuals:
+  - type: video
+    src: vid_milkyway_mountain
+  - type: counter
+    value: 100000
+    suffix: ' light-years'
+    label: Milky Way, edge to edge
+    sub: Sun about 26,000 light-years from the centre (NASA)
+    count: 1.6
+- id: andromeda
+  chapter: 'Step 9: Andromeda'
+  nasa_quote: easily visible with the unaided eye from a dark sky site   # verbatim, S11 (NASA Messier 31 page)
+  sources:
+  - S11
+  - S12
+  narration: 'Step nine: the Andromeda Galaxy. Two and a half million light-years away. And yet NASA says it is
+    easily visible with the unaided eye from a dark-sky site. It looks like a faint, stretched smudge of light.
+    That makes it the most distant thing most people will ever see with their own eyes.
+
+
+    Think about what that light has been through. It left Andromeda about two and a half million years ago. Our
+    own species, Homo sapiens, appeared only around 300,000 years ago. So when that light set out, there were no
+    humans anywhere to see it. It was already more than two million years into its trip.
+
+    '
+  visuals:
+  - type: image
+    src: img_andromeda
+    motion: zoom_in
+  - type: counter
+    value: 2500000
+    suffix: ' light-years'
+    label: Andromeda Galaxy
+    sub: easily visible to the naked eye from a dark site (NASA)
+    count: 2.0
+    bg: img_andromeda
+  - type: kinetic
+    text: THE LIGHT IS OLDER THAN OUR SPECIES.
+    accent:
+    - OLDER
+- id: edge
+  chapter: 'Step 10: the edge of what we can see'
+  sources:
+  - S13
+  - S14
+  narration: 'Step ten: the edge. In January 2026, NASA announced that the Webb Space Telescope had confirmed a
+    galaxy called MoM-z14. We see it as it was just 280 million years after the Big Bang.
+
+
+    Its light has been traveling through expanding space for about 13.5 billion years, out of the universe''s 13.8.
+    Because space has been stretching the whole time, the galaxy is much farther away than 13.5 billion light-years
+    today. But that light is the oldest galaxy light anyone has confirmed.
+
+
+    The stretching also changes the light itself. A redshift of 14.44 means every wavelength arrives about 15 and
+    a half times longer than when it left. Light that started out as ultraviolet reaches us as infrared, which is
+    exactly the kind of light Webb was built to collect.
+
+    '
+  visuals:
+  - type: video
+    src: vid_webb_mirrors
+  - type: image
+    src: img_deepfield
+    motion: zoom_in
+  - type: counter
+    value: 13.5
+    decimals: 1
+    suffix: ' billion years'
+    label: Light from MoM-z14
+    sub: 280 million years after the Big Bang (NASA, Webb)
+    count: 1.8
+    bg: img_deepfield
+- id: ladder
+  chapter: The whole ladder
+  sources:
+  - S1
+  - S4
+  - S5
+  - S7
+  - S8
+  - S9
+  - S10
+  - S11
+  - S13
+  narration: 'Now put every step on one line, measured in light-travel time. 1.3 seconds. 8 minutes. 22 minutes.
+    4 hours. One day. 4.2 years. 8.6 years. 1,500 years. 26,000 years. 2.5 million years. 13.5 billion years.
+
+
+    The last step is more than 300,000 trillion times longer than the first.
+
+
+    To feel that, shrink everything. Make the Moon''s 1.3 seconds equal to one millimeter, roughly the thickness
+    of a credit card. On that scale, the Sun is about 39 centimeters away. Proxima Centauri is about 100 kilometers
+    away. And MoM-z14 is more than 2,000 times the real distance from Earth to the Sun.
+
+
+    And here is the part we like most. Several of these steps are in your own sky, no telescope needed. The Moon.
+    Sirius. The Orion Nebula, this season, after midnight. And from a dark site, Andromeda.
+
+    '
+  visuals:
+  - type: bars
+    title: The distance ladder, in light-travel time
+    note: Logarithmic scale. Sources in the description.
+    log: true
+    items:
+    - label: Moon
+      value: 1.28
+      display: 1.3 s
+    - label: Sun
+      value: 499
+      display: 8 min
+    - label: Neptune
+      value: 15060
+      display: 4 h
+    - label: Voyager 1
+      value: 86400
+      display: 1 day
+    - label: Proxima
+      value: 133170000
+      display: 4.2 yr
+    - label: Orion Nebula
+      value: 47336400000
+      display: 1,500 yr
+    - label: Galactic centre
+      value: 820497600000
+      display: 26,000 yr
+    - label: Andromeda
+      value: 78894000000000
+      display: 2.5 Myr
+    - label: MoM-z14
+      value: 426011000000000000
+      display: 13.5 Byr
+      hi: true
+  - type: video
+    src: vid_observatory_night
+- id: outro
+  sources:
+  - S11
+  narration: 'If you want to find those with your own eyes, our beginner''s guide, LOOK UP, walks you through it
+    night by night, from the Moon at 1.3 light-seconds to Andromeda at 2.5 million light-years. The link is at the
+    top of the description, together with every source used in this video.
+
+
+    If we got a number wrong, tell us in the comments, and we will pin the correction.
+
+    '
+  visuals:
+  - type: kinetic
+    text: FROM THE MOON TO ANDROMEDA. LOOK UP.
+    accent:
+    - LOOK
+    - UP.
+  - type: title
+    text: Real space. Real data.
+    sub: Cosmos in Numbers

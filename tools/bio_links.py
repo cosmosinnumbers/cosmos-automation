@@ -36,7 +36,9 @@ def facebook():
     free, look = utm("solar-system-20", "facebook", "post"), utm("look-up", "facebook", "post")
     old = [u.strip() for u in (cur.get("website") or "").split(",") if u.strip()]
     old = [u for u in old if "gumroad.com/l/look-up" not in u and not u.startswith("https://gum.co/u/")]
-    sites = [free, look, *dict.fromkeys(old)]  # keep the links already there (site, TikTok, Instagram)
+    base = ["https://cosmosinnumbers.github.io/links.html?src=fb", "https://cosmosinnumbers.github.io/",
+            "https://www.tiktok.com/@cosmosinnumbers", "https://www.instagram.com/cosmos.innumbers/"]
+    sites = [free, look, *dict.fromkeys([*old, *base])]  # keep the links already there (site, TikTok, Instagram)
     website = ", ".join(sites)
     about = cur.get("about") or ""
     if free not in about:

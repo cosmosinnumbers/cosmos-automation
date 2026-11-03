@@ -1,12 +1,14 @@
 """Long video on YouTube via the API (owner 03/11/2026: "il caricamento lo fai sempre via api youtube").
 
-  python tools/yt_long_upload.py [--tag lf-<id>] [--dry-run]
+  python tools/yt_long_upload.py [--tag lf-<id>] [--replace <videoId>] [--dry-run]
 
 Takes the oldest release lf-<id> of longform-build that is not yet on the channel (logs/youtube-publish-log.jsonl,
 ref = tag, plus the titles on the channel) and uploads <id>.mp4 as a SCHEDULED video: private with publishAt on
 the next free Sunday at PUBLISH_AT (16:00 Italian time; one long video per Sunday), so YouTube makes it public
 by itself. Then: English captions from <id>.srt, thumbnail thumb_A.jpg (needs a verified channel: a failure is
 only a warning). Title, description and tags from upload.md; an old launch code in the text becomes COSMOS9.
+--replace <videoId> (owner's ok needed: it deletes a video): first deletes that video of ours from the channel and
+drops its lines from the log, so the same release (e.g. rebuilt with new animations) is uploaded again on the same Sunday.
 Credentials: secret YOUTUBE_TOKEN_JSON (same as the Shorts), never printed. Quota: about 2,100 of 10,000 units.
 """
 from __future__ import annotations
@@ -39,6 +41,13 @@ def gh(*a) -> str:
     return r.stdout
 
 
+def youtube():
+    from google.oauth2.credentials import Credentials
+    from googleapiclient.discovery import build
+    info = json.loads(os.environ.get("YOUTUBE_TOKEN_JSON") or (creds.LOCAL_SECRETS / "token.json").read_text("utf-8"))
+    return build("youtube", "v3", credentials=Credentials.from_authorized_user_info(info), cache_discovery=False)
+
+
 def section(md: str, name: str) -> str:
     m = re.search(rf"^## {name}\s*\n(.*?)(?=^## |\Z)", md, re.S | re.M)
     return re.sub(r"^```\w*\s*$", "", m.group(1), flags=re.M).strip() if m else ""
@@ -69,6 +78,17 @@ def next_sunday(now: datetime, taken: set[str]) -> datetime:
     return d
 
 
+def drop_from_log(vid: str) -> int:
+    """Removes the log lines of a deleted video; returns how many."""
+    p = creds.LOGS / LOG
+    if not p.exists():
+        return 0
+    lines = p.read_text("utf-8").splitlines()
+    keep = [l for l in lines if not l.strip() or json.loads(l).get("id") != vid]
+    p.write_text("\n".join(keep) + ("\n" if keep else ""), "utf-8")
+    return len(lines) - len(keep)
+
+
 def pending(tag: str | None) -> list[dict]:
     rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=100"))
     done = {e.get("ref") for e in creds.events(LOG)}
@@ -80,6 +100,24 @@ def main():
     sys.stdout.reconfigure(encoding="utf-8")
     a = sys.argv[1:]
     tag = a[a.index("--tag") + 1] if "--tag" in a else None
+    replace = a[a.index("--replace") + 1] if "--replace" in a else None
+    if replace:
+        old = [e for e in creds.events(LOG) if e.get("id") == replace and e.get("k") == "long"]
+        if not old:
+            sys.exit(f"--replace {replace}: not a long video in the log, nothing deleted.")
+        tag = tag or old[0]["ref"]
+        if DRY:
+            print(f"DRY-RUN: would delete {replace} ({tag}) and upload the release again.")
+        else:
+            yt = youtube()
+            try:
+                yt.videos().delete(id=replace).execute()
+                print(f"deleted {replace} ({tag})")
+            except Exception as e:  # noqa: BLE001
+                if "404" not in str(e) and "videoNotFound" not in str(e):
+                    sys.exit(f"delete {replace} failed: {type(e).__name__}: {str(e)[:200]}")
+                print(f"{replace} already gone from the channel")
+            print(f"log: {drop_from_log(replace)} lines removed")
     rels = pending(tag)
     if not rels:
         print("No long video waiting for YouTube.")
@@ -110,15 +148,12 @@ def main():
         if DRY:
             print("DRY-RUN: nothing uploaded.\n" + desc[:400])
             return
-        from google.oauth2.credentials import Credentials
-        from googleapiclient.discovery import build
         from googleapiclient.http import MediaFileUpload
-        info = json.loads(os.environ.get("YOUTUBE_TOKEN_JSON") or (creds.LOCAL_SECRETS / "token.json").read_text("utf-8"))
-        yt = build("youtube", "v3", credentials=Credentials.from_authorized_user_info(info), cache_discovery=False)
+        yt = youtube()
         ch = yt.channels().list(part="contentDetails", mine=True).execute()["items"][0]
         uploads = ch["contentDetails"]["relatedPlaylists"]["uploads"]
         for it in yt.playlistItems().list(part="snippet", playlistId=uploads, maxResults=50).execute()["items"]:
-            if it["snippet"]["title"].strip().lower() == title.lower():
+            if it["snippet"]["title"].strip().lower() == title.lower() and it["snippet"]["resourceId"]["videoId"] != replace:
                 vid = it["snippet"]["resourceId"]["videoId"]
                 print(f"{ref}: already on the channel ({vid}), not uploaded again.")
                 creds.append(LOG, {"p": "youtube", "k": "long", "at": int(time.time()), "id": vid, "ref": ref, "note": "found on the channel"})

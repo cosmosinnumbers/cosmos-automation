@@ -17,6 +17,10 @@ on:
         description: "Release tag lf-<id> (empty = oldest not uploaded)"
         type: string
         default: ""
+      replace:
+        description: "videoId of our long video to DELETE and upload again from its rebuilt release (owner's ok only)"
+        type: string
+        default: ""
       dry_run:
         description: "Dry run: check release, title and slot, upload nothing"
         type: boolean
@@ -51,10 +55,12 @@ jobs:
         env:
           YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
           IN_TAG: ${{ inputs.tag }}
+          IN_REPLACE: ${{ inputs.replace }}
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
         run: |
           args=()
           [ -n "$IN_TAG" ] && args+=(--tag "$IN_TAG")
+          [ -n "$IN_REPLACE" ] && args+=(--replace "$IN_REPLACE")
           [ "$IN_DRY" = "true" ] && args+=(--dry-run)
           python tools/yt_long_upload.py "${args[@]}"
       - name: Save the log

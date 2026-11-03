@@ -124,3 +124,21 @@ def test_carousel_slides_only_checked_sentences():
     assert [n for n, _ in st] == ["142,984", "9.9"]          # a bare year is not a slide
     assert all(t in narr for _, t in st)                       # every slide is a sentence of the narration
     assert "COSMOS9" not in "".join(t for _, t in st)
+
+
+def test_long_upload_slot_and_text():
+    from zoneinfo import ZoneInfo
+    import yt_long_upload as yl
+    tz = ZoneInfo("Europe/Rome")
+    sat = datetime_(2026, 11, 7, 12, tz)
+    assert yl.next_sunday(sat, set()).strftime("%Y-%m-%d %H:%M") == "2026-11-08 16:00"
+    assert yl.next_sunday(sat, {"2026-11-08"}).date().isoformat() == "2026-11-15"
+    sun_late = datetime_(2026, 11, 8, 14, tz)   # less than 3 h before the slot: next week
+    assert yl.next_sunday(sun_late, set()).date().isoformat() == "2026-11-15"
+    assert "COSMOS9" in yl.clean_description("guide (code LAUNCH9 → $9 until Nov 30)") and "LAUNCH9" not in yl.clean_description("LAUNCH9")
+    assert yl.tags_of("## Tags\na, b, c\n(3 characters)") == ["a", "b", "c"]
+
+
+def datetime_(y, m, d, h, tz):
+    from datetime import datetime
+    return datetime(y, m, d, h, tzinfo=tz)

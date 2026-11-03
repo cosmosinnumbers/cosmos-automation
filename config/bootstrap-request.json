@@ -1,9 +1,9 @@
 {
-  "ready": false,
+  "ready": true,
   "target": "cosmosinnumbers/stickman-automation",
   "niche": "stickman",
   "name": "",
-  "push_code": true,
+  "push_code": false,
   "copy_secrets": true,
   "note": "Mettere ready=true (dopo che il repo esiste e il token lo vede) sul branch del thread fa partire niche-bootstrap.yml (03/11/2026)."
 }

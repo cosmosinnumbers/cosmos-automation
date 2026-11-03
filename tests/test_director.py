@@ -58,3 +58,19 @@ if __name__ == "__main__":
         if name.startswith("test_"):
             fn()
             print(name, "ok")
+
+
+def test_long_uses_typewriter_and_risers():
+    import director as dr
+    shots, t = [], 0.0
+    for c in range(6):
+        for k in range(4):
+            v = {"type": "kinetic", "text": "A huge number appears here"} if k == 1 else {"type": "image", "src": "img"}
+            shots.append({"start": t, "end": t + 5.0, "segment": f"s{c}", "visual": v,
+                          "chapter": (f"Chapter title {c}" if c else "Intro") if k == 0 else None})
+            t += 5.0
+    script = {"segments": [{"id": f"s{c}", "narration": "Text."} for c in range(6)], "sources": []}
+    p = dr.plan_long(script, shots, {"duration": t})
+    effects = [f["effect"] for f in p["fx"].values()]
+    assert "typewriter" in effects
+    assert sum(1 for _, k in p["events"] if k == "riser") >= 5

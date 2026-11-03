@@ -25,7 +25,8 @@ def hms(t: float) -> str:
 
 
 PRODUCT = ("📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up "
-           "(code COSMOS9 → $9 until Nov 30)")   # product line first in every YouTube description (owner, 19/10/2026)
+           "(code COSMOS9 → $9 until Nov 30)\n"
+           "🆓 Free PDF, The Solar System in 20 Numbers: https://cosmosinnumbers.gumroad.com/l/solar-system-20")   # product line first in every YouTube description (owner, 19/10/2026)
 
 
 def description(script: dict, timings: dict, assets: dict) -> str:

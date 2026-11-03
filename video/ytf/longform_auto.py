@@ -992,10 +992,10 @@ def main():
         topic=p.get("topic"), angle=p.get("angle"), sources=src_block, recap_every=330, wmin=LEN["wmin"], wmax=LEN["wmax"],
         mmin=LEN["mmin"], mmax=LEN["mmax"], chapters=f"{LEN['cmin']} to {LEN['cmax']}", trend_titles=trend_titles())}]}]
     history, scores = [], {}
-    acts = "--acts" in args or not gemini_up()
-    if acts:   # free models: outline + one act per call, same checks on the whole script (owner 03/11/2026)
+    acts = "--full" not in args   # act mode by default: small blocks work for Gemini and for the free writers
+    if acts:   # outline + one act per call, same checks on the whole script (owner 03/11/2026)
         global SKIP_GEMINI
-        SKIP_GEMINI = "--acts" not in args
+        SKIP_GEMINI = not gemini_up()   # Gemini over quota: no 2-minute retries before every small call
         print("Act mode: one act per call" + (" (Gemini unavailable)" if SKIP_GEMINI else ""))
         spec, history = write_by_acts(p, sources)
         for rnd in range(3):

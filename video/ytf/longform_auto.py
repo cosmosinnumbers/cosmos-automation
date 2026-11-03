@@ -657,8 +657,34 @@ def act_sources(sources: list[dict], ids: list, budget: int = 6500) -> list[dict
     return [{**s, "text": s["text"][:per]} for s in pick]
 
 
+EXTEND = """The act below is {short} words too short. Write {k} NEW beats (18-28 words each, same rules, only facts and
+numbers from the SOURCES, new information, no repetition) that go just before its last 2 beats, so the act still
+ends on its question or twist. Mix the visuals: at least one data graphic and one footage or image.
+ACT:
+{act}
+
+SOURCES:
+{sources}
+
+Answer JSON only: {{"beats": [{{"say": "", "show": {{}}}}]}}"""
+
+
+def extend_act(act: dict, short: int, src: list[dict]) -> dict:
+    """Free models write 150-190 words an answer: instead of rewriting a short act, add the missing beats."""
+    k = max(2, -(-short // 22) + 1)
+    _, out = llm([{"role": "user", "parts": [{"text": EXTEND.format(
+        short=short, k=k, act=json.dumps({"beats": act["beats"]}, ensure_ascii=False),
+        sources="\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text']}" for s in src))}]}])
+    new = [b for b in (out or {}).get("beats", []) if isinstance(b, dict) and b.get("say")]
+    for b in new:
+        for k2 in ("ask", "spot", "recap"):
+            b.pop(k2, None)
+    bs = act["beats"]
+    return {**act, "beats": bs[:-2] + new + bs[-2:] if len(bs) > 2 else bs + new}
+
+
 def write_by_acts(p: dict, sources: list[dict]) -> tuple[dict, list[str]]:
-    total = LEN["cmin"]
+    total = LEN["cmax"]   # more, shorter acts: each answer of a free model stays small
     excerpt = "\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text'][:1100]}" for s in sources)
     _, out = llm([{"role": "user", "parts": [{"text": OUTLINE.format(topic=p.get("topic"), angle=p.get("angle"),
                   acts=total, sources=excerpt, trend_titles=trend_titles(5))}]}])
@@ -687,6 +713,15 @@ def write_by_acts(p: dict, sources: list[dict]) -> tuple[dict, list[str]]:
             act = clean_flags({"title": act.get("title") or x.get("title", ""), "sources": x.get("sources") or [],
                                "beats": [b for b in act.get("beats", []) if isinstance(b, dict)]})
             probs = act_check(act, rules[i], words, sources)
+            for _ in range(2):   # short act: add beats instead of rewriting it
+                m = re.match(r"this act has (\d+) words", probs[0]) if probs else None
+                if not m or int(m.group(1)) >= words:
+                    break
+                longer = clean_flags(extend_act(act, words + 15 - int(m.group(1)), src))
+                lp = act_check(longer, rules[i], words, sources)
+                if len(lp) > len(probs):
+                    break
+                act, probs = longer, lp
             history.append(f"Act {i + 1}, draft {rnd + 1}: {len(probs)} problem(s)" + "".join(f"\n  - {q}" for q in probs))
             print(history[-1])
             if best is None or len(probs) < len(best[2]):

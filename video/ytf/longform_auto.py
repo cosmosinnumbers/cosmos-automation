@@ -73,7 +73,13 @@ RETENTION (this is what keeps people watching to the end):
   "stickman": {{"label": "YOU", "size": "small|tiny|big"}} (tiny = you are a dot next to this). Use it on at least 6
   beats, spread through the video.
 - {chapters} chapters; every chapter ends on a question or a twist that pulls into the next; escalate the scale or the
-  stakes chapter by chapter; the biggest reveal near the end.
+  stakes chapter by chapter; the biggest reveal near the end. Every chapter has ONE "wow" moment (a number or a
+  comparison that makes the viewer say "no way"), placed in its first third, and opens by answering the question
+  the previous chapter left hanging, then opens a new one.
+- A turning point at about two thirds: something the viewer thought was true flips. Re-hook every 30-45 seconds
+  with a short pull ("But here is the part nobody mentions.", "And that is not even the strange part.").
+- At the end of the middle chapter, ONE soft sentence after delivering value that points to the beginner's
+  stargazing guide "LOOK UP" (link in the description, never a discount code).
 - Turn numbers into things people can picture: comparisons of size, travel times, "X Earths would fit".
 - Short spoken sentences. Total narration {wmin:,} to {wmax:,} words (the video must last {mmin}-{mmax} minutes):
   beats of 18-28 words each, 8-10 beats per chapter. Count your words before answering.
@@ -115,6 +121,21 @@ SCRIPT:
 {script}
 
 Answer JSON only: {{"issues": [{{"claim": "", "problem": "", "severity": "high|medium|low"}}]}}"""
+
+RETENTION_REVIEW = """You are a YouTube retention editor, ruthless and specific. Read the narration below, written for a faceless
+8-15 minute space-data video, and judge only how well it keeps strangers watching (not whether the facts are right).
+Score 0-10: hook (does the first 20 s promise something concrete and extreme, no greeting), pacing (new information or
+a visual idea every 30-45 s, no flat stretches), clarity (a 12 year old follows every sentence), originality (a
+viewer has not heard this exact framing a hundred times), payoff (the end delivers what the hook promised and echoes it).
+List up to 4 weak spots: the chapter number, the quoted weak sentence, why viewers leave there, and a concrete rewrite
+instruction. Be honest: a 7 means good, a 9 is rare.
+SCRIPT (chapter by chapter):
+{script}
+
+Answer JSON only: {{"scores": {{"hook": 0, "pacing": 0, "clarity": 0, "originality": 0, "payoff": 0}},
+"weak": [{{"chapter": 1, "quote": "", "why": "", "fix": ""}}]}}"""
+
+RETENTION_MIN = {"hook": 7, "pacing": 6, "clarity": 7, "originality": 6, "payoff": 6}
 
 FIX = """Your script failed these checks:
 {problems}
@@ -351,6 +372,28 @@ def review(spec: dict, sources: list[dict]) -> list[str]:
             for it in issues if str(it.get("severity", "")).lower() == "high"]
 
 
+def retention_review(spec: dict) -> tuple[list[str], dict]:
+    """Second critic (Claude when available, else GLM/Groq): scores the script for retention. Returns (problems that
+    send the script back for a rewrite, the scores for the report). No critic available -> no gate, no scores."""
+    chs = []
+    for ci, ch in enumerate(spec.get("chapters", []), 1):
+        chs.append(f"## Chapter {ci}: {ch.get('title', '')}\n" + "\n".join(f"- {b.get('say', '')}" for b in ch.get("beats", [])))
+    msgs = [{"role": "user", "parts": [{"text": RETENTION_REVIEW.format(script="\n\n".join(chs))}]}]
+    out = ((claude_cli.chat(msgs, timeout=600) if claude_cli.available() else None)
+           or (glm.chat(msgs, thinking=True, temperature=0.3, timeout=300) if glm.available() else None)
+           or a.backup_llm(msgs))
+    j = out[1] if out else None
+    if not j or not isinstance(j.get("scores"), dict):
+        return [], {}
+    sc = {k: float(v) for k, v in j["scores"].items() if isinstance(v, (int, float))}
+    print("  retention scores:", sc)
+    probs = [f"retention critic: {k} {sc[k]:.0f}/10 (need {m}+)" for k, m in RETENTION_MIN.items() if k in sc and sc[k] < m]
+    if probs:   # only a failing score sends the script back, together with the concrete weak spots
+        probs += [f"retention critic, chapter {w.get('chapter')}: '{str(w.get('quote', ''))[:100]}' - {str(w.get('why', ''))[:120]}. "
+                  f"Fix: {str(w.get('fix', ''))[:160]}" for w in (j.get("weak") or [])[:4]]
+    return probs, sc
+
+
 # ---------- assets ----------
 def nasa_asset(query: str, media: str, vdir: Path, key: str, taken: set) -> str | None:
     try:
@@ -492,12 +535,17 @@ def main():
     msgs = [{"role": "user", "parts": [{"text": WRITE.format(
         topic=p.get("topic"), angle=p.get("angle"), sources=src_block, recap_every=330, wmin=LEN["wmin"], wmax=LEN["wmax"],
         mmin=LEN["mmin"], mmax=LEN["mmax"], chapters=f"{LEN['cmin']} to {LEN['cmax']}")}]}]
-    history = []
+    history, scores = [], {}
     for rnd in range(3):
         raw, spec = llm(msgs)
         problems = fact_check(spec, sources) + script_check(spec)
         if not [x for x in problems if x.startswith("number")]:  # the reviewer only on drafts whose numbers are clean
             problems += review(spec, sources)
+            if rnd < 2 and not problems:   # last round: the critic's score is reported, not a reason to throw the script away
+                rprobs, scores = retention_review(spec)
+                problems += rprobs
+            elif not problems:
+                _, scores = retention_review(spec)
         history.append(f"Round {rnd + 1}: {len(problems)} problem(s)" + "".join(f"\n  - {x}" for x in problems))
         print(history[-1])
         if not problems:
@@ -511,6 +559,7 @@ def main():
                         f"Argomento: {p.get('topic')} ({p.get('angle')})", f"Parole: {words}; capitoli: {len(spec['chapters'])}; "
                         f"battute: {len(beats(spec))}", "", "## Esito per giro", *history, "",
                         "## Fonti", *[f"- {s['id']} {s['title']}: {s['url']}" for s in sources], "",
+                        f"Punteggi del critico di ritenzione (0-10): {', '.join(f'{k} {v:.0f}' for k, v in scores.items()) or 'critico non disponibile'}", "",
                         "Approvato dal codice: ogni numero è nelle fonti, il revisore non ha trovato problemi gravi, "
                         "struttura e ritmo nei limiti. Nessuna revisione umana."]) + "\n"
     print(report)

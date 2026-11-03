@@ -120,6 +120,9 @@ jobs:
           ID: ${{ steps.pick.outputs.id }}
         run: |
           out="longform/$ID/out"
+          # viral plan, phase D on long videos: advisory (a 60-minute build is not thrown away), result in qc.md and the notes
+          python tools/video_qc.py "$out/$ID.mp4" --kind long --md /tmp/video-qc.md || true
+          cat /tmp/video-qc.md >> "$out/qc.md" 2>/dev/null || true
           files=("$out/$ID.mp4" "$out/$ID.srt" "$out/upload.md" "$out/qc.md" "$out"/thumb_*.jpg)
           for c in longform/$ID/clips/*/out/*.mp4; do
             [ -f "$c" ] || continue
@@ -128,7 +131,7 @@ jobs:
           done
           title=$(python -c "import yaml;print(yaml.safe_load(open('longform/$ID/script.yaml',encoding='utf-8'))['title'])")
           { echo "Video lungo pronto (non caricato). Build: ${MAKE_MIN} min. QC:"; grep -m1 -E "PASS|FAIL" "$out/qc.md" || true
-            echo; echo "Titolo, descrizione e impostazioni in upload.md. Clip verticali per Reel e TikTok, se presenti, con la loro didascalia."; } > /tmp/notes.md
+            echo; head -1 /tmp/video-qc.md 2>/dev/null || true; echo; echo "Titolo, descrizione e impostazioni in upload.md. Clip verticali per Reel e TikTok, se presenti, con la loro didascalia."; } > /tmp/notes.md
           if gh release view "lf-$ID" >/dev/null 2>&1; then
             gh release upload "lf-$ID" "${files[@]}" --clobber
           else

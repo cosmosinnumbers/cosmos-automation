@@ -1,0 +1,100 @@
+# New niche repo bootstrap (owner 03/11/2026: "copia tutto il motore e i segreti, in autonomia").
+# Reads config/bootstrap-request.json: checks the target repo exists, pushes a clean copy of the engine
+# (tools/niche_bootstrap.py: Cosmos data excluded, every scheduled publisher OFF) if the target is empty, and copies the
+# shared secrets (tools/copy_secrets.py: LLM keys, YouTube API key, sound libraries, OAuth client; never channel tokens).
+# Token: BOOTSTRAP_TOKEN, else GH_SECRETS_TOKEN; it needs "Contents: write" + "Secrets: write" on the target repo.
+# Never prints a secret. Result (names only) in reports/bootstrap-<repo>.md and the run summary.
+name: niche-bootstrap
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/**"]
+    paths: ["config/bootstrap-request.json"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: niche-bootstrap
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONIOENCODING: utf-8
+      TZ: Europe/Rome
+      COPY_TOKEN: ${{ secrets.BOOTSTRAP_TOKEN || secrets.GH_SECRETS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}", fetch-depth: 1}
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.12"}
+      - name: Read request
+        id: req
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          r = json.load(open("config/bootstrap-request.json"))
+          print(f"ready={str(r.get('ready', False)).lower()}")
+          print(f"target={r['target']}"); print(f"niche={r.get('niche', 'stickman')}"); print(f"name={r.get('name', '')}")
+          print(f"push_code={str(r.get('push_code', True)).lower()}"); print(f"copy_secrets={str(r.get('copy_secrets', True)).lower()}")
+          PY
+      - name: Check target repo
+        id: target
+        if: steps.req.outputs.ready == 'true'
+        env: {GH_TOKEN: "${{ env.COPY_TOKEN }}", TARGET: "${{ steps.req.outputs.target }}"}
+        run: |
+          mkdir -p reports
+          f="reports/bootstrap-${TARGET#*/}.md"
+          if [ -z "$GH_TOKEN" ]; then echo "Nessun token (BOOTSTRAP_TOKEN/GH_SECRETS_TOKEN)." | tee "$f"; exit 1; fi
+          if ! gh api "repos/$TARGET" --jq .full_name > /dev/null 2>&1; then
+            echo "# Bootstrap $TARGET ($(date '+%d/%m/%Y %H:%M'))\n\nIl repo non esiste o il token non lo vede." | tee "$f"; exit 1
+          fi
+          size=$(gh api "repos/$TARGET" --jq .size)
+          echo "empty=$([ "$size" = 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - name: Push the clean engine copy
+        if: steps.req.outputs.ready == 'true' && steps.req.outputs.push_code == 'true' && steps.target.outputs.empty == 'true'
+        continue-on-error: true  # the Claude GitHub app can push the code too
+        env: {TARGET: "${{ steps.req.outputs.target }}", NICHE: "${{ steps.req.outputs.niche }}", NAME: "${{ steps.req.outputs.name }}"}
+        run: |
+          python tools/niche_bootstrap.py "$RUNNER_TEMP/copy" --niche "$NICHE" --name "$NAME"
+          cd "$RUNNER_TEMP/copy"
+          git init -q -b main
+          git config user.name "cosmos-automation[bot]"
+          git config user.email "cosmos-automation@users.noreply.github.com"
+          git add -A && git commit -q -m "Bootstrap: copia pulita del motore di Cosmos in Numbers per la nicchia $NICHE"
+          git push -q "https://x-access-token:${COPY_TOKEN}@github.com/${TARGET}.git" main
+          echo "code pushed to $TARGET"
+      - name: Copy shared secrets
+        if: steps.req.outputs.ready == 'true' && steps.req.outputs.copy_secrets == 'true'
+        env:
+          TARGET: ${{ steps.req.outputs.target }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINIAPIKEY3 }}
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+          GLM_BASE_URL: ${{ secrets.GLM_BASE_URL }}
+          GLM_MODELS: ${{ secrets.GLM_MODELS }}
+          BACKUP_LLM_URL: ${{ secrets.BACKUP_LLM_URL }}
+          BACKUP_LLM_MODELS: ${{ secrets.BACKUP_LLM_MODELS }}
+          BACKUP_LLM_KEY: ${{ secrets.BACKUP_LLM_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          FREESOUND_API_KEY: ${{ secrets.FREESOUND_API_KEY }}
+          OPENVERSE_CLIENT_ID: ${{ secrets.OPENVERSE_CLIENT_ID }}
+          OPENVERSE_CLIENT_SECRET: ${{ secrets.OPENVERSE_CLIENT_SECRET }}
+          REDDIT_JSON: ${{ secrets.REDDIT_JSON }}
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+          GH_SECRETS_TOKEN: ${{ secrets.GH_SECRETS_TOKEN }}
+          YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+        run: python tools/copy_secrets.py "$TARGET"
+      - name: Save report
+        if: always()
+        run: |
+          [ -n "$(ls reports/bootstrap-*.md 2>/dev/null)" ] && cat reports/bootstrap-*.md >> "$GITHUB_STEP_SUMMARY"
+          git config user.name "cosmos-automation[bot]"
+          git config user.email "cosmos-automation@users.noreply.github.com"
+          git add reports
+          git diff --cached --quiet || (git commit -q -m "report: bootstrap nuova nicchia" && git pull -q --rebase && git push -q)

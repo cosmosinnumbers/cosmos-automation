@@ -18,6 +18,7 @@
     "tokens":           {"retries": 2, "autofix": true},
     "health":           {"retries": 1, "autofix": true},
     "engage":           {"retries": 0, "autofix": true},
+    "niche-scan":       {"retries": 1, "autofix": true},
     "sfx-library":      {"retries": 1, "autofix": true}
   },
   "autofix": {

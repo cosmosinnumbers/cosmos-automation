@@ -507,7 +507,8 @@ THIS ACT: "{act_title}". It answers: {answered}. Its wow moment (in its first th
 Rules:
 - Use ONLY facts and numbers in the SOURCES below; write every number in digits exactly as printed there (say
   "about" when rounding). A computed number needs "calc": "6378.1 + 3474.8 = 9852.9" with source numbers on the left.
-  Never invent a number, a date, a quote or a mission detail.
+  Fact sheets print many values in units like (10^6 km): to say 0.3844 (10^6 km) as 384,400 km write
+  "calc": "0.3844 * 1000000 = 384400". Never invent a number, a date, a quote or a mission detail.
 - {beats} beats, each 1-2 short spoken sentences of 18-28 words (never over 30) over ONE visual; AT LEAST {words}
   words in total for this act (count them: short acts are rejected). Speak to the viewer ("you", "picture yourself")
   at least once in 5 sentences, and at least one beat is a single direct question to the viewer that contains "you"
@@ -647,12 +648,21 @@ def act_check(act: dict, rule: dict, words: int, sources: list[dict]) -> list[st
     text = " ".join(says)
     if ANNOUNCE.search(text) or PRICE.search(text):
         p.append("never announce chapters or parts, never a price, discount or code")
-    p += fact_check({"chapters": [act]}, sources)
-    return p
+    found = fact_check({"chapters": [act]}, sources)
+    if any(q.startswith(("number", "calc uses")) for q in found):
+        found.append("for every number above: use it exactly as printed in the SOURCES, or add a calc that converts "
+                     "a printed value (e.g. 0.3844 * 1000000 = 384400), or remove the sentence")
+    return p + found
 
 
-def act_sources(sources: list[dict], ids: list, budget: int = 6500) -> list[dict]:
+def act_sources(sources: list[dict], ids: list, budget: int = 6500, hint: str = "") -> list[dict]:
+    """The act's sources, plus any other source that prints a number named in the act's outline (hint)."""
     pick = [s for s in sources if s["id"] in set(ids or [])] or sources[:2]
+    nums = [n.replace(",", "") for n in a.numbers(hint) if len(n.replace(",", "").replace(".", "")) > 2]
+    for s in sources:
+        flat = s["text"].replace(",", "")
+        if s not in pick and any(n in flat for n in nums) and len(pick) < 4:
+            pick.append(s)
     per = max(1200, budget // len(pick))
     return [{**s, "text": s["text"][:per]} for s in pick]
 
@@ -672,7 +682,7 @@ Answer JSON only: {{"beats": [{{"say": "", "show": {{}}}}]}}"""
 def extend_act(act: dict, short: int, src: list[dict], sources: list[dict]) -> dict:
     """Free models write 150-190 words an answer: instead of rewriting a short act, add the missing beats. A new
     beat is kept only if it passes the fact check on its own and uses a known visual type."""
-    k = max(2, -(-short // 22) + 1)
+    k = min(5, max(2, -(-short // 22) + 1))
     _, out = llm([{"role": "user", "parts": [{"text": EXTEND.format(
         short=short, k=k, act=json.dumps({"beats": act["beats"]}, ensure_ascii=False),
         sources="\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text']}" for s in src))}]}])
@@ -680,7 +690,7 @@ def extend_act(act: dict, short: int, src: list[dict], sources: list[dict]) -> d
     for b in new:
         for k2 in ("ask", "spot", "recap"):
             b.pop(k2, None)
-    good = [b for b in new if (b.get("show") or {}).get("type") in MOTION | REAL and len(str(b["say"]).split()) <= 32
+    good = [b for b in new[:k] if (b.get("show") or {}).get("type") in MOTION | REAL and len(str(b["say"]).split()) <= 32
             and "LOOK UP" not in str(b["say"]) and not fact_check({"chapters": [{"beats": [b]}]}, sources)]
     print(f"  extend: {len(new)} new beats, {len(good)} kept "
           f"(+{sum(len(str(b['say']).split()) for b in good)} words)", flush=True)
@@ -712,7 +722,7 @@ def write_by_acts(p: dict, sources: list[dict]) -> tuple[dict, list[str]]:
     words = -(-(LEN["wmin"] + 120) // total)
     rules, history, chapters = act_plan(total), [], []
     for i, x in enumerate(acts):
-        src = act_sources(sources, x.get("sources"))
+        src = act_sources(sources, x.get("sources"), hint=" ".join(str(x.get(k, "")) for k in ("wow", "question_answered", "ends_with")))
         prev = (f"The previous act ended with: \"{chapters[-1]['beats'][-1].get('say', '')}\" - open by answering it."
                 if chapters and chapters[-1].get("beats") else "")
         msgs = [{"role": "user", "parts": [{"text": ACT.format(

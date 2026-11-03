@@ -112,7 +112,7 @@ jobs:
               print(f"{c['id']}\t{c['start']}\t{c['end']}\t{c['headline']}")
           EOF
           while IFS=$'\t' read -r cid t0 t1 head; do
-            python video/ytf/clip.py "longform/$ID" "$cid" "$t0" "$t1" "$head"
+            python video/ytf/clip.py "longform/$ID" "$cid" "$t0" "$t1" "$head" < /dev/null  # ffmpeg must not eat the clip list
           done < /tmp/clips.txt
       - name: Release for the phone
         if: steps.pick.outputs.id != ''

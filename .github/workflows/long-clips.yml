@@ -81,7 +81,7 @@ jobs:
           files=()
           while IFS=$'\t' read -r cid t0 t1 head; do
             grep -qx "$cid.mp4" <<< "$have" && continue
-            python video/ytf/clip.py "longform/$ID" "$cid" "$t0" "$t1" "$head"
+            python video/ytf/clip.py "longform/$ID" "$cid" "$t0" "$t1" "$head" < /dev/null  # ffmpeg must not eat the clip list
             cp "longform/$ID/clips/$cid/out/caption.txt" "/tmp/$cid-caption.txt"
             files+=("longform/$ID/clips/$cid/out/$cid.mp4" "/tmp/$cid-caption.txt")
           done < /tmp/clips.txt

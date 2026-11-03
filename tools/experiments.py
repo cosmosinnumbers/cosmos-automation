@@ -165,7 +165,7 @@ def record(result_path: Path) -> dict:
     labels["title_chars"] = len(re.sub(r"#\w+", "", r.get("title", "")).strip())
     labels["seconds"] = r.get("duration")
     row = {"date": date.today().isoformat(), "ref": r.get("id"), "title": r.get("title"), "labels": labels,
-           "run": os.environ.get("GITHUB_RUN_ID")}
+           "run": os.environ.get("GITHUB_RUN_ID"), "timing": r.get("timing")}
     LOG.parent.mkdir(exist_ok=True)
     with LOG.open("a", encoding="utf-8") as f:
         f.write(json.dumps(row, ensure_ascii=False) + "\n")
@@ -248,9 +248,10 @@ def follow_ups(rows: list[dict], ideas: list[dict], today: date) -> list[dict]:
         if (today - date.fromisoformat(r["published"])).days > 21:
             continue   # an old hit: the trend has moved on
         f = r["labels"].get("format")
-        f = f if f in lib else "scale_zoom"
+        if f not in lib:   # title not classified: data Shorts are evergreen comparisons, the others news
+            f = "scale_zoom" if "nasa data" in r["title"].lower() else "news_angle"
         for n, angle in enumerate(("the next step of the same story or a neighbouring object (a sequel: 'Part 2')",
-                                   "the same kind of comparison on a different object"), 1):
+                                   "the same format and angle on a different object"), 1):
             new.append({"id": f"{r['id']}-{n}", "from": r["title"], "from_id": r["id"], "format": f, "priority": 2 if n == 1 else 1,
                         "created": today.isoformat(), "score_from": r["score"],
                         "hint": f"Our Short '{r['title']}' did {r['score']}x our median. Make {angle}. "
@@ -288,6 +289,9 @@ def report(today: date, dry: bool = False) -> str:
     L += ["## Uscite degli ultimi 7 giorni", ""]
     L += [f"- {r['date']} {r.get('ref')}: formato {r['labels'].get('format')}, hook {r['labels'].get('hook')}"
           + (f", da {r['labels'].get('source')}" if r['labels'].get('source') else "") for r in wk] or ["- nessuna uscita etichettata"]
+    tt = [r["timing"]["total_s"] for r in wk if (r.get("timing") or {}).get("total_s")]
+    if tt:
+        L += ["", f"Tempo medio di produzione di uno Short (scrittura + clip + render): {statistics.mean(tt) / 60:.1f} minuti su {len(tt)} Short."]
     ours = recent_formats(log, today)
     hot = [k for k, v in (trends.get("formats") or {}).items() if k != "other" and not ours.get(k)][:3]
     L += ["", "## Trend della nicchia non coperti da noi questa settimana", ""] + [f"- {k}" for k in hot] or ["- nessuno"]

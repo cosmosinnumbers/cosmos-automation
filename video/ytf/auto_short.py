@@ -748,6 +748,7 @@ def main():
     today = datetime.now().strftime("%Y-%m-%d")
     opt = {k: a[a.index(f"--{k}") + 1] for k in ("format", "hook", "idea", "source") if f"--{k}" in a}
     FORMAT_RULES = format_rules(opt.get("format", ""), opt.get("hook", ""))
+    t0, timing = time.time(), {}   # seconds per phase (viral engine, step 3: measure before optimising)
     if FORMAT_RULES:
         print("variant:", opt)
     if "--spec" in a:
@@ -772,6 +773,7 @@ def main():
             missing, problems, report = check(spec)
             if "--reserve" in a:
                 problems += reserve_problems(spec)
+    timing["write_s"] = round(time.time() - t0)
     print(report)
     if missing or problems:
         sys.exit("FACT CHECK FAILED: no Short today. " + "; ".join(problems + [f"number {n} not in sources" for n in missing]))
@@ -784,7 +786,10 @@ def main():
     if DRY:
         print("DRY-RUN: no footage, no render.")
         return
+    t1 = time.time()
     visuals = footage(spec, news_dir)
+    timing["footage_s"] = round(time.time() - t1)
+    t1 = time.time()
     srcs = [{"id": f"S{i}", "title": s["title"], "url": s["url"]} for i, s in enumerate(spec["sources"], 1)]
     save_yaml(news_dir / "script.yaml", {"sources": srcs})
     short_dir.mkdir(parents=True, exist_ok=True)
@@ -799,6 +804,8 @@ def main():
     r = subprocess.run([sys.executable, str(Path(__file__).parent / "short.py"), str(short_dir)])
     if r.returncode:
         sys.exit("short.py failed")
+    timing["render_s"] = round(time.time() - t1)
+    timing["total_s"] = round(time.time() - t0)
     mp4 = short_dir / "out" / f"{sid}.mp4"
     dur = media_duration(mp4)
     if not 20 <= dur <= (45 if "--reserve" in a else 60):
@@ -807,7 +814,8 @@ def main():
     if not labels["format_fit"]:
         labels.pop("format", None)   # the writer could not follow it: tools/experiments.py infers it from the title
     meta = {"id": sid, "title": title, "duration": round(dur, 1), "mp4": str(mp4), "narration": spec["narration"],
-            "upload": str(short_dir / "out" / "upload.md"), "factcheck": str(base / "factcheck.md"), "labels": labels}
+            "upload": str(short_dir / "out" / "upload.md"), "factcheck": str(base / "factcheck.md"), "labels": labels,
+            "timing": timing}
     (base / "result.json").write_text(json.dumps(meta, indent=1, ensure_ascii=False), "utf-8")
     gh_out = os.environ.get("GITHUB_OUTPUT")
     if gh_out:

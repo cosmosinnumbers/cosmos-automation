@@ -93,8 +93,10 @@ def build(start: date) -> str:
                 ("16:00", "Threads: quiz con sondaggio (risposta il giorno dopo)"),
                 ("21:00", f"YouTube Short 1: formato previsto **{label}** ({why})"),
                 ("21:00", "Threads: post del video del giorno")]
+        if d.weekday() in (1, 4):
+            rows.append(("19:00", "Carosello Instagram: dal Short migliore della settimana (solo se ne ha uno sopra 1,5 volte la mediana)"))
         if d.weekday() == 5:
-            rows.append(("09:00", "Video lungo della settimana: costruito e controllato in automatico, pronto come release"))
+            rows.append(("09:00", "Video lungo della settimana: costruito e controllato in automatico, pronto come release da caricare"))
         q = queued(d)
         busy = {(t, w.split(":")[0]) for t, w in q}
         rows = [(t, w) for t, w in rows if (t, w.split(":")[0]) not in busy]   # the queued post replaces the generic slot

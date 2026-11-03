@@ -9,6 +9,7 @@ Tutto esce da GitHub Actions, senza PC. Gli orari sono ora italiana. Il formato 
 - 12:00 · Threads: NASA Invites Media to Northrop Grumman CRS-25 Station Resupply Launch
 - 15:00 · YouTube Short 2: notizia calda delle ultime 48 ore (esce solo se ce n'è una che passa il fact check)
 - 16:00 · Threads: Yesterday's answer: Mars, -65 °C on average (NASA Planetary Fact Sheet
+- 19:00 · Carosello Instagram: dal Short migliore della settimana (solo se ne ha uno sopra 1,5 volte la mediana)
 - 20:48 · Storia Facebook: del Short "Mars elongated cloud"
 - 20:48 · Storia Instagram: del Short "Mars elongated cloud"
 - 21:00 · Threads: Voyager 1 Is Now 24 Hours of Light Away
@@ -44,12 +45,13 @@ Tutto esce da GitHub Actions, senza PC. Gli orari sono ora italiana. Il formato 
 - 12:00 · Threads: notizia del giorno (fonte NASA/ESA/ESO)
 - 15:00 · YouTube Short 2: notizia calda delle ultime 48 ore (esce solo se ce n'è una che passa il fact check)
 - 16:00 · Threads: quiz con sondaggio (risposta il giorno dopo)
+- 19:00 · Carosello Instagram: dal Short migliore della settimana (solo se ne ha uno sopra 1,5 volte la mediana)
 - 21:00 · Threads: post del video del giorno
 - 21:00 · YouTube Short 1: formato previsto **Confronto di scala** (seguito di "The Moon Swings 295 °C in One Day. Here's Why (NASA data)" (2.05x la mediana))
 
 ## Sabato 07/11
 
-- 09:00 · Video lungo della settimana: costruito e controllato in automatico, pronto come release
+- 09:00 · Video lungo della settimana: costruito e controllato in automatico, pronto come release da caricare
 - 12:00 · Threads: notizia del giorno (fonte NASA/ESA/ESO)
 - 15:00 · YouTube Short 2: notizia calda delle ultime 48 ore (esce solo se ce n'è una che passa il fact check)
 - 16:00 · Threads: quiz con sondaggio (risposta il giorno dopo)

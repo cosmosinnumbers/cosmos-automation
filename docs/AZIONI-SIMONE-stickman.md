@@ -8,7 +8,7 @@ progetti Claude o account, né di leggere i valori dei segreti. Gli script però
 
 ## Adesso (circa 3 minuti, dal telefono)
 1. **Crea il repo vuoto:** apri
-   https://github.com/new?owner=cosmosinnumbers&name=stickman-automation&visibility=private
+   https://github.com/new (Owner cosmosinnumbers, nome stickman-automation, Private)
    lascia tutto com'è (niente README) e premi **Create repository**.
 2. **Allarga il token dei segreti al nuovo repo:** apri https://github.com/settings/personal-access-tokens
    (loggato come cosmosinnumbers), apri il token `cosmos-automation-secrets` → **Edit** → Repository access: aggiungi

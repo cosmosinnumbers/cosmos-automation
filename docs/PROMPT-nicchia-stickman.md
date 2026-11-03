@@ -46,10 +46,10 @@ sono foto NASA ma disegni stick man nostri, generati in codice).
   cancellazioni, spese.
 
 ## 1. Fase 1: struttura (repo, progetto, segreti) (Simone + Claude)
-Decisione consigliata: **repo nuovo e privato** nell'organizzazione `cosmosinnumbers` (es. `stickman-automation`) e
+Decisione consigliata: **repo nuovo e privato** nell'account `cosmosinnumbers` (account personale, non organizzazione) (es. `stickman-automation`) e
 **progetto Claude separato** per la nicchia. Motivi: segreti, token, code, log e memoria non si mescolano; i workflow
 schedulati di Cosmos non rischiano di pubblicare sul canale sbagliato; un errore del nuovo canale non ferma Cosmos.
-Non un fork (un fork privato nella stessa organizzazione non si può fare e si porterebbe dietro la storia e i log di
+Non un fork (un fork privato nello stesso account non si può fare e si porterebbe dietro la storia e i log di
 Cosmos): si fa una **copia pulita** del codice (tools, video/ytf, motion, workflow, test) senza `logs/`, `queues/`,
 `research/cosmos`, `media/`, report e segreti.
 1. Simone crea il repo vuoto privato e lo aggiunge al progetto (passi esatti in `docs/AZIONI-SIMONE-stickman.md`).

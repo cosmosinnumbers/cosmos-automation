@@ -1,6 +1,6 @@
 """Variant tests and automatic replication of what works (viral engine, steps 4, 5 and 7).
 
-  python tools/experiments.py plan [--evergreen] [--seed S]     choose format + hook (+ topic) of the next Short
+  python tools/experiments.py plan [--evergreen | --hot] [--seed S]     choose format + hook (+ topic) of the next Short
   python tools/experiments.py record <result.json>              log the labels of a released Short
   python tools/experiments.py learn [--dry-run]                 metrics -> arm state, hits -> follow-up ideas
   python tools/experiments.py report [--dry-run]                reports/esperimenti-<YYYY-Www>.md
@@ -110,7 +110,10 @@ def trend_bonus(trends: dict, key: str) -> dict:
     return {k: v / top for k, v in sc.items()} if top else {}
 
 
-def plan(today: date, evergreen: bool = False, seed: str | None = None) -> dict:
+HOT_FORMATS = ("news_angle", "mission_glitch", "myth_number", "scale_zoom", "survive_x")  # fit any fresh news
+
+
+def plan(today: date, evergreen: bool = False, seed: str | None = None, hot: bool = False) -> dict:
     lib = ts.load_formats()
     rng = random.Random(seed or f"{today}-{datetime.now():%H}")
     log, state, trends = jl(LOG), jload(STATE, {}), latest_trends()
@@ -119,6 +122,8 @@ def plan(today: date, evergreen: bool = False, seed: str | None = None) -> dict:
     losers = {k for k, v in fstate.items() if v.get("decision") == "perde"}
     allowed = [k for k, f in lib["formats"].items()
                if used.get(k, 0) < MAX_PER_WEEK and (f.get("evergreen") or not evergreen)]
+    if hot:   # second Short of the day: only formats that fit a fresh news story, no sky event, no follow-up
+        allowed = [k for k in allowed if k in HOT_FORMATS] or list(HOT_FORMATS)
     questions = [q for q in trends.get("audience_questions", []) if len(q) <= 140]
     if not questions:
         allowed = [k for k in allowed if k != "audience_question"]
@@ -126,11 +131,11 @@ def plan(today: date, evergreen: bool = False, seed: str | None = None) -> dict:
 
     # 1. a sky event the viewer can see in the next 2 days, not covered in the last 3 days
     sky = [e for e in ts.sky_events(today, 2)]
-    if sky and not evergreen and "sky_tonight" in allowed and recent_formats(log, today, 3).get("sky_tonight", 0) == 0:
+    if sky and not evergreen and not hot and "sky_tonight" in allowed and recent_formats(log, today, 3).get("sky_tonight", 0) == 0:
         e = sky[0]
         out.update(format="sky_tonight", topic=e["hint"], source="sky-calendar", why=f"{e['name']} il {e['date']}")
     # 2. a follow-up of a hit (queues/ideas.json), oldest first
-    if "format" not in out:
+    if "format" not in out and not hot:
         ideas = jload(IDEAS, [])
         todo = [i for i in ideas if not i.get("used") and i.get("format") in allowed]
         if todo:
@@ -311,7 +316,7 @@ def main():
     today = date.today()
     dry = "--dry-run" in a
     if cmd == "plan":
-        p = plan(today, "--evergreen" in a, a[a.index("--seed") + 1] if "--seed" in a else None)
+        p = plan(today, "--evergreen" in a, a[a.index("--seed") + 1] if "--seed" in a else None, "--hot" in a)
         print(json.dumps(p, ensure_ascii=False, indent=1))
         gh = os.environ.get("GITHUB_OUTPUT")
         if gh:

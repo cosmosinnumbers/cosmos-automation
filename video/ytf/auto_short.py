@@ -1,6 +1,7 @@
 """Daily news Short built in the cloud (GitHub Actions, shorts-build.yml): Gemini writes, the code checks and renders.
 
   python auto_short.py [--dry-run] [--topic "<hint>"] [--spec <file.json>] [--format F --hook H [--idea ID --source S]]
+       [--hot --prefix b]   second Short of the day: news of the last 48 hours, release b<MMDD>-<slug>
 
 --format/--hook: the variant chosen by tools/experiments.py plan (config/formats.json), added to the writer rules and
 saved as labels in result.json, so the metrics can tell which format and hook worked.
@@ -46,6 +47,7 @@ ALLOWED = ("nasa.gov", "esa.int", "esawebb.org", "esahubble.org", "eso.org", "st
 UA = {"User-Agent": "Mozilla/5.0 (CosmosInNumbers fact check)"}
 OUT = ROOT / "build" / "auto"
 DRY = "--dry-run" in sys.argv
+HOT = "--hot" in sys.argv   # second Short of the day (prefix b): the freshest news, 48 hours at most
 
 VIRAL_RULES = """Retention rules (the Short is judged on how many people stay to the end and watch it again):
 - ONE idea, one story. Two or three measured numbers at most, each with a comparison a viewer can picture.
@@ -412,7 +414,7 @@ def write_spec(today, hint):
     if spec:
         return msgs, raw, spec, True
     print("Google Search grounding unavailable: using the agencies' RSS feeds")
-    items = rss_items()
+    items = rss_items(days=2 if HOT else 7)   # second Short of the day: only news of the last 48 hours
     if not items:
         sys.exit("No recent item readable from the feeds: no Short today.")
     block = "\n\n".join(f"[{i}] {it['title']} ({it['date']:%Y-%m-%d})\nURL: {it['url']}\nEXCERPT: {it['text']}"
@@ -742,6 +744,24 @@ def footage(spec, news_dir) -> list[dict]:
     return visuals
 
 
+def same_story(slug: str, days: int = 5) -> str | None:
+    """Tag of a release of the last `days` days on the same story (a shared word of 5+ letters in the slug)."""
+    r = subprocess.run(["gh", "release", "list", "--limit", "20", "--json", "tagName,createdAt"], capture_output=True, text=True)
+    if r.returncode:
+        return None
+    words = {w for w in slug.split("-") if len(w) >= 5}
+    cutoff = datetime.now().timestamp() - days * 86400
+    for rel in json.loads(r.stdout or "[]"):
+        try:
+            when = datetime.fromisoformat(rel["createdAt"].replace("Z", "+00:00")).timestamp()
+        except (KeyError, ValueError):
+            continue
+        tag_words = {w for w in rel["tagName"].split("-")[1:] if len(w) >= 5}
+        if when >= cutoff and words & tag_words:
+            return rel["tagName"]
+    return None
+
+
 def write_checked(a, today, hint):
     """Write the Short, fact-check it, one rewrite if needed: (spec, missing numbers, problems, report)."""
     msgs, raw, spec, search = write_reserve_spec(today) if "--reserve" in a else write_spec(today, hint)
@@ -779,6 +799,9 @@ def main():
         missing, problems, report = check(spec)
     else:
         hint = f"Prefer this topic if there is fresh news on it: {a[a.index('--topic') + 1]}." if "--topic" in a else ""
+        if HOT:
+            hint += (" HOT NEWS slot: pick ONLY a story published in the last 48 hours, the one people will talk about today,"
+                     " and NOT the topic of today's first Short (in the list of used topics).")
         spec, missing, problems, report = write_checked(a, today, hint)
         if (missing or problems or spec.get("skip")) and FORMAT_RULES:
             # the variant under test did not fit today's material: one plain attempt, never a lost day for a test
@@ -794,7 +817,12 @@ def main():
     if missing or problems:
         sys.exit("FACT CHECK FAILED: no Short today. " + "; ".join(problems + [f"number {n} not in sources" for n in missing]))
     slug = re.sub(r"[^a-z0-9-]", "", spec["slug"].lower())[:40] or "news"
-    sid = f"{'r' if '--reserve' in a else 'a'}{datetime.now():%m%d}-{slug}"
+    if HOT:
+        dup = same_story(slug)
+        if dup:
+            sys.exit(f"HOT slot: the story '{slug}' is already out as {dup}: no second Short today.")
+    prefix = a[a.index("--prefix") + 1] if "--prefix" in a else ("r" if "--reserve" in a else "a")
+    sid = f"{prefix}{datetime.now():%m%d}-{slug}"
     base = OUT / sid
     news_dir, short_dir = base / "material", base / "short"
     print("Short:", sid, "|", spec["title"])

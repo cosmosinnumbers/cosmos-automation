@@ -87,3 +87,30 @@ def test_format_rules_in_writer_prompt():
     txt = a.format_rules("quiz_guess", "question")
     assert "FORMAT quiz_guess" in txt and "HOOK question" in txt and "format_fit" in txt
     assert a.format_rules("nope", "nope") == ""
+
+
+def test_hot_plan_only_news_formats(tmp_path, monkeypatch):
+    monkeypatch.setattr(ex, "LOG", tmp_path / "none.jsonl")
+    monkeypatch.setattr(ex, "IDEAS", tmp_path / "ideas.json")
+    for s in range(20):
+        p = ex.plan(date(2026, 11, 16), seed=str(s), hot=True)
+        assert p["format"] in ex.HOT_FORMATS and p["source"] == "bandit"
+
+
+def test_scaletta_week():
+    import scaletta
+    md = scaletta.build(date(2026, 11, 16))
+    assert md.count("## ") >= 8 and "YouTube Short 1" in md and "15:00" in md
+    assert "Leonids" in md   # sky event of the week
+
+
+def test_hot_same_story(monkeypatch):
+    import subprocess
+    from datetime import datetime, timezone
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "video" / "ytf"))
+    import auto_short as a
+    now = datetime.now(timezone.utc).isoformat()
+    out = json.dumps([{"tagName": "a1102-escapade-earth-slingshot", "createdAt": now}])
+    monkeypatch.setattr(subprocess, "run", lambda *x, **k: subprocess.CompletedProcess(x, 0, out, ""))
+    assert a.same_story("escapade-speed-increase") == "a1102-escapade-earth-slingshot"
+    assert a.same_story("leonid-meteor-peak") is None

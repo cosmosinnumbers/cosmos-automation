@@ -10,6 +10,7 @@ on:
     types: [completed]
   schedule:
     - cron: "45 19 * * *"   # 20:45 Italian time in winter (CET)
+    - cron: "45 13 * * *"   # 14:45: SECOND Short of the day (b<MMDD>-*, hot news), public at 15:00 (owner 03/11/2026)
     - cron: "45 18 * * *"   # 20:45 in summer (CEST, from 28/03/2027); off-season it only checks (19:45) or is a no-op (21:45)
   workflow_dispatch:
     inputs:
@@ -50,6 +51,8 @@ jobs:
       - name: Upload today's Short
         env:
           YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+          SHORT_PREFIX: ${{ github.event.schedule == '45 13 * * *' && 'b' || 'a' }}
+          UPLOAD_AT: ${{ github.event.schedule == '45 13 * * *' && '15:00' || '21:00' }}
           IN_TAG: ${{ inputs.tag }}
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
         run: |

@@ -16,8 +16,13 @@ on:
     - cron: "30 5 * * *"
     - cron: "0 10 * * *"
     - cron: "0 14 * * *"
+    - cron: "30 11 * * *"   # 12:30 Italian time (winter): SECOND Short of the day, hot news of the last 48 h (owner 03/11/2026)
   workflow_dispatch:
     inputs:
+      second:
+        description: "Second Short of the day (hot news, release b<MMDD>-*, YouTube at 15:00)"
+        type: boolean
+        default: false
       topic:
         description: "Optional topic hint for Gemini (e.g. 'Europa Clipper')"
         type: string
@@ -44,13 +49,19 @@ jobs:
       TZ: Europe/Rome
       PYTHONIOENCODING: utf-8
       GH_TOKEN: ${{ github.token }}
+      # second Short of the day (12:30 cron or the "second" input): prefix b, hot news, no retries, no reserve, no alert
+      SECOND: ${{ github.event.schedule == '30 11 * * *' || inputs.second == true }}
     steps:
       - uses: actions/checkout@v7
         with: {ref: "${{ github.ref }}"}  # tip of the branch: a re-run sees the logs of the attempt before (self-heal)
       - name: Today's Short already out?
         id: today
         run: |
-          tag=$(gh release list --limit 20 --json tagName --jq '.[].tagName' | grep "^a$(date +%m%d)-" | head -1 || true)
+          p=a; [ "$SECOND" = "true" ] && p=b
+          if [ "$SECOND" = "true" ] && [ "${{ vars.SECOND_SHORT_ENABLED }}" = "false" ]; then
+            echo "Second Short switched off (SECOND_SHORT_ENABLED=false)."; echo "done=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          tag=$(gh release list --limit 20 --json tagName --jq '.[].tagName' | grep "^$p$(date +%m%d)-" | head -1 || true)
           if [ -n "$tag" ] && [ "${{ github.event_name }}" = "schedule" ]; then
             echo "Today's Short is already out ($tag): nothing to do."; echo "done=true" >> "$GITHUB_OUTPUT"
           fi
@@ -93,7 +104,9 @@ jobs:
         id: plan
         if: steps.today.outputs.done != 'true'
         continue-on-error: true
-        run: python tools/experiments.py plan
+        run: |
+          args=(); [ "$SECOND" = "true" ] && args+=(--hot)
+          python tools/experiments.py plan "${args[@]}"
       - name: Write and render the Short
         id: short
         if: steps.today.outputs.done != 'true'
@@ -121,6 +134,7 @@ jobs:
           [ -n "$IN_TOPIC" ] && args+=(--topic "$IN_TOPIC")
           [ -n "$P_FORMAT" ] && args+=(--format "$P_FORMAT" --hook "$P_HOOK" --source "$P_SOURCE")
           [ -n "$P_IDEA" ] && args+=(--idea "$P_IDEA")
+          [ "$SECOND" = "true" ] && args+=(--hot --prefix b)
           [ "$IN_DRY" = "true" ] && args+=(--dry-run)
           python video/ytf/auto_short.py "${args[@]}"
       - name: "Publish as a release (private repo, only the owner can download it)"
@@ -166,7 +180,7 @@ jobs:
           retention-days: 3
       - name: Reserve Short (last attempt of the day)
         id: reserve
-        if: github.event_name == 'schedule' && steps.today.outputs.done != 'true' && steps.short.outputs.id == '' && steps.today.outputs.last == 'true'
+        if: github.event_name == 'schedule' && env.SECOND != 'true' && steps.today.outputs.done != 'true' && steps.short.outputs.id == '' && steps.today.outputs.last == 'true'
         continue-on-error: true
         run: |
           python tools/reserve_short.py
@@ -175,7 +189,7 @@ jobs:
           git commit -q -m "riserva: usato ${{ github.run_id }}"
           for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done; exit 1
       - name: Alert if no Short today
-        if: steps.today.outputs.done != 'true' && steps.short.outputs.id == '' && steps.reserve.outputs.used == '' && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+        if: env.SECOND != 'true' && steps.today.outputs.done != 'true' && steps.short.outputs.id == '' && steps.reserve.outputs.used == '' && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
         run: |
           if [ "${{ steps.today.outputs.last }}" != "true" ]; then
             echo "No Short at this attempt: next try at 11:00 or 15:00."; exit 0

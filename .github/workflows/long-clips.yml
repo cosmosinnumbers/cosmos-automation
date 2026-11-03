@@ -1,0 +1,111 @@
+# Every short video comes from a long video (owner 03/11/2026: "tutti i video corti devono essere clippate dei video
+# lunghi", every channel, from config/short-source.json "clips_from"). Two jobs:
+# - render: the vertical clips of longform/<id>/clips.yaml cut from the release lf-<id> (mp4 + srt) with clip.py,
+#   only the clips the release does not have yet, uploaded to the same release. The long video is never rebuilt.
+#   On a push of clips.yaml, or "Run workflow" with the id.
+# - day: tools/day_clip.py makes the release c<MMDD>-<clip> of the day (next unused clip of a long video already
+#   public on YouTube). tools/day_short.py picks it for every channel: queue-short-reel (Reels, Stories),
+#   threads-build (21:00 post) and youtube-upload (21:00) follow this workflow. Every day at 06:50 Italian time
+#   (winter; summer "50 4"), before threads-build (07:40).
+# Off switch: repository variable LONG_CLIPS_ENABLED=false.
+name: long-clips
+
+on:
+  push:
+    branches: [main]
+    paths: ["longform/*/clips.yaml"]
+  schedule:
+    - cron: "50 5 * * *"
+  workflow_dispatch:
+    inputs:
+      id:
+        description: "Folder in longform/ to render clips for (empty = only the clip of the day)"
+        default: ""
+      dry_run:
+        description: "Dry run: render and release nothing, print what would happen"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency: long-clips
+
+jobs:
+  render:
+    if: vars.LONG_CLIPS_ENABLED != 'false' && (github.event_name == 'push' || inputs.id != '')
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with: {fetch-depth: 2}
+      - name: Which video
+        id: pick
+        env:
+          IN_ID: ${{ inputs.id }}
+        run: |
+          if [ -n "$IN_ID" ]; then id="$IN_ID"
+          else id=$(git diff --name-only HEAD~1 HEAD -- 'longform/*/clips.yaml' | cut -d/ -f2 | sort -u | head -1)
+          fi
+          [ -n "$id" ] && gh release view "lf-$id" >/dev/null 2>&1 || { echo "no release lf-$id: longform-build first"; exit 0; }
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-python@v7
+        if: steps.pick.outputs.id != ''
+        with: {python-version: "3.13", cache: pip}
+      - if: steps.pick.outputs.id != ''
+        run: pip install -q kokoro-onnx espeakng-loader phonemizer-fork onnxruntime soundfile numpy scipy pillow matplotlib fonttools imageio-ffmpeg PyYAML requests tzdata
+      - name: Cut the missing clips
+        if: steps.pick.outputs.id != ''
+        env:
+          ID: ${{ steps.pick.outputs.id }}
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          have=$(gh release view "lf-$ID" --json assets --jq '.assets[].name')
+          python - <<'PY' > /tmp/clips.txt
+          import os, yaml
+          for c in yaml.safe_load(open(f"longform/{os.environ['ID']}/clips.yaml", encoding="utf-8")) or []:
+              print(f"{c['id']}\t{c['start']}\t{c['end']}\t{c['headline']}")
+          PY
+          todo=0
+          while IFS=$'\t' read -r cid t0 t1 head; do
+            grep -qx "$cid.mp4" <<< "$have" && { echo "$cid: already in the release"; continue; }
+            echo "$cid: $t0-$t1 s \"$head\""; todo=1
+          done < /tmp/clips.txt
+          [ "$todo" = 1 ] && [ "$IN_DRY" != "true" ] || { echo "nothing to cut (or dry run)"; exit 0; }
+          mkdir -p "longform/$ID/out"
+          gh release download "lf-$ID" -p "$ID.mp4" -p "$ID.srt" -D "longform/$ID/out" --clobber
+          files=()
+          while IFS=$'\t' read -r cid t0 t1 head; do
+            grep -qx "$cid.mp4" <<< "$have" && continue
+            python video/ytf/clip.py "longform/$ID" "$cid" "$t0" "$t1" "$head"
+            cp "longform/$ID/clips/$cid/out/caption.txt" "/tmp/$cid-caption.txt"
+            files+=("longform/$ID/clips/$cid/out/$cid.mp4" "/tmp/$cid-caption.txt")
+          done < /tmp/clips.txt
+          gh release upload "lf-$ID" "${files[@]}" --clobber
+
+  day:
+    needs: render
+    if: always() && vars.LONG_CLIPS_ENABLED != 'false' && needs.render.result != 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.12"}
+      - run: pip install -q requests PyYAML tzdata
+      - name: Clip of the day
+        env:
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          args=()
+          [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          python tools/day_clip.py "${args[@]}"

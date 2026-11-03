@@ -13,7 +13,7 @@ on:
   schedule:
     - cron: "40 6 * * *"
   workflow_run:
-    workflows: [shorts-build]
+    workflows: [shorts-build, long-clips]
     types: [completed]
   workflow_dispatch:
     inputs:

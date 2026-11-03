@@ -5,7 +5,7 @@ name: queue-short-reel
 
 on:
   workflow_run:
-    workflows: [shorts-build]
+    workflows: [shorts-build, long-clips]
     types: [completed]
   workflow_dispatch:
     inputs:
@@ -24,7 +24,8 @@ concurrency: queue-short-reel
 
 jobs:
   queue:
-    if: vars.SHORT_REEL_ENABLED != 'false' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
+    # news Shorts are off (SHORT_REEL_ENABLED=false, owner 03/11/2026); the clip of the day (long-clips) always queues
+    if: (vars.SHORT_REEL_ENABLED != 'false' || github.event.workflow_run.name == 'long-clips') && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -37,8 +38,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TIKTOK_ENABLED: ${{ vars.TIKTOK_ENABLED || 'false' }}
-          # Reel IG only from long-video clips, never the Short of the day (owner 03/11/2026)
-          SHORT_META_KINDS: ${{ vars.SHORT_META_KINDS || 'fb-reel,ig-story,fb-story' }}
+          # Meta only from long-video clips (owner 03/11/2026): from clips_from the release of the day IS the clip
+          SHORT_META_KINDS: ${{ vars.SHORT_META_KINDS || 'ig-reel,fb-reel,ig-story,fb-story' }}
         run: |
           args=()
           [ -n "${{ inputs.tag }}" ] && args+=(--tag "${{ inputs.tag }}")

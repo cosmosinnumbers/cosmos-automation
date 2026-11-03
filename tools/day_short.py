@@ -5,6 +5,9 @@ second build on the same day (manual dispatch, reserve) never splits the channel
   1. config/day-short.json: {"a1103": "a1103-swift-space-telescope-reentry"} pins the Short of a day by hand;
   2. the release of that day already on YouTube (logs/youtube-publish-log.jsonl): what went out stays the Short;
   3. else the first release of that day by creation time: later builds the same day are spares, never replacements.
+From config/short-source.json "clips_from" (owner 03/11/2026: "tutti i video corti devono essere clippate dei video
+lunghi", every channel) the Short of the day is the clip release c<MMDD>-* made by tools/day_clip.py; the news
+Shorts a<MMDD>-* and b<MMDD>-* are still built as a reserve but never picked.
 tools/short_sync.py checks every evening that the channels agree and opens an issue when they do not.
 """
 from __future__ import annotations
@@ -15,11 +18,21 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PINS = ROOT / "config" / "day-short.json"
+SOURCE = ROOT / "config" / "short-source.json"
 YT_LOG = ROOT / "logs" / "youtube-publish-log.jsonl"
 
 
 def key(day: datetime, prefix: str = "a") -> str:
     return f"{prefix}{day:%m%d}"
+
+
+def clips_mode(day: datetime) -> bool:
+    """True from clips_from on: the short video of the day is a clip of a long video."""
+    try:
+        start = json.loads(SOURCE.read_text("utf-8")).get("clips_from", "")
+    except (OSError, ValueError):
+        return False
+    return bool(start) and f"{day:%Y-%m-%d}" >= start
 
 
 def pins() -> dict:
@@ -43,6 +56,10 @@ def on_youtube() -> list[str]:
 
 def pick(rels: list[dict], day: datetime, prefix: str = "a") -> dict | None:
     """The release that is the Short of `day` (releases as returned by the GitHub API), or None."""
+    if clips_mode(day):
+        if prefix != "a":
+            return None  # no second (news) Short of the day in clips mode
+        prefix = "c"
     k = key(day, prefix)
     cands = [r for r in rels if r["tag_name"].startswith(f"{k}-") and not r.get("draft")]
     if not cands:

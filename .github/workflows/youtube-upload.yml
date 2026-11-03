@@ -6,7 +6,7 @@ name: youtube-upload
 
 on:
   workflow_run:
-    workflows: [shorts-build]
+    workflows: [shorts-build, long-clips]
     types: [completed]
   schedule:
     - cron: "45 19 * * *"   # 20:45 Italian time in winter (CET)

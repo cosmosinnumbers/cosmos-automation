@@ -692,11 +692,20 @@ def extend_act(act: dict, short: int, src: list[dict], sources: list[dict]) -> d
 def write_by_acts(p: dict, sources: list[dict]) -> tuple[dict, list[str]]:
     total = LEN["cmax"]   # more, shorter acts: each answer of a free model stays small
     excerpt = "\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text'][:1100]}" for s in sources)
-    _, out = llm([{"role": "user", "parts": [{"text": OUTLINE.format(topic=p.get("topic"), angle=p.get("angle"),
-                  acts=total, sources=excerpt, trend_titles=trend_titles(5))}]}])
-    acts = [x for x in (out.get("acts") or []) if isinstance(x, dict)][:total]
-    if len(acts) < total:
-        sys.exit(f"Act mode: the outline has {len(acts)} acts (need {total}).")
+    msgs = [{"role": "user", "parts": [{"text": OUTLINE.format(topic=p.get("topic"), angle=p.get("angle"),
+             acts=total, sources=excerpt, trend_titles=trend_titles(5))}]}]
+    for rnd in range(3):   # free models sometimes answer one act only: ask again, saying how many
+        raw, out = llm(msgs)
+        acts = [x for x in (out.get("acts") or []) if isinstance(x, dict)][:total]
+        print(f"Outline, draft {rnd + 1}: {len(acts)} acts")
+        if len(acts) >= LEN["cmin"]:
+            break
+        msgs = msgs[:1] + [{"role": "model", "parts": [{"text": raw}]}, {"role": "user", "parts": [{"text":
+                f"Your outline has {len(acts)} acts. Answer again with the same JSON and EXACTLY {total} objects in "
+                "\"acts\", one per act, covering the whole story from the hook to the payoff."}]}]
+    else:
+        sys.exit(f"Act mode: the outline has {len(acts)} acts after 3 drafts (need {LEN['cmin']}-{total}).")
+    total = len(acts)
     spec = {k: out.get(k) for k in ("id", "title", "alt_titles", "description_intro", "tags", "hashtags", "thumbs")}
     outline = "\n".join(f"{i + 1}. {x.get('title', '')}: {x.get('question_answered', '')} -> {x.get('ends_with', '')}"
                         for i, x in enumerate(acts))

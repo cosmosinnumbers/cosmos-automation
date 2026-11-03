@@ -194,6 +194,10 @@ def llm(msgs: list) -> tuple[str, dict]:
                 print(f"  Gemini {m}: unusable answer ({type(e).__name__})", flush=True)
     out = ((claude_cli.chat(msgs, timeout=900) if claude_cli.available() else None)
            or (glm.chat(msgs, max_tokens=32000, timeout=600) if glm.available() else None) or a.backup_llm(msgs))
+    if not out:   # the free writers are often briefly over capacity: one more round after a minute
+        print("  no writer answered: one more try in 60 s", flush=True)
+        time.sleep(60)
+        out = a.backup_llm(msgs)
     if not out:
         sys.exit("No writer available (Gemini, GLM and backup).")
     return out

@@ -306,17 +306,29 @@ def backup_llm(messages):
     chat = [{"role": "assistant" if m["role"] == "model" else "user",
              "content": "".join(p.get("text", "") for p in m["parts"])} for m in messages]
     for model in [m.strip() for m in models.split(",") if m.strip()]:
-        msgs, waits = chat, 0
-        for shrink in range(6):  # 413 (request over the per-minute token limit): smaller blocks; 429: wait the minute
+        msgs, waits, strict = chat, 0, True
+        # 413 (request over the per-minute token limit): smaller blocks; 429 / 503: wait and retry; 400 "Failed to
+        # validate JSON": once more without the JSON mode, the JSON is then cut out of the text
+        for shrink in range(8):
+            body = {"model": model, "messages": msgs, "temperature": 0.4}
+            if strict:
+                body["response_format"] = {"type": "json_object"}
             try:
-                r = requests.post(url, timeout=120, headers={"Authorization": f"Bearer {tok}"},
-                                  json={"model": model, "messages": msgs, "temperature": 0.4,
-                                        "response_format": {"type": "json_object"}})
+                r = requests.post(url, timeout=120, headers={"Authorization": f"Bearer {tok}"}, json=body)
                 text = r.json()["choices"][0]["message"]["content"] or "" if r.status_code == 200 else ""
             except (requests.RequestException, ValueError, KeyError, IndexError, TypeError) as e:
                 print(f"  backup writer {model}: no usable answer ({type(e).__name__})", flush=True)
                 r = None
                 break
+            if r.status_code == 400 and "validate JSON" in r.text and strict:
+                print(f"  backup writer {model} HTTP 400 (JSON mode): retrying without it", flush=True)
+                strict = False
+                continue
+            if r.status_code == 503 and waits < 2:
+                print(f"  backup writer {model} HTTP 503 (over capacity): waiting 30 s", flush=True)
+                time.sleep(30)
+                waits += 1
+                continue
             if r.status_code == 429 and "per minute" in r.text and waits < 2:
                 m = re.search(r"try again in ([\d.]+)s", r.text)
                 pause = min(70.0, float(m.group(1)) + 2) if m else 62.0
@@ -324,7 +336,7 @@ def backup_llm(messages):
                 time.sleep(pause)
                 waits += 1
                 continue
-            if r.status_code != 413 or shrink >= 5:
+            if r.status_code != 413 or shrink >= 6:
                 break
             msgs = smaller(msgs)
             print(f"  backup writer {model} HTTP 413: retrying with the input cut to "
@@ -336,8 +348,13 @@ def backup_llm(messages):
             continue
         mt = re.search(r"\{.*\}", text, re.S)
         if mt:
+            try:
+                data = json.loads(mt.group())
+            except ValueError:   # without the JSON mode a model can still answer broken JSON: next model
+                print(f"  backup writer {model}: broken JSON in the answer", flush=True)
+                continue
             print(f"  written by the backup writer {model}", flush=True)
-            return text, json.loads(mt.group())
+            return text, data
     return None
 
 

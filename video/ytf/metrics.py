@@ -38,6 +38,10 @@ DEFS = {
         "minutes_watched": "Minuti di visione stimati (Analytics estimatedMinutesWatched).",
         "avg_view_duration_s": "Durata media di visione in secondi (Analytics averageViewDuration).",
         "avg_view_pct": "Percentuale media visualizzata (Analytics averageViewPercentage; per gli Short può superare 100 con le ripetizioni).",
+        "r5": "Quota di spettatori ancora presenti al 5% del video (curva di ritenzione, audienceWatchRatio; solo organico).",
+        "r25": "Quota ancora presente al 25% del video.", "r50": "Quota ancora presente al 50% del video.", "r75": "Quota ancora presente al 75% del video.",
+        "r100": "Quota ancora presente alla fine (per gli Short pu\u00f2 superare 1 se si rivede).",
+        "worst_drop": "Calo massimo tra due punti consecutivi della curva (1% del video).", "worst_drop_at_pct": "A che % del video avviene il calo massimo.",
         "subs_gained": "Iscritti guadagnati dal video (Analytics subscribersGained).",
         "shares": "Condivisioni (Analytics shares).",
         "link_clicks": "Non esposti dalle API: i clic sui link in descrizione non sono misurati.",
@@ -148,6 +152,27 @@ def yt_analytics(interactive=False):
     return build("youtubeAnalytics", "v2", credentials=creds)
 
 
+def retention_curve(an, vid):
+    """Per-video retention curve (audienceWatchRatio per 1% of elapsed time) -> list of 100 floats, or None."""
+    r = an.reports().query(ids="channel==MINE", startDate=SINCE, endDate=now().date().isoformat(),
+                           dimensions="elapsedVideoTimeRatio", metrics="audienceWatchRatio",
+                           filters=f"video=={vid};audienceType==ORGANIC", sort="elapsedVideoTimeRatio").execute()
+    rows = r.get("rows") or []
+    return [round(x[1], 3) for x in rows] or None
+
+
+def curve_summary(curve):
+    """Where viewers leave: watch ratio at 3 s-equivalent (first 5%), at 25/50/75/100% and the steepest drop."""
+    if not curve:
+        return {}
+    n = len(curve)
+    at = lambda f: curve[min(n - 1, int(f * (n - 1)))]  # noqa: E731
+    drops = [(curve[i] - curve[i + 1], i + 1) for i in range(n - 1)]
+    d, pos = max(drops)
+    return {"r5": at(.05), "r25": at(.25), "r50": at(.5), "r75": at(.75), "r100": at(1.0),
+            "worst_drop": round(d, 3), "worst_drop_at_pct": pos}
+
+
 def youtube():
     import yt_api
     from stats import iso_seconds
@@ -182,6 +207,14 @@ def youtube():
         if a:
             m.update(an_views=a["views"], minutes_watched=a["estimatedMinutesWatched"], avg_view_duration_s=a["averageViewDuration"],
                      avg_view_pct=round(a["averageViewPercentage"], 1), subs_gained=a["subscribersGained"], shares=a["shares"])
+            try:
+                curve = retention_curve(an, v["id"])
+                m.update(curve_summary(curve))
+                if curve:
+                    with open(ROOT / "logs" / "video-metrics.jsonl", "a", encoding="utf-8") as f:
+                        f.write(json.dumps({"id": v["id"], "title": sn["title"], "date": now().date().isoformat(), "curve": curve}) + "\n")
+            except Exception as e:  # noqa: BLE001
+                miss["retention_curve"] = f"{type(e).__name__}: {str(e)[:100]}"
         elif an_err:
             miss.update({k: an_err for k in ("avg_view_duration_s", "avg_view_pct", "subs_gained", "shares")})
         kind = "short" if iso_seconds(v["contentDetails"]["duration"]) <= 180 else "long"

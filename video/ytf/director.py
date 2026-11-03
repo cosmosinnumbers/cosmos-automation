@@ -266,6 +266,8 @@ def _keys(text: str, cps: float = 24.0) -> list[float]:
 
 
 # ---------- long videos ----------
+MIN_GAP_LONG = 9.0   # seconds between two Remotion scenes in a long video (was 12: one new scene per chapter at least)
+
 def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosmos") -> dict:
     """Turn some shots of a long video into effects (visual type 'fx'), mark chapter cuts for transitions, and
     list the sound events. Returns {fx: {shot_index: {effect, props}}, transitions: {shot_index: effect},
@@ -277,7 +279,7 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
     say = {}
     for seg in script.get("segments", []):
         say[seg["id"]] = seg.get("narration", "")
-    counters = 0
+    counters = chapters = 0
     mid_done = False
     for i, sh in enumerate(shots):
         v = sh["visual"]
@@ -285,7 +287,18 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
         d = t1 - t0
         if i and sh.get("chapter") and sh["chapter"].lower() not in ("intro",):
             transitions[i] = "glitch" if len(transitions) % 2 else "zoomthrough"
-        if i == 0 or d < 2.0 or t0 - last < 12 or t1 > dur - 4:
+            events.append((max(0.0, t0 - 1.2), "riser"))   # tension before every new chapter (owner 03/11/2026)
+            chapters += 1
+            # 11 Typewriter: every other chapter opens with its title typed on screen (the 11th effect in long videos)
+            if chapters % 2 == 1 and d >= 2.5 and t0 - last >= 6 and t1 <= dur - 4 and sh["chapter"].lower() != "outro":
+                title = _short_title(sh["chapter"], 40)
+                lines = [f"chapter {chapters:02d}", title]
+                props = {"lines": lines, "keys": _keys("\n".join(lines), cps=26)}
+                fx[i] = {"effect": "typewriter", "props": props, "src": v.get("src")}
+                last = t0
+                events += [(t0 + a, k) for a, k in effect_sounds("typewriter", d, props)]
+                continue
+        if i == 0 or d < 2.0 or t0 - last < MIN_GAP_LONG or t1 > dur - 4:
             continue
         text = say.get(sh["segment"], "")
         kind = v.get("type")

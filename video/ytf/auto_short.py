@@ -489,6 +489,9 @@ def numbers(text: str) -> list[str]:
     return [n.rstrip(".,") for n in re.findall(r"\d[\d,.]*", text) if n.rstrip(".,")]
 
 
+# talking heads, briefings, title cards, mascots and posters: never the picture of a Short about a measured number
+BAD_VISUAL = re.compile(r"presentation|briefing|news conference|press|interview|panel|podcast|episode|report|webcast|"
+                        r"emoji|mascot|cartoon|clip ?art|poster|logo|infographic|live ?stream|\bq&a\b|\bsocial\b", re.I)
 BAD_OPEN = re.compile(r"^\s*(did you know|in this video|today|welcome|hey|hello|have you ever|what if|imagine)\b", re.I)
 BAD_END = re.compile(r"(subscribe|thanks for watching|see you|follow for|like and)", re.I)
 
@@ -599,6 +602,8 @@ def footage(spec, news_dir) -> list[dict]:
     def relevance(it) -> int:
         """How many story words (mission, object, telescope) appear in the clip's NASA title and description."""
         d = it["data"][0]
+        if BAD_VISUAL.search(d.get("title", "")):
+            return 0
         hay = (d.get("title", "") + " " + d.get("description", "")[:400] + " " + " ".join(d.get("keywords", []))).lower()
         return sum(1 for w in topic if w in hay)
 

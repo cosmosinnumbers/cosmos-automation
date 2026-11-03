@@ -32,6 +32,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "video" / "ytf"))
 import creds  # noqa: E402
 import post_qc  # noqa: E402
+import day_short  # noqa: E402
 
 QUEUE = creds.QUEUES / "threads-queue.json"
 REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
@@ -430,8 +431,8 @@ def quiz(day: datetime, queue: list[dict]) -> dict | None:
 # ---------- video ----------
 
 def todays_short(day: datetime) -> dict | None:
-    rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=15"))
-    rel = next((r for r in rels if r["tag_name"].startswith(f"a{day:%m%d}-")), None)
+    rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=30"))
+    rel = day_short.pick(rels, day)  # the same Short as YouTube and the Meta queue
     if not rel:
         return None
     import yaml

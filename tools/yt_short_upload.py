@@ -25,6 +25,7 @@ from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import creds  # noqa: E402
+import day_short  # noqa: E402
 
 TZ = ZoneInfo("Europe/Rome")
 LOG = "youtube-publish-log.jsonl"
@@ -42,8 +43,10 @@ def gh(*a) -> str:
 
 
 def release(now, tag):
-    rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=20"))
-    return next((r for r in rels if (r["tag_name"] == tag if tag else r["tag_name"].startswith(f"{PREFIX}{now:%m%d}-"))), None)
+    rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=30"))
+    if tag:
+        return next((r for r in rels if r["tag_name"] == tag), None)
+    return day_short.pick(rels, now, PREFIX)  # the same Short on every channel
 
 
 def section(md, name):

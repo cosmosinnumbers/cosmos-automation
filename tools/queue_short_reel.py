@@ -2,7 +2,7 @@
 
   python tools/queue_short_reel.py [--tag a1031-slug] [--dry-run]
 
-Takes the release of shorts-build (default: the newest a<MMDD>-* of today, Europe/Rome), copies its mp4 into
+Takes the release of shorts-build (default: the Short of the day from tools/day_short.py, the same on every channel), copies its mp4 into
 media/shorts/ (plus a 19 s Story cut, <tag>_story.mp4) and appends to queues/meta-queue.json, for publish.yml:
   sr-<tag> ig-reel, fr-<tag> fb-reel (caption with the LOOK UP link: Facebook allows links), si-<tag> ig-story,
   sf-<tag> fb-story (owner 30/10/2026: "Collegare allo Short del giorno Reel FB, Storia IG e Storia FB").
@@ -22,6 +22,9 @@ import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import day_short  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
@@ -46,9 +49,10 @@ def gh(*a) -> str:
 
 
 def release(now: datetime) -> dict:
-    rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=15"))
+    rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=30"))
     tag = sys.argv[sys.argv.index("--tag") + 1] if "--tag" in sys.argv else None
-    rel = next((r for r in rels if (r["tag_name"] == tag if tag else r["tag_name"].startswith(f"a{now:%m%d}-"))), None)
+    # the same Short as YouTube and Threads (tools/day_short.py)
+    rel = next((r for r in rels if r["tag_name"] == tag), None) if tag else day_short.pick(rels, now)
     if not rel:
         if tag:
             sys.exit(f"No release {tag}.")

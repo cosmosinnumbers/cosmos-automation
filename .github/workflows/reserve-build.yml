@@ -71,6 +71,11 @@ jobs:
           mkdir -p ~/.cache/kokoro && cd ~/.cache/kokoro
           [ -s kokoro-v1.0.onnx ] || curl -sSLf -o kokoro-v1.0.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
           [ -s voices-v1.0.bin ] || curl -sSLf -o voices-v1.0.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+      - name: Choose the variant (evergreen formats only)
+        id: plan
+        if: steps.full.outputs.full != 'true'
+        continue-on-error: true
+        run: python tools/experiments.py plan --evergreen
       - name: Write and render a reserve Short
         id: short
         if: steps.full.outputs.full != 'true'
@@ -87,8 +92,11 @@ jobs:
           GLM_BASE_URL: ${{ secrets.GLM_BASE_URL }}
           GLM_MODELS: ${{ secrets.GLM_MODELS }}
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+          P_FORMAT: ${{ steps.plan.outputs.format }}
+          P_HOOK: ${{ steps.plan.outputs.hook }}
         run: |
           args=(--reserve)
+          [ -n "$P_FORMAT" ] && args+=(--format "$P_FORMAT" --hook "$P_HOOK" --source reserve)
           [ "$IN_DRY" = "true" ] && args+=(--dry-run)
           python video/ytf/auto_short.py "${args[@]}"
       - name: Store it in reserve/

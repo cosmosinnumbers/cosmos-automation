@@ -41,11 +41,16 @@ jobs:
         run: python video/ci_secrets.py
       - name: Snapshot
         run: timeout 600 python video/ytf/metrics.py all < /dev/null
+      # Viral engine, steps 4-5: arm state every day (not only on Mondays) and follow-ups of the hits.
+      - name: Learn from the experiments
+        continue-on-error: true
+        run: python tools/experiments.py learn
       - name: Save
         run: |
           git config user.name "cosmos-metrics[bot]"
           git config user.email "cosmos-metrics@users.noreply.github.com"
-          git add 07-analytics/metrics
+          git add 07-analytics/metrics config/experiments-state.json
+          [ -f queues/ideas.json ] && git add queues/ideas.json
           git diff --cached --quiet && exit 0
           git commit -q -m "metrics: daily snapshot $(date +%F)"
           for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep $((i * 10)); done

@@ -87,6 +87,13 @@ jobs:
           mkdir -p ~/.cache/kokoro && cd ~/.cache/kokoro
           [ -s kokoro-v1.0.onnx ] || curl -sSLf -o kokoro-v1.0.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
           [ -s voices-v1.0.bin ] || curl -sSLf -o voices-v1.0.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+      # Viral engine, step 4 (docs/PROMPT-motore-virale.md): format + hook of today's Short from tools/experiments.py
+      # (sky event, follow-up of a hit, or Thompson sampling 80/20 on the metrics). A failure here = a plain Short.
+      - name: Choose today's variant
+        id: plan
+        if: steps.today.outputs.done != 'true'
+        continue-on-error: true
+        run: python tools/experiments.py plan
       - name: Write and render the Short
         id: short
         if: steps.today.outputs.done != 'true'
@@ -103,11 +110,17 @@ jobs:
           GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
           GLM_BASE_URL: ${{ secrets.GLM_BASE_URL }}
           GLM_MODELS: ${{ secrets.GLM_MODELS }}
-          IN_TOPIC: ${{ inputs.topic }}
+          IN_TOPIC: ${{ inputs.topic || steps.plan.outputs.topic }}
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+          P_FORMAT: ${{ steps.plan.outputs.format }}
+          P_HOOK: ${{ steps.plan.outputs.hook }}
+          P_IDEA: ${{ steps.plan.outputs.idea }}
+          P_SOURCE: ${{ steps.plan.outputs.source }}
         run: |
           args=()
           [ -n "$IN_TOPIC" ] && args+=(--topic "$IN_TOPIC")
+          [ -n "$P_FORMAT" ] && args+=(--format "$P_FORMAT" --hook "$P_HOOK" --source "$P_SOURCE")
+          [ -n "$P_IDEA" ] && args+=(--idea "$P_IDEA")
           [ "$IN_DRY" = "true" ] && args+=(--dry-run)
           python video/ytf/auto_short.py "${args[@]}"
       - name: "Publish as a release (private repo, only the owner can download it)"
@@ -129,6 +142,18 @@ jobs:
           gh release create "$ID" --title "$title" --notes-file "$DIR/phone.md" \
             "$DIR/short/out/$ID.mp4" "${social[@]}" "$DIR/short/out/upload.md" "$DIR/factcheck.md" "$DIR/short.yaml" \
             "$DIR/material-assets.yaml" "$DIR/material-script.yaml"
+      - name: Log the variant (experiments)
+        if: steps.short.outputs.id != ''
+        continue-on-error: true  # the release is out: a log failure must not turn the run red
+        env:
+          DIR: ${{ steps.short.outputs.dir }}
+        run: |
+          python tools/experiments.py record "$DIR/result.json"
+          git config user.name "cosmos-automation[bot]"; git config user.email "cosmos-automation@users.noreply.github.com"
+          git add logs/experiments.jsonl queues/ideas.json 2>/dev/null || git add logs/experiments.jsonl
+          git diff --cached --quiet && exit 0
+          git commit -q -m "esperimenti: variante di ${{ steps.short.outputs.id }}"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done; exit 1
       - name: Keep the blocked video for inspection (QC failed)
         if: failure() && steps.short.outputs.id != ''
         uses: actions/upload-artifact@v4

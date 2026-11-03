@@ -1,6 +1,9 @@
 """Daily news Short built in the cloud (GitHub Actions, shorts-build.yml): Gemini writes, the code checks and renders.
 
-  python auto_short.py [--dry-run] [--topic "<hint>"] [--spec <file.json>]
+  python auto_short.py [--dry-run] [--topic "<hint>"] [--spec <file.json>] [--format F --hook H [--idea ID --source S]]
+
+--format/--hook: the variant chosen by tools/experiments.py plan (config/formats.json), added to the writer rules and
+saved as labels in result.json, so the metrics can tell which format and hook worked.
 
 1. Gemini (with Google Search) picks ONE space news of the last 7 days from a primary source (NASA, ESA, JPL,
    ESA/Webb, ESO, STScI, NOIRLab...) not used yet, and writes title, headline, 85-110 words of narration (key
@@ -56,8 +59,29 @@ VIRAL_RULES = """Retention rules (the Short is judged on how many people stay to
 """
 
 
+FORMAT_RULES = ""   # set by main() from --format/--hook (tools/experiments.py plan): the variant under test
+
+
+def format_rules(fmt: str, hook: str) -> str:
+    """Writer lines of the format and hook under test (config/formats.json)."""
+    try:
+        lib = json.loads((ROOT / "config" / "formats.json").read_text("utf-8"))
+    except (OSError, ValueError):
+        return ""
+    lines = [x for x in (lib["formats"].get(fmt, {}).get("writer"), lib["hooks"].get(hook, {}).get("writer")) if x]
+    if not lines:
+        return ""
+    return ("Variant under test today (follow it, it is how we learn what works):\n- " + "\n- ".join(lines) +
+            '\n- If the sources cannot fit this format, write the best Short you can and add "format_fit": false to the JSON.\n')
+
+
 def viral_rules() -> str:
-    """VIRAL_RULES plus what the weekly learning loop (tools/learn_weekly.py) found worked or failed on this channel."""
+    """VIRAL_RULES plus what the weekly learning loop (tools/learn_weekly.py) found worked or failed on this channel,
+    plus the format and hook under test (FORMAT_RULES)."""
+    return _viral_rules() + FORMAT_RULES
+
+
+def _viral_rules() -> str:
     try:
         w = json.loads((ROOT / "config" / "viral-weights.json").read_text("utf-8"))
     except (OSError, ValueError):
@@ -719,8 +743,13 @@ def footage(spec, news_dir) -> list[dict]:
 
 def main():
     sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)  # log lines in order in Actions
+    global FORMAT_RULES
     a = sys.argv[1:]
     today = datetime.now().strftime("%Y-%m-%d")
+    opt = {k: a[a.index(f"--{k}") + 1] for k in ("format", "hook", "idea", "source") if f"--{k}" in a}
+    FORMAT_RULES = format_rules(opt.get("format", ""), opt.get("hook", ""))
+    if FORMAT_RULES:
+        print("variant:", opt)
     if "--spec" in a:
         spec = json.loads(Path(a[a.index("--spec") + 1]).read_text("utf-8"))
         missing, problems, report = check(spec)
@@ -774,8 +803,11 @@ def main():
     dur = media_duration(mp4)
     if not 20 <= dur <= (45 if "--reserve" in a else 60):
         sys.exit(f"QC: duration {dur:.1f}s outside 20-60 s")
+    labels = {**opt, "format_fit": spec.get("format_fit", True) is not False, "topic": a[a.index("--topic") + 1] if "--topic" in a else ""}
+    if not labels["format_fit"]:
+        labels.pop("format", None)   # the writer could not follow it: tools/experiments.py infers it from the title
     meta = {"id": sid, "title": title, "duration": round(dur, 1), "mp4": str(mp4), "narration": spec["narration"],
-            "upload": str(short_dir / "out" / "upload.md"), "factcheck": str(base / "factcheck.md")}
+            "upload": str(short_dir / "out" / "upload.md"), "factcheck": str(base / "factcheck.md"), "labels": labels}
     (base / "result.json").write_text(json.dumps(meta, indent=1, ensure_ascii=False), "utf-8")
     gh_out = os.environ.get("GITHUB_OUTPUT")
     if gh_out:

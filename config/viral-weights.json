@@ -1,0 +1,83 @@
+{
+ "updated": "2026-11-03",
+ "winners": [
+  {
+   "title": "11 Earths Fit Across Jupiter (NASA data)",
+   "kind": "short",
+   "score": 2.48,
+   "views": 955,
+   "view_pct": 59.3
+  },
+  {
+   "title": "NASA's Roman Telescope Got Sharper by Moving a Mirror",
+   "kind": "short",
+   "score": 2.36,
+   "views": 927,
+   "view_pct": 52.5
+  },
+  {
+   "title": "The Moon Swings 295 °C in One Day. Here's Why (NASA data)",
+   "kind": "short",
+   "score": 1.96,
+   "views": 744,
+   "view_pct": 49.6
+  }
+ ],
+ "losers": [
+  {
+   "title": "The Nearest Star to the Sun Is Invisible to the Naked Eye",
+   "kind": "short",
+   "score": 0.43,
+   "views": 22,
+   "view_pct": 46.1
+  },
+  {
+   "title": "Voyager 1 Is About to Be One Light-Day Away. And That's Nothing",
+   "kind": "short",
+   "score": 0.4,
+   "views": 16,
+   "view_pct": 44.0
+  }
+ ],
+ "rules": [
+  "keep the title at 55 characters or fewer"
+ ],
+ "features": {
+  "short:number_in_title": {
+   "kind": "short",
+   "with": 1.12,
+   "without": 1.1,
+   "n_with": 8,
+   "n_without": 9,
+   "lift": 0.02,
+   "rule": null
+  },
+  "short:scale_comparison": {
+   "kind": "short",
+   "with": 1.26,
+   "without": 1.07,
+   "n_with": 4,
+   "n_without": 13,
+   "lift": 0.18,
+   "rule": null
+  },
+  "short:short_title": {
+   "kind": "short",
+   "with": 1.51,
+   "without": 0.95,
+   "n_with": 5,
+   "n_without": 12,
+   "lift": 0.59,
+   "rule": "keep the title at 55 characters or fewer"
+  },
+  "short:under_35s": {
+   "kind": "short",
+   "with": 1.4,
+   "without": 0.86,
+   "n_with": 8,
+   "n_without": 9,
+   "lift": 0.63,
+   "rule": "keep the Short at 35 seconds or fewer"
+  }
+ }
+}

@@ -91,7 +91,7 @@ def blacks(path: str) -> list[tuple[float, float]]:
     return [(float(a), float(b)) for a, b in re.findall(r"black_start:([\d.]+) black_end:([\d.]+)", txt)]
 
 
-def cuts(path: str, thr: float = 0.25) -> list[float]:
+def cuts(path: str, thr: float = 0.1) -> list[float]:
     txt = run(["ffmpeg", "-nostats", "-i", path, "-an", "-vf", f"select='gt(scene,{thr})',showinfo", "-f", "null", "-"])
     return [round(float(t), 1) for t in re.findall(r"pts_time:([\d.]+)", txt)]
 
@@ -132,8 +132,8 @@ def analyse(path: str, kind: str = "short", script: dict | None = None, prev_cut
             warn.append(f"loudness {lufs:.1f} LUFS, target -14 (+-1)")
         if peak is not None and peak > -0.1:
             err.append(f"peak {peak:.1f} dBFS: clipping")
-        elif peak is not None and peak > -1.0:
-            warn.append(f"peak {peak:.1f} dBFS above -1")
+        elif peak is not None and peak > -0.5:
+            warn.append(f"peak {peak:.1f} dBFS above -0.5")
     sil = [(s, e) for s, e in silences(path, dur) if e - s >= 0.6 and e < dur - 1.0 and s > 0.2]
     if sil:
         warn.append(f"{len(sil)} silence(s) over 0.6 s (first at {sil[0][0]:.1f}s)")

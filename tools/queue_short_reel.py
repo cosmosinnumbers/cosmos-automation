@@ -155,6 +155,9 @@ def main():
     now = datetime.now(TZ)
     rel = release(now)
     tag = rel["tag_name"]
+    if not tag.startswith("c") and os.environ.get("NEWS_TO_META") == "false" and "--tag" not in sys.argv:
+        print(f"{tag}: news Short, not a clip of a long video: Meta takes only clips (owner 03/11/2026).")
+        return
     queue = json.loads(QUEUE.read_text("utf-8")) if QUEUE.exists() else []
     kinds = [k for k in os.environ.get("SHORT_META_KINDS", ",".join(KINDS)).split(",") if k in KINDS]
     todo = [k for k in kinds if not any(i.get("ref") == f"{KINDS[k][2]}-{tag}" for i in queue)]

@@ -38,6 +38,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TIKTOK_ENABLED: ${{ vars.TIKTOK_ENABLED || 'false' }}
+          NEWS_TO_META: ${{ vars.SHORT_REEL_ENABLED || 'true' }}  # false: only clips (c<MMDD>) go to Meta
           # Meta only from long-video clips (owner 03/11/2026): from clips_from the release of the day IS the clip
           SHORT_META_KINDS: ${{ vars.SHORT_META_KINDS || 'ig-reel,fb-reel,ig-story,fb-story' }}
         run: |

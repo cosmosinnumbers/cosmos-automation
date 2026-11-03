@@ -4,7 +4,7 @@
 
 Picks the best Short of config/experiments-state.json (hits, score >= 1.5 x the median) that has no carousel yet,
 or --tag. From its release (short.yaml: title, headline, narration already fact-checked; material-script.yaml:
-sources; the mp4: real NASA/ESA frames already credited in the Short) it builds 1080x1350 slides: cover, one slide
+sources) plus public-domain photos of the NASA Image Library on the same subject, it builds 1080x1350 slides: cover, one slide
 per sentence with a number (2-5), a LOOK UP slide (no discount code on the image, ever). The JPEGs go to
 cosmosinnumbers.github.io/media/carousels/<tag>/ (secret PAGES_TOKEN; Instagram fetches public URLs) and an
 "ig-carousel" item enters queues/meta-queue.json at 19:00 (publish.yml + meta_api.guard: max 1 feed post in 20 h).
@@ -19,7 +19,7 @@ import re
 import subprocess
 import sys
 import tempfile
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 import requests
@@ -28,7 +28,7 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "video" / "ytf"))
 sys.path.insert(0, str(ROOT / "tools"))
-from common import BRAND, CHANNEL, font, ffmpeg_exe, load_yaml  # noqa: E402
+from common import BRAND, CHANNEL, font, load_yaml  # noqa: E402
 
 CW, CH = 1080, 1350
 QUEUE = ROOT / "queues" / "meta-queue.json"
@@ -153,13 +153,20 @@ NUM = re.compile(r"(?:about |nearly |over |almost )?-?\d[\d,.]*(?:\s?(?:%|°C|°
 
 
 def slides_from(narration: str) -> list[tuple[str, str]]:
-    """(big number, sentence) for each sentence with a number; years alone do not count. At most 5."""
+    """(big number, sentence) for each sentence with a new number; years alone do not count. At most 5.
+    The big number is the one with the most digits ("1 in 2,100" stays whole); a number already shown is skipped."""
     sents = [s.strip() for s in re.split(r"(?<=[.!?])\s+", narration.strip()) if s.strip()]
-    out = []
+    out, shown = [], set()
     for s in sents:
-        nums = [m.group(0).strip() for m in NUM.finditer(s) if not re.fullmatch(r"(19|20)\d\d", m.group(0).strip())]
+        odds = re.search(r"\b\d+ in [\d,]+\b", s)
+        nums = [odds.group(0)] if odds else [m.group(0).strip() for m in NUM.finditer(s)
+                                              if not re.fullmatch(r"(19|20)\d\d", m.group(0).strip())]
+        nums = [re.sub(r"^(about|nearly|over|almost) ", "", x, flags=re.I) for x in nums]
+        nums = [x for x in nums if x not in shown]
         if nums:
-            out.append((re.sub(r"^(about|nearly|over|almost) ", "", nums[0], flags=re.I), s))
+            big = max(nums, key=lambda x: len(re.sub(r"\D", "", x)))
+            shown.add(big)
+            out.append((big, s))
     return out[:5]
 
 
@@ -170,21 +177,49 @@ def caption(title: str, sources: list[dict], now: datetime) -> str:
         f"{title} Which number surprised you most?",
         f"Full video on YouTube: @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio{code}",
         f"Data: {src}." if src else "",
-        "Text from our fact-checked Short, AI-assisted and checked by code against the sources. Images: NASA/ESA, public domain, from the video.",
+        "Text from our fact-checked Short, AI-assisted and checked by code against the sources. Images: NASA Image Library (public domain), credited on each slide.",
         "#space #astronomy #nasa #science #universe"]))
 
 
-def frames(mp4: Path, n: int, out: Path) -> list[Path]:
-    """n frames spread over the video (skipping the first and last 10%)."""
-    dur = float(re.search(r"Duration: (\d+):(\d+):([\d.]+)", subprocess.run([ffmpeg_exe(), "-i", str(mp4)], capture_output=True, text=True).stderr).groups()[2] or 30)
-    res = []
-    for i in range(n):
-        t = dur * (0.1 + 0.8 * i / max(1, n - 1))
-        p = out / f"f{i}.jpg"
-        subprocess.run([ffmpeg_exe(), "-y", "-loglevel", "error", "-ss", f"{t:.2f}", "-i", str(mp4), "-frames:v", "1", "-q:v", "3", str(p)])
-        if p.exists():
-            res.append(p)
-    return res
+BAD = re.compile(r"presentation|briefing|news conference|press|interview|panel|podcast|poster|logo|portrait|award|"
+                 r"ceremony|meeting|visit|employee|team photo", re.I)
+
+
+def nasa_photos(tag: str, n: int, out: Path) -> tuple[list[Path], str]:
+    """n photos from the NASA Image Library (public domain) searched with the words of the Short's slug, from the
+    most specific query to the shortest. Photos only, never frames of our video (they carry captions)."""
+    words = [w for w in tag.split("-")[1:] if w not in {"data", "reserve", "nasa", "new"} and not w[:1].isdigit()]
+    seen, files, credits = set(), [], set()
+    for k in range(min(3, len(words)), 0, -1):
+        q = " ".join(words[:k])
+        try:
+            items = requests.get("https://images-api.nasa.gov/search", params={"q": q, "media_type": "image"},
+                                 timeout=30).json()["collection"]["items"]
+        except Exception as e:  # noqa: BLE001
+            print("  NASA images failed:", type(e).__name__)
+            break
+        for it in items[:30]:
+            d, links = it["data"][0], it.get("links") or []
+            if d["nasa_id"] in seen or BAD.search(d.get("title", "") + " " + " ".join(d.get("keywords", []))) or not links:
+                continue
+            seen.add(d["nasa_id"])
+            url = links[0]["href"].replace("~thumb", "~medium").replace("http://", "https://")
+            try:
+                r = requests.get(url, timeout=60)
+                if r.status_code != 200 or len(r.content) < 20000:
+                    continue
+                p = out / f"p{len(files)}.jpg"
+                p.write_bytes(r.content)
+                Image.open(p).verify()
+            except Exception:  # noqa: BLE001
+                continue
+            files.append(p)
+            credits.add("NASA" + (f"/{d['center']}" if d.get("center") else ""))
+            if len(files) >= n:
+                return files, "Images: " + ", ".join(sorted(credits))
+        if len(files) >= 2:
+            break
+    return files, ("Images: " + ", ".join(sorted(credits))) if credits else ""
 
 
 def pick_tag(queue: list[dict]) -> str | None:
@@ -243,7 +278,7 @@ def main():
     with tempfile.TemporaryDirectory() as d:
         d = Path(d)
         try:
-            gh("release", "download", tag, "--repo", REPO, "-p", "short.yaml", "-p", "material-script.yaml", "-p", "*.mp4", "-D", str(d))
+            gh("release", "download", tag, "--repo", REPO, "-p", "short.yaml", "-p", "material-script.yaml", "-D", str(d))
         except RuntimeError as e:
             sys.exit(f"{tag}: release files missing ({e}): no carousel")
         if not (d / "short.yaml").exists():
@@ -255,9 +290,7 @@ def main():
         stats = slides_from(spec["narration"])
         if len(stats) < 2:
             sys.exit(f"{tag}: only {len(stats)} sentences with a number: no carousel")
-        mp4 = next((p for p in d.glob("*.mp4") if not p.name.endswith("_social.mp4")), None)
-        imgs = frames(mp4, len(stats) + 1, d) if mp4 else []
-        credit = "Images: NASA/ESA (public domain)"
+        imgs, credit = nasa_photos(tag, len(stats) + 1, d)
         title = spec["title"].replace("#shorts", "").strip()
         total = len(stats) + 2
         pages = [cover(title, "Real NASA data", imgs[0] if imgs else None, total, credit)]

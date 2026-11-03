@@ -20,7 +20,7 @@ import json
 import re
 import statistics
 import sys
-from datetime import date, datetime, timedelta
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]

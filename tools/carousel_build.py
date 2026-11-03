@@ -214,6 +214,7 @@ def nasa_photos(tag: str, n: int, out: Path) -> tuple[list[Path], str]:
             except Exception:  # noqa: BLE001
                 continue
             files.append(p)
+            print(f"  photo {len(files)}: {d['nasa_id']} {d.get('title', '')[:70]} (query '{q}')")
             credits.add("NASA" + (f"/{d['center']}" if d.get("center") else ""))
             if len(files) >= n:
                 return files, "Images: " + ", ".join(sorted(credits))

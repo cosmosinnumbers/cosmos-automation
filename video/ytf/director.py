@@ -279,7 +279,7 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
     say = {}
     for seg in script.get("segments", []):
         say[seg["id"]] = seg.get("narration", "")
-    counters = chapters = 0
+    counters = chapters = pullbacks = 0
     mid_done = False
     for i, sh in enumerate(shots):
         v = sh["visual"]
@@ -321,8 +321,9 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
         elif kind in ("image", "video") and not mid_done and abs(t0 - dur / 2) < dur * 0.12 and CONTRAST.search(text):
             pick = ("framebreak", {"text": ""})
             mid_done = True
-        elif kind in ("image", "video") and BIG.search(text) and t0 > dur * 0.6:
-            pick = ("pullback", {"text": _short_title(text.split(".")[0], 46)})
+        elif kind in ("image", "video") and BIG.search(text) and t0 > dur * 0.6 and pullbacks < 2:
+            pick = ("pullback", {"text": _short_title(text.split(".")[0], 46)})   # max 2: the same move tires
+            pullbacks += 1
         if pick:
             fx[i] = {"effect": pick[0], "props": pick[1], "src": v.get("src")}
             last = t0

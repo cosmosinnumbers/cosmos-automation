@@ -74,3 +74,22 @@ def test_long_uses_typewriter_and_risers():
     effects = [f["effect"] for f in p["fx"].values()]
     assert "typewriter" in effects
     assert sum(1 for _, k in p["events"] if k == "riser") >= 5
+
+
+def test_long_shots_are_cut_and_numbers_become_kinetic():
+    import render
+    assert render.beat_text("It will make forty-nine science-dedicated flybys.")[0] == "49 science-dedicated flybys"
+    assert render.beat_text("It arrives in April twenty-thirty and enters orbit.") is None
+    assert render.beat_text("The December twenty twenty-six Earth assist.") is None
+    assert render.beat_text("But the number forty-nine is a plan.") is None
+    img, chart = {"type": "image", "src": "a"}, {"type": "chart", "src": "b"}
+    script = {"segments": [{"id": "s1", "chapter": "Intro", "narration": "x", "visuals": [img, chart]}]}
+    sents = [{"text": "Hello there.", "start": 0.0, "end": 9.0},
+             {"text": "It carries nine science instruments.", "start": 10.0, "end": 14.0}]
+    shots = render.build_shots(script, {"duration": 200.0, "segments": [{"id": "s1", "start": 0.0, "sentences": sents}]})
+    assert max(s["end"] - s["start"] for s in shots) <= render.MAX_SHOT_LONG + 0.5
+    assert [s for s in shots if s["chapter"]] == shots[:1]
+    kin = [s["visual"]["text"] for s in shots if s["visual"]["type"] == "kinetic"]
+    assert kin == ["9 science instruments"]
+    short = render.build_shots(script, {"duration": 50.0, "segments": [{"id": "s1", "start": 0.0, "sentences": sents}]})
+    assert len(short) == 2   # Shorts keep their own cuts

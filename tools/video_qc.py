@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shutil
 import subprocess
 import sys
 from datetime import datetime
@@ -27,15 +28,37 @@ LIMITS = {  # per kind: (min s, max s) hard, (min s, max s) target, longest stat
 STOP = set("the a an of to in on is are was were it its and or for with as at by from that this be has have had not no".split())
 
 
+def _ffmpeg() -> str:
+    exe = shutil.which("ffmpeg")
+    if exe:
+        return exe
+    import imageio_ffmpeg  # the Actions runners get ffmpeg from this package (no ffprobe there)
+    return imageio_ffmpeg.get_ffmpeg_exe()
+
+
+FFMPEG = _ffmpeg()
+
+
 def run(cmd: list[str]) -> str:
+    cmd = [FFMPEG if c == "ffmpeg" else c for c in cmd]
     p = subprocess.run(cmd, capture_output=True, text=True)
     return (p.stderr or "") + (p.stdout or "")
 
 
 def probe(path: str) -> dict:
-    out = subprocess.run(["ffprobe", "-v", "error", "-show_streams", "-show_format", "-of", "json", path],
-                         capture_output=True, text=True).stdout
-    return json.loads(out or "{}")
+    """Same shape as ffprobe -of json, read from the text of `ffmpeg -i` (ffprobe is not always installed)."""
+    txt = run(["ffmpeg", "-hide_banner", "-i", path])
+    streams, fmt = [], {}
+    d = re.search(r"Duration: (\d+):(\d+):([\d.]+)", txt)
+    if d:
+        fmt["duration"] = int(d.group(1)) * 3600 + int(d.group(2)) * 60 + float(d.group(3))
+    for ln in txt.splitlines():
+        m = re.search(r"Stream #\S+: Video: .*?, (\d{2,5})x(\d{2,5})", ln)
+        if m:
+            streams.append({"codec_type": "video", "width": int(m.group(1)), "height": int(m.group(2))})
+        elif re.search(r"Stream #\S+: Audio:", ln):
+            streams.append({"codec_type": "audio"})
+    return {"streams": streams, "format": fmt}
 
 
 def loudness(path: str) -> tuple[float | None, float | None]:

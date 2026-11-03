@@ -2,17 +2,25 @@
 # published per platform, Short releases, future queue items and deadlines (Threads token, Meta data access,
 # COSMOS9). tools/health.py prints only counts and ages, never a secret.
 # Monday 08:15 Italian time (winter; summer time from 28/03/2027: "15 6"), after tokens.yml (08:00).
+# Every evening 21:40 (winter; summer "40 19"), job sync: tools/short_sync.py checks that YouTube, Threads and the
+# Meta queue carry the same Short of the day (tools/day_short.py) and opens an issue when they do not (03/11/2026).
 name: health
 
 on:
   schedule:
     - cron: "15 7 * * 1"
+    - cron: "40 20 * * *"   # sync, 21:40 Italian time
   workflow_dispatch:
     inputs:
       dry_run:
         description: "Dry run: print the report, open no issue"
         type: boolean
         default: true
+      check:
+        description: "weekly = report, sync = same Short on every channel"
+        type: choice
+        options: [weekly, sync]
+        default: weekly
 
 permissions:
   contents: read
@@ -21,6 +29,7 @@ permissions:
 
 jobs:
   health:
+    if: github.event.schedule != '40 20 * * *' && inputs.check != 'sync'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -42,3 +51,25 @@ jobs:
           args=()
           [ "$IN_DRY" = "true" ] && args+=(--dry-run)
           python tools/health.py "${args[@]}"
+
+  sync:
+    if: github.event.schedule == '40 20 * * *' || inputs.check == 'sync'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.12"}
+      - run: pip install -q requests tzdata
+      - name: Same Short on every channel
+        env:
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          args=()
+          [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          python tools/short_sync.py "${args[@]}"

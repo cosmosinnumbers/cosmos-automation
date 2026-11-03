@@ -1,0 +1,22 @@
+{
+  "name": "Stick man explainer (nuova nicchia, nome canale da decidere)",
+  "region": "US",
+  "youtube_queries": ["stick figure explained", "stickman explains", "what if animated stick figure", "explained with stick figures", "stickman animation history", "every level explained animation"],
+  "subreddits": ["explainlikeimfive", "todayilearned", "AskHistorians", "psychology", "NoStupidQuestions"],
+  "reddit_keywords": ["why do", "what would happen", "how does", "explain"],
+  "ig_hashtags": ["stickman", "explained", "didyouknow", "animation"],
+  "trends_terms": ["what if", "explained", "stick figure", "psychology facts", "history explained"],
+  "scan": {
+    "windows_days": [30, 365],
+    "per_query": 25,
+    "min_views": 20000,
+    "max_videos": 150,
+    "queries": [
+      "stick figure explained", "stickman explains", "explained with stick figures", "stick figure animation explained",
+      "what if stick figure animation", "stickman what would happen if", "stick figure history explained",
+      "stick figure psychology", "stick figure economics money explained", "stickman documentary animation",
+      "every level explained animation", "stick figure science explained", "stickman facts animation",
+      "simple animation explained why"
+    ]
+  }
+}

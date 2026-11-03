@@ -1,6 +1,7 @@
 """Let Gemini watch the top competitor videos of a research report (by URL, nothing downloaded, no Claude tokens).
 
-  python tools/gemini_watch.py <niche> [n]      research/<niche>/<latest>.json -> research/<niche>/gemini-<YYYY-MM-DD>.md
+  python tools/gemini_watch.py <niche> [n] [source.json]   research/<niche>/<latest>.json (or source.json, e.g.
+                                                            research/stickman/watchlist.json) -> research/<niche>/gemini-<YYYY-MM-DD>.md
 
 Picks the n (default 3) videos with most views per day not analysed yet (research/<niche>/gemini-seen.json).
 Key: env GEMINI_API_KEY (GitHub secret) or secrets/gemini.json {"api_key", "model"}. Read-only on YouTube.
@@ -22,6 +23,20 @@ PROFILES = {  # format concept of each channel and the paid product it pushes
               "sells LOOK UP, a $14 beginner stargazing guide on Gumroad",
     "companies": "Companies in Numbers: faceless business channel, company rises and collapses told through numbers from filings; "
                  "sells The Collapse Files ($9) on Gumroad; never investment advice",
+    "stickman": "new faceless explainer channel (to launch) in the viral stick man style: simple original 2D stick figure "
+                "animations that explain interesting things (what if, history, psychology, money, science) for a broad "
+                "audience; will sell a low-price digital product on Gumroad; everything drawn by us in code (Remotion)",
+}
+EXTRA = {  # extra questions per niche, appended to PROMPT
+    "stickman": """
+8. Art style (to rebuild it ORIGINALLY in code, never copy): background colour, line thickness and colour, character
+   design (head shape, eyes, expressions, props), how many distinct drawings/scenes per minute, how the camera moves
+   (pan, zoom, cut), how objects/numbers/maps/labels are drawn, colour palette (max 5), transitions.
+9. Voice and script: voice gender/tone/speed (words per minute estimate), humour type, sentences per scene, how often
+   the narrator addresses "you", running jokes or recurring character.
+10. Title and thumbnail: title formula, thumbnail composition (characters, text words, colours, emotion).
+11. Production cost guess: could it be produced automatically with code-drawn stick figures + TTS + simple motion? What
+    is the hardest part to automate?""",
 }
 PROMPT = """You are analysing a viral competitor video for a faceless channel ({profile}).
 Answer in Italian, concise, with timestamps (mm:ss). Sections:
@@ -47,7 +62,7 @@ def config():
 
 def watch(url, cfg, niche):
     body = {"contents": [{"parts": [{"file_data": {"file_uri": url}},
-                                    {"text": PROMPT.format(profile=PROFILES.get(niche, niche))}]}]}
+                                    {"text": PROMPT.format(profile=PROFILES.get(niche, niche)) + EXTRA.get(niche, "")}]}]}
     models = [cfg.get("model", "gemini-3.8-flash"), "gemini-3.6-flash"]  # fallback when the newest model is overloaded
     for attempt in range(4):
         model = models[0] if attempt < 2 else models[1]
@@ -66,9 +81,9 @@ def watch(url, cfg, niche):
     return None, "ERRORE Gemini: modello sovraccarico, troppo lento o limite gratuito; riprovo al prossimo giro."
 
 
-def main(niche, n=3):
+def main(niche, n=3, source=None):
     folder = ROOT / "research" / niche
-    reports = sorted(p for p in folder.glob("*.json") if p.stem[:4].isdigit())
+    reports = [Path(source)] if source else sorted(p for p in folder.glob("*.json") if p.stem[:4].isdigit())
     if not reports:
         sys.exit(f"No research report in {folder}.")
     videos = json.loads(reports[-1].read_text("utf-8")).get("youtube", {}).get("videos", [])
@@ -102,4 +117,4 @@ if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")
     if len(sys.argv) < 2:
         sys.exit(__doc__)
-    main(sys.argv[1], int(sys.argv[2]) if len(sys.argv) > 2 else 3)
+    main(sys.argv[1], int(sys.argv[2]) if len(sys.argv) > 2 else 3, sys.argv[3] if len(sys.argv) > 3 else None)

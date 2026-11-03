@@ -12,7 +12,7 @@ name: self-heal
 on:
   workflow_run:
     workflows: [publish, youtube-upload, threads-build, queue-short-reel, shorts-build, reserve-build, longform-auto,
-                longform-build, metrics, research, strategy, tokens, health, engage, sfx-library]
+                longform-build, metrics, research, strategy, tokens, health, engage, sfx-library, niche-scan]
     types: [completed]
 
 permissions:

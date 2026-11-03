@@ -1,0 +1,57 @@
+# New niche scan (stick man explainers, owner 03/11/2026): YouTube Data API (read-only) + Gemini looks at thumbnails
+# (style check) and watches the fastest style-confirmed videos (reverse engineering: hook, structure, pacing, art style,
+# voice, title, thumbnail). No downloads, no scraping, no Claude tokens. Writes research/<niche>/scan-<date>.md/.json,
+# watchlist.json and gemini-<date>.md. Weekly on Monday; also by hand (Actions → niche-scan → Run workflow).
+name: niche-scan
+
+on:
+  schedule:
+    - cron: "30 5 * * 1"   # Monday 06:30 CET
+  workflow_dispatch:
+    inputs:
+      niche: {description: "Niche file in research/niches", type: string, default: "stickman"}
+      watch: {description: "How many videos Gemini watches", type: string, default: "8"}
+  push:  # first run straight from the work branch (no PC, no manual step)
+    branches: ["claude/project-thread-b44bj3"]
+    paths: [".github/workflows/niche-scan.yml", "tools/niche_scan.py", "research/niches/stickman.json"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: research
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      NICHE: ${{ inputs.niche || 'stickman' }}
+      WATCH_N: ${{ inputs.watch || '8' }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINIAPIKEY3 }}
+    steps:
+      - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -q -r requirements.txt pytest
+      - run: python -m pytest -q tests/test_niche_scan.py
+      - name: Scan the niche on YouTube
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python tools/niche_scan.py "$NICHE"
+      - name: Gemini watches the fastest videos of the niche
+        continue-on-error: true
+        timeout-minutes: 25
+        run: python tools/gemini_watch.py "$NICHE" "$WATCH_N" "research/$NICHE/watchlist.json"
+      - name: Save reports
+        if: always()
+        run: |
+          git config user.name "cosmos-automation[bot]"
+          git config user.email "cosmos-automation@users.noreply.github.com"
+          git add research
+          git diff --cached --quiet || (git commit -q -m "research: niche scan $NICHE" && git pull -q --rebase && git push -q)

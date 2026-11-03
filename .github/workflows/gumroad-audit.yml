@@ -7,9 +7,6 @@ on:
   schedule:
     - cron: "0 8 * * 1"
   workflow_dispatch:
-  push:
-    branches: [claude/project-thread-a3uzoy]
-    paths: [tools/gumroad_audit.py, .github/workflows/gumroad-audit.yml]
 
 permissions:
   contents: write

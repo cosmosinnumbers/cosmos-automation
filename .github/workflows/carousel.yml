@@ -1,0 +1,71 @@
+# Instagram carousel from a winning Short (viral engine, step 5; owner ok 03/11/2026 for more posts).
+# Tuesday and Friday 08:30 Italian time (winter; summer: "30 6 * * 2,5"): tools/carousel_build.py takes the best Short
+# of config/experiments-state.json (score >= 1.5 x the median) without a carousel, builds the slides from its
+# fact-checked narration and real frames, hosts them on cosmosinnumbers.github.io (PAGES_TOKEN) and queues an
+# ig-carousel at 19:00 in queues/meta-queue.json; publish.yml posts it (meta_api.guard: max 1 feed post in 20 h).
+# No discount code on the images. Off switch: repository variable CAROUSEL_ENABLED=false.
+name: carousel
+
+on:
+  schedule:
+    - cron: "30 7 * * 2,5"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag of the Short (empty = best hit without a carousel)"
+        type: string
+        default: ""
+      dry_run:
+        description: "Dry run: build the slides (artifact), queue nothing"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-commits
+  cancel-in-progress: false
+
+jobs:
+  carousel:
+    if: vars.CAROUSEL_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -q pillow numpy scipy soundfile matplotlib fonttools imageio-ffmpeg PyYAML requests tzdata
+      - name: Build and queue the carousel
+        env:
+          PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
+          IN_TAG: ${{ inputs.tag }}
+          IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          args=()
+          [ -n "$IN_TAG" ] && args+=(--tag "$IN_TAG")
+          [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          python tools/carousel_build.py "${args[@]}"
+      - name: Slides for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: carousel-slides
+          path: build/carousels/
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Save the queue
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        run: |
+          git config user.name "cosmos-automation[bot]"; git config user.email "cosmos-automation@users.noreply.github.com"
+          git add queues/meta-queue.json; git diff --cached --quiet && exit 0
+          git commit -q -m "coda Meta: carosello dal Short vincente"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done; exit 1

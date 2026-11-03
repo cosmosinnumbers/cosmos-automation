@@ -12,6 +12,13 @@ Una metrica rifiutata dall'API va in `missing` con il motivo: nei rapporti si sc
 - `minutes_watched`: Minuti di visione stimati (Analytics estimatedMinutesWatched).
 - `avg_view_duration_s`: Durata media di visione in secondi (Analytics averageViewDuration).
 - `avg_view_pct`: Percentuale media visualizzata (Analytics averageViewPercentage; per gli Short può superare 100 con le ripetizioni).
+- `r5`: Quota di spettatori ancora presenti al 5% del video (curva di ritenzione, audienceWatchRatio; solo organico).
+- `r25`: Quota ancora presente al 25% del video.
+- `r50`: Quota ancora presente al 50% del video.
+- `r75`: Quota ancora presente al 75% del video.
+- `r100`: Quota ancora presente alla fine (per gli Short può superare 1 se si rivede).
+- `worst_drop`: Calo massimo tra due punti consecutivi della curva (1% del video).
+- `worst_drop_at_pct`: A che % del video avviene il calo massimo.
 - `subs_gained`: Iscritti guadagnati dal video (Analytics subscribersGained).
 - `shares`: Condivisioni (Analytics shares).
 - `link_clicks`: Non esposti dalle API: i clic sui link in descrizione non sono misurati.

@@ -364,9 +364,14 @@ def recent_texts(queue: list[dict], at: str, days: int = 14, exclude: str = "") 
         t0 = datetime.strptime(at[:10], "%Y-%m-%d")
     except ValueError:
         return []
+    # the same video on another Meta surface (sr-/fr-/si-/sf-<tag>) is cross-posting, not a duplicate (03/11/2026:
+    # the Reel FB of c1103-p4-clip-d was blocked because the Reel IG one minute earlier had the same caption)
+    same = exclude.split("-", 1)[1] if re.match(r"^(sr|fr|si|sf)-", exclude) else None
     out = []
     for i in queue:
         if i.get("ref") == exclude or not i.get("at") or i["at"] >= at:
+            continue
+        if same and re.match(r"^(sr|fr|si|sf)-", i.get("ref", "")) and i["ref"].split("-", 1)[1] == same:
             continue
         if (t0 - datetime.strptime(i["at"][:10], "%Y-%m-%d")).days <= days:
             body = i.get("text") or i.get("caption") or ""

@@ -615,6 +615,7 @@ def footage(spec, news_dir) -> list[dict]:
     stop = set("the and for with from this that nasa space new first about into over than more most what when your are was were has have had its not".split())
     subject = " ".join(spec.get("footage_queries", []) + [spec.get("image_query", "")])
     names = re.findall(r"\b[A-Z][a-z0-9]{3,}\b", spec.get("title", "") + " " + spec.get("headline", ""))   # Mars, Jupiter, Leonid
+    names_l = {n.lower() for n in names if n.lower() not in stop | {"will", "apart", "degrees", "every", "hour", "hours", "week", "year"}}
     topic = {w for w in re.findall(r"[a-z0-9]{4,}", (subject + " " + " ".join(names)).lower())
              if w not in stop | {"will", "apart", "degrees", "video", "image", "footage", "science", "visualization"}}
 
@@ -665,14 +666,16 @@ def footage(spec, news_dir) -> list[dict]:
     assets = stock.load_yaml(news_dir / "assets.yaml")
     # on-topic NASA images (Mars story -> Mars pictures) fill the cuts that no on-topic clip covers
     imgs, seen_img = [], set()
-    for q in dict.fromkeys([spec.get("image_query", "")] + queries):
+    short_qs = [" ".join(q.split()[:2]) for q in queries] + sorted(names_l)   # long queries find little: try 2 words, then each name
+    for q in dict.fromkeys([spec.get("image_query", "")] + queries + short_qs):
         if len(imgs) >= 4 or not q.strip():
             continue
         try:
-            items = sorted(nasa_items(q, "image")[:15], key=lambda it: -relevance(it))
+            items = sorted(nasa_items(q, "image")[:20], key=lambda it: -relevance(it))
         except Exception as e:  # noqa: BLE001
             print("  NASA image search failed:", q, e)
             continue
+        print(f"  NASA images '{q}': {len(items)} found, {sum(1 for it in items if relevance(it) >= 1)} on topic")
         for it in items:
             nid = it["data"][0]["nasa_id"]
             if len(imgs) >= 4 or nid in seen_img or relevance(it) < 1:

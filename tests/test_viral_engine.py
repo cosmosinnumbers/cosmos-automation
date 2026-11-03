@@ -114,3 +114,13 @@ def test_hot_same_story(monkeypatch):
     monkeypatch.setattr(subprocess, "run", lambda *x, **k: subprocess.CompletedProcess(x, 0, out, ""))
     assert a.same_story("escapade-speed-increase") == "a1102-escapade-earth-slingshot"
     assert a.same_story("leonid-meteor-peak") is None
+
+
+def test_carousel_slides_only_checked_sentences():
+    import carousel_build as cb
+    narr = ("Eleven Earths fit across Jupiter. Jupiter is 142,984 kilometers wide. In 1979 Voyager flew by. "
+            "It spins once every 9.9 hours.")
+    st = cb.slides_from(narr)
+    assert [n for n, _ in st] == ["142,984", "9.9"]          # a bare year is not a slide
+    assert all(t in narr for _, t in st)                       # every slide is a sentence of the narration
+    assert "COSMOS9" not in "".join(t for _, t in st)

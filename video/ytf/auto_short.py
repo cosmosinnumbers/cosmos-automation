@@ -744,6 +744,24 @@ def footage(spec, news_dir) -> list[dict]:
     return visuals
 
 
+def same_story(slug: str, days: int = 5) -> str | None:
+    """Tag of a release of the last `days` days on the same story (a shared word of 5+ letters in the slug)."""
+    r = subprocess.run(["gh", "release", "list", "--limit", "20", "--json", "tagName,createdAt"], capture_output=True, text=True)
+    if r.returncode:
+        return None
+    words = {w for w in slug.split("-") if len(w) >= 5}
+    cutoff = datetime.now().timestamp() - days * 86400
+    for rel in json.loads(r.stdout or "[]"):
+        try:
+            when = datetime.fromisoformat(rel["createdAt"].replace("Z", "+00:00")).timestamp()
+        except (KeyError, ValueError):
+            continue
+        tag_words = {w for w in rel["tagName"].split("-")[1:] if len(w) >= 5}
+        if when >= cutoff and words & tag_words:
+            return rel["tagName"]
+    return None
+
+
 def write_checked(a, today, hint):
     """Write the Short, fact-check it, one rewrite if needed: (spec, missing numbers, problems, report)."""
     msgs, raw, spec, search = write_reserve_spec(today) if "--reserve" in a else write_spec(today, hint)
@@ -799,6 +817,10 @@ def main():
     if missing or problems:
         sys.exit("FACT CHECK FAILED: no Short today. " + "; ".join(problems + [f"number {n} not in sources" for n in missing]))
     slug = re.sub(r"[^a-z0-9-]", "", spec["slug"].lower())[:40] or "news"
+    if HOT:
+        dup = same_story(slug)
+        if dup:
+            sys.exit(f"HOT slot: the story '{slug}' is already out as {dup}: no second Short today.")
     prefix = a[a.index("--prefix") + 1] if "--prefix" in a else ("r" if "--reserve" in a else "a")
     sid = f"{prefix}{datetime.now():%m%d}-{slug}"
     base = OUT / sid

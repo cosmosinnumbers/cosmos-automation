@@ -102,3 +102,15 @@ def test_scaletta_week():
     md = scaletta.build(date(2026, 11, 16))
     assert md.count("## ") >= 8 and "YouTube Short 1" in md and "15:00" in md
     assert "Leonids" in md   # sky event of the week
+
+
+def test_hot_same_story(monkeypatch):
+    import subprocess
+    from datetime import datetime, timezone
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "video" / "ytf"))
+    import auto_short as a
+    now = datetime.now(timezone.utc).isoformat()
+    out = json.dumps([{"tagName": "a1102-escapade-earth-slingshot", "createdAt": now}])
+    monkeypatch.setattr(subprocess, "run", lambda *x, **k: subprocess.CompletedProcess(x, 0, out, ""))
+    assert a.same_story("escapade-speed-increase") == "a1102-escapade-earth-slingshot"
+    assert a.same_story("leonid-meteor-peak") is None

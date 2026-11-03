@@ -1,22 +1,33 @@
 # Nicchia stick man: le sole cose che deve fare Simone
 
-Tutto il resto (codice, video, grafica, testi, bio, playlist, workflow, pubblicazioni) lo fa Claude su GitHub Actions.
-Nessuna password o chiave va scritta in chat: le chiavi si incollano solo in GitHub, Settings → Secrets → Actions.
+Tutto il resto lo fa Claude su GitHub Actions: copia del motore, copia dei segreti condivisi, video, grafica, testi,
+bio, playlist, workflow, pubblicazioni. Nessuna password o chiave va scritta in chat.
 
-## Subito (5 minuti, anche dal telefono)
-1. **Repo nuovo:** su https://github.com/organizations/cosmosinnumbers/repositories/new crea un repo **privato**
-   vuoto (nessun README) chiamato `stickman-automation` (il nome del canale arriva dopo, il repo si può rinominare).
-2. **Progetto Claude nuovo** per la nicchia (consigliato), con quel repo tra i repository. Se preferisci restare in
-   questo progetto, aggiungi il repo in Project settings → Resources.
-3. **Segreti condivisi** nel nuovo repo (stessi valori di Cosmos): `GEMINI_API_KEY`, `GROK_API_KEY`, `YOUTUBE_API_KEY`,
-   `FREESOUND_API_KEY`, e se li vuoi `CLAUDE_CODE_OAUTH_TOKEN`/`GLM_API_KEY`; più un token `GH_SECRETS_TOKEN` per il
-   nuovo repo (stessa procedura di `docs/segreti.md`, scegliendo il nuovo repo), così i token rinnovati si salvano da soli.
+Perché servono queste azioni: le regole di sicurezza di Claude e di GitHub non gli permettono di creare repository,
+progetti Claude o account, né di leggere i valori dei segreti. Gli script però fanno tutto il resto da soli.
 
-## Quando Claude ha scelto il nome (dopo la ricerca)
-4. **Account:** crea un account Google/brand per il canale YouTube, poi Instagram (professionale), pagina Facebook,
-   Threads (dall'Instagram), TikTok, con il nome e l'handle che Claude propone. Solo registrazione e login.
-5. **Autorizzazioni con un clic:** apri i link che Claude prepara (YouTube, Meta, TikTok) dal telefono, loggato col
+## Adesso (circa 3 minuti, dal telefono)
+1. **Crea il repo vuoto:** apri
+   https://github.com/new?owner=cosmosinnumbers&name=stickman-automation&visibility=private
+   lascia tutto com'è (niente README) e premi **Create repository**.
+2. **Allarga il token dei segreti al nuovo repo:** apri https://github.com/settings/personal-access-tokens
+   (loggato come cosmosinnumbers), apri il token `cosmos-automation-secrets` → **Edit** → Repository access: aggiungi
+   `stickman-automation` → in Repository permissions metti **Secrets: Read and write** e **Contents: Read and write**
+   → **Update**. Il valore del token non cambia, non va copiato da nessuna parte.
+3. **Se richiesto,** dai all'app Claude l'accesso al nuovo repo:
+   https://github.com/apps/claude/installations/select_target → cosmosinnumbers → aggiungi `stickman-automation`.
+4. **Progetto Claude nuovo:** crea un progetto (es. "Stick man channel"), aggiungi il repo
+   `cosmosinnumbers/stickman-automation` e scrivi nella chat del progetto: "Leggi docs/MEMORIA-stickman.md e
+   docs/PROMPT-nicchia-stickman.md nel repo, salvale in memoria e parti dalla fase in corso".
+
+Poi Claude, da solo: copia il motore (con tutti i publisher spenti), copia i segreti condivisi (chiavi LLM, chiave
+YouTube, librerie suoni, client OAuth Google; mai i token di Cosmos) e continua con ricerca, brand e motore grafico.
+
+## Più avanti (quando Claude ha scelto il nome del canale)
+5. **Account:** crea l'account Google/brand del canale YouTube, Instagram professionale, pagina Facebook, Threads,
+   TikTok, con il nome e l'handle che Claude propone. Solo registrazione e login.
+6. **Autorizzazioni con un clic:** apri dal telefono i link che Claude prepara (YouTube, Meta, TikTok), loggato con il
    nuovo account, e premi "Consenti". I token li salva il workflow.
-6. **Gumroad:** se vuoi uno store separato, crealo e collega il payout; altrimenti il prodotto va sullo store attuale.
+7. **Gumroad:** il prodotto va sullo store attuale; uno store separato solo se lo vuoi tu.
 
-Tutto qui. Su TikTok non attivare mai "contenuti commerciali"/"il tuo brand".
+Su TikTok non attivare mai "contenuti commerciali"/"il tuo brand".

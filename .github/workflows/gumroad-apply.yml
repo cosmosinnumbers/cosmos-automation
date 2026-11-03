@@ -1,0 +1,33 @@
+# Apply store changes through the Gumroad API (tools/gumroad_apply.py): LOOK UP texts/tags/category/receipt, the free
+# product "The Solar System in 20 Numbers", store name and bio. Manual only. Prices and offer codes are not touched.
+name: gumroad-apply
+
+on:
+  workflow_dispatch:
+    inputs:
+      what:
+        description: "Any of: lookup free profile"
+        default: "free lookup profile"
+      dry_run:
+        type: boolean
+        default: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: pip install -q requests
+      - env:
+          GUMROAD_JSON: ${{ secrets.GUMROAD_JSON }}
+        run: python video/ci_secrets.py
+      - env:
+          WHAT: ${{ inputs.what }}
+          DRY: ${{ inputs.dry_run }}
+        run: python tools/gumroad_apply.py $WHAT $([ "$DRY" = "true" ] && echo --dry-run)

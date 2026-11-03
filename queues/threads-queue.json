@@ -346,5 +346,15 @@
   ],
   "quiz": "Orbital Period-0",
   "answer": "Uranus, 30,589 days per orbit (NASA Planetary Fact Sheet)"
+ },
+ {
+  "ref": "th-a1103-swift-space-telescope-reentry",
+  "at": "2026-11-03 21:00",
+  "tag": "NASA",
+  "text": "A 3,200-Pound Space Telescope Is Falling to Earth\n\nA 3,200-pound space telescope is crashing back to Earth today. And the odds of it hitting anyone are stranger than you think. NASA launched the Neil Gehrels Swift Observatory almost 22 years ago. It spent decades tracking the most powerful explosions in the universe.\n\nSource: NASA.\nNarration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers",
+  "replies": [
+   "Source: NASA’s Swift Observatory to Re-Enter Atmosphere: https://science.nasa.gov/blogs/swift/2026/11/02/nasas-swift-observatory-to-re-enter-atmosphere/"
+  ],
+  "short": "a1103-swift-space-telescope-reentry"
  }
 ]

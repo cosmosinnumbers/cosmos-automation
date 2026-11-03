@@ -79,7 +79,8 @@ RETENTION (this is what keeps people watching to the end):
 - A turning point at about two thirds: something the viewer thought was true flips. Re-hook every 30-45 seconds
   with a short pull ("But here is the part nobody mentions.", "And that is not even the strange part.").
 - At the end of the middle chapter, ONE soft sentence after delivering value that points to the beginner's
-  stargazing guide "LOOK UP" (link in the description, never a discount code).
+  stargazing guide linked in the description (do not write the words LOOK UP there: they appear once, in the
+  last chapter; never a discount code).
 - Turn numbers into things people can picture: comparisons of size, travel times, "X Earths would fit".
 - Short spoken sentences. Total narration {wmin:,} to {wmax:,} words (the video must last {mmin}-{mmax} minutes):
   beats of 18-28 words each, 8-10 beats per chapter. Count your words before answering.

@@ -138,7 +138,25 @@ def research(today: date) -> str:
             continue
         if (today - d).days <= 7:
             parts.append(f.read_text("utf-8")[:2500])
+    ins = threads_insights()
+    if ins:
+        parts.append(ins[:2000])
     return "\n\n---\n\n".join(parts)[:14000] or "nessuna ricerca"
+
+
+def insights_section() -> list[str]:
+    """The Threads Insights file as a report section (its own title replaced), or nothing."""
+    text = threads_insights()
+    if not text:
+        return []
+    body = text.split("\n", 1)[-1].strip()
+    return ["## Threads Insights (ultimo file inviato da Simone)", "", *body.splitlines(), ""]
+
+
+def threads_insights() -> str:
+    """The latest Threads Insights the owner sent (research/threads-insights-<date>.md), or ""."""
+    files = sorted(RESEARCH.parent.glob("threads-insights-*.md"))
+    return files[-1].read_text("utf-8") if files else ""
 
 
 def unverified(text: str, sources: str) -> list[str]:
@@ -182,7 +200,7 @@ def main():
     doc = [f"# Scorecard settimanale ({today:%d/%m/%Y})", "",
            f"**Periodo delle letture:** {period}. **Fonti:** `07-analytics/metrics/*.jsonl` (metrics.yml), "
            f"`research/cosmos/`. Fatti calcolati dal codice (`tools/strategy_weekly.py`); l'analisi è un'ipotesi, "
-           "non una conclusione. Campioni piccoli: tutto esplorativo.", "", *facts, "", *analysis, ""]
+           "non una conclusione. Campioni piccoli: tutto esplorativo.", "", *facts, "", *insights_section(), *analysis, ""]
     text = "\n".join(doc)
     if "--dry-run" in sys.argv:
         print(text)

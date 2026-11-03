@@ -39,6 +39,14 @@ REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
 FACTSHEET = "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
 UA = {"User-Agent": "Mozilla/5.0 (CosmosInNumbers fact check)"}
 SLOTS = {"news": "12:00", "quiz": "16:00", "video": "21:00"}
+# Threads Insights of 03/11/2026 (research/threads-insights-2026-11-03.md): the audience is most active Wednesday and
+# Friday 19-22 and Thursday 22-01 (CET). The 21:00 video already sits there; on Wednesday-Friday the quiz moves to
+# 17:55, as late as the 3-hour gap before the 21:00 video allows (threads_api.guard, max 3 posts a day).
+SLOTS_BY_WEEKDAY = {2: {"quiz": "17:55"}, 3: {"quiz": "17:55"}, 4: {"quiz": "17:55"}}
+
+
+def slot_at(day: datetime, kind: str) -> str:
+    return SLOTS_BY_WEEKDAY.get(day.weekday(), {}).get(kind, SLOTS[kind])
 DISCLOSURE = "Narration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers"
 DRY = "--dry-run" in sys.argv
 
@@ -221,7 +229,7 @@ def apod_item(day: datetime, it: dict) -> dict | None:
         reply = " ".join(rest)
     reply = (reply + (f"\n\nImage: {a['credit']}." if a["credit"] else "")).strip()
     print(f"  APOD via {a['via']}: {a['title']!r}")
-    return {"ref": f"th-news-{day:%m%d}-apod-{slug(a['title'])}", "at": f"{day:%Y-%m-%d} {SLOTS['news']}",
+    return {"ref": f"th-news-{day:%m%d}-apod-{slug(a['title'])}", "at": f"{day:%Y-%m-%d} {slot_at(day, 'news')}",
             "tag": tag_for(a["title"] + " " + text), "text": text, "replies": [reply] if reply else [],
             "news_title": it["title"], "_source": a["explanation"] + " " + a["title"]}
 
@@ -243,7 +251,7 @@ def news(day: datetime, queue: list[dict], short_urls: set[str]) -> dict | None:
         if lead or APOD_PAGE.search(it["url"]):
             cands.append((0 if a.numbers(" ".join(lead[:2])) else 1, it, lead))
     cands.sort(key=lambda c: (c[0], -c[1]["date"].timestamp()))
-    best, recent = [], post_qc.recent_texts(queue, f"{day:%Y-%m-%d} {SLOTS['news']}")
+    best, recent = [], post_qc.recent_texts(queue, f"{day:%Y-%m-%d} {slot_at(day, 'news')}")
     for item in news_items(day, cands, a):
         r = post_qc.review(item, "threads", "news", recent=recent, source_text=item.pop("_source", None))
         print(f"  QC {item['ref']}: score {r['score']} {r['parts']}{' ERRORS ' + '; '.join(r['errors']) if r['errors'] else ''}")
@@ -295,7 +303,7 @@ def news_items(day: datetime, cands: list, a):
         if missing or problems:
             print(f"  news skipped {url}: missing {missing}, {problems}")
             continue
-        yield {"ref": f"th-news-{day:%m%d}-{slug(title)}", "at": f"{day:%Y-%m-%d} {SLOTS['news']}",
+        yield {"ref": f"th-news-{day:%m%d}-{slug(title)}", "at": f"{day:%Y-%m-%d} {slot_at(day, 'news')}",
                "tag": tag_for(title + " " + text), "text": text, "replies": [reply], "news_title": title}
 
 
@@ -341,7 +349,7 @@ def data_post(day: datetime, queue: list[dict], sheet: dict | None = None) -> di
         body = (f"NASA lists {row[planet].rstrip('*')} {unit} for {name} and {row['EARTH'].rstrip('*')} {unit} "
                 f"for Earth. {context}")
         text = f"{head}\n\n{body}\n\nData: NASA Planetary Fact Sheet.\n{FACTSHEET}"
-        return {"ref": f"th-data-{day:%m%d}-{key}", "at": f"{day:%Y-%m-%d} {SLOTS['news']}", "tag": tag_for(name),
+        return {"ref": f"th-data-{day:%m%d}-{key}", "at": f"{day:%Y-%m-%d} {slot_at(day, 'news')}", "tag": tag_for(name),
                 "text": text, "replies": []}
     return None
 
@@ -422,7 +430,7 @@ def quiz(day: datetime, queue: list[dict]) -> dict | None:
         top = f"Yesterday's answer: {prev['answer']}.\n\n" if prev and prev.get("answer") else ""
         text = f"{top}Today's quiz {emo} Which of these planets {qmax if d == 0 else qmin}?\n\nAnswer tomorrow."
         return {"ref": f"th-quiz-{day:%m%d}-{slug(label, 2)}-{'max' if d == 0 else 'min'}",
-                "at": f"{day:%Y-%m-%d} {SLOTS['quiz']}", "tag": "Astronomy", "poll": opts, "text": text,
+                "at": f"{day:%Y-%m-%d} {slot_at(day, 'quiz')}", "tag": "Science", "poll": opts, "text": text,
                 "replies": [f"Data: NASA Planetary Fact Sheet, {FACTSHEET}"], "quiz": f"{label}-{d}", "answer": answer}
     print("No unambiguous quiz found.")
     return None
@@ -479,7 +487,7 @@ def video(day: datetime, short: dict) -> dict:
     agency = next((n for dom, n in AGENCY if dom in src.get("url", "")), "NASA")
     text = fit([title, short["narration"], f"Source: {agency}.\n{DISCLOSURE}"], 500)
     replies = [f"Source: {s['title']}: {s['url']}" for s in short["source_list"][:1]]
-    return {"ref": f"th-{short['tag']}", "at": f"{day:%Y-%m-%d} {SLOTS['video']}", "tag": tag_for(title + " " + short["narration"]),
+    return {"ref": f"th-{short['tag']}", "at": f"{day:%Y-%m-%d} {slot_at(day, 'video')}", "tag": tag_for(title + " " + short["narration"]),
             "text": text, "replies": replies, "short": short["tag"]}
 
 
@@ -496,7 +504,7 @@ def main():
     short_urls = {s["url"] for s in (short or {}).get("source_list", [])}
     added = []
     for kind in only:
-        at = f"{day:%Y-%m-%d} {SLOTS[kind]}"
+        at = f"{day:%Y-%m-%d} {slot_at(day, kind)}"
         if at in taken and not DRY:
             print(f"{kind}: slot {at} already has an item, left alone")
             continue

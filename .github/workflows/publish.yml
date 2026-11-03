@@ -21,6 +21,7 @@ on:
     - cron: "45 13 * * *"
     - cron: "45 16 * * *"
     - cron: "45 18 * * *"
+    - cron: "45 15 * * 3-5"  # summer: 17:45 for the Threads quiz at 17:55 Wed-Fri (in winter the 16:45 UTC run above does it)
   workflow_dispatch:
     inputs:
       dry_run:

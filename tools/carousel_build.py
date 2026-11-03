@@ -197,8 +197,14 @@ def pick_tag(queue: list[dict]) -> str | None:
             refs[e["id"]] = e["ref"]
         except (ValueError, KeyError):
             pass
+    by_title = {}
+    try:   # Shorts uploaded by hand before the API: match the release by its title
+        for r in json.loads(gh("api", f"repos/{REPO}/releases?per_page=100")):
+            by_title[re.sub(r"#\w+", "", r.get("name") or "").strip().lower()] = r["tag_name"]
+    except (RuntimeError, ValueError):
+        pass
     for h in state.get("hits", []):
-        tag = refs.get(h.get("id"))
+        tag = refs.get(h.get("id")) or by_title.get(h.get("title", "").strip().lower())
         if tag and h.get("score", 0) >= MIN_SCORE and tag not in done:
             return tag
     return None

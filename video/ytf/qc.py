@@ -75,7 +75,10 @@ def check(script: dict, timings: dict, assets: dict, video: Path, loud: dict | N
         add(True, "Loudness normalised to -14 LUFS", f"input {loud['input_i']} LUFS → target -14")
     ch = chapters(script, timings)
     gaps = [ch[k + 1][0] - ch[k][0] for k in range(len(ch) - 1)]
-    add(len(ch) >= 3 and (not gaps or min(gaps) >= 10), "Chapters: ≥3, first at 0:00, each ≥10 s", f"{len(ch)} chapters")
+    if script.get("chapters", True) is False:   # owner 03/11/2026: one continuous story, no chapters
+        add(not ch, "No chapters (one continuous story)", f"{len(ch)} chapters")
+    else:
+        add(len(ch) >= 3 and (not gaps or min(gaps) >= 10), "Chapters: ≥3, first at 0:00, each ≥10 s", f"{len(ch)} chapters")
     add(len(script["title"]) <= 100, "Title ≤ 100 characters", f"{len(script['title'])}")
     add(len(desc) <= 5000, "Description ≤ 5000 characters", f"{len(desc)}")
     tags = ", ".join(script.get("tags", []))

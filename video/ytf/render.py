@@ -113,13 +113,13 @@ def split_long(shots: list[dict], seg_visuals: dict, sentences: dict) -> list[di
             continue
         n = int(-(-d // MAX_SHOT_LONG))
         step = d / n
-        vis = seg_visuals.get(sh["segment"]) or [sh["visual"]]
+        vis = [v for v in seg_visuals.get(sh["segment"], []) if not v.get("spot") and not v.get("ask")] or [sh["visual"]]
         k0 = next((k for k, v in enumerate(vis) if v is sh["visual"]), 0)
         last_kin = False
         for p in range(n):
             a, b = sh["start"] + p * step, sh["start"] + (p + 1) * step
-            v = sh["visual"] if p == 0 else vis[(k0 + p) % len(vis)]
-            if p and not last_kin:
+            v = sh["visual"] if p == 0 or sh["visual"].get("spot") else vis[(k0 + p) % len(vis)]
+            if p and not last_kin and not sh["visual"].get("spot"):
                 for j, se in enumerate(sentences.get(sh["segment"], [])):
                     if (sh["segment"], j) in used or not a - 0.3 <= se["start"] < b - 2.5:
                         continue
@@ -129,7 +129,8 @@ def split_long(shots: list[dict], seg_visuals: dict, sentences: dict) -> list[di
                         v = {"type": "kinetic", "text": bt[0], "accent": [bt[1]], "src": sh["visual"].get("src")}
                         break
             last_kin = v.get("type") == "kinetic"
-            out.append({**sh, "start": a, "end": b, "visual": dict(v), "chapter": sh.get("chapter") if p == 0 else None})
+            out.append({**sh, "start": a, "end": b, "visual": dict(v), "chapter": sh.get("chapter") if p == 0 else None,
+                        "act": sh.get("act") if p == 0 else None})
     return out
 
 
@@ -146,7 +147,7 @@ def build_shots(script: dict, timings: dict) -> list[dict]:
         for j, (v, w) in enumerate(zip(visuals, weights)):
             d = span * w / sum(weights)
             shots.append({"start": acc, "end": acc + d, "visual": v, "segment": seg["id"],
-                          "chapter": seg.get("chapter") if j == 0 else None})
+                          "chapter": seg.get("chapter") if j == 0 else None, "act": seg.get("act") if j == 0 else None})
             acc += d
     if total > LONG_MIN:
         shots = split_long(shots, {seg["id"]: seg["visuals"] for seg in script["segments"]},
@@ -713,7 +714,7 @@ def render_audio(script: dict, video: Path, timings: dict, shots: list[dict], to
     if events == [] and mp.exists():
         events = [tuple(e) for e in load_json(mp).get("events", [])]
     for sh in shots:
-        if sh.get("chapter") and sh["start"] > 1:
+        if (sh.get("chapter") or sh.get("act")) and sh["start"] > 1:
             events.append((sh["start"], "whoosh"))
         elif script.get("cut_sfx") and sh["start"] > 1:  # a soft swish on every cut
             events.append((sh["start"], "swish"))

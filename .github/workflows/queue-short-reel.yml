@@ -37,6 +37,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TIKTOK_ENABLED: ${{ vars.TIKTOK_ENABLED || 'false' }}
+          # Reel IG only from long-video clips, never the Short of the day (owner 03/11/2026)
+          SHORT_META_KINDS: ${{ vars.SHORT_META_KINDS || 'fb-reel,ig-story,fb-story' }}
         run: |
           args=()
           [ -n "${{ inputs.tag }}" ] && args+=(--tag "${{ inputs.tag }}")

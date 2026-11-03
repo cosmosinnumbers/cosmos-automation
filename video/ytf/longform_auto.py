@@ -504,9 +504,10 @@ Rules:
 - Use ONLY facts and numbers in the SOURCES below; write every number in digits exactly as printed there (say
   "about" when rounding). A computed number needs "calc": "6378.1 + 3474.8 = 9852.9" with source numbers on the left.
   Never invent a number, a date, a quote or a mission detail.
-- {beats} beats, each 1-2 short spoken sentences of 18-28 words (never over 30) over ONE visual; {words} words in
-  total for this act (count them). Speak to the viewer ("you", "picture yourself") at least once in 5 sentences and
-  ask the viewer at least one direct question with "you" ending in "?".
+- {beats} beats, each 1-2 short spoken sentences of 18-28 words (never over 30) over ONE visual; AT LEAST {words}
+  words in total for this act (count them: short acts are rejected). Speak to the viewer ("you", "picture yourself")
+  at least once in 5 sentences, and at least one beat is a single direct question to the viewer that contains "you"
+  and ends with "?" (e.g. "Can you guess how many Earths fit inside?").
 - Visuals ("show"): at least {motion} beats with data graphics and at least {real} beats with real footage or images
   using at least 3 different queries; never three beats in a row with the same type. Types:
   {{"type": "footage", "query": "2-4 words for the NASA video library", "stickman": {{"label": "YOU", "size": "small|tiny|big"}} optional}}
@@ -523,8 +524,8 @@ Rules:
 SOURCES:
 {sources}
 
-Answer JSON only: {{"title": "{act_title}", "beats": [{{"say": "", "show": {{}}, "calc": "optional", "recap": "optional true",
- "ask": "optional", "spot": "optional true"}}]}}"""
+Answer JSON only: {{"title": "{act_title}", "beats": [{{"say": "", "show": {{}}}}, ...]}}
+A beat may add "calc": "a + b = c" when it says a computed number.{keys}"""
 
 
 def act_plan(total: int) -> list[dict]:
@@ -561,9 +562,39 @@ def act_plan(total: int) -> list[dict]:
             e.append("- Do not write \"LOOK UP\" in this act.")
         if i not in (1, total - 1):
             e.append("- No beat with \"ask\" in this act.")
-        out.append({"extra": "\n".join(e), "ask": i in (1, total - 1), "spot": i == mid,
+        keys = []
+        if i in recaps:
+            keys.append('ONE beat adds "recap": true.')
+        if i in (1, total - 1):
+            keys.append('ONE beat adds "ask": "the comment question".')
+        if i == mid:
+            keys.append('Beat 2 adds "spot": true.')
+        out.append({"extra": "\n".join(e), "keys": (" " + " ".join(keys)) if keys else " No other keys.",
+                    "ask": i in (1, total - 1), "spot": i == mid,
                     "recap": i in recaps, "lookup": i in (mid, total - 1)})
     return out
+
+
+def flag_true(v) -> bool:
+    return v is True or str(v).strip().lower() == "true"
+
+
+def flag_text(v) -> str:
+    """An "ask" question, or "" for the placeholders models copy from the template."""
+    s = str(v or "").strip()
+    return "" if s.lower() in {"", "optional", "none", "no", "false", "null", "n/a"} else s
+
+
+def clean_flags(act: dict) -> dict:
+    """Drop placeholder flags, so script_check counts only real ones."""
+    for b in act["beats"]:
+        for k in ("ask", "spot", "recap"):
+            if k in b and not (flag_text(b[k]) if k == "ask" else flag_true(b[k])):
+                b.pop(k)
+        for k in ("spot", "recap"):
+            if k in b:
+                b[k] = True
+    return act
 
 
 def act_check(act: dict, rule: dict, words: int, sources: list[dict]) -> list[str]:
@@ -589,12 +620,12 @@ def act_check(act: dict, rule: dict, words: int, sources: list[dict]) -> list[st
     qs = {(b.get("show") or {}).get("query", "").lower() for b in bs if (b.get("show") or {}).get("type") in REAL} - {""}
     if len(qs) < 3:
         p.append(f"{len(qs)} different image/footage queries (need at least 3)")
-    asks = [b for b in bs if str(b.get("ask") or "").strip()]
+    asks = [b for b in bs if flag_text(b.get("ask"))]
     if len(asks) != (1 if rule["ask"] else 0):
         p.append(f"{len(asks)} beats with \"ask\" (need {1 if rule['ask'] else 0})")
     if any(len(str(b["ask"]).split()) > 12 for b in asks):
         p.append("an \"ask\" question is longer than 12 words")
-    spots = [k for k, b in enumerate(bs) if b.get("spot")]
+    spots = [k for k, b in enumerate(bs) if flag_true(b.get("spot"))]
     if len(spots) != (1 if rule["spot"] else 0):
         p.append(f"{len(spots)} beats with \"spot\" (need {1 if rule['spot'] else 0})")
     elif spots and ("LOOK UP" not in says[spots[0]] or len(says[spots[0]].split()) > 45):
@@ -604,7 +635,7 @@ def act_check(act: dict, rule: dict, words: int, sources: list[dict]) -> list[st
         p.append("\"LOOK UP\" must not appear in this act")
     if rule["lookup"] and not rule["spot"] and (len(look) != 1 or look[0] < len(says) - 3):
         p.append("\"LOOK UP\" exactly once, in the last 3 beats")
-    if rule["recap"] and not any(b.get("recap") for b in bs):
+    if rule["recap"] and not any(flag_true(b.get("recap")) for b in bs):
         p.append("one beat must have \"recap\": true")
     if not any(s.strip().endswith("?") and re.search(r"\byou(r)?\b", s, re.I)
                for s in re.split(r"(?<=[.!?])\s+", " ".join(says))):
@@ -642,23 +673,28 @@ def write_by_acts(p: dict, sources: list[dict]) -> tuple[dict, list[str]]:
         msgs = [{"role": "user", "parts": [{"text": ACT.format(
             n=i + 1, total=total, title=spec.get("title"), topic=p.get("topic"), outline=outline, previous=prev,
             act_title=x.get("title", f"Act {i + 1}"), answered=x.get("question_answered", ""), wow=x.get("wow", ""),
-            ends=x.get("ends_with", ""), beats=round(words / 22), words=words, motion=round(words / 22 * 0.45),
-            real=round(words / 22 * 0.35), extra=rules[i]["extra"],
+            ends=x.get("ends_with", ""), beats=round((words + 30) / 22), words=words + 30,
+            motion=round((words + 30) / 22 * 0.45), real=round((words + 30) / 22 * 0.35), extra=rules[i]["extra"],
+            keys=rules[i]["keys"],
             sources="\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text']}" for s in src))}]}]
-        for rnd in range(3):
+        best = None
+        for rnd in range(4):
             raw, act = llm(msgs)
-            act = {"title": act.get("title") or x.get("title", ""), "sources": x.get("sources") or [],
-                   "beats": [b for b in act.get("beats", []) if isinstance(b, dict)]}
+            act = clean_flags({"title": act.get("title") or x.get("title", ""), "sources": x.get("sources") or [],
+                               "beats": [b for b in act.get("beats", []) if isinstance(b, dict)]})
             probs = act_check(act, rules[i], words, sources)
             history.append(f"Act {i + 1}, draft {rnd + 1}: {len(probs)} problem(s)" + "".join(f"\n  - {q}" for q in probs))
             print(history[-1])
+            if best is None or len(probs) < len(best[2]):
+                best = (raw, act, probs)
             if not probs:
                 break
+            raw, act, probs = best   # the next draft fixes the best one so far, never a worse one
             msgs = msgs[:1] + [{"role": "model", "parts": [{"text": raw}]},
                                {"role": "user", "parts": [{"text": FIX.format(problems="\n".join(f"- {q}" for q in probs))
                                                           .replace("whole script", "whole act")}]}]
         else:
-            sys.exit(f"CHECKS FAILED: act {i + 1} still fails after 3 drafts: no long video this week.\n" + "\n".join(history))
+            sys.exit(f"CHECKS FAILED: act {i + 1} still fails after 4 drafts: no long video this week.\n" + "\n".join(history))
         chapters.append(act)
     spec["chapters"] = chapters
     return spec, history
@@ -737,8 +773,8 @@ def repair_acts(spec: dict, problems: list[str], sources: list[dict], history: l
             sources="\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text']}" for s in src))}]}]
         for rnd in range(2):
             raw, act = llm(msgs)
-            act = {"title": chs[i]["title"], "sources": chs[i].get("sources") or [],
-                   "beats": [b for b in act.get("beats", []) if isinstance(b, dict)]}
+            act = clean_flags({"title": chs[i]["title"], "sources": chs[i].get("sources") or [],
+                               "beats": [b for b in act.get("beats", []) if isinstance(b, dict)]})
             left = act_check(act, rules[i], words, sources)
             history.append(f"Repair act {i + 1}, draft {rnd + 1}: {len(left)} problem(s)" + "".join(f"\n  - {q}" for q in left))
             print(history[-1])

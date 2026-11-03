@@ -322,6 +322,32 @@
   "short": "a1102-mars-elongated-cloud"
  },
  {
+  "ref": "th-news-1103-nasa-invites-media",
+  "at": "2026-11-03 12:00",
+  "tag": "NASA",
+  "text": "NASA Invites Media to Northrop Grumman CRS-25 Station Resupply Launch\n\nThe mission is known as NASA’s Northrop Grumman Commercial Resupply Services 25, or NASA’s Northrop Grumman CRS-25.\n\nSource: NASA (02 Nov 2026).",
+  "replies": [
+   "9, 2026, in the grip of the Canadarm2 robotic arm moments before its release into Earth orbit after a nearly six‑month stay attached to the International Space Station’s Unity module.\n\nhttps://www.nasa.gov/news-release/nasa-invites-media-to-northrop-grumman-crs-25-station-resupply-launch/"
+  ],
+  "news_title": "NASA Invites Media to Northrop Grumman CRS-25 Station Resupply Launch"
+ },
+ {
+  "ref": "th-quiz-1103-orbital-period-max",
+  "at": "2026-11-03 16:00",
+  "tag": "Astronomy",
+  "poll": [
+   "Saturn",
+   "Uranus",
+   "Venus"
+  ],
+  "text": "Yesterday's answer: Mars, -65 °C on average (NASA Planetary Fact Sheet).\n\nToday's quiz 📅 Which of these planets has the longest year?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Orbital Period-0",
+  "answer": "Uranus, 30,589 days per orbit (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-a1103-voyager-1-light-day",
   "at": "2026-11-03 21:00",
   "tag": "Mars",

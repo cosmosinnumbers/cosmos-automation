@@ -129,3 +129,12 @@ def test_long_script_check_engagement():
     assert "'ask' beats" in probs and "'spot' beat" in probs
     spec["title"] = "The Shocking Secret of Europa"
     assert "vague word" in " | ".join(lf.script_check(spec))
+
+
+def test_long_stickmen_added_and_length_hint():
+    import longform_auto as lf
+    segs = [{"visuals": [{"type": "image", "src": f"i{k}{j}"} for j in range(3)]} for k in range(4)]
+    assert lf.add_stickmen(segs) == 6
+    spec = {"title": "x", "chapters": [{"title": "a", "beats": [{"say": "word " * 100, "show": {"type": "image"}}]}]}
+    msg = next(m for m in lf.script_check(spec) if m.startswith("narration has"))
+    assert "ADD about" in msg and "act 1 100 words" in msg

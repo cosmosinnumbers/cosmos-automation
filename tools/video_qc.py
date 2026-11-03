@@ -91,7 +91,7 @@ def blacks(path: str) -> list[tuple[float, float]]:
     return [(float(a), float(b)) for a, b in re.findall(r"black_start:([\d.]+) black_end:([\d.]+)", txt)]
 
 
-def cuts(path: str, thr: float = 0.25) -> list[float]:
+def cuts(path: str, thr: float = 0.1) -> list[float]:
     txt = run(["ffmpeg", "-nostats", "-i", path, "-an", "-vf", f"select='gt(scene,{thr})',showinfo", "-f", "null", "-"])
     return [round(float(t), 1) for t in re.findall(r"pts_time:([\d.]+)", txt)]
 

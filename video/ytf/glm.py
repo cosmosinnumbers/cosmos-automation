@@ -20,8 +20,12 @@ BASE = "https://api.z.ai/api/paas/v4"
 FALLBACK_MODELS = "glm-5.3,glm-5.2"
 
 
+_NO_CREDIT = False  # set by chat() on "1113 Insufficient balance": no more GLM calls in this run (03/11/2026)
+
+
 def available() -> bool:
-    return bool(os.environ.get("GLM_API_KEY"))
+    """Key present, not switched off (GLM_ENABLED=false) and not out of credit in this run."""
+    return bool(os.environ.get("GLM_API_KEY")) and os.environ.get("GLM_ENABLED") != "false" and not _NO_CREDIT
 
 
 def _base() -> str:
@@ -56,8 +60,9 @@ def chat(messages: list[dict], *, check=None, temperature: float = 0.4, max_toke
     """messages: the Gemini-style list used everywhere in this repo ([{role: user|model, parts: [{text}]}]).
     check(json) -> list[str] of problems; an answer with problems goes to the next model. `thinking` turns on GLM's
     reasoning mode (slower, better for fact checking and code-like output)."""
+    global _NO_CREDIT
     key = os.environ.get("GLM_API_KEY")
-    if not key:
+    if not available():
         return None
     chat_msgs = [{"role": "assistant" if m["role"] == "model" else "user",
                   "content": "".join(p.get("text", "") for p in m["parts"])} for m in messages]
@@ -74,6 +79,10 @@ def chat(messages: list[dict], *, check=None, temperature: float = 0.4, max_toke
             if r.status_code == 400 and "thinking" in body:     # an older endpoint that does not know the field
                 body.pop("thinking")
                 continue
+            if r.status_code == 429 and ("1113" in r.text or "Insufficient balance" in r.text):
+                _NO_CREDIT = True  # no credit: every model and every retry would fail the same way
+                print("  GLM: no credit left (code 1113): skipped for the rest of this run, recharge to use it again", flush=True)
+                return None
             if r.status_code in (429, 500, 502, 503, 504) and attempt == 0:
                 print(f"  GLM {model} HTTP {r.status_code}: retrying", flush=True)
                 time.sleep(8)

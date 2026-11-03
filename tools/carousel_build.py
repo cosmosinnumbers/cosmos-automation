@@ -182,7 +182,7 @@ def caption(title: str, sources: list[dict], now: datetime) -> str:
 
 
 BAD = re.compile(r"presentation|briefing|news conference|press|interview|panel|podcast|poster|logo|portrait|award|"
-                 r"ceremony|meeting|visit|employee|team photo", re.I)
+                 r"ceremony|meeting|visit|employee|team photo|diagram|chart|graph|infographic|illustration|artist.?s? concept", re.I)
 
 
 def nasa_photos(tag: str, n: int, out: Path) -> tuple[list[Path], str]:
@@ -200,7 +200,10 @@ def nasa_photos(tag: str, n: int, out: Path) -> tuple[list[Path], str]:
             break
         for it in items[:30]:
             d, links = it["data"][0], it.get("links") or []
-            if d["nasa_id"] in seen or BAD.search(d.get("title", "") + " " + " ".join(d.get("keywords", []))) or not links:
+            about = (d.get("title", "") + " " + " ".join(d.get("keywords", [])) + " " + d.get("description", "")[:300]).lower()
+            if d["nasa_id"] in seen or BAD.search(about) or not links:
+                continue
+            if words and not re.search(rf"\b{re.escape(words[0])}", about):   # the subject itself, not just "space"
                 continue
             seen.add(d["nasa_id"])
             url = links[0]["href"].replace("~thumb", "~medium").replace("http://", "https://")

@@ -1,0 +1,15 @@
+{
+ "_doc": "Eventi del cielo per il formato sky_tonight (docs/PROMPT-motore-virale.md, step 6). Da aggiornare una volta al mese da fonti ufficiali. Le date sono indicative (picco); lo scrittore deve comunque trovare la fonte primaria (NASA What's Up, IMO) e il fact check del codice controlla ogni numero. hint = argomento passato allo scrittore.",
+ "sources": ["https://science.nasa.gov/skywatching/whats-up/", "https://www.imo.net/resources/calendar/"],
+ "events": [
+  {"date": "2026-11-05", "name": "Southern Taurids peak", "hint": "the Southern Taurid meteor shower peak and the fireballs it is known for"},
+  {"date": "2026-11-12", "name": "Northern Taurids peak", "hint": "the Northern Taurid meteor shower peak, debris of Comet Encke"},
+  {"date": "2026-11-17", "name": "Leonids peak", "hint": "the Leonid meteor shower peak, debris of Comet Tempel-Tuttle, the fastest meteors of the year"},
+  {"date": "2026-11-24", "name": "Full Moon (supermoon)", "hint": "the November full Moon, the first of three supermoons in a row"},
+  {"date": "2026-12-14", "name": "Geminids peak", "hint": "the Geminid meteor shower peak, the strongest of the year, from asteroid 3200 Phaethon"},
+  {"date": "2026-12-21", "name": "December solstice", "hint": "the December solstice: the shortest day in the northern hemisphere and why it happens"},
+  {"date": "2026-12-22", "name": "Ursids peak", "hint": "the Ursid meteor shower, debris of Comet Tuttle"},
+  {"date": "2026-12-24", "name": "Full Moon (supermoon)", "hint": "the December full Moon, the Cold Moon, a supermoon"},
+  {"date": "2027-01-03", "name": "Quadrantids peak", "hint": "the Quadrantid meteor shower, a short sharp peak from asteroid 2003 EH1"}
+ ]
+}

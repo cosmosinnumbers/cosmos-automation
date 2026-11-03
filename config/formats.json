@@ -1,0 +1,66 @@
+{
+ "_doc": "Libreria dei formati del motore virale (docs/PROMPT-motore-virale.md, step 2). Ricette NOSTRE: dei virali si copia la struttura, mai testi, titoli o immagini. 'match' = regex (minuscolo) con cui tools/trend_scout.py classifica i titoli dei video in crescita della nicchia. 'writer' = istruzione aggiunta al prompt dello scrittore degli Short (video/ytf/auto_short.py --format). 'evergreen' = il formato funziona anche sulla riserva dati NASA (nessuna notizia del giorno).",
+ "formats": {
+  "scale_zoom": {
+   "label": "Confronto di scala",
+   "match": "size|scale|comparison|\\bvs\\b|versus|\\bfits?\\b|bigger|biggest|smaller|how big|how far|how large|distance|light-?year",
+   "writer": "FORMAT scale_zoom: build the whole Short on ONE scale comparison a viewer can picture (X fits inside Y N times, X is as far as Y). Start small and zoom out sentence by sentence, each step bigger than the last, the biggest number at the end.",
+   "evergreen": true
+  },
+  "mission_glitch": {
+   "label": "Missione + intoppo concreto",
+   "match": "couldn.?t|can.?t|failed|failure|problem|broke|broken|stuck|dead|grave|\\blid\\b|destroy|lost|crash|wrong turn|mistake",
+   "writer": "FORMAT mission_glitch: tell it as a mission story with one concrete obstacle. Sentence 1: the huge achievement next to a small, everyday problem (the paradox). Then the problem, why the obvious fix does not work, the clever solution, the measured result.",
+   "evergreen": false
+  },
+  "survive_x": {
+   "label": "Cosa ti succederebbe su X",
+   "match": "survive|nothing can|what happens|would happen|if you|could you|inside a",
+   "writer": "FORMAT survive_x: put the viewer there ('Stand on X and...'). Walk through what happens step by step using ONLY the measured numbers of the place from the sources (temperature, pressure, gravity, radiation, speed); times you add yourself are in words, never digits.",
+   "evergreen": true
+  },
+  "myth_number": {
+   "label": "Mito smentito da un numero",
+   "match": "\\blie\\b|myth|wrong|actually|really|truth|not what|misconception",
+   "writer": "FORMAT myth_number: open with a belief most people hold, then break it with ONE measured number from the source. Explain why the myth exists and end on the true number.",
+   "evergreen": true
+  },
+  "countdown_top": {
+   "label": "Classifica top 3",
+   "match": "top \\d|\\b\\d+ (biggest|largest|hottest|coldest|fastest|strangest|weirdest)|insane facts|facts about|ranked",
+   "writer": "FORMAT countdown_top: a countdown of exactly three entries from the sources, one measured number each, the most extreme last. Say the rank in words before each entry (third, second, first), never as digits.",
+   "evergreen": true
+  },
+  "news_angle": {
+   "label": "Notizia con un numero forte",
+   "match": "nasa (is|just|has|will|announces)|\\bnew\\b|changes|discover|found|first|just (saw|found|photographed|detected)|breaking|announc",
+   "writer": "FORMAT news_angle: today's news told through its single most surprising measured number, said in the first sentence, then what it means and what happens next.",
+   "evergreen": false
+  },
+  "sky_tonight": {
+   "label": "Cielo stasera",
+   "match": "tonight|meteor|eclipse|supermoon|full moon|visible|night sky|look up|stargaz|aurora|conjunction",
+   "writer": "FORMAT sky_tonight: a sky event the viewer can see. Say WHEN (date and time window), WHERE to look and HOW MANY (rate, brightness, distance) using the source numbers, and one reason it happens.",
+   "evergreen": false
+  },
+  "quiz_guess": {
+   "label": "Indovina il numero",
+   "match": "guess|quiz|can you|which (one|planet)|\\?$",
+   "writer": "FORMAT quiz_guess: the first sentence challenges the viewer to guess a number ('Guess how many...'). Give two wrong but reasonable guesses in WORDS, never digits (\"a few hundred?\", \"twice the Earth?\"): every digit must be in the sources. Then reveal the measured number and why it is so.",
+   "evergreen": true
+  },
+  "audience_question": {
+   "label": "Risposta a una domanda vera",
+   "match": "^why |^how |why does|why is|why do|how does|how do",
+   "writer": "FORMAT audience_question: answer ONE real question people ask in the comments (given in the hint). Say the question in the first sentence in plain words, answer it with measured numbers.",
+   "evergreen": true
+  }
+ },
+ "hooks": {
+  "paradox": {"label": "Paradosso", "match": "couldn.?t|can.?t|but |despite|lie|wrong|nothing", "writer": "HOOK paradox: the first sentence puts two things that should not go together side by side."},
+  "extreme_number": {"label": "Numero estremo", "match": "\\d", "writer": "HOOK extreme_number: the first sentence is the most extreme measured number, with its unit, in 8 words or fewer."},
+  "comparison": {"label": "Confronto", "match": "\\bvs\\b|than|\\bfits?\\b|size|times", "writer": "HOOK comparison: the first sentence is a comparison with something familiar (a city, a car, the Earth)."},
+  "question": {"label": "Domanda", "match": "\\?|^why|^how|^what", "writer": "HOOK question: the first sentence is a direct question the viewer cannot answer yet (never 'did you know')."},
+  "you": {"label": "Seconda persona", "match": "\\byou\\b|\\byour\\b", "writer": "HOOK you: the first sentence puts the viewer in the scene ('If you stood on...', 'Your body would...')."}
+ }
+}

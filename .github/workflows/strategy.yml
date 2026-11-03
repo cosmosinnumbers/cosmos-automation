@@ -44,12 +44,15 @@ jobs:
           python tools/strategy_weekly.py "${args[@]}"
       - name: Learning loop (viral plan, phase F)
         if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
-        run: python tools/learn_weekly.py
+        run: |
+          python tools/learn_weekly.py
+          python tools/experiments.py learn && python tools/experiments.py report  # viral engine, step 7
       - name: Commit the report
         if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
         run: |
           git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
-          git add reports config/viral-weights.json
+          git add reports config/viral-weights.json config/experiments-state.json
+          [ -f queues/ideas.json ] && git add queues/ideas.json
           git diff --cached --quiet && exit 0
           git commit -q -m "strategia: scorecard e decisioni della settimana"
           for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done; exit 1

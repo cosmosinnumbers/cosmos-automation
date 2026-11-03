@@ -55,6 +55,14 @@ jobs:
           niches="$IN_NICHE"
           [ -z "$niches" ] && niches=$(ls research/niches | sed 's/\.json$//')
           for n in $niches; do python tools/gemini_watch.py "$n" 3; done
+      - name: Trend scout (viral engine, step 1)
+        continue-on-error: true
+        env:
+          IN_NICHE: ${{ inputs.niche }}
+        run: |
+          niches="$IN_NICHE"
+          [ -z "$niches" ] && niches=$(ls research/niches | sed 's/\.json$//')
+          for n in $niches; do python tools/trend_scout.py "$n" || echo "trend scout $n failed"; done
       - name: Save reports
         if: always()
         run: |

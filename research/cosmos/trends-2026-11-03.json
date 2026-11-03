@@ -1,0 +1,677 @@
+{
+ "videos": [
+  {
+   "id": "INmLPyGjsMI",
+   "title": "The Black Hole That Makes Stars",
+   "channel": "Past the Blue",
+   "published": "2026-10-28",
+   "seconds": 63,
+   "views": 6977513,
+   "views_per_day": 1395502,
+   "engagement": 0.0481,
+   "acceleration": null,
+   "format": "other",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "p0EqvHzr_X4",
+   "title": "Why NASA Is Paying to Destroy the ISS",
+   "channel": "Past the Blue",
+   "published": "2026-10-23",
+   "seconds": 91,
+   "views": 5819756,
+   "views_per_day": 581975,
+   "engagement": 0.0251,
+   "acceleration": null,
+   "format": "mission_glitch",
+   "hook": "question",
+   "theme": "iss",
+   "emoji": false
+  },
+  {
+   "id": "dv-Czhabars",
+   "title": "SIZE OF SOLAR SYSTEM! 💀",
+   "channel": "Jase Cosmology",
+   "published": "2026-10-26",
+   "seconds": 29,
+   "views": 4003131,
+   "views_per_day": 571875,
+   "engagement": 0.0124,
+   "acceleration": null,
+   "format": "scale_zoom",
+   "hook": "comparison",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "TGDF1889rGE",
+   "title": "The Lid NASA Couldn’t Open",
+   "channel": "BrainRush",
+   "published": "2026-10-16",
+   "seconds": 66,
+   "views": 7055962,
+   "views_per_day": 415056,
+   "engagement": 0.0256,
+   "acceleration": null,
+   "format": "mission_glitch",
+   "hook": "paradox",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "CiMGXfEjF7c",
+   "title": "Solar System's Biggest Lie!💀☝",
+   "channel": "Astrryy",
+   "published": "2026-10-28",
+   "seconds": 32,
+   "views": 1735824,
+   "views_per_day": 347164,
+   "engagement": 0.0003,
+   "acceleration": null,
+   "format": "scale_zoom",
+   "hook": "paradox",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "bb4KirnWsB4",
+   "title": "NASA Is Making Big Changes To Artemis",
+   "channel": "The Space Race",
+   "published": "2026-10-31",
+   "seconds": 1204,
+   "views": 661215,
+   "views_per_day": 330607,
+   "engagement": 0.0195,
+   "acceleration": null,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "artemis",
+   "emoji": false
+  },
+  {
+   "id": "ppQmLxCxmGw",
+   "title": "Ant vs the Universe | Size Comparison 💀",
+   "channel": "The Scale Dive",
+   "published": "2026-10-07",
+   "seconds": 50,
+   "views": 6392042,
+   "views_per_day": 245847,
+   "engagement": 0.0062,
+   "acceleration": null,
+   "format": "scale_zoom",
+   "hook": "comparison",
+   "theme": "galaxy",
+   "emoji": true
+  },
+  {
+   "id": "tKikZXrcZCQ",
+   "title": "Why Nothing Can Survive Venus",
+   "channel": "Facts' Mine",
+   "published": "2026-10-24",
+   "seconds": 57,
+   "views": 2334669,
+   "views_per_day": 233466,
+   "engagement": 0.0589,
+   "acceleration": null,
+   "format": "survive_x",
+   "hook": "paradox",
+   "theme": "venus",
+   "emoji": false
+  },
+  {
+   "id": "KDqkFCM0CQ0",
+   "title": "NASA’s OSIRIS-REx Touches Asteroid Bennu!",
+   "channel": "UNIVERSIA",
+   "published": "2026-10-15",
+   "seconds": 8,
+   "views": 4019766,
+   "views_per_day": 223320,
+   "engagement": 0.0002,
+   "acceleration": null,
+   "format": "other",
+   "hook": "other",
+   "theme": "small_bodies",
+   "emoji": false
+  },
+  {
+   "id": "x9fM_-eVCXI",
+   "title": "Kalpana Chawla Ki Kahani: Karnal Se NASA Aur Columbia Tak",
+   "channel": "StrategyLabIndia",
+   "published": "2026-10-15",
+   "seconds": 140,
+   "views": 3771723,
+   "views_per_day": 209540,
+   "engagement": 0.0277,
+   "acceleration": null,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "Fme5MA1VYJc",
+   "title": "insane facts about Sun!",
+   "channel": "Dev",
+   "published": "2026-10-14",
+   "seconds": 110,
+   "views": 3916684,
+   "views_per_day": 206141,
+   "engagement": 0.0332,
+   "acceleration": null,
+   "format": "countdown_top",
+   "hook": "other",
+   "theme": "sun",
+   "emoji": false
+  },
+  {
+   "id": "G33L_lR5mjw",
+   "title": "How Fast Is Light Really 🤔🥶 #shorts #space #science #astronomy #speedoflight #universe #spacefacts",
+   "channel": "Galaxy Verse ",
+   "published": "2026-10-24",
+   "seconds": 31,
+   "views": 1673651,
+   "views_per_day": 185961,
+   "engagement": 0.0002,
+   "acceleration": null,
+   "format": "myth_number",
+   "hook": "question",
+   "theme": "galaxy",
+   "emoji": true
+  },
+  {
+   "id": "DJv5hJ9qrOE",
+   "title": "What Happens Beyond The Speed Of Light",
+   "channel": "Facts' Mine",
+   "published": "2026-10-25",
+   "seconds": 45,
+   "views": 1537653,
+   "views_per_day": 170850,
+   "engagement": 0.0661,
+   "acceleration": null,
+   "format": "survive_x",
+   "hook": "question",
+   "theme": "light_speed",
+   "emoji": false
+  },
+  {
+   "id": "nfuwtAeaPIU",
+   "title": "The Dead Wheel That Dug a Rover's Grave",
+   "channel": "Past the Blue",
+   "published": "2026-10-07",
+   "seconds": 77,
+   "views": 4200830,
+   "views_per_day": 161570,
+   "engagement": 0.0542,
+   "acceleration": null,
+   "format": "mission_glitch",
+   "hook": "other",
+   "theme": "mars",
+   "emoji": false
+  },
+  {
+   "id": "BdRisD_BV8o",
+   "title": "ALERTA Super Niño: la NASA descubre anomalía en el océano que agravará el fenómeno",
+   "channel": "Ciudadano news",
+   "published": "2026-10-19",
+   "seconds": 53,
+   "views": 2054264,
+   "views_per_day": 146733,
+   "engagement": 0.0126,
+   "acceleration": null,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "Zzs458AUj1M",
+   "title": "What would happen if Earth fell into a black hole? #space #outerspace #blackhole #spacefacts",
+   "channel": "prodbeatsbymat",
+   "published": "2026-10-05",
+   "seconds": 88,
+   "views": 4051202,
+   "views_per_day": 144685,
+   "engagement": 0.0169,
+   "acceleration": null,
+   "format": "survive_x",
+   "hook": "question",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "kGe6LHzmCXo",
+   "title": "Crew 12 successfully splashes down off coast",
+   "channel": "FOX 5 New York",
+   "published": "2026-10-08",
+   "seconds": 87,
+   "views": 3096498,
+   "views_per_day": 123859,
+   "engagement": 0.0078,
+   "acceleration": null,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "3T3F-LNnfMI",
+   "title": "Tesla unveils new flying car model",
+   "channel": "NBC News",
+   "published": "2026-10-16",
+   "seconds": 109,
+   "views": 2048169,
+   "views_per_day": 120480,
+   "engagement": 0.0034,
+   "acceleration": null,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "U4I-BTL8HZE",
+   "title": "Reflect Orbital Startup (3D) by Professor of How",
+   "channel": "Professor Of AI",
+   "published": "2026-10-08",
+   "seconds": 76,
+   "views": 2928030,
+   "views_per_day": 112616,
+   "engagement": 0.0331,
+   "acceleration": null,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "W5Njz6P5UBk",
+   "title": "How long is one year on each planet? 🪐 #space #shorts #astronomy",
+   "channel": "Tired Monk",
+   "published": "2026-10-18",
+   "seconds": 18,
+   "views": 1607670,
+   "views_per_day": 100479,
+   "engagement": 0.0056,
+   "acceleration": null,
+   "format": "audience_question",
+   "hook": "question",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "OgIer2mfkLU",
+   "title": "Alien 100% Exist! #space #universe #galaxy #alien #voyager #facts #nasa",
+   "channel": "Galaxy Knowledge",
+   "published": "2026-10-14",
+   "seconds": 70,
+   "views": 1844509,
+   "views_per_day": 97079,
+   "engagement": 0.0129,
+   "acceleration": null,
+   "format": "other",
+   "hook": "paradox",
+   "theme": "galaxy",
+   "emoji": false
+  },
+  {
+   "id": "sP_LxJomMUA",
+   "title": "जुपिटर के अंदर भेजा गया Probe आखिर कितनी देर ज़िंदा रहा? | Galileo Mission",
+   "channel": "What Happens If?",
+   "published": "2026-10-17",
+   "seconds": 181,
+   "views": 1492609,
+   "views_per_day": 93288,
+   "engagement": 0.0265,
+   "acceleration": null,
+   "format": "other",
+   "hook": "question",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "fvSgvd_Bv80",
+   "title": "How Many Fit Inside? Part 2 💀 | Planet Size Comparison",
+   "channel": "How Big, Really?",
+   "published": "2026-10-27",
+   "seconds": 24,
+   "views": 651105,
+   "views_per_day": 93015,
+   "engagement": 0.0042,
+   "acceleration": null,
+   "format": "scale_zoom",
+   "hook": "extreme_number",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "zJdZAh5wAy8",
+   "title": "Why TON 618 Is So Terrifying",
+   "channel": "Ridddle",
+   "published": "2026-10-12",
+   "seconds": 1055,
+   "views": 1879069,
+   "views_per_day": 89479,
+   "engagement": 0.0108,
+   "acceleration": null,
+   "format": "audience_question",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "cJKCqeWI2k4",
+   "title": "13 नवंबर 2026 को खत्म हो जाएगी दुनिया? जानिए सच",
+   "channel": "AB Star News 24×7",
+   "published": "2026-10-16",
+   "seconds": 64,
+   "views": 1509468,
+   "views_per_day": 88792,
+   "engagement": 0.0092,
+   "acceleration": null,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": false
+  }
+ ],
+ "formats": {
+  "other": {
+   "score": 14.58,
+   "videos": 9,
+   "accelerating": false,
+   "engagement": 0.0198,
+   "ours_7d": 0,
+   "examples": [
+    "The Black Hole That Makes Stars",
+    "NASA’s OSIRIS-REx Touches Asteroid Bennu!"
+   ]
+  },
+  "scale_zoom": {
+   "score": 7.36,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.0058,
+   "ours_7d": 0,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "Solar System's Biggest Lie!💀☝"
+   ]
+  },
+  "mission_glitch": {
+   "score": 6.78,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.035,
+   "ours_7d": 0,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS",
+    "The Lid NASA Couldn’t Open"
+   ]
+  },
+  "survive_x": {
+   "score": 3.21,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0473,
+   "ours_7d": 0,
+   "examples": [
+    "Why Nothing Can Survive Venus",
+    "What Happens Beyond The Speed Of Light"
+   ]
+  },
+  "news_angle": {
+   "score": 2.64,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0115,
+   "ours_7d": 0,
+   "examples": [
+    "NASA Is Making Big Changes To Artemis",
+    "Tesla unveils new flying car model"
+   ]
+  },
+  "countdown_top": {
+   "score": 1.21,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0332,
+   "ours_7d": 0,
+   "examples": [
+    "insane facts about Sun!"
+   ]
+  },
+  "audience_question": {
+   "score": 1.11,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0082,
+   "ours_7d": 0,
+   "examples": [
+    "How long is one year on each planet? 🪐 #space #shorts #astronomy",
+    "Why TON 618 Is So Terrifying"
+   ]
+  },
+  "myth_number": {
+   "score": 1.09,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0002,
+   "ours_7d": 0,
+   "examples": [
+    "How Fast Is Light Really 🤔🥶 #shorts #space #science #astronomy #speedoflight #universe #spacefacts"
+   ]
+  }
+ },
+ "hooks": {
+  "other": {
+   "score": 16.35,
+   "videos": 8,
+   "accelerating": false,
+   "engagement": 0.0249,
+   "ours_7d": null,
+   "examples": [
+    "The Black Hole That Makes Stars",
+    "NASA Is Making Big Changes To Artemis"
+   ]
+  },
+  "question": {
+   "score": 7.48,
+   "videos": 6,
+   "accelerating": false,
+   "engagement": 0.0234,
+   "ours_7d": null,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS",
+    "How Fast Is Light Really 🤔🥶 #shorts #space #science #astronomy #speedoflight #universe #spacefacts"
+   ]
+  },
+  "paradox": {
+   "score": 6.4,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.0244,
+   "ours_7d": null,
+   "examples": [
+    "The Lid NASA Couldn’t Open",
+    "Solar System's Biggest Lie!💀☝"
+   ]
+  },
+  "comparison": {
+   "score": 4.79,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0093,
+   "ours_7d": null,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "Ant vs the Universe | Size Comparison 💀"
+   ]
+  },
+  "extreme_number": {
+   "score": 2.97,
+   "videos": 5,
+   "accelerating": false,
+   "engagement": 0.013,
+   "ours_7d": null,
+   "examples": [
+    "Crew 12 successfully splashes down off coast",
+    "Reflect Orbital Startup (3D) by Professor of How"
+   ]
+  }
+ },
+ "themes": {
+  "black_hole": {
+   "score": 9.01,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0325,
+   "ours_7d": null,
+   "examples": [
+    "The Black Hole That Makes Stars",
+    "What would happen if Earth fell into a black hole? #space #outerspace #blackhole #spacefacts"
+   ]
+  },
+  "other": {
+   "score": 8.19,
+   "videos": 9,
+   "accelerating": false,
+   "engagement": 0.0174,
+   "ours_7d": null,
+   "examples": [
+    "The Lid NASA Couldn’t Open",
+    "Kalpana Chawla Ki Kahani: Karnal Se NASA Aur Columbia Tak"
+   ]
+  },
+  "solar_system": {
+   "score": 6.51,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.0056,
+   "ours_7d": null,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "Solar System's Biggest Lie!💀☝"
+   ]
+  },
+  "iss": {
+   "score": 3.41,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0251,
+   "ours_7d": null,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS"
+   ]
+  },
+  "galaxy": {
+   "score": 3.1,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0064,
+   "ours_7d": null,
+   "examples": [
+    "Ant vs the Universe | Size Comparison 💀",
+    "How Fast Is Light Really 🤔🥶 #shorts #space #science #astronomy #speedoflight #universe #spacefacts"
+   ]
+  },
+  "artemis": {
+   "score": 1.94,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0195,
+   "ours_7d": null,
+   "examples": [
+    "NASA Is Making Big Changes To Artemis"
+   ]
+  },
+  "venus": {
+   "score": 1.37,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0589,
+   "ours_7d": null,
+   "examples": [
+    "Why Nothing Can Survive Venus"
+   ]
+  },
+  "small_bodies": {
+   "score": 1.31,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0002,
+   "ours_7d": null,
+   "examples": [
+    "NASA’s OSIRIS-REx Touches Asteroid Bennu!"
+   ]
+  },
+  "sun": {
+   "score": 1.21,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0332,
+   "ours_7d": null,
+   "examples": [
+    "insane facts about Sun!"
+   ]
+  },
+  "light_speed": {
+   "score": 1.0,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0661,
+   "ours_7d": null,
+   "examples": [
+    "What Happens Beyond The Speed Of Light"
+   ]
+  },
+  "mars": {
+   "score": 0.95,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0542,
+   "ours_7d": null,
+   "examples": [
+    "The Dead Wheel That Dug a Rover's Grave"
+   ]
+  }
+ },
+ "short_share": 0.88,
+ "audience_questions": [
+  "So...a galaxy could just decide to hurl a blackhole our way?",
+  "Ok, dumb question, why make it fall?",
+  "Why not throw it on a collision course toward the Sun or Venus, where it will be reduced to smithereen or atomized, so no space junk?",
+  "Did someone think of just pushing it into space?",
+  "(what i asked chatgpt What is the difference between mercury and sun?",
+  "To phir earth se lander moon par kaise bheja gya tha jab ki moon aur earth ke bich itna distance hai???",
+  "But my question is why does the moon look's close to earth in the sky?",
+  "Whats in here, rocks?",
+  "But did they put the capsule in a vacuum to reopen it?",
+  "How will moonbase defend against meteorites?",
+  "ive seen this brought up a few times without a clear answer. is the defense purely just dense walls and escape plans?",
+  "Or if it's just something that was available from a catalog?"
+ ],
+ "instagram_median_likes": {
+  "CAROUSEL_ALBUM": 12308.0,
+  "IMAGE": 12420.5
+ },
+ "median_views_per_day": 170850,
+ "niche": "cosmos",
+ "date": "2026-11-03",
+ "source": "2026-W45.json",
+ "sky": [
+  {
+   "date": "2026-11-05",
+   "name": "Southern Taurids peak",
+   "hint": "the Southern Taurid meteor shower peak and the fireballs it is known for",
+   "in_days": 2
+  },
+  {
+   "date": "2026-11-12",
+   "name": "Northern Taurids peak",
+   "hint": "the Northern Taurid meteor shower peak, debris of Comet Encke",
+   "in_days": 9
+  }
+ ]
+}

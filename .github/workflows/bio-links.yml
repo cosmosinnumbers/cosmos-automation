@@ -1,0 +1,32 @@
+# Tracked Gumroad links in the Facebook Page and YouTube channel texts (tools/bio_links.py). Manual.
+name: bio-links
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "facebook or youtube"
+        default: "facebook"
+      dry_run:
+        type: boolean
+        default: false
+
+jobs:
+  bio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: pip install -q requests PyYAML google-api-python-client google-auth google-auth-oauthlib tzdata
+      - env:
+          GUMROAD_JSON: ${{ secrets.GUMROAD_JSON }}
+          META_JSON: ${{ secrets.META_JSON }}
+          YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+        run: python video/ci_secrets.py
+      - env:
+          TARGET: ${{ inputs.target }}
+          DRY: ${{ inputs.dry_run }}
+        run: python tools/bio_links.py "$TARGET" $([ "$DRY" = "true" ] && echo --dry-run)

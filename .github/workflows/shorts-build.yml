@@ -129,6 +129,16 @@ jobs:
           gh release create "$ID" --title "$title" --notes-file "$DIR/phone.md" \
             "$DIR/short/out/$ID.mp4" "${social[@]}" "$DIR/short/out/upload.md" "$DIR/factcheck.md" "$DIR/short.yaml" \
             "$DIR/material-assets.yaml" "$DIR/material-script.yaml"
+      - name: Keep the blocked video for inspection (QC failed)
+        if: failure() && steps.short.outputs.id != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: blocked-${{ steps.short.outputs.id }}
+          path: |
+            ${{ steps.short.outputs.dir }}/short/out/*.mp4
+            ${{ steps.short.outputs.dir }}/short/build/motion_plan.json
+            ${{ steps.short.outputs.dir }}/qc.md
+          retention-days: 3
       - name: Reserve Short (last attempt of the day)
         id: reserve
         if: github.event_name == 'schedule' && steps.today.outputs.done != 'true' && steps.short.outputs.id == '' && steps.today.outputs.last == 'true'

@@ -489,6 +489,9 @@ def numbers(text: str) -> list[str]:
     return [n.rstrip(".,") for n in re.findall(r"\d[\d,.]*", text) if n.rstrip(".,")]
 
 
+# talking heads, briefings, title cards, mascots and posters: never the picture of a Short about a measured number
+BAD_VISUAL = re.compile(r"presentation|briefing|news conference|press|interview|panel|podcast|episode|report|webcast|"
+                        r"emoji|mascot|cartoon|clip ?art|poster|logo|infographic|live ?stream|\bq&a\b|\bsocial\b", re.I)
 BAD_OPEN = re.compile(r"^\s*(did you know|in this video|today|welcome|hey|hello|have you ever|what if|imagine)\b", re.I)
 BAD_END = re.compile(r"(subscribe|thanks for watching|see you|follow for|like and)", re.I)
 
@@ -559,22 +562,28 @@ def nasa_items(query, media):
     return stock.nasa(f"/search?q={q}&media_type={media}")["collection"]["items"]
 
 
+def fetch_image(it, news_dir, assets, key):
+    """Download one NASA library image item into the material folder and register it. Returns the key or None."""
+    d = it["data"][0]
+    files = stock.get_json(f"https://images-assets.nasa.gov/image/{urllib.parse.quote(d['nasa_id'])}/collection.json", {})
+    jpg = next((f for t in ("~large.jpg", "~medium.jpg", "~orig.jpg") for f in files if f.endswith(t)), None)
+    if not jpg:
+        return None
+    rel = f"assets/stock/nasa-img-{re.sub(r'[^A-Za-z0-9_-]', '_', d['nasa_id'])}.jpg"
+    stock.download(jpg.replace("http://", "https://"), news_dir / rel)
+    concept = any(w in (d.get("description", "") + d["title"]).lower() for w in ("concept", "illustration", "rendering", "artist"))
+    assets[key] = {"file": rel, "type": "image", "kind": "illustration" if concept else "photo",
+                   "title": d["title"], "source": f"https://images.nasa.gov/details/{d['nasa_id']}",
+                   "credit": "NASA" + (f"/{d['center']}" if d.get("center") else ""),
+                   "license": "NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)",
+                   "check": "ok"}
+    return key
+
+
 def nasa_image(query, news_dir, assets):
     for it in nasa_items(query, "image")[:5]:
-        d = it["data"][0]
-        files = stock.get_json(f"https://images-assets.nasa.gov/image/{urllib.parse.quote(d['nasa_id'])}/collection.json", {})
-        jpg = next((f for t in ("~large.jpg", "~medium.jpg", "~orig.jpg") for f in files if f.endswith(t)), None)
-        if not jpg:
-            continue
-        rel = f"assets/stock/nasa-img-{re.sub(r'[^A-Za-z0-9_-]', '_', d['nasa_id'])}.jpg"
-        stock.download(jpg.replace("http://", "https://"), news_dir / rel)
-        concept = any(w in (d.get("description", "") + d["title"]).lower() for w in ("concept", "illustration", "rendering", "artist"))
-        assets["img_main"] = {"file": rel, "type": "image", "kind": "illustration" if concept else "photo",
-                              "title": d["title"], "source": f"https://images.nasa.gov/details/{d['nasa_id']}",
-                              "credit": "NASA" + (f"/{d['center']}" if d.get("center") else ""),
-                              "license": "NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)",
-                              "check": "ok"}
-        return "img_main"
+        if fetch_image(it, news_dir, assets, "img_main"):
+            return "img_main"
     return None
 
 
@@ -584,22 +593,39 @@ def footage(spec, news_dir) -> list[dict]:
     if not (news_dir / "assets.yaml").exists():  # stock.get reads the register before adding to it
         save_yaml(news_dir / "assets.yaml", {})
     picked, seen, results = [], set(), {}
+    stop = set("the and for with from this that nasa space new first about into over than more most what when your are was were has have had its not".split())
+    subject = " ".join(spec.get("footage_queries", []) + [spec.get("image_query", "")])
+    names = re.findall(r"\b[A-Z][a-z0-9]{3,}\b", spec.get("title", "") + " " + spec.get("headline", ""))   # Mars, Jupiter, Leonid
+    topic = {w for w in re.findall(r"[a-z0-9]{4,}", (subject + " " + " ".join(names)).lower())
+             if w not in stop | {"will", "apart", "degrees", "video", "image", "footage", "science", "visualization"}}
+
+    def relevance(it) -> int:
+        """How many story words (mission, object, telescope) appear in the clip's NASA title and description."""
+        d = it["data"][0]
+        if BAD_VISUAL.search(d.get("title", "")):
+            return 0
+        hay = (d.get("title", "") + " " + d.get("description", "")[:400] + " " + " ".join(d.get("keywords", []))).lower()
+        return sum(1 for w in topic if w in hay)
+
+    strict = [True]
 
     def take(q, per_query):
         """Download up to per_query new clips of query q; stops at 3 clips in total."""
         if q not in results:
             try:
-                results[q] = nasa_items(q, "video")[:8]
+                results[q] = sorted(nasa_items(q, "video")[:12], key=lambda it: -relevance(it))[:8]  # on-topic first
             except Exception as e:  # noqa: BLE001
                 print("  NASA search failed:", q, e)
                 results[q] = []
             print(f"  NASA '{q}': {len(results[q])} videos")
         got = 0
         for it in results[q]:
-            if got >= per_query or len(picked) >= 3:
+            if got >= per_query or len(picked) >= 4:
                 return
             sid = it["data"][0]["nasa_id"]
             if sid in seen:
+                continue
+            if strict[0] and relevance(it) < 1:   # the viewer sees Hubble repair footage in a Mars story: not shown
                 continue
             seen.add(sid)
             key = f"vid_{len(picked) + 1}"
@@ -614,31 +640,58 @@ def footage(spec, news_dir) -> list[dict]:
     queries = [q for q in spec.get("footage_queries", [])[:4] if q.strip()]
     for q in queries:  # one clip per story query first, for variety
         take(q, 1)
-    for q in queries:  # then more from the same queries
-        if len(picked) < 2:
+    for q in queries:  # then more from the same queries (4 clips: a cut every few seconds, not one long shot)
+        if len(picked) < 4:
             take(q, 2)
-    # last resort: the single key words of the queries (mission, telescope, object), then real NASA space footage
-    words = [w for q in queries for w in q.split() if len(w) > 3 and w.lower() not in ("nasa", "with", "from", "space")]
-    for q in list(dict.fromkeys(words))[:4] + ["Hubble space telescope", "James Webb Space Telescope", "deep space"]:
-        if len(picked) >= 2:
-            break
-        take(q, 1)
-    if len(picked) < 2:
-        sys.exit(f"Only {len(picked)} NASA clips found: Short not built (rule: at least 2 real clips).")
     assets = stock.load_yaml(news_dir / "assets.yaml")
-    img = None
-    if spec.get("image_query"):
+    # on-topic NASA images (Mars story -> Mars pictures) fill the cuts that no on-topic clip covers
+    imgs, seen_img = [], set()
+    for q in dict.fromkeys([spec.get("image_query", "")] + queries):
+        if len(imgs) >= 4 or not q.strip():
+            continue
         try:
-            img = nasa_image(spec["image_query"], news_dir, assets)
+            items = sorted(nasa_items(q, "image")[:15], key=lambda it: -relevance(it))
         except Exception as e:  # noqa: BLE001
-            print("  NASA image failed:", e)
+            print("  NASA image search failed:", q, e)
+            continue
+        for it in items:
+            nid = it["data"][0]["nasa_id"]
+            if len(imgs) >= 4 or nid in seen_img or relevance(it) < 1:
+                continue
+            seen_img.add(nid)
+            try:
+                k = fetch_image(it, news_dir, assets, f"img_{len(imgs) + 1}")
+            except BaseException as e:  # noqa: BLE001
+                print("  skip image", nid, str(e)[:100])
+                continue
+            if k:
+                imgs.append(k)
+    print(f"  on-topic visuals: {len(picked)} clips + {len(imgs)} images (topic words: {sorted(topic)[:8]})")
+    if len(picked) < 1 or len(picked) + len(imgs) < 3:
+        # not enough on-topic material: old behaviour, key words and generic NASA footage up to 2 real clips
+        strict[0] = False
+        words = [w for q in queries for w in q.split() if len(w) > 3 and w.lower() not in ("nasa", "with", "from", "space")]
+        for q in list(dict.fromkeys(words))[:4] + ["Hubble space telescope", "James Webb Space Telescope", "deep space"]:
+            if len(picked) >= 2:
+                break
+            take(q, 1)
+        assets = {**stock.load_yaml(news_dir / "assets.yaml"), **{k: v for k, v in assets.items() if k.startswith("img_")}}
+    if len(picked) < 2 and not imgs:
+        sys.exit(f"Only {len(picked)} NASA clips found: Short not built (rule: at least 2 real clips).")
     save_yaml(news_dir / "assets.yaml", assets)
-    visuals = []
+    vids = []
     for k in picked:
         dur = media_duration(news_dir / assets[k]["file"])
-        visuals.append({"src": k, "start": round(min(8.0, dur * 0.2), 1)})  # skip title cards at the start
-    if img:
-        visuals.insert(1, {"src": img, "motion": "zoom_in"})
+        vids.append({"src": k, "start": round(min(8.0, dur * 0.2), 1), "_dur": dur})  # skip title cards at the start
+    visuals = []
+    for n in range(max(len(vids), len(imgs))):   # clip, picture, clip, picture: the look changes at every cut
+        if n < len(vids):
+            visuals.append({k: v for k, v in vids[n].items() if k != "_dur"})
+        if n < len(imgs):
+            visuals.append({"src": imgs[n], "motion": "zoom_in" if n % 2 == 0 else "zoom_out"})
+    for v in vids:   # a second, different stretch of the longer clips: a real cut at least every ~6 s
+        if v["_dur"] >= 16 and len(visuals) < 7:
+            visuals.append({"src": v["src"], "start": round(min(v["_dur"] - 7.0, v["_dur"] * 0.55), 1)})
     return visuals
 
 
@@ -663,8 +716,8 @@ def main():
                      {"role": "user", "parts": [{"text": FIX.format(missing=", ".join(missing) or "none") +
                                                  (" Source problems: " + "; ".join(problems) if problems else "")}]}]
             raw, spec = gemini(msgs, search=search)
-            if not spec:
-                sys.exit("Gemini unavailable for the correction: no Short today.")
+            if not spec or not spec.get("narration"):
+                sys.exit("the rewrite came back without a narration (" + str((spec or {}).get("skip", "no JSON"))[:120] + "): no Short today.")
             missing, problems, report = check(spec)
             if "--reserve" in a:
                 problems += reserve_problems(spec)

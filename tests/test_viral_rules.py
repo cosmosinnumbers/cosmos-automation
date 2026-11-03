@@ -23,5 +23,15 @@ def test_good_short_passes():
     assert a.viral_problems(good) == []
 
 
+def test_punch_in_changes_odd_subshots():
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "video" / "ytf"))
+    import short
+    from PIL import Image, ImageDraw
+    f = Image.new("RGB", (400, 300), (0, 0, 0))
+    ImageDraw.Draw(f).rectangle((0, 0, 200, 150), fill=(255, 255, 255))
+    assert short.punch(f, 0, 0).tobytes() == f.tobytes()
+    assert short.punch(f, 1, 1.0).tobytes() != f.tobytes()
+
+
 if __name__ == "__main__":
-    test_prompts_format(); test_bad_short_is_rejected(); test_good_short_passes(); print("ok")
+    test_prompts_format(); test_bad_short_is_rejected(); test_good_short_passes(); test_punch_in_changes_odd_subshots(); print("ok")

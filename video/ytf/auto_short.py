@@ -306,8 +306,8 @@ def backup_llm(messages):
     chat = [{"role": "assistant" if m["role"] == "model" else "user",
              "content": "".join(p.get("text", "") for p in m["parts"])} for m in messages]
     for model in [m.strip() for m in models.split(",") if m.strip()]:
-        msgs = chat
-        for shrink in range(4):  # HTTP 413 (request over the per-minute token limit): same model, smaller blocks
+        msgs, waits = chat, 0
+        for shrink in range(6):  # 413 (request over the per-minute token limit): smaller blocks; 429: wait the minute
             try:
                 r = requests.post(url, timeout=120, headers={"Authorization": f"Bearer {tok}"},
                                   json={"model": model, "messages": msgs, "temperature": 0.4,
@@ -317,7 +317,14 @@ def backup_llm(messages):
                 print(f"  backup writer {model}: no usable answer ({type(e).__name__})", flush=True)
                 r = None
                 break
-            if r.status_code != 413 or shrink == 3:
+            if r.status_code == 429 and "per minute" in r.text and waits < 2:
+                m = re.search(r"try again in ([\d.]+)s", r.text)
+                pause = min(70.0, float(m.group(1)) + 2) if m else 62.0
+                print(f"  backup writer {model} HTTP 429 (tokens per minute): waiting {pause:.0f} s", flush=True)
+                time.sleep(pause)
+                waits += 1
+                continue
+            if r.status_code != 413 or shrink >= 5:
                 break
             msgs = smaller(msgs)
             print(f"  backup writer {model} HTTP 413: retrying with the input cut to "

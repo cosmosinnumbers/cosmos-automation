@@ -34,7 +34,7 @@ jobs:
   write:
     if: vars.LONGFORM_AUTO != 'false'
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90  # act mode with the free writers: many small calls, a minute apart
     env:
       TZ: Europe/Rome
       PYTHONIOENCODING: utf-8

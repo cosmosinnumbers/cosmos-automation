@@ -41,6 +41,7 @@ FACTSHEETS = ["https://nssdc.gsfc.nasa.gov/planetary/factsheet/"]
 # length target: ~163 spoken words a minute at voice speed 1.1 (P6: 1,319 words = 8.23 min at 1.08)
 LEN = {"mmin": 8, "mmax": 10, "wmin": 1350, "wmax": 1550, "cmin": 6, "cmax": 8}
 DRY = "--dry-run" in sys.argv
+SKIP_GEMINI = False  # act mode with Gemini down: straight to the free writers, no 2-minute retries per call
 MOTION = {"counter", "scale", "timer", "compare", "bars", "kinetic"}
 REAL = {"footage", "image"}
 ANNOUNCE = re.compile(r"\bchapter\b|\bpart (?:one|two|three|four|five|six|seven|eight|\d)\b|\bin this (?:section|part)\b|"
@@ -176,7 +177,7 @@ def llm(msgs: list) -> tuple[str, dict]:
     import time
     import requests
     key = os.environ.get("GEMINI_API_KEY")
-    if key:
+    if key and not SKIP_GEMINI:
         for attempt in range(6):
             m = a.gemini_models(key)[attempt % len(a.gemini_models(key))]
             try:
@@ -465,6 +466,296 @@ def retention_review(spec: dict) -> tuple[list[str], dict]:
     return probs, sc
 
 
+# ---------- act mode (owner 03/11/2026: free models only, small blocks) ----------
+# Without Gemini the backup writers (Groq free tier: a few thousand tokens a minute) cannot write a 1,400-word
+# script in one answer. Act mode asks for an outline, then ONE act per call with only that act's sources, checks
+# every act by code and rewrites only the failing ones; the whole script then goes through the same checks as
+# before (fact_check, script_check, reviewer per act, retention critic). Nothing is approved that would fail them.
+
+OUTLINE = """You plan the long YouTube video of "Cosmos in Numbers" (faceless, English, real NASA/ESA footage and
+data graphics). Topic: {topic}. Angle: {angle}. One continuous story in {acts} acts (internal only, never announced).
+Act 1 opens with a hook: a common belief that is wrong or the single most striking number. Each act answers the
+question the previous one left hanging, has one "wow" number, escalates, and ends on a question or twist.
+A turning point at about two thirds; the last act pays off the hook.
+Use ONLY facts in these SOURCE EXCERPTS:
+{sources}
+
+Title rules: max 60 characters, the concrete subject plus a real number or a precise contrast, one promise, never a
+vague word alone (secret, mystery, amazing, insane, shocking, truth, crazy, unbelievable). Copy the STRUCTURE of
+these growing titles, never the words:
+{trend_titles}
+
+Answer JSON only:
+{{"id": "2-4 lowercase words joined by -", "title": "", "alt_titles": ["", ""],
+ "description_intro": "2 sentences naming the sources", "tags": ["8-12 search phrases"],
+ "hashtags": ["space", "nasa", "astronomy"],
+ "thumbs": [{{"lines": ["2-3 WORDS", "PER LINE"], "query": "NASA image query"}}, 2 more; the third with "stickman": true],
+ "acts": [{{"title": "", "sources": ["S1"], "question_answered": "", "wow": "the act's striking fact, from the sources",
+   "ends_with": "the question or twist that pulls into the next act"}}]}}"""
+
+ACT = """You write ACT {n} of {total} of a long YouTube video for "Cosmos in Numbers" (faceless, English, synthetic
+voice, real NASA/ESA footage, animated data graphics). Title: {title}. Topic: {topic}.
+The whole story (internal acts, never announced to the viewer):
+{outline}
+{previous}
+THIS ACT: "{act_title}". It answers: {answered}. Its wow moment (in its first third): {wow}. It ends with: {ends}.
+
+Rules:
+- Use ONLY facts and numbers in the SOURCES below; write every number in digits exactly as printed there (say
+  "about" when rounding). A computed number needs "calc": "6378.1 + 3474.8 = 9852.9" with source numbers on the left.
+  Never invent a number, a date, a quote or a mission detail.
+- {beats} beats, each 1-2 short spoken sentences of 18-28 words (never over 30) over ONE visual; {words} words in
+  total for this act (count them). Speak to the viewer ("you", "picture yourself") at least once in 5 sentences and
+  ask the viewer at least one direct question with "you" ending in "?".
+- Visuals ("show"): at least {motion} beats with data graphics and at least {real} beats with real footage or images
+  using at least 3 different queries; never three beats in a row with the same type. Types:
+  {{"type": "footage", "query": "2-4 words for the NASA video library", "stickman": {{"label": "YOU", "size": "small|tiny|big"}} optional}}
+  {{"type": "image", "query": "2-4 words for the NASA image library", "stickman": optional}}
+  {{"type": "counter", "value": 384400, "suffix": " km", "label": "EARTH TO MOON", "sub": "short line"}}
+  {{"type": "scale", "title": "", "items": [{{"label": "Earth", "value": 12756, "display": "12,756 km"}}, 2-4 items]}}
+  {{"type": "timer", "seconds": 500, "label": "SUNLIGHT TO EARTH", "display": "about 8 min 20 s"}}
+  {{"type": "compare", "title": "", "items": [{{"label": "", "value": 0, "suffix": ""}}, {{"label": "", "value": 0, "suffix": ""}}]}}
+  {{"type": "bars", "title": "", "items": [{{"label": "", "value": 0, "display": ""}}], "log": false, "note": "Source: ..."}}
+  {{"type": "kinetic", "text": "max 7 words", "accent": ["ONE", "WORD"]}}
+  Values on screen come from the sources too.
+- Never say "chapter", "part", "section", "in this video", "did you know"; no greetings; no price, discount or code.
+{extra}
+SOURCES:
+{sources}
+
+Answer JSON only: {{"title": "{act_title}", "beats": [{{"say": "", "show": {{}}, "calc": "optional", "recap": "optional true",
+ "ask": "optional", "spot": "optional true"}}]}}"""
+
+
+def act_plan(total: int) -> list[dict]:
+    """Where the code wants the structural beats (script_check positions): hook in act 1, a comment question in
+    act 2 and in the last act, the LOOK UP spot at the start of the middle act, recaps spread out, the follow
+    invitation once, the closing LOOK UP line in the last 3 beats."""
+    mid = total // 2
+    recaps = {1, 2, mid + 1, total - 2} - {0, total - 1}   # at least 3 recaps (one every ~2 minutes)
+    out = []
+    for i in range(total):
+        e = []
+        if i == 0:
+            e.append("- This is the opening: the FIRST sentence (max 14 words) is a question or a promise built on the "
+                     "most striking number or a wrong common belief; within the first 75 words a question to the viewer, "
+                     "the stakes and the promise of the payoff (\"by the end you'll know ...\"). Ask the viewer to bet "
+                     "(\"guess: closer to 10 or to 100? Write it in the comments.\").")
+        if i == 1:
+            e.append("- Exactly ONE beat has \"ask\": \"a question for the comments, max 12 words\" and says it out loud.")
+        if i in recaps:
+            e.append("- Exactly ONE beat has \"recap\": true: one sentence recapping what we know so far plus the next question.")
+        if i == mid:
+            e.append("- Beat 2 of this act has \"spot\": true: 2 sentences, max 40 words, saying what LOOK UP is (our "
+                     "beginner's guide to finding in the real sky the things we talk about) and \"link in the "
+                     "description\". \"LOOK UP\" appears nowhere else in this act.")
+        if i == 2:
+            e.append("- Right after the wow moment, one sentence inviting to follow: \"If numbers like this make your "
+                     "day, follow: there is a new one every day.\"")
+        if i == total - 1:
+            e.append("- This is the last act: payoff that echoes the opening hook, one sentence on why it matters; in "
+                     "the LAST 3 beats ONE sentence inviting viewers who want to see these objects in the real sky to "
+                     "the beginner's stargazing guide \"LOOK UP\" (link in the description), and the very last beat "
+                     "has \"ask\": \"a question for the comments, max 12 words\".")
+        if i not in (mid, total - 1):
+            e.append("- Do not write \"LOOK UP\" in this act.")
+        if i not in (1, total - 1):
+            e.append("- No beat with \"ask\" in this act.")
+        out.append({"extra": "\n".join(e), "ask": i in (1, total - 1), "spot": i == mid,
+                    "recap": i in recaps, "lookup": i in (mid, total - 1)})
+    return out
+
+
+def act_check(act: dict, rule: dict, words: int, sources: list[dict]) -> list[str]:
+    """The script_check rules that can be judged on one act, plus its numbers against the sources."""
+    p, bs = [], [b for b in act.get("beats", []) if isinstance(b, dict)]
+    says = [str(b.get("say", "")) for b in bs]
+    n = len(" ".join(says).split())
+    if not words - 25 <= n <= words + 60:   # 6 acts at the low end still make the script's minimum
+        p.append(f"this act has {n} words: write {words} (about {round(words / 22)} beats of ~22 words), "
+                 f"{'ADD' if n < words else 'CUT'} about {abs(words - n)} words with facts from the sources")
+    long = [s[:40] for s in says if len(s.split()) > 32]
+    if long:
+        p.append(f"{len(long)} beats over 30 words: {long[:2]}")
+    kinds = [(b.get("show") or {}).get("type") for b in bs]
+    if sum(k in MOTION for k in kinds) < 0.4 * len(kinds) - 0.5:
+        p.append(f"only {sum(k in MOTION for k in kinds)}/{len(kinds)} beats are data graphics (need 40%)")
+    if sum(k in REAL for k in kinds) < 0.3 * len(kinds) - 0.5:
+        p.append(f"only {sum(k in REAL for k in kinds)}/{len(kinds)} beats are real footage or images (need 30%)")
+    if [i for i in range(2, len(kinds)) if kinds[i] == kinds[i - 1] == kinds[i - 2]]:
+        p.append("three equal visuals in a row")
+    if [k for k in kinds if k not in MOTION | REAL]:
+        p.append(f"unknown visual types {set(k for k in kinds if k not in MOTION | REAL)}")
+    qs = {(b.get("show") or {}).get("query", "").lower() for b in bs if (b.get("show") or {}).get("type") in REAL} - {""}
+    if len(qs) < 3:
+        p.append(f"{len(qs)} different image/footage queries (need at least 3)")
+    asks = [b for b in bs if str(b.get("ask") or "").strip()]
+    if len(asks) != (1 if rule["ask"] else 0):
+        p.append(f"{len(asks)} beats with \"ask\" (need {1 if rule['ask'] else 0})")
+    if any(len(str(b["ask"]).split()) > 12 for b in asks):
+        p.append("an \"ask\" question is longer than 12 words")
+    spots = [k for k, b in enumerate(bs) if b.get("spot")]
+    if len(spots) != (1 if rule["spot"] else 0):
+        p.append(f"{len(spots)} beats with \"spot\" (need {1 if rule['spot'] else 0})")
+    elif spots and ("LOOK UP" not in says[spots[0]] or len(says[spots[0]].split()) > 45):
+        p.append("the spot beat must name LOOK UP and say 'link in the description' in max 40 words")
+    look = [k for k, s in enumerate(says) if "LOOK UP" in s]
+    if not rule["lookup"] and look:
+        p.append("\"LOOK UP\" must not appear in this act")
+    if rule["lookup"] and not rule["spot"] and (len(look) != 1 or look[0] < len(says) - 3):
+        p.append("\"LOOK UP\" exactly once, in the last 3 beats")
+    if rule["recap"] and not any(b.get("recap") for b in bs):
+        p.append("one beat must have \"recap\": true")
+    if not any(s.strip().endswith("?") and re.search(r"\byou(r)?\b", s, re.I)
+               for s in re.split(r"(?<=[.!?])\s+", " ".join(says))):
+        p.append("no direct question to the viewer with 'you'")
+    text = " ".join(says)
+    if ANNOUNCE.search(text) or PRICE.search(text):
+        p.append("never announce chapters or parts, never a price, discount or code")
+    p += fact_check({"chapters": [act]}, sources)
+    return p
+
+
+def act_sources(sources: list[dict], ids: list, budget: int = 6500) -> list[dict]:
+    pick = [s for s in sources if s["id"] in set(ids or [])] or sources[:2]
+    per = max(1200, budget // len(pick))
+    return [{**s, "text": s["text"][:per]} for s in pick]
+
+
+def write_by_acts(p: dict, sources: list[dict]) -> tuple[dict, list[str]]:
+    total = LEN["cmin"]
+    excerpt = "\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text'][:1100]}" for s in sources)
+    _, out = llm([{"role": "user", "parts": [{"text": OUTLINE.format(topic=p.get("topic"), angle=p.get("angle"),
+                  acts=total, sources=excerpt, trend_titles=trend_titles(5))}]}])
+    acts = [x for x in (out.get("acts") or []) if isinstance(x, dict)][:total]
+    if len(acts) < total:
+        sys.exit(f"Act mode: the outline has {len(acts)} acts (need {total}).")
+    spec = {k: out.get(k) for k in ("id", "title", "alt_titles", "description_intro", "tags", "hashtags", "thumbs")}
+    outline = "\n".join(f"{i + 1}. {x.get('title', '')}: {x.get('question_answered', '')} -> {x.get('ends_with', '')}"
+                        for i, x in enumerate(acts))
+    words = -(-(LEN["wmin"] + 120) // total)
+    rules, history, chapters = act_plan(total), [], []
+    for i, x in enumerate(acts):
+        src = act_sources(sources, x.get("sources"))
+        prev = (f"The previous act ended with: \"{chapters[-1]['beats'][-1].get('say', '')}\" - open by answering it."
+                if chapters and chapters[-1].get("beats") else "")
+        msgs = [{"role": "user", "parts": [{"text": ACT.format(
+            n=i + 1, total=total, title=spec.get("title"), topic=p.get("topic"), outline=outline, previous=prev,
+            act_title=x.get("title", f"Act {i + 1}"), answered=x.get("question_answered", ""), wow=x.get("wow", ""),
+            ends=x.get("ends_with", ""), beats=round(words / 22), words=words, motion=round(words / 22 * 0.45),
+            real=round(words / 22 * 0.35), extra=rules[i]["extra"],
+            sources="\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text']}" for s in src))}]}]
+        for rnd in range(3):
+            raw, act = llm(msgs)
+            act = {"title": act.get("title") or x.get("title", ""), "sources": x.get("sources") or [],
+                   "beats": [b for b in act.get("beats", []) if isinstance(b, dict)]}
+            probs = act_check(act, rules[i], words, sources)
+            history.append(f"Act {i + 1}, draft {rnd + 1}: {len(probs)} problem(s)" + "".join(f"\n  - {q}" for q in probs))
+            print(history[-1])
+            if not probs:
+                break
+            msgs = msgs[:1] + [{"role": "model", "parts": [{"text": raw}]},
+                               {"role": "user", "parts": [{"text": FIX.format(problems="\n".join(f"- {q}" for q in probs))
+                                                          .replace("whole script", "whole act")}]}]
+        else:
+            sys.exit(f"CHECKS FAILED: act {i + 1} still fails after 3 drafts: no long video this week.\n" + "\n".join(history))
+        chapters.append(act)
+    spec["chapters"] = chapters
+    return spec, history
+
+
+def review_by_acts(spec: dict, sources: list[dict]) -> list[str]:
+    """The fact reviewer act by act, each with the sources of that act: small requests for the free models."""
+    out = []
+    for ci, ch in enumerate(spec.get("chapters", []), 1):
+        part = {"chapters": [ch]}
+        out += [f"act {ci}: {x}" for x in review(part, act_sources(sources, ch.get("sources"), 7000))]
+    return out
+
+
+def gemini_up() -> bool:
+    """One tiny request: is any Gemini model answering on this key right now?"""
+    import os
+    import requests
+    key = os.environ.get("GEMINI_API_KEY")
+    if not key:
+        return False
+    for m in a.gemini_models(key)[:2]:
+        try:
+            r = requests.post(a.GEMINI.format(model=m), params={"key": key}, timeout=60, json={
+                "contents": [{"role": "user", "parts": [{"text": "Answer JSON only: {\"ok\": true}"}]}],
+                "generationConfig": {"responseMimeType": "application/json", "maxOutputTokens": 20}})
+            if r.status_code == 200:
+                return True
+            print(f"  Gemini {m} HTTP {r.status_code}", flush=True)
+        except requests.RequestException as e:
+            print(f"  Gemini {m}: {type(e).__name__}", flush=True)
+    return False
+
+
+REPAIR = """Here is ACT {n} of the script (JSON). The checks of the whole script found these problems in it:
+{problems}
+Rewrite the whole act fixing every point, same JSON format and rules as before (beats of 18-28 words, about {words}
+words, only numbers from the SOURCES, keep its "ask"/"spot"/"recap" beats where they are).
+ACT:
+{act}
+
+SOURCES:
+{sources}
+
+Answer JSON only: {{"title": "", "beats": [...]}}"""
+
+
+def repair_acts(spec: dict, problems: list[str], sources: list[dict], history: list[str]) -> None:
+    """Rewrite only the acts the problems point to (act N, chapter N, or the act holding a wrong number); problems
+    about the whole script go to the acts that can fix them (shortest acts for length, every act otherwise)."""
+    chs, total = spec["chapters"], len(spec["chapters"])
+    words = -(-(LEN["wmin"] + 120) // total)
+    rules = act_plan(total)
+    todo: dict[int, list[str]] = {}
+    for q in problems:
+        if q.startswith(("title must", "vague word")):
+            continue
+        m = re.search(r"\b(?:act|chapter) (\d+)", q)
+        num = re.match(r"number ([\d,.]+) is not", q)
+        if m and 1 <= int(m.group(1)) <= total:
+            hit = [int(m.group(1)) - 1]
+        elif num:
+            hit = [i for i, ch in enumerate(chs) if any(num.group(1) in json.dumps(b) for b in ch["beats"])] or [0]
+        elif q.startswith("narration has"):
+            n = [len(" ".join(b.get("say", "") for b in ch["beats"]).split()) for ch in chs]
+            hit = [i for i in range(total) if n[i] < words] or list(range(total))
+        else:
+            hit = list(range(total))
+        for i in hit:
+            todo.setdefault(i, []).append(q)
+    for i, probs in sorted(todo.items()):
+        src = act_sources(sources, chs[i].get("sources"))
+        msgs = [{"role": "user", "parts": [{"text": REPAIR.format(
+            n=i + 1, problems="\n".join(f"- {q}" for q in probs), words=words, act=json.dumps(
+                {"title": chs[i]["title"], "beats": chs[i]["beats"]}, ensure_ascii=False),
+            sources="\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text']}" for s in src))}]}]
+        for rnd in range(2):
+            raw, act = llm(msgs)
+            act = {"title": chs[i]["title"], "sources": chs[i].get("sources") or [],
+                   "beats": [b for b in act.get("beats", []) if isinstance(b, dict)]}
+            left = act_check(act, rules[i], words, sources)
+            history.append(f"Repair act {i + 1}, draft {rnd + 1}: {len(left)} problem(s)" + "".join(f"\n  - {q}" for q in left))
+            print(history[-1])
+            if not left:
+                chs[i] = act
+                break
+            msgs = msgs[:1] + [{"role": "model", "parts": [{"text": raw}]},
+                               {"role": "user", "parts": [{"text": FIX.format(problems="\n".join(f"- {q}" for q in left))
+                                                          .replace("whole script", "whole act")}]}]
+    if any(q.startswith(("title must", "vague word")) for q in problems):
+        _, t = llm([{"role": "user", "parts": [{"text": (
+            f"Script topic: {spec.get('title')}. Opening: {chs[0]['beats'][0].get('say', '')}\nWrite a YouTube title: "
+            "20-60 characters, the concrete subject plus a real number from the script, one promise, no vague words "
+            "(secret, mystery, amazing, insane, shocking, truth, crazy, unbelievable). Answer JSON only: {\"title\": \"\"}")}]}])
+        spec["title"] = (t or {}).get("title") or spec.get("title")
+
+
 # ---------- assets ----------
 def nasa_asset(query: str, media: str, vdir: Path, key: str, taken: set) -> str | None:
     try:
@@ -626,7 +917,28 @@ def main():
         topic=p.get("topic"), angle=p.get("angle"), sources=src_block, recap_every=330, wmin=LEN["wmin"], wmax=LEN["wmax"],
         mmin=LEN["mmin"], mmax=LEN["mmax"], chapters=f"{LEN['cmin']} to {LEN['cmax']}", trend_titles=trend_titles())}]}]
     history, scores = [], {}
-    for rnd in range(4):
+    acts = "--acts" in args or not gemini_up()
+    if acts:   # free models: outline + one act per call, same checks on the whole script (owner 03/11/2026)
+        global SKIP_GEMINI
+        SKIP_GEMINI = "--acts" not in args
+        print("Act mode: one act per call" + (" (Gemini unavailable)" if SKIP_GEMINI else ""))
+        spec, history = write_by_acts(p, sources)
+        for rnd in range(3):
+            problems = fact_check(spec, sources) + script_check(spec)
+            if not [x for x in problems if x.startswith("number")]:
+                problems += review_by_acts(spec, sources)
+                if not problems:
+                    rprobs, scores = retention_review(spec)
+                    problems += rprobs if rnd < 2 else []
+            history.append(f"Whole script, check {rnd + 1}: {len(problems)} problem(s)" + "".join(f"\n  - {x}" for x in problems))
+            print(history[-1])
+            if not problems:
+                break
+            if rnd < 2:
+                repair_acts(spec, problems, sources, history)
+        else:
+            sys.exit("CHECKS FAILED in act mode: no long video this week.\n" + "\n".join(history))
+    for rnd in range(0 if acts else 4):
         raw, spec = llm(msgs)
         problems = fact_check(spec, sources) + script_check(spec)
         if not [x for x in problems if x.startswith("number")]:  # the reviewer only on drafts whose numbers are clean
@@ -643,7 +955,8 @@ def main():
         msgs += [{"role": "model", "parts": [{"text": raw}]},
                  {"role": "user", "parts": [{"text": FIX.format(problems="\n".join(f"- {x}" for x in problems))}]}]
     else:
-        sys.exit("CHECKS FAILED after 4 drafts: no long video this week.\n" + "\n".join(history))
+        if not acts:   # act mode skips this loop: its checks already passed above
+            sys.exit("CHECKS FAILED after 4 drafts: no long video this week.\n" + "\n".join(history))
     words = sum(len(b.get("say", "").split()) for _, b in beats(spec))
     report = "\n".join([f"# Controlli automatici ({datetime.now():%Y-%m-%d %H:%M})", "",
                         f"Argomento: {p.get('topic')} ({p.get('angle')})", f"Parole: {words}; capitoli: {len(spec['chapters'])}; "

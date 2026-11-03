@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import subprocess
 from functools import lru_cache
 from pathlib import Path
@@ -26,6 +27,112 @@ XFADE = 12  # frames
 
 
 # ---------- timeline ----------
+LONG_MIN = 180.0      # a narration longer than this is a long video
+MAX_SHOT_LONG = 8.0   # long videos: no picture held longer than this (video QC: static picture max 9 s)
+MONTHS = re.compile(r"^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)", re.I)
+STOP = {"and", "or", "of", "the", "a", "an", "to", "in", "on", "at", "for", "with", "by", "from", "that", "which", "is", "are", "was"}
+
+
+UNITS_W = {w: i for i, w in enumerate("zero one two three four five six seven eight nine ten eleven twelve thirteen "
+                                       "fourteen fifteen sixteen seventeen eighteen nineteen".split())}
+TENS_W = {w: 10 * i for i, w in enumerate("_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()) if w != "_"}
+SCALE_W = {"hundred": 100, "thousand": 1000, "million": 10**6, "billion": 10**9}
+WORDNUM = re.compile(r"\b(?:(?:%s)(?:-(?:%s))?|%s)(?:[\s-]+(?:and\s+)?(?:%s|%s|%s)(?:-(?:%s))?)*\b" % (
+    "|".join(TENS_W), "|".join(list(UNITS_W)[1:10]), "|".join(list(UNITS_W)[1:]),
+    "|".join(TENS_W), "|".join(list(UNITS_W)[1:]), "|".join(SCALE_W), "|".join(list(UNITS_W)[1:10])), re.I)
+
+
+def words_to_number(text: str) -> int | None:
+    total = cur = 0
+    for w in re.split(r"[\s-]+", text.lower()):
+        if w == "and":
+            continue
+        if w in UNITS_W:
+            if cur % 100 and (cur % 10 or UNITS_W[w] >= 10):   # 'nineteen ninety', 'six four': a year or a list
+                return None
+            cur += UNITS_W[w]
+        elif w in TENS_W:
+            if cur % 100:                                         # 'twenty thirty', 'twenty twenty-six': a year
+                return None
+            cur += TENS_W[w]
+        elif w == "hundred":
+            cur = max(cur, 1) * 100
+        elif w in SCALE_W:
+            if SCALE_W[w] >= 10**6:     # 'two billion' reads better as words: keep the scale word
+                return None
+            total += max(cur, 1) * SCALE_W[w]
+            cur = 0
+        else:
+            return None
+    return total + cur
+
+
+def beat_text(sentence: str) -> tuple[str, str] | None:
+    """Kinetic phrase of a narrated number: the number in digits and up to 3 following words ('49 science-dedicated
+    flybys'). Numbers may be digits or words (the narration spells them out for the voice). None for dates, years,
+    names and 'one' (too common to be a beat)."""
+    ms = director.real_numbers(sentence)
+    m, num = (ms[0], ms[0].group(1).rstrip(",")) if ms else (None, None)
+    if m is None:
+        for wm in WORDNUM.finditer(sentence):
+            after = sentence[wm.end():wm.end() + 1]
+            before = sentence[:wm.start()].split()[-1:] or [""]
+            if after == "-" or after.isalpha() or MONTHS.match(before[0]) or before[0].lower() in ("in", "of", "since"):
+                continue                                          # 'nineteen-nineties', 'April twenty-thirty'
+            val = words_to_number(wm.group(0))
+            if val is not None and val >= 2:
+                m, num = wm, f"{val:,}"
+                break
+    if m is None:
+        return None
+    words = sentence[m.end():].split()
+    if words and MONTHS.match(words[0]):
+        return None
+    out = [num]
+    for w in words[:3]:
+        clean = w.strip(",.;:!?()\"'")
+        if not clean or w[0] in "(\"" or clean.lower() in STOP:
+            break
+        out.append(clean)
+        if w[-1] in ",.;:!?)":
+            break
+    while len(out) > 1 and out[-1].lower() in STOP:
+        out.pop()
+    return (" ".join(out), num) if len(out) >= 2 else None
+
+
+def split_long(shots: list[dict], seg_visuals: dict, sentences: dict) -> list[dict]:
+    """Long videos: cut every shot longer than MAX_SHOT_LONG into pieces of at most MAX_SHOT_LONG s, alternating the
+    visuals of its segment, and turn the piece where a narrated number starts into kinetic text of that number
+    (the director then makes it a Paper Cut or Vertigo scene). Owner 30/10/2026: entertain for the whole video."""
+    out, used = [], set()
+    for sh in shots:
+        d = sh["end"] - sh["start"]
+        if d <= MAX_SHOT_LONG + 0.5:
+            out.append(sh)
+            continue
+        n = int(-(-d // MAX_SHOT_LONG))
+        step = d / n
+        vis = seg_visuals.get(sh["segment"]) or [sh["visual"]]
+        k0 = next((k for k, v in enumerate(vis) if v is sh["visual"]), 0)
+        last_kin = False
+        for p in range(n):
+            a, b = sh["start"] + p * step, sh["start"] + (p + 1) * step
+            v = sh["visual"] if p == 0 else vis[(k0 + p) % len(vis)]
+            if p and not last_kin:
+                for j, se in enumerate(sentences.get(sh["segment"], [])):
+                    if (sh["segment"], j) in used or not a - 0.3 <= se["start"] < b - 2.5:
+                        continue
+                    bt = beat_text(se["text"])
+                    if bt:
+                        used.add((sh["segment"], j))
+                        v = {"type": "kinetic", "text": bt[0], "accent": [bt[1]], "src": sh["visual"].get("src")}
+                        break
+            last_kin = v.get("type") == "kinetic"
+            out.append({**sh, "start": a, "end": b, "visual": dict(v), "chapter": sh.get("chapter") if p == 0 else None})
+    return out
+
+
 def build_shots(script: dict, timings: dict) -> list[dict]:
     segs = timings["segments"]
     total = timings["duration"]
@@ -41,6 +148,9 @@ def build_shots(script: dict, timings: dict) -> list[dict]:
             shots.append({"start": acc, "end": acc + d, "visual": v, "segment": seg["id"],
                           "chapter": seg.get("chapter") if j == 0 else None})
             acc += d
+    if total > LONG_MIN:
+        shots = split_long(shots, {seg["id"]: seg["visuals"] for seg in script["segments"]},
+                           {st.get("id"): st.get("sentences", []) for st in segs})
     return shots
 
 

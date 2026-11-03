@@ -55,6 +55,25 @@ VIRAL_RULES = """Retention rules (the Short is judged on how many people stay to
 - Active voice, present tense, simple words a 12 year old understands.
 """
 
+
+def viral_rules() -> str:
+    """VIRAL_RULES plus what the weekly learning loop (tools/learn_weekly.py) found worked or failed on this channel."""
+    try:
+        w = json.loads((ROOT / "config" / "viral-weights.json").read_text("utf-8"))
+    except (OSError, ValueError):
+        return VIRAL_RULES
+    extra = []
+    if w.get("rules"):
+        extra.append("- Learned from our last videos (data, this week): " + "; ".join(w["rules"]) + ".")
+    best = [x["title"] for x in w.get("winners", []) if x.get("kind") == "short"][:3]
+    worst = [x["title"] for x in w.get("losers", []) if x.get("kind") == "short"][:2]
+    if best:
+        extra.append("- Our best recent titles (copy the structure, never the topic): " + " | ".join(best) + ".")
+    if worst:
+        extra.append("- Our weakest recent titles (avoid this kind of framing): " + " | ".join(worst) + ".")
+    return VIRAL_RULES + ("\n".join(extra) + "\n" if extra else "")
+
+
 PROMPT = """You are the news writer of "Cosmos in Numbers", a faceless English YouTube Shorts channel about space:
 real NASA/ESA footage and data, every number with a primary source. Today is {today}.
 Use Google Search to find ONE space or astronomy news story published in the last 7 days by a primary source
@@ -363,7 +382,7 @@ def rss_items(days=7, n=10):
 def write_spec(today, hint):
     """Grounded search first; without grounding quota, the RSS feeds of the agencies."""
     used = used_topics()
-    msgs = [{"role": "user", "parts": [{"text": PROMPT.format(today=today, hint=hint, used=used, rules=VIRAL_RULES)}]}]
+    msgs = [{"role": "user", "parts": [{"text": PROMPT.format(today=today, hint=hint, used=used, rules=viral_rules())}]}]
     raw, spec = gemini(msgs, search=True)
     if spec:
         return msgs, raw, spec, True
@@ -373,7 +392,7 @@ def write_spec(today, hint):
         sys.exit("No recent item readable from the feeds: no Short today.")
     block = "\n\n".join(f"[{i}] {it['title']} ({it['date']:%Y-%m-%d})\nURL: {it['url']}\nEXCERPT: {it['text']}"
                          for i, it in enumerate(items, 1))
-    msgs = [{"role": "user", "parts": [{"text": RSS_PROMPT.format(today=today, hint=hint, used=used, items=block, rules=VIRAL_RULES)}]}]
+    msgs = [{"role": "user", "parts": [{"text": RSS_PROMPT.format(today=today, hint=hint, used=used, items=block, rules=viral_rules())}]}]
     raw, spec = gemini(msgs, search=False)
     return msgs, raw, spec, False
 
@@ -432,7 +451,7 @@ def write_reserve_spec(today):
         blocks.append(f"[{i}] URL: {url}\nSHEET: {text}")
     if not blocks:
         sys.exit("No NASA fact sheet readable: no reserve Short.")
-    msgs = [{"role": "user", "parts": [{"text": REF_PROMPT.format(today=today, used=used_topics(), items="\n\n".join(blocks), rules=VIRAL_RULES)}]}]
+    msgs = [{"role": "user", "parts": [{"text": REF_PROMPT.format(today=today, used=used_topics(), items="\n\n".join(blocks), rules=viral_rules())}]}]
     raw, spec = gemini(msgs, search=False)
     return msgs, raw, spec, False
 

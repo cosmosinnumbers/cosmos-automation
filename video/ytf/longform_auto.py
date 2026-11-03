@@ -43,6 +43,10 @@ LEN = {"mmin": 8, "mmax": 10, "wmin": 1350, "wmax": 1550, "cmin": 6, "cmax": 8}
 DRY = "--dry-run" in sys.argv
 MOTION = {"counter", "scale", "timer", "compare", "bars", "kinetic"}
 REAL = {"footage", "image"}
+ANNOUNCE = re.compile(r"\bchapter\b|\bpart (?:one|two|three|four|five|six|seven|eight|\d)\b|\bin this (?:section|part)\b|"
+                      r"\b(?:first|next|last|final) (?:part|section)\b", re.I)
+VAGUE = re.compile(r"\b(secrets?|myster(?:y|ies)|amazing|insane|shocking|truth|crazy|unbelievable|incredible)\b", re.I)
+PRICE = re.compile(r"\$\s?\d|\b\d+ ?(?:dollars|euros?)\b|\bcode\b|\bdiscount\b|COSMOS9|LAUNCH9", re.I)
 CLICHES = [r"\bin this video\b", r"\bdid you know\b", r"\bsmash (?:that|the) like\b", r"\bwithout further ado\b",
            r"\bbuckle up\b", r"\bmind[- ]blowing\b", r"\byou won'?t believe\b", r"\blet'?s dive in\b"]
 
@@ -72,23 +76,44 @@ RETENTION (this is what keeps people watching to the end):
 - The channel's stick man is the human scale: on footage/image beats where size matters add
   "stickman": {{"label": "YOU", "size": "small|tiny|big"}} (tiny = you are a dot next to this). Use it on at least 6
   beats, spread through the video.
-- {chapters} chapters; every chapter ends on a question or a twist that pulls into the next; escalate the scale or the
-  stakes chapter by chapter; the biggest reveal near the end. Every chapter has ONE "wow" moment (a number or a
-  comparison that makes the viewer say "no way"), placed in its first third, and opens by answering the question
-  the previous chapter left hanging, then opens a new one.
+- ONE continuous story, no chapters for the viewer: the JSON groups beats in {chapters} "chapters" only for pacing
+  (call them acts). NEVER say "chapter", "part one/two", "section", "first/next part" or announce a structure; move
+  from act to act with a pulling sentence ("So if that is true, why would NASA...?"). Every act ends on a question or
+  a twist that pulls into the next; escalate the scale or the stakes act by act; the biggest reveal near the end.
+  Every act has ONE "wow" moment (a number or a comparison that makes the viewer say "no way"), placed in its first
+  third, and opens by answering the question the previous act left hanging, then opens a new one. Every act uses
+  at least 3 different image/footage queries.
 - A turning point at about two thirds: something the viewer thought was true flips. Re-hook every 30-45 seconds
   with a short pull ("But here is the part nobody mentions.", "And that is not even the strange part.").
-- At the end of the middle chapter, ONE soft sentence after delivering value that points to the beginner's
-  stargazing guide linked in the description (do not write the words LOOK UP there: they appear once, in the
-  last chapter; never a discount code).
+ENGAGEMENT (owner 03/11/2026: talk to the person watching, make them take part):
+- Speak to the viewer: "you" all through the video (at least one sentence in five), "picture yourself...".
+- At least 4 direct questions to the viewer, spread out; the first one in the first minute asks them to bet
+  ("Before I tell you, guess: closer to 10 or to 100? Write it in the comments.").
+- Exactly 2 beats with "ask": "a short question for the comments, max 12 words" (shown typed on screen): one in
+  the first half, one in the last act. The beat's "say" asks it out loud.
+- Once, right after the strongest "wow" moment (never at the start): one sentence inviting to follow, e.g.
+  "If numbers like this make your day, follow: there is a new one every day."
+- MID-VIDEO SPOT: exactly 1 beat with "spot": true between 35% and 65% of the video, right after delivering value:
+  2 sentences, max 40 words, saying what LOOK UP is (our beginner's guide to finding in the real sky the things
+  we talk about) and "link in the description". Never a price, never a discount code. Its visual is ignored.
 - Turn numbers into things people can picture: comparisons of size, travel times, "X Earths would fit".
 - Short spoken sentences. Total narration {wmin:,} to {wmax:,} words (the video must last {mmin}-{mmax} minutes):
   beats of 18-28 words each, 8-10 beats per chapter. Count your words before answering.
 - Say the numbers as the sources print them, with the same decimals. A number you compute (sum, difference,
   ratio, conversion) is allowed only if that beat has "calc": "6378.1 + 3474.8 = 9852.9" with source numbers on the
   left: the code redoes the arithmetic and rejects mistakes. Otherwise change the sentence, not the number.
-- Last chapter: payoff, one sentence on why it matters, then ONE sentence inviting viewers who want to see these
-  objects in the real sky to the beginner's stargazing guide "LOOK UP" (link in the description). Nowhere else.
+- Last act: payoff that echoes the hook, one sentence on why it matters, ONE sentence inviting viewers who want to
+  see these objects in the real sky to the beginner's stargazing guide "LOOK UP" (link in the description), then the
+  last "ask" question for the comments. "LOOK UP" is written exactly twice: in the spot and in the last 3 beats.
+
+TITLE AND HOOK (copywriting, like the titles growing in the niche this week):
+- Title: specific and clear in 2 seconds: the concrete subject plus a real number or a precise contrast
+  ("Why NASA Will Fly Past Europa 49 Times", not "The Secret of Europa"); max 60 characters; ONE promise; never a
+  vague word on its own (secret, mystery, amazing, insane, shocking, truth, crazy, unbelievable).
+- Copy the STRUCTURE of these growing titles, never the words:
+{trend_titles}
+- The first sentence is the title's promise said differently, with the number or the contrast right away.
+- 2 alt_titles with different hooks (paradox, extreme number, comparison, question, "you").
 
 BEATS: each chapter is a list of beats; a beat is 1-2 sentences (max 30 words) said over ONE visual (~5 s).
 Visual types ("show"):
@@ -107,10 +132,10 @@ SOURCES:
 {sources}
 
 Answer JSON only:
-{{"id": "2-4 lowercase words joined by -", "title": "max 70 characters with a number, curiosity, no lie",
+{{"id": "2-4 lowercase words joined by -", "title": "max 60 characters: subject + number or contrast, no lie",
  "alt_titles": ["", ""], "description_intro": "2 sentences naming the sources", "tags": ["8-12 search phrases"],
  "hashtags": ["space", "nasa", "astronomy"], "thumbs": [{{"lines": ["2-3 WORDS", "PER LINE"], "query": "NASA image query"}}, 2 more; the third with "stickman": true],
- "chapters": [{{"title": "", "sources": ["S1"], "beats": [{{"say": "", "show": {{}}, "calc": "optional"}}]}}]}}"""
+ "chapters": [{{"title": "", "sources": ["S1"], "beats": [{{"say": "", "show": {{}}, "calc": "optional", "ask": "optional", "spot": "optional true"}}]}}]}}"""
 
 REVIEW = """You are a strict science fact-checker. Below are the SOURCES and a SCRIPT written from them. List every
 claim in the script that the sources do not support, that overstates them (certainty, "first", "largest", "proves"),
@@ -127,16 +152,17 @@ RETENTION_REVIEW = """You are a YouTube retention editor, ruthless and specific.
 8-15 minute space-data video, and judge only how well it keeps strangers watching (not whether the facts are right).
 Score 0-10: hook (does the first 20 s promise something concrete and extreme, no greeting), pacing (new information or
 a visual idea every 30-45 s, no flat stretches), clarity (a 12 year old follows every sentence), originality (a
-viewer has not heard this exact framing a hundred times), payoff (the end delivers what the hook promised and echoes it).
+viewer has not heard this exact framing a hundred times), payoff (the end delivers what the hook promised and echoes it),
+engagement (it talks to the viewer, asks them things, makes them want to comment; no announced chapters).
 List up to 4 weak spots: the chapter number, the quoted weak sentence, why viewers leave there, and a concrete rewrite
 instruction. Be honest: a 7 means good, a 9 is rare.
 SCRIPT (chapter by chapter):
 {script}
 
-Answer JSON only: {{"scores": {{"hook": 0, "pacing": 0, "clarity": 0, "originality": 0, "payoff": 0}},
+Answer JSON only: {{"scores": {{"hook": 0, "pacing": 0, "clarity": 0, "originality": 0, "payoff": 0, "engagement": 0}},
 "weak": [{{"chapter": 1, "quote": "", "why": "", "fix": ""}}]}}"""
 
-RETENTION_MIN = {"hook": 7, "pacing": 6, "clarity": 7, "originality": 6, "payoff": 6}
+RETENTION_MIN = {"hook": 7, "pacing": 6, "clarity": 7, "originality": 6, "payoff": 6, "engagement": 7}
 
 FIX = """Your script failed these checks:
 {problems}
@@ -179,6 +205,20 @@ def research_notes() -> str:
         for m in re.finditer(r"^## (.+?)\n.*?### 6\.(.*?)(?=^### 7|\Z)", f.read_text("utf-8"), re.S | re.M):
             out.append(f"- {m.group(1)[:90]}: {' '.join(m.group(2).split())[:300]}")
     return "\n".join(out[-6:]) or "- (none this week)"
+
+
+def trend_titles(n: int = 8) -> str:
+    """Examples of the formats and hooks growing this week (tools/trend_scout.py), for the title style."""
+    files = sorted((ROOT / "research" / "cosmos").glob("trends-*.json"))
+    if not files:
+        return "- (no trend file this week)"
+    try:
+        t = json.loads(files[-1].read_text("utf-8"))
+    except ValueError:
+        return "- (no trend file this week)"
+    vids = sorted(t.get("videos", []), key=lambda v: -(v.get("views_per_day") or 0))
+    out = [f"- {v['title'][:90]} ({v.get('format')}, {v.get('hook')})" for v in vids if (v.get("seconds") or 0) > 180][:n]
+    return "\n".join(out) or "- (no trend file this week)"
 
 
 def used() -> str:
@@ -298,7 +338,7 @@ def script_check(spec: dict) -> list[str]:
     if not wmin - 30 <= words <= wmax + 100:
         p.append(f"narration has {words} words (need {wmin:,}-{wmax:,}: the video must last {LEN['mmin']}-{LEN['mmax']} minutes)")
     if not LEN["cmin"] <= len(chs) <= LEN["cmax"]:
-        p.append(f"{len(chs)} chapters (need {LEN['cmin']}-{LEN['cmax']})")
+        p.append(f"{len(chs)} acts (need {LEN['cmin']}-{LEN['cmax']})")
     recaps = sum(1 for _, b in bs if b.get("recap"))
     if recaps < max(2, LEN["mmin"] // 2 - 1):
         p.append(f"{recaps} recap beats (need one every ~2 minutes: at least {max(2, LEN['mmin'] // 2 - 1)})")
@@ -317,7 +357,7 @@ def script_check(spec: dict) -> list[str]:
     for i, ch in enumerate(chs[:-1]):
         tail = " ".join(b.get("say", "") for b in ch.get("beats", [])[-2:])
         if "?" not in " ".join(b.get("say", "") for b in ch.get("beats", [])) and not re.search(r"\bbut\b|\byet\b", tail, re.I):
-            p.append(f"chapter {i + 1} '{ch.get('title', '')}' has no open question or twist")
+            p.append(f"act {i + 1} '{ch.get('title', '')}' has no open question or twist")
     kinds = [b.get("show", {}).get("type") for _, b in bs]
     n = max(1, len(kinds))
     if sum(k in MOTION for k in kinds) / n < 0.38:
@@ -336,12 +376,37 @@ def script_check(spec: dict) -> list[str]:
     for pat in CLICHES:
         if re.search(pat, text, re.I):
             p.append(f"cliché: {pat}")
+    # engagement (owner 03/11/2026): one story without announced chapters, talk to the viewer, spot mid-video
+    ann = [s[:50] for s in says if ANNOUNCE.search(s)]
+    if ann:
+        p.append(f"never announce chapters or parts (one continuous story): {ann[:2]}")
+    you_q = [s for s in re.split(r"(?<=[.!?])\s+", text) if s.endswith("?") and re.search(r"\byou(r)?\b", s, re.I)]
+    if len(you_q) < 4:
+        p.append(f"{len(you_q)} direct questions to the viewer (need at least 4, with 'you', spread through the video)")
+    asks = [k for k, (_, b) in enumerate(bs) if str(b.get("ask") or "").strip()]
+    if len(asks) != 2 or not asks or asks[0] > len(bs) / 2 or asks[-1] < len(bs) * 0.8:
+        p.append(f"need exactly 2 'ask' beats (comment questions): one in the first half, one in the last act (found {len(asks)})")
+    if any(len(str(bs[k][1]["ask"]).split()) > 12 for k in asks):
+        p.append("an 'ask' question is longer than 12 words")
+    spots = [k for k, (_, b) in enumerate(bs) if b.get("spot")]
+    if len(spots) != 1 or not 0.35 <= spots[0] / max(1, len(bs)) <= 0.65:
+        p.append(f"need exactly 1 'spot' beat (LOOK UP guide) between 35% and 65% of the video (found {len(spots)})")
+    elif "LOOK UP" not in says[spots[0]] or len(says[spots[0]].split()) > 45:
+        p.append("the spot beat must name LOOK UP and say 'link in the description' in max 40 words")
     look = [i for i, s in enumerate(says) if "LOOK UP" in s]
-    if len(look) != 1 or look[0] < len(says) - 3:
-        p.append("LOOK UP must appear exactly once, in the last 3 beats")
+    if len(look) != 2 or look[-1] < len(says) - 3 or (spots and look[0] != spots[0]):
+        p.append("LOOK UP must appear exactly twice: in the spot beat and in the last 3 beats")
+    if PRICE.search(text):
+        p.append("no price, discount or code in the narration (the code is only in the description)")
+    for ci, ch in enumerate(chs):
+        qs = {(b.get("show") or {}).get("query", "").lower() for b in ch.get("beats", []) if (b.get("show") or {}).get("type") in REAL}
+        if len(qs - {""}) < 3:
+            p.append(f"act {ci + 1} has {len(qs - {''})} different image/footage queries (need at least 3)")
     t = spec.get("title", "")
-    if not (20 <= len(t) <= 72 and re.search(r"\d", t)):
-        p.append("title must be 20-70 characters with a number")
+    if not (20 <= len(t) <= 66 and re.search(r"\d", t)):
+        p.append("title must be 20-60 characters, specific, with the subject and a number")
+    if VAGUE.search(t):
+        p.append(f"vague word in the title ('{VAGUE.search(t).group(0)}'): name the concrete subject and the number")
     for _, b in bs:
         s = b.get("show", {})
         if s.get("type") in ("scale", "bars") and len(s.get("items", [])) < 2:
@@ -378,7 +443,7 @@ def retention_review(spec: dict) -> tuple[list[str], dict]:
     send the script back for a rewrite, the scores for the report). No critic available -> no gate, no scores."""
     chs = []
     for ci, ch in enumerate(spec.get("chapters", []), 1):
-        chs.append(f"## Chapter {ci}: {ch.get('title', '')}\n" + "\n".join(f"- {b.get('say', '')}" for b in ch.get("beats", [])))
+        chs.append(f"## Act {ci} (internal, not shown): {ch.get('title', '')}\n" + "\n".join(f"- {b.get('say', '')}" for b in ch.get("beats", [])))
     msgs = [{"role": "user", "parts": [{"text": RETENTION_REVIEW.format(script="\n\n".join(chs))}]}]
     out = ((claude_cli.chat(msgs, timeout=600) if claude_cli.available() else None)
            or (glm.chat(msgs, thinking=True, temperature=0.3, timeout=300) if glm.available() else None)
@@ -484,12 +549,17 @@ def build_folder(spec: dict, sources: list[dict], report: str) -> Path:
                         it.setdefault("decimals", 0 if it["value"].is_integer() else 1)
                 if kind in ("counter", "kinetic", "compare", "timer") and last_img:
                     v.update(bg=last_img, dim=0.7)
+            if b.get("spot"):   # mid-video LOOK UP spot: Phone Screens scene (director), kinetic text if Remotion fails
+                v = {"type": "kinetic", "text": "LOOK UP · link in the description", "accent": ["LOOK", "UP"], "spot": True}
             if not v:  # nothing found: the line on screen as kinetic text
                 v = {"type": "kinetic", "text": " ".join(say.split()[:7]), "accent": []}
+            if str(b.get("ask") or "").strip():   # comment question typed on screen (director: Typewriter)
+                v["ask"] = " ".join(str(b["ask"]).split())[:80]
             visuals.append(v)
             weights.append(max(4, len(say.split())))
             says.append(say)
-        segments.append({"id": f"c{ci + 1}", "chapter": "Intro" if ci == 0 else ch.get("title", f"Part {ci + 1}"),
+        # owner 03/11/2026: no chapters for the viewer (no cards, no list in the description); the act only paces
+        segments.append({"id": f"c{ci + 1}", "act": "Intro" if ci == 0 else ch.get("title", f"Part {ci + 1}"),
                          "sources": [x for x in ch.get("sources", []) if x in {s['id'] for s in sources}] or ["S1"],
                          "narration": " ".join(says), "visuals": visuals, "weights": weights})
     if real < 6:
@@ -505,7 +575,7 @@ def build_folder(spec: dict, sources: list[dict], report: str) -> Path:
     script = {"id": vid, "title": spec["title"], "alt_titles": spec.get("alt_titles", [])[:2], "voice": "af_heart",
               "speed": 1.1, "music": {"seed": int(datetime.now().strftime("%j")), "mood": "wonder"},
               "hashtags": spec.get("hashtags", ["space", "nasa"])[:3], "tags": spec.get("tags", [])[:12],
-              "description_intro": spec.get("description_intro", ""), "progress_bar": True, "cut_sfx": True,
+              "description_intro": spec.get("description_intro", ""), "progress_bar": True, "cut_sfx": True, "chapters": False,
               "approved": True, "approved_by": "longform_auto.py (checks: facts, reviewer, script)",
               "sources": [{"id": s["id"], "title": s["title"], "url": s["url"]} for s in sources], "segments": segments}
     save_yaml(vdir / "script.yaml", script)
@@ -535,7 +605,7 @@ def main():
     src_block = "\n\n".join(f"[{s['id']}] {s['title']} ({s['url']})\n{s['text']}" for s in sources)
     msgs = [{"role": "user", "parts": [{"text": WRITE.format(
         topic=p.get("topic"), angle=p.get("angle"), sources=src_block, recap_every=330, wmin=LEN["wmin"], wmax=LEN["wmax"],
-        mmin=LEN["mmin"], mmax=LEN["mmax"], chapters=f"{LEN['cmin']} to {LEN['cmax']}")}]}]
+        mmin=LEN["mmin"], mmax=LEN["mmax"], chapters=f"{LEN['cmin']} to {LEN['cmax']}", trend_titles=trend_titles())}]}]
     history, scores = [], {}
     for rnd in range(3):
         raw, spec = llm(msgs)

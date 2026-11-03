@@ -93,3 +93,39 @@ def test_long_shots_are_cut_and_numbers_become_kinetic():
     assert kin == ["9 science instruments"]
     short = render.build_shots(script, {"duration": 50.0, "segments": [{"id": "s1", "start": 0.0, "sentences": sents}]})
     assert len(short) == 2   # Shorts keep their own cuts
+
+
+def test_long_without_chapters_has_spot_and_ask():
+    import director
+    shots = []
+    t = 0.0
+    for i in range(60):
+        v = {"type": "image", "src": f"img_{i}"}
+        if i == 28:
+            v = {"type": "kinetic", "text": "LOOK UP · link in the description", "spot": True}
+        if i in (10, 58):
+            v["ask"] = "Closer to 10 or to 100?"
+        shots.append({"start": t, "end": t + 6, "visual": v, "segment": f"c{i // 8 + 1}", "chapter": None,
+                      "act": f"Act {i // 8}" if i % 8 == 0 else None})
+        t += 6
+    script = {"chapters": False, "sources": [], "segments": [{"id": f"c{k}", "narration": "look up"} for k in range(1, 9)]}
+    p = director.plan_long(script, shots, {"duration": t})
+    eff = {i: f["effect"] for i, f in p["fx"].items()}
+    assert eff[28] == "phonescreens"
+    assert eff[10] == "typewriter" and p["fx"][10]["props"]["lines"][0] == "> your turn"
+    assert not any(f["effect"] == "typewriter" and "chapter" in f["props"]["lines"][0] for f in p["fx"].values())
+    assert p["transitions"] and any(k == "riser" for _, k in p["events"])   # acts still pace the video
+    assert eff[59] == "phonescreens" and eff[58] == "typewriter"
+
+
+def test_long_script_check_engagement():
+    import longform_auto as lf
+    def beat(say, kind="image", q="europa ice", **kw):
+        return {"say": say, "show": {"type": kind, "query": q} if kind in ("image", "footage") else {"type": kind, "text": "x"}, **kw}
+    spec = {"title": "Why NASA Will Fly Past Europa 49 Times", "chapters": [
+        {"title": "a", "beats": [beat("Chapter one begins here, so what do you think?")]}]}
+    probs = " | ".join(lf.script_check(spec))
+    assert "never announce chapters" in probs
+    assert "'ask' beats" in probs and "'spot' beat" in probs
+    spec["title"] = "The Shocking Secret of Europa"
+    assert "vague word" in " | ".join(lf.script_check(spec))

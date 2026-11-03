@@ -281,16 +281,32 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
         say[seg["id"]] = seg.get("narration", "")
     counters = chapters = pullbacks = 0
     mid_done = False
+    shown = script.get("chapters", True) is not False   # owner 03/11/2026: no chapters for the viewer
     for i, sh in enumerate(shots):
         v = sh["visual"]
         t0, t1 = sh["start"], sh["end"]
         d = t1 - t0
-        if i and sh.get("chapter") and sh["chapter"].lower() not in ("intro",):
+        if v.get("spot") and d >= 2.5:   # mid-video LOOK UP spot: the guide on a phone (never a code on screen)
+            cta = PRODUCT.get(brand, PRODUCT["cosmos"])
+            props = {"product": cta["product"], "productSub": cta["productSub"], "labels": cta["labels"]}
+            fx[i] = {"effect": "phonescreens", "props": props, "src": v.get("src")}
+            last = t0
+            events += [(t0 + a_, k) for a_, k in effect_sounds("phonescreens", 3.0, props)]
+            continue
+        if v.get("ask") and d >= 2.5 and t0 - last >= 4 and t1 <= dur - 1:   # question for the comments, typed
+            lines = ["> your turn", _short_title(v["ask"], 60)]
+            props = {"lines": lines, "keys": _keys("\n".join(lines), cps=26)}
+            fx[i] = {"effect": "typewriter", "props": props, "src": v.get("src")}
+            last = t0
+            events += [(t0 + a_, k) for a_, k in effect_sounds("typewriter", d, props)]
+            continue
+        act = sh.get("chapter") or sh.get("act")
+        if i and act and act.lower() not in ("intro",):
             transitions[i] = "glitch" if len(transitions) % 2 else "zoomthrough"
             events.append((max(0.0, t0 - 1.2), "riser"))   # tension before every new chapter (owner 03/11/2026)
             chapters += 1
             # 11 Typewriter: every other chapter opens with its title typed on screen (the 11th effect in long videos)
-            if chapters % 2 == 1 and d >= 2.5 and t0 - last >= 6 and t1 <= dur - 4 and sh["chapter"].lower() != "outro":
+            if shown and sh.get("chapter") and chapters % 2 == 1 and d >= 2.5 and t0 - last >= 6 and t1 <= dur - 4 and sh["chapter"].lower() != "outro":
                 title = _short_title(sh["chapter"], 40)
                 lines = [f"chapter {chapters:02d}", title]
                 props = {"lines": lines, "keys": _keys("\n".join(lines), cps=26)}
@@ -330,7 +346,9 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
             events += [(t0 + a, k) for a, k in effect_sounds(pick[0], d, pick[1])]
     # 07 Phone Screens on the closing LOOK UP beat (our guide on a phone, never a discount code on screen)
     k = len(shots) - 1
-    if shots and "look up" in say.get(shots[k]["segment"], "").lower() and shots[k]["end"] - shots[k]["start"] >= 2.5:
+    if k > 0 and k in fx and fx[k]["effect"] == "typewriter":   # the last beat is the comment question: the phone goes before
+        k -= 1
+    if shots and k not in fx and "look up" in say.get(shots[k]["segment"], "").lower() and shots[k]["end"] - shots[k]["start"] >= 2.5:
         cta = PRODUCT.get(brand, PRODUCT["cosmos"])
         props = {"product": cta["product"], "productSub": cta["productSub"], "labels": cta["labels"]}
         fx[k] = {"effect": "phonescreens", "props": props, "src": shots[k]["visual"].get("src")}

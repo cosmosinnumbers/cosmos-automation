@@ -44,6 +44,17 @@ UA = {"User-Agent": "Mozilla/5.0 (CosmosInNumbers fact check)"}
 OUT = ROOT / "build" / "auto"
 DRY = "--dry-run" in sys.argv
 
+VIRAL_RULES = """Retention rules (the Short is judged on how many people stay to the end and watch it again):
+- ONE idea, one story. Two or three measured numbers at most, each with a comparison a viewer can picture.
+- HOOK = the first sentence, 12 words or fewer, spoken in under 3 seconds: a concrete oddity or a scale comparison
+  ("A day on Venus is longer than its year."), never a greeting, never a question about "did you know".
+- Open loop: by the second sentence promise something ("and the reason is stranger than the number") and pay it off
+  before the end. Sentences of 6 to 12 words, one new fact per sentence, no filler.
+- LAST sentence closes the loop by echoing the opening words, so the Short replays seamlessly
+  (it can end with the same noun or number that started it). No "subscribe", no "thanks for watching".
+- Active voice, present tense, simple words a 12 year old understands.
+"""
+
 PROMPT = """You are the news writer of "Cosmos in Numbers", a faceless English YouTube Shorts channel about space:
 real NASA/ESA footage and data, every number with a primary source. Today is {today}.
 Use Google Search to find ONE space or astronomy news story published in the last 7 days by a primary source
@@ -51,7 +62,8 @@ Use Google Search to find ONE space or astronomy news story published in the las
 or the peer-reviewed paper). Pick the one with the most striking, concrete number. {hint}
 Do NOT pick any of these topics, already used: {used}
 
-Write the Short:
+Write the Short.
+{rules}
 - "narration": 85 to 110 words, plain spoken English. First sentence = the key number, no greeting or intro
   ("Did you know", "In this video" are forbidden). Short sentences. Every number must be written exactly as it
   appears in the sources (digits, e.g. "161,000", "3.2"). No number that is not in the sources. Say "about" for
@@ -89,7 +101,8 @@ number about space, answer only {{"skip": "<why>"}}.
 {items}
 
 Write the Short using ONLY facts and numbers that appear in the excerpt of the item you pick. At least two
-measured numbers from the excerpt must be in the narration; mission or aircraft names with digits do not count:
+measured numbers from the excerpt must be in the narration; mission or aircraft names with digits do not count.
+{rules}
 - "narration": 85 to 110 words, plain spoken English. First sentence = the key number, no greeting or intro
   ("Did you know", "In this video" are forbidden). Short sentences. Every number exactly as written in the excerpt
   (digits). Say "about" for rounded values. End with one sentence of why it matters.
@@ -350,7 +363,7 @@ def rss_items(days=7, n=10):
 def write_spec(today, hint):
     """Grounded search first; without grounding quota, the RSS feeds of the agencies."""
     used = used_topics()
-    msgs = [{"role": "user", "parts": [{"text": PROMPT.format(today=today, hint=hint, used=used)}]}]
+    msgs = [{"role": "user", "parts": [{"text": PROMPT.format(today=today, hint=hint, used=used, rules=VIRAL_RULES)}]}]
     raw, spec = gemini(msgs, search=True)
     if spec:
         return msgs, raw, spec, True
@@ -360,7 +373,7 @@ def write_spec(today, hint):
         sys.exit("No recent item readable from the feeds: no Short today.")
     block = "\n\n".join(f"[{i}] {it['title']} ({it['date']:%Y-%m-%d})\nURL: {it['url']}\nEXCERPT: {it['text']}"
                          for i, it in enumerate(items, 1))
-    msgs = [{"role": "user", "parts": [{"text": RSS_PROMPT.format(today=today, hint=hint, used=used, items=block)}]}]
+    msgs = [{"role": "user", "parts": [{"text": RSS_PROMPT.format(today=today, hint=hint, used=used, items=block, rules=VIRAL_RULES)}]}]
     raw, spec = gemini(msgs, search=False)
     return msgs, raw, spec, False
 
@@ -376,7 +389,8 @@ list of topics already used: {used}
 {items}
 
 Write the Short using ONLY numbers that appear in the sheets you use. ONE idea, told as a story, not a list:
-2 to 4 measured numbers in total (never more than 5), each with a vivid comparison a viewer can picture.
+2 to 3 measured numbers in total (never more than 4), each with a vivid comparison a viewer can picture.
+{rules}
 Units in spoken words, never symbols ("kilograms per cubic meter", "meters per second", "times Earth"):
 no "/", "^" or unit abbreviations in the narration.
 - "narration": 80 to 95 words, plain spoken English. First sentence = the key number, no greeting or intro
@@ -397,8 +411,8 @@ def reserve_problems(spec) -> list[str]:
     """Extra rules of the reserve Shorts: they go out with no human reading them first."""
     out, n = [], spec.get("narration", "")
     data = [x for x in dict.fromkeys(numbers(n)) if not re.fullmatch(r"(19|20)\d\d", x)]
-    if len(data) > 5:
-        out.append(f"{len(data)} numbers in the narration (max 5: one idea, not a list)")
+    if len(data) > 4:
+        out.append(f"{len(data)} numbers in the narration (max 4: one idea, not a list)")
     if re.search(r"/|\^|\b(km|kg|mph)\b|\d\s?(K|m|s)\b|\bm \d\b", n):
         out.append("unit symbols in the narration (the voice must hear words)")
     return out
@@ -418,7 +432,7 @@ def write_reserve_spec(today):
         blocks.append(f"[{i}] URL: {url}\nSHEET: {text}")
     if not blocks:
         sys.exit("No NASA fact sheet readable: no reserve Short.")
-    msgs = [{"role": "user", "parts": [{"text": REF_PROMPT.format(today=today, used=used_topics(), items="\n\n".join(blocks))}]}]
+    msgs = [{"role": "user", "parts": [{"text": REF_PROMPT.format(today=today, used=used_topics(), items="\n\n".join(blocks), rules=VIRAL_RULES)}]}]
     raw, spec = gemini(msgs, search=False)
     return msgs, raw, spec, False
 
@@ -475,6 +489,31 @@ def numbers(text: str) -> list[str]:
     return [n.rstrip(".,") for n in re.findall(r"\d[\d,.]*", text) if n.rstrip(".,")]
 
 
+BAD_OPEN = re.compile(r"^\s*(did you know|in this video|today|welcome|hey|hello|have you ever|what if|imagine)\b", re.I)
+BAD_END = re.compile(r"(subscribe|thanks for watching|see you|follow for|like and)", re.I)
+
+
+def viral_problems(spec) -> list[str]:
+    """Hard rules of the retention prompt: they trigger the same one-shot rewrite as a failed fact check."""
+    n = spec.get("narration", "")
+    sents = [x.strip() for x in re.split(r"(?<=[.!?])\s+", n.strip()) if x.strip()]
+    out = []
+    if not sents:
+        return out
+    if len(sents[0].split()) > 16:
+        out.append(f"hook has {len(sents[0].split())} words (max 12-16: it must be spoken in under 3 seconds)")
+    if BAD_OPEN.search(sents[0]):
+        out.append("the opening is a greeting or a 'did you know' question")
+    if not re.search(r"\d", sents[0]) and len(sents) > 1 and not re.search(r"\d", sents[1]):
+        out.append("no number in the first two sentences")
+    if BAD_END.search(sents[-1]):
+        out.append("the last sentence is a sign-off: close the loop instead")
+    long_ = [x for x in sents if len(x.split()) > 22]
+    if long_:
+        out.append(f"{len(long_)} sentence(s) over 22 words: split them")
+    return out
+
+
 def check(spec) -> tuple[list[str], list[str], str]:
     """(missing numbers, source problems, report). A number matches with or without thousands separators."""
     texts, problems = [], []
@@ -509,6 +548,9 @@ def check(spec) -> tuple[list[str], list[str], str]:
         problems.append("off topic for the channel (aeronautics, education or agency business)")
     if not texts:
         problems.append("no readable primary source")
+    vp = viral_problems(spec)
+    problems += vp
+    rep += [f"- Regole retention: {'; '.join(vp) or 'ok'}"]
     return missing, problems, "\n".join(rep) + "\n"
 
 

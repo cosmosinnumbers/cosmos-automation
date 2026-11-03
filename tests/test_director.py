@@ -49,7 +49,8 @@ def test_sfx_track_peaks_on_event():
     import numpy as np
     x = sfx.track(2.0, [(1.0, "impact")])
     env = np.abs(x[:, 0])
-    assert abs(np.argmax(env) / sfx.SR - 1.0) < 0.08
+    onset = np.argmax(env > 0.2 * env.max()) / sfx.SR   # real samples can peak a little after they start
+    assert 0.9 < onset < 1.1 and env[: int(0.9 * sfx.SR)].max() < 0.05 * env.max()
 
 
 if __name__ == "__main__":

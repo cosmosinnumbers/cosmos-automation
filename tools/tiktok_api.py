@@ -23,6 +23,8 @@ from __future__ import annotations
 
 import json
 import os
+import hashlib
+import hmac
 import secrets as pysecrets
 import sys
 import time
@@ -49,6 +51,21 @@ def cfg():
 def aigc(c):
     env = os.environ.get("TIKTOK_AIGC_LABEL", "").strip()
     return (env.lower() != "false") if env else bool(c.get("aigc_label", True))
+
+
+def verifier(c, state):
+    """PKCE code_verifier rebuilt from the state, so the run that exchanges the code needs nothing saved by the run
+    that printed the link. Keyed on the client secret, so it cannot be guessed from the (public) state."""
+    return hmac.new(c["client_secret"].encode(), state.encode(), hashlib.sha256).hexdigest()
+
+
+def parse_redirect(s):
+    """The full redirect URL (code + state) or just the code. Returns (code, state or None)."""
+    s = s.strip().replace("&amp;", "&")
+    if "code=" in s:
+        q = urllib.parse.parse_qs(urllib.parse.urlparse(s).query or s)
+        return q["code"][0], (q.get("state") or [None])[0]
+    return urllib.parse.unquote(s), None
 
 
 def oauth(data):
@@ -180,14 +197,24 @@ def main():
     cmd = a[0]
     if cmd == "auth-url":
         c = cfg()
+        state = pysecrets.token_urlsafe(16)
+        # PKCE (required for desktop apps): TikTok's desktop flow wants the hex SHA-256 of the verifier.
         q = {"client_key": c["client_key"], "scope": SCOPES, "response_type": "code",
-             "redirect_uri": c["redirect_uri"], "state": pysecrets.token_urlsafe(16)}
-        print(f"{AUTH}?{urllib.parse.urlencode(q)}")
-        print("Open it logged in as @cosmosinnumbers, approve, then copy 'code' from the redirect URL.")
+             "redirect_uri": c["redirect_uri"], "state": state,
+             "code_challenge": hashlib.sha256(verifier(c, state).encode()).hexdigest(), "code_challenge_method": "S256"}
+        # Every character percent-encoded: the client key and redirect URI are Actions secrets, and the log would
+        # mask them as *** in a plain link. TikTok decodes the query string, so this link works the same.
+        enc = lambda v: "".join(f"%{b:02X}" for b in str(v).encode("utf-8"))  # noqa: E731
+        print(f"{AUTH}?" + "&".join(f"{k}={enc(v)}" for k, v in q.items()))
+        print("Open it logged in as @cosmosinnumbers, approve, then pass the WHOLE redirect URL (code and state) to tiktok-auth.")
     elif cmd == "setup":
         c = cfg()
-        store(c, oauth({"client_key": c["client_key"], "client_secret": c["client_secret"], "grant_type": "authorization_code",
-                        "code": urllib.parse.unquote(a[1]), "redirect_uri": c["redirect_uri"]}))
+        code, state = parse_redirect(a[1])
+        data = {"client_key": c["client_key"], "client_secret": c["client_secret"], "grant_type": "authorization_code",
+                "code": code, "redirect_uri": c["redirect_uri"]}
+        if state:
+            data["code_verifier"] = verifier(c, state)
+        store(c, oauth(data))
         print("TikTok tokens saved (access 24 h, refresh 365 days).")
         sys.argv[1:] = ["check"]
         main()

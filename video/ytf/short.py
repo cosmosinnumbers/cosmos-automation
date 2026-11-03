@@ -137,6 +137,22 @@ def backdrop(frame_vis):
     return Image.blend(big, Image.new("RGB", (SW, SH), BRAND["space"]), 0.6)
 
 
+SUBSHOT_S = 3.4   # no picture stays unchanged longer than this: every other sub-shot is a punch-in on the same footage
+
+
+def punch(frame, sub: int, since: float):
+    """Odd sub-shots are a tighter crop (alternating left/right) that pops in over 5 frames: a visible cut."""
+    if sub % 2 == 0:
+        return frame
+    p = render.ease(min(1.0, since * FPS / 5))
+    z = 1.0 + 0.2 * p
+    w, h = frame.size
+    bw, bh = w / z, h / z
+    dx = (w - bw) * (0.35 if (sub // 2) % 2 == 0 else 0.65)
+    dy = (h - bh) * 0.5
+    return frame.resize((w, h), Image.BILINEAR, box=(dx, dy, dx + bw, dy + bh))
+
+
 def advance(vis, per, t):
     """Under a full-screen scene, keep reading the clip of this moment so the footage resumes in sync."""
     k = min(len(vis) - 1, int(t // per))
@@ -307,6 +323,9 @@ def main():
                 cw, ch = canvas.size
                 bw, bh = cw / z, ch / z
                 frame_vis = canvas.resize((VIS_W, VIS_H), Image.BILINEAR, box=((cw - bw) / 2, (ch - bh) / 2, (cw + bw) / 2, (ch + bh) / 2))
+            if t < dur:
+                rel = t - k * per
+                frame_vis = punch(frame_vis, int(rel // SUBSHOT_S), rel % SUBSHOT_S)
             last_vis = frame_vis
             fi = i
             cut = next((c for c in trans if c - 5 <= fi < c + 5), None)

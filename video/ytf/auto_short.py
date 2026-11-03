@@ -584,19 +584,28 @@ def footage(spec, news_dir) -> list[dict]:
     if not (news_dir / "assets.yaml").exists():  # stock.get reads the register before adding to it
         save_yaml(news_dir / "assets.yaml", {})
     picked, seen, results = [], set(), {}
+    stop = set("the and for with from this that nasa space new first about into over than more most what when your are was were has have had its not".split())
+    topic = {w for w in re.findall(r"[a-z0-9]{4,}", " ".join([spec.get("title", ""), spec.get("headline", ""),
+                                                              " ".join(spec.get("footage_queries", []))]).lower()) if w not in stop}
+
+    def relevance(it) -> int:
+        """How many story words (mission, object, telescope) appear in the clip's NASA title and description."""
+        d = it["data"][0]
+        hay = (d.get("title", "") + " " + d.get("description", "")[:400] + " " + " ".join(d.get("keywords", []))).lower()
+        return sum(1 for w in topic if w in hay)
 
     def take(q, per_query):
         """Download up to per_query new clips of query q; stops at 3 clips in total."""
         if q not in results:
             try:
-                results[q] = nasa_items(q, "video")[:8]
+                results[q] = sorted(nasa_items(q, "video")[:12], key=lambda it: -relevance(it))[:8]  # on-topic first
             except Exception as e:  # noqa: BLE001
                 print("  NASA search failed:", q, e)
                 results[q] = []
             print(f"  NASA '{q}': {len(results[q])} videos")
         got = 0
         for it in results[q]:
-            if got >= per_query or len(picked) >= 3:
+            if got >= per_query or len(picked) >= 4:
                 return
             sid = it["data"][0]["nasa_id"]
             if sid in seen:
@@ -614,8 +623,8 @@ def footage(spec, news_dir) -> list[dict]:
     queries = [q for q in spec.get("footage_queries", [])[:4] if q.strip()]
     for q in queries:  # one clip per story query first, for variety
         take(q, 1)
-    for q in queries:  # then more from the same queries
-        if len(picked) < 2:
+    for q in queries:  # then more from the same queries (4 clips: a cut every few seconds, not one long shot)
+        if len(picked) < 4:
             take(q, 2)
     # last resort: the single key words of the queries (mission, telescope, object), then real NASA space footage
     words = [w for q in queries for w in q.split() if len(w) > 3 and w.lower() not in ("nasa", "with", "from", "space")]
@@ -637,6 +646,12 @@ def footage(spec, news_dir) -> list[dict]:
     for k in picked:
         dur = media_duration(news_dir / assets[k]["file"])
         visuals.append({"src": k, "start": round(min(8.0, dur * 0.2), 1)})  # skip title cards at the start
+    more = []   # a second, different stretch of the longer clips: a real cut at least every ~6 s
+    for k in picked:
+        dur = media_duration(news_dir / assets[k]["file"])
+        if dur >= 16 and len(visuals) + len(more) < 7:
+            more.append({"src": k, "start": round(min(dur - 7.0, dur * 0.55), 1)})
+    visuals += more
     if img:
         visuals.insert(1, {"src": img, "motion": "zoom_in"})
     return visuals

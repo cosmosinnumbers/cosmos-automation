@@ -8,6 +8,7 @@ from __future__ import annotations
 import zlib
 
 LINK = "https://cosmosinnumbers.gumroad.com/l/look-up"
+FREE = "https://cosmosinnumbers.gumroad.com/l/solar-system-20"
 CODE = "Code COSMOS9 → $9 until Nov 30."
 TEXTS = [  # each under 280 characters with the link (X counts a URL as 23)
     f"📘 Want to go further? LOOK UP, our beginner's stargazing guide (no telescope needed): {LINK}\n{CODE}",
@@ -15,6 +16,8 @@ TEXTS = [  # each under 280 characters with the link (X counts a URL as 23)
     f"Every number in our posts is checked against NASA data. Same for our guide LOOK UP: {LINK}\n{CODE}",
     f"Tonight's sky, explained with real data: LOOK UP, a beginner's guide for eyes and binoculars. {LINK}\n{CODE}",
     f"If you like these numbers, you'll like LOOK UP: what to see, when, and how to find it. {LINK}\n{CODE}",
+    f"New here? Start with our free PDF, The Solar System in 20 Numbers: {FREE}\nThen take LOOK UP outside: {LINK}\n{CODE}",
+    f"Free: 20 checked Solar System numbers in one PDF ({FREE}). Ready for the real sky? LOOK UP: {LINK}\n{CODE}",
 ]
 
 

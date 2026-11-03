@@ -187,7 +187,7 @@ def errors_of(platform: str, kind: str, text: str, replies: list[str] | None = N
     gum = [p for p in [text, *replies] if "gumroad.com" in p]
     if today <= COSMOS9_UNTIL and platform in ("threads", "x", "fb") and gum and not any("COSMOS9" in p for p in gum):
         errs.append("Gumroad link without the COSMOS9 code (valid until 30/11/2026)")
-    if re.search(r"gumroad\.com(?!/l/look-up)", allt):
+    if re.search(r"gumroad\.com(?!/l/(?:look-up|solar-system-20))", allt):
         errs.append("Gumroad link that is not the LOOK UP page")
     if re.search(r"https?://\S*…|https?://\S*\.\.\.", allt):
         errs.append("truncated link")

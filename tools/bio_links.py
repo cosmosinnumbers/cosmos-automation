@@ -33,12 +33,19 @@ def facebook():
     G, pid, tok = "https://graph.facebook.com/v21.0", c["page_id"], c["page_token"]
     cur = requests.get(f"{G}/{pid}", params={"access_token": tok, "fields": "website,about,description"}, timeout=60).json()
     print("current:", json.dumps(cur, ensure_ascii=False))
-    free = utm("solar-system-20", "facebook", "post")
-    about = "Space, by the numbers. Every fact checked against NASA, ESA and JPL data. Free PDF: The Solar System in 20 Numbers (link below)."
-    print("new website:", free, "| about:", len(about), "chars")
+    free, look = utm("solar-system-20", "facebook", "post"), utm("look-up", "facebook", "post")
+    old = [u.strip() for u in (cur.get("website") or "").split(",") if u.strip()]
+    old = [u for u in old if "gumroad.com/l/look-up" not in u and not u.startswith("https://gum.co/u/")]
+    sites = [free, look, *dict.fromkeys(old)]  # keep the links already there (site, TikTok, Instagram)
+    website = ", ".join(sites)
+    about = cur.get("about") or ""
+    if free not in about:
+        about = ("Real space. Real data. Space explainers from real NASA/ESA images and public data. "
+                 f"Free PDF, The Solar System in 20 Numbers: {free} | Full videos: youtube.com/@CosmosinNumbers")
+    print("new website:", website, "| about:", len(about), "chars")
     if DRY:
         return
-    r = requests.post(f"{G}/{pid}", data={"access_token": tok, "website": free, "about": about}, timeout=60)
+    r = requests.post(f"{G}/{pid}", data={"access_token": tok, "website": website, "about": about}, timeout=60)
     print("facebook:", r.status_code, r.text[:300])
 
 

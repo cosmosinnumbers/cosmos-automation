@@ -53,5 +53,4 @@ jobs:
           [ -f queues/ideas.json ] && git add queues/ideas.json
           git diff --cached --quiet && exit 0
           git commit -q -m "metrics: daily snapshot $(date +%F)"
-          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep $((i * 10)); done
-          exit 1
+          bash tools/git_sync.sh

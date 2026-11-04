@@ -30,6 +30,7 @@ import day_short  # noqa: E402
 import queue_short_reel as qsr  # noqa: E402
 
 DRY = "--dry-run" in sys.argv
+RESERVE = Path(__file__).resolve().parents[1] / "config" / "clip-reserve.json"
 CLIP = re.compile(r"^(.+-clip-[a-z0-9]+)\.mp4$")
 COSMOS9_UNTIL = qsr.COSMOS9_UNTIL
 
@@ -42,6 +43,33 @@ def longs(cutoff: datetime) -> list[dict]:
             if int(e.get("publish_at") or e.get("at") or 0) <= cutoff.timestamp():
                 out.setdefault(e["ref"], {"ref": e["ref"], "id": e["id"], "when": int(e.get("publish_at") or e["at"])})
     return sorted(out.values(), key=lambda v: v["when"])
+
+
+def reserve(day: datetime, rels: list[dict]):
+    """Reserve clip (owner 04/11/2026: "se la coda del giorno dopo è vuota, riempila dalla riserva clip"): when no
+    unused clip is left, the clip whose last use is the oldest, if at least reuse_after_days ago
+    (config/clip-reserve.json, 0 = off), from a long video still public. Its title starts with "Rewind:"."""
+    cfg = json.loads(RESERVE.read_text("utf-8")) if RESERVE.exists() else {}
+    days = int(cfg.get("reuse_after_days", 0))
+    if days <= 0:
+        return None
+    last: dict[str, datetime] = {}
+    for r in rels:
+        m = re.match(r"^c\d{4}-(.+)$", r["tag_name"])
+        if m:
+            when = datetime.strptime(r["created_at"][:10], "%Y-%m-%d").replace(tzinfo=qsr.TZ)
+            last[m.group(1)] = max(last.get(m.group(1), when), when)
+    public = {lv["ref"]: lv for lv in longs(day.replace(hour=20, minute=0, second=0, microsecond=0))}
+    for cid, when in sorted(last.items(), key=lambda kv: kv[1]):
+        if (day - when).days < days:
+            break
+        for ref, lv in public.items():
+            rel = next((r for r in rels if r["tag_name"] == ref), None)
+            if rel and any(x["name"] == f"{cid}.mp4" for x in rel.get("assets", [])):
+                print(f"reserve: {cid} (last used {when:%d/%m}, more than {days} days ago) from {ref}")
+                return lv, rel, cid
+    print(f"reserve: no clip used more than {days} days ago")
+    return None
 
 
 def srt_text(srt: str, t0: float, t1: float) -> str:
@@ -80,8 +108,12 @@ def main():
         print(f"{lv['ref']}: {len(clips)} clips, {len(free)} unused")
         if free and not pick:
             pick = (lv, rel, free[0])
+    reuse = False
     if not pick:
-        print(f"{day:%d/%m}: no unused clip of a public long video: no short video today.")
+        pick = reserve(day, rels)
+        reuse = bool(pick)
+    if not pick:
+        print(f"{day:%d/%m}: no unused clip of a public long video and no reserve clip: no short video today.")
         return
     lv, rel, cid = pick
     tag = f"{k}-{cid}"
@@ -96,7 +128,7 @@ def main():
         narration = srt_text((Path(d) / dl[1]).read_text("utf-8"), spec["start"], spec["end"]) if spec else ""
         url = f"https://youtu.be/{lv['id']}"
         code = " · code COSMOS9" if day < COSMOS9_UNTIL else ""
-        title = f"{headline[:90]} #shorts"
+        title = f"{'Rewind: ' if reuse else ''}{headline[:90]} #shorts"  # a new title: the upload skips a title already on the channel
         desc = (f"📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up{code}\n\n"
                 f"Full video: {long_title} {url}\n\n{narration}\n\n"
                 "Clip of the full video: sources and credits are in its description. Synthetic voice; script drafted "

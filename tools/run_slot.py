@@ -128,7 +128,9 @@ def commit(msg):
         return
     subprocess.run(["git", "commit", "-q", "-m", msg], check=True)
     for _ in range(4):
-        subprocess.run(["git", "pull", "-q", "--rebase"], check=False)
+        # --autostash: a file left modified can never block the pull (threads-build, 4/11); logs merge as union
+        if subprocess.run(["git", "pull", "-q", "--rebase", "--autostash"]).returncode != 0:
+            subprocess.run(["git", "rebase", "--abort"], check=False, capture_output=True)
         if subprocess.run(["git", "push", "-q"]).returncode == 0:
             return
         time.sleep(5)

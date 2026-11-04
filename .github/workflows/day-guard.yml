@@ -1,0 +1,74 @@
+# Daily guard (owner 04/11/2026: "voglio che il sistema si autorisolva senza scrivere a Claude"): at 11:30 and 17:30
+# Italian time tools/day_guard.py checks that today's clip, Meta queue and Threads slots (news 12:00, quiz 16:00 or
+# 17:55, video 21:00) are there and makes what is missing with the same idempotent generators (no double posts);
+# an item already late but still inside the publish window goes out now through publish.yml --ref. The 17:30 run
+# also checks tomorrow's clip. Solved issues are closed; an issue is opened only for what is still missing.
+# Winter crons (CET); summer time from 28/03/2027: "30 9" and "30 15". Off switch: repository variable DAY_GUARD=false.
+name: day-guard
+
+on:
+  schedule:
+    - cron: "30 10 * * *"   # 11:30
+    - cron: "30 16 * * *"   # 17:30
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Day YYYY-MM-DD (empty = today, Europe/Rome)"
+        default: ""
+      dry_run:
+        description: "Dry run: show what would be made or published, change nothing"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  actions: write
+  issues: write
+
+concurrency: day-guard
+
+jobs:
+  guard:
+    if: vars.DAY_GUARD != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+      GH_TOKEN: ${{ github.token }}
+      DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+    steps:
+      - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.12"}
+      - run: pip install -q -r requirements.txt PyYAML
+      - name: Check and repair today's posts
+        id: guard
+        env:
+          PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
+          NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
+          IN_DATE: ${{ inputs.date }}
+          NEWS_TO_META: ${{ vars.SHORT_REEL_ENABLED || 'true' }}
+          SHORT_META_KINDS: ${{ vars.SHORT_META_KINDS || 'ig-reel,fb-reel,ig-story,fb-story' }}
+          TIKTOK_ENABLED: ${{ vars.TIKTOK_ENABLED || 'false' }}
+        run: |
+          args=()
+          [ -n "$IN_DATE" ] && args+=(--date "$IN_DATE")
+          [ "$DRY" = "true" ] && args+=(--dry-run)
+          python tools/day_guard.py "${args[@]}"
+      - name: Commit what was made
+        if: env.DRY != 'true'
+        run: |
+          git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
+          git add -A queues media
+          git diff --cached --quiet || git commit -q -m "day-guard: post mancanti di oggi rifatti"
+          bash tools/git_sync.sh "log: day-guard"
+      - name: Publish the late items now
+        if: env.DRY != 'true' && steps.guard.outputs.late != ''
+        env:
+          LATE: ${{ steps.guard.outputs.late }}
+        run: |
+          for item in ${LATE//,/ }; do
+            gh workflow run publish.yml --ref main -f dry_run=false -f only="${item%%:*}" -f ref="${item#*:}"
+          done

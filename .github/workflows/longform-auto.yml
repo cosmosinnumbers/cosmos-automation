@@ -75,7 +75,7 @@ jobs:
           git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
           git add "longform/$ID"
           git commit -q -m "video lungo approvato dai controlli: $ID"
-          for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
+          bash tools/git_sync.sh
           gh workflow run longform-build.yml -f id="$ID"
       - name: Issue if the checks failed
         if: failure() && !(github.event_name == 'workflow_dispatch' && inputs.dry_run) && (vars.SELF_HEAL == 'false' || github.event_name == 'workflow_dispatch')  # else self-heal.yml retries, fixes, then alerts

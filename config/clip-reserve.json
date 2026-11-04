@@ -1,0 +1,4 @@
+{
+ "_note": "Reserve clip of tools/day_clip.py (owner 04/11/2026): when no unused clip of a public long video is left, the clip whose last use is the oldest goes out again, if at least reuse_after_days ago, with the title 'Rewind: ...'. 0 = off. Hypothesis to measure: views of a Rewind clip vs its first release.",
+ "reuse_after_days": 30
+}

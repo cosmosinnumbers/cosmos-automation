@@ -101,6 +101,49 @@ def after_recovery():
         print(f"started {wf_file}: HTTP {r.status_code}")
 
 
+def known_failure(log: str) -> dict | None:
+    """The first entry of config "known" whose pattern is in the failed log (owner 04/11/2026: known failures are
+    repaired with fixed steps and their own waits, not by the LLM autofix and its 20 h limit)."""
+    for k in CFG.get("known", []):
+        if re.search(k["pattern"], log, re.I | re.M):
+            return k
+    return None
+
+
+def dispatch_and_wait(wf_file: str, inputs: dict, max_s: int = 60 * 60) -> str:
+    """Start a workflow (not one of self-heal's: no loop) and wait for its run; its conclusion ('' if unknown)."""
+    t0 = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    r = gh_api("POST", f"/actions/workflows/{wf_file}/dispatches", json={"ref": "main", "inputs": inputs})
+    print(f"started {wf_file}: HTTP {r.status_code}", flush=True)
+    if r.status_code >= 300:
+        return ""
+    start = time.time()
+    while time.time() - start < max_s:
+        time.sleep(30)
+        runs = gh_api("GET", f"/actions/workflows/{wf_file}/runs",
+                      params={"event": "workflow_dispatch", "created": f">={t0}", "per_page": 5}).json()
+        done = [x for x in runs.get("workflow_runs", []) if x.get("status") == "completed"]
+        if done:
+            return done[0].get("conclusion") or ""
+    return ""
+
+
+def heal_known(k: dict) -> bool:
+    """Fixed repair of a known failure: the steps in "before" (e.g. make the missing clip), then re-runs after the
+    waits of "waits_s". True when a re-run succeeds."""
+    waits = k.get("waits_s", [])
+    for i, wait in enumerate(waits):
+        print(f"{WF}: known failure '{k['kind']}' ({k['label']}): repair {i + 1}/{len(waits)} in {wait} s", flush=True)
+        time.sleep(wait)
+        for wf_file, inputs in k.get("before", []):
+            print(f"  before the re-run: {wf_file} -> {dispatch_and_wait(wf_file, inputs) or 'no result'}", flush=True)
+        concl = rerun_and_wait()
+        print(f"{WF}: repair {i + 1} -> {concl or 'no result'}", flush=True)
+        if concl == "success":
+            return True
+    return False
+
+
 def cmd_retry():
     retries = int(wf_cfg().get("retries", 0))
     backoff = CFG.get("backoff_s", [120, 360])
@@ -111,6 +154,14 @@ def cmd_retry():
         concl = rerun_and_wait()
         print(f"{WF}: attempt {i + 1} -> {concl or 'no result'}", flush=True)
         if concl == "success":
+            after_recovery()
+            output(result="recovered")
+            return
+    k = known_failure(failed_logs()[1]) if retries else None
+    if k:
+        TMP.mkdir(parents=True, exist_ok=True)
+        save_state(known=k["kind"])
+        if heal_known(k):
             after_recovery()
             output(result="recovered")
             return
@@ -405,8 +456,15 @@ def cmd_diagnose():
     TMP.mkdir(parents=True, exist_ok=True)
     info = run_info()
     where, log = failed_logs()
+    known = next((k for k in CFG.get("known", [])
+                  if k["kind"] == json.loads(STATE.read_text("utf-8") if STATE.exists() else "{}").get("known")), None)
     save_state(wf_path=info.get("path", ""), where=where, log=log, diagnosis="", todo="", kind="", provider="",
                head_sha=info.get("head_sha", ""))
+    if known and not known.get("code_fix"):  # quota, network, upload: nothing to change in the code
+        save_state(kind=known["issue_kind"], diagnosis=f"{known['label']}: ancora così dopo "
+                   f"{len(known.get('waits_s', []))} tentativi automatici con attese.", todo=known.get("todo", ""))
+        output(status="skip")
+        return
     if not wf_cfg().get("autofix") or os.environ.get("AUTOFIX_ENABLED", "true") == "false":
         save_state(kind="off", diagnosis="Autofix spento per questo workflow.")
         output(status="skip")
@@ -484,7 +542,7 @@ def push_main_log(entry: dict):
     git_identity()
     sh("git", "checkout", "-q", "-f", "main", check=False)
     for _ in range(4):
-        sh("git", "pull", "-q", "--rebase", "origin", "main", check=False)
+        sh("git", "pull", "-q", "--rebase", "--autostash", "origin", "main", check=False)
         with LOG.open("a", encoding="utf-8") as f:
             f.write(json.dumps(entry, ensure_ascii=False) + "\n")
         sh("git", "add", str(LOG))
@@ -579,7 +637,7 @@ def cmd_finish():
                 print(f"merge refused: HTTP {m.status_code} {m.text[:200]}")
         else:  # Actions may not be allowed to open PRs (repo setting): the safe fix goes straight to main
             print(f"PR not created (HTTP {r.status_code}): pushing the safe fix to main")
-            sh("git", "pull", "-q", "--rebase", "origin", "main", check=False)
+            sh("git", "pull", "-q", "--rebase", "--autostash", "origin", "main", check=False)
             merged = sh("git", "push", "-q", "origin", f"{branch}:main", check=False).returncode == 0
         if merged:
             gh_api("DELETE", f"/git/refs/heads/{branch}")

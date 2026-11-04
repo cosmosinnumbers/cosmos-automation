@@ -167,7 +167,7 @@ jobs:
           git add logs/experiments.jsonl queues/ideas.json 2>/dev/null || git add logs/experiments.jsonl
           git diff --cached --quiet && exit 0
           git commit -q -m "esperimenti: variante di ${{ steps.short.outputs.id }}"
-          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done; exit 1
+          bash tools/git_sync.sh
       - name: Keep the blocked video for inspection (QC failed)
         if: failure() && steps.short.outputs.id != ''
         uses: actions/upload-artifact@v7
@@ -187,7 +187,7 @@ jobs:
           git config user.name "cosmos-automation[bot]"; git config user.email "cosmos-automation@users.noreply.github.com"
           git add -A reserve; git diff --cached --quiet && exit 0
           git commit -q -m "riserva: usato ${{ github.run_id }}"
-          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done; exit 1
+          bash tools/git_sync.sh
       - name: Alert if no Short today
         if: env.SECOND != 'true' && steps.today.outputs.done != 'true' && steps.short.outputs.id == '' && steps.reserve.outputs.used == '' && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
         run: |

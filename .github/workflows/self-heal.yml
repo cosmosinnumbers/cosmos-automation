@@ -12,7 +12,8 @@ name: self-heal
 on:
   workflow_run:
     workflows: [publish, youtube-upload, threads-build, queue-short-reel, shorts-build, reserve-build, longform-auto,
-                longform-build, metrics, research, strategy, tokens, health, engage, sfx-library]
+                longform-build, metrics, research, strategy, tokens, health, engage, sfx-library,
+                day-guard]
     types: [completed]
 
 permissions:
@@ -35,7 +36,7 @@ jobs:
       github.event.workflow_run.run_attempt == 1 && github.event.workflow_run.head_branch == 'main' &&
       (github.event.workflow_run.event != 'workflow_dispatch' || github.event.workflow_run.triggering_actor.login == 'github-actions[bot]')
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 240  # known failures wait up to 45 min more (config "known")
     env:
       TZ: Europe/Rome
       PYTHONIOENCODING: utf-8

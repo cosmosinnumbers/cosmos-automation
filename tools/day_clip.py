@@ -10,7 +10,8 @@ the full video on YouTube). tools/day_short.py picks it for every channel, so yo
 (21:00 post) and queue-short-reel (Reels and Stories) publish the same clip. News Shorts (a<MMDD>-*) are still built
 as a reserve but no longer published.
 Rules: only long videos already public on YouTube by 20:00 of that day (logs/youtube-publish-log.jsonl, k=long,
-publish_at); oldest long video first, clips in name order; a clip is used once (existing c* releases). No clip left:
+publish_at); among their unused clips the one with the best score predicted by the cross-channel learning loop
+(config/cross-weights.json, tools/cross_learn.py; 1 day in 5 the least-tried theme); a clip is used once (existing c* releases). No clip left:
 no release, nothing goes out that day.
 """
 from __future__ import annotations
@@ -26,6 +27,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import creds  # noqa: E402
+import cross_learn  # noqa: E402
 import day_short  # noqa: E402
 import queue_short_reel as qsr  # noqa: E402
 
@@ -72,6 +74,33 @@ def reserve(day: datetime, rels: list[dict]):
     return None
 
 
+def headlines(ref: str) -> dict:
+    p = Path(qsr.ROOT, "longform", ref[3:], "clips.yaml")
+    try:
+        return {c["id"]: str(c.get("headline", "")) for c in yaml.safe_load(p.read_text("utf-8")) or []}
+    except (OSError, ValueError, TypeError, KeyError, yaml.YAMLError):
+        return {}
+
+
+def choose(cands: list, day: datetime):
+    """Learning loop (owner 04/11/2026: "imparare dai dati"): the unused clip whose headline scores best on what
+    worked across every channel (tools/cross_learn.py predict); ties keep the old order (oldest long video, name
+    order). 1 day in 5 explores: the clip whose theme was measured least, so new themes get data too."""
+    if not cands:
+        return None
+    w = cross_learn._jload(cross_learn.OUT, {})
+    if day.toordinal() % 5 == 0 and len(cands) > 1:
+        best = min(cands, key=lambda c: (cross_learn.novelty(c[3], w), c[4], c[5]))
+        why = f"explore (theme measured {cross_learn.novelty(best[3], w)} times)"
+    else:
+        best = max(cands, key=lambda c: (cross_learn.predict(c[3], w), -c[4], -c[5]))
+        why = f"predicted {cross_learn.predict(best[3], w)}x"
+    for c in sorted(cands, key=lambda c: -cross_learn.predict(c[3], w))[:6]:
+        print(f"  {cross_learn.predict(c[3], w):.2f}x  {c[2]}  '{c[3]}'")
+    print(f"pick {best[2]}: {why}")
+    return best[:3]
+
+
 def srt_text(srt: str, t0: float, t1: float) -> str:
     words = []
     for b in re.split(r"\n\s*\n", srt.strip()):
@@ -100,14 +129,15 @@ def main():
         print(f"{have}: the clip of the day is already out.")
         return
     used = {r["tag_name"].split("-", 1)[1] for r in rels if re.match(r"^c\d{4}-", r["tag_name"])}
-    pick = None
-    for lv in longs(day.replace(hour=20, minute=0, second=0, microsecond=0)):
+    cands = []
+    for n, lv in enumerate(longs(day.replace(hour=20, minute=0, second=0, microsecond=0))):
         rel = next((r for r in rels if r["tag_name"] == lv["ref"]), None)
         clips = sorted(m.group(1) for x in (rel or {}).get("assets", []) if (m := CLIP.match(x["name"])))
         free = [c for c in clips if c not in used]
         print(f"{lv['ref']}: {len(clips)} clips, {len(free)} unused")
-        if free and not pick:
-            pick = (lv, rel, free[0])
+        heads = headlines(lv["ref"])
+        cands += [(lv, rel, c, heads.get(c, c.replace("-", " ")), n, i) for i, c in enumerate(free)]
+    pick = choose(cands, day)
     reuse = False
     if not pick:
         pick = reserve(day, rels)

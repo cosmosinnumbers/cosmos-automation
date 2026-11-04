@@ -68,7 +68,7 @@ jobs:
       - name: Commit the queue
         run: |
           git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
-          git add queues/threads-queue.json
+          git add queues/threads-queue.json logs/qc-log.jsonl  # post_qc logs every decision (4/11: an unstaged qc-log broke the pull)
           git diff --cached --quiet && exit 0
           git commit -m "coda Threads: post del giorno (news, quiz, video)"
-          for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 5; done; exit 1
+          for i in 1 2 3; do git pull --rebase --autostash && git push && exit 0; sleep 5; done; exit 1

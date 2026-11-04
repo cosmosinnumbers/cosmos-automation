@@ -51,4 +51,4 @@ jobs:
           git add logs/threads-publish-log.jsonl
           git diff --cached --quiet && exit 0
           git commit -m "log: threads deleted $IN_REF"
-          for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 5; done; exit 1
+          for i in 1 2 3; do git pull --rebase --autostash && git push && exit 0; sleep 5; done; exit 1

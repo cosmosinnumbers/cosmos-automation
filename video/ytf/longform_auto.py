@@ -209,7 +209,30 @@ def research_notes() -> str:
     for f in notes:
         for m in re.finditer(r"^## (.+?)\n.*?### 6\.(.*?)(?=^### 7|\Z)", f.read_text("utf-8"), re.S | re.M):
             out.append(f"- {m.group(1)[:90]}: {' '.join(m.group(2).split())[:300]}")
-    return "\n".join(out[-6:]) or "- (none this week)"
+    return ("\n".join(out[-6:]) or "- (none this week)") + "\n" + cross_block()
+
+
+def cross_block() -> str:
+    """What our own audience watched most on every channel (tools/cross_learn.py, owner 04/11/2026: "imparare dai
+    dati"), so the next long video, and therefore its clips, goes where the data points."""
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        import cross_learn
+        return cross_learn.writer_block()
+    except Exception as e:  # noqa: BLE001  (never blocks the weekly video)
+        print(f"cross-channel weights unavailable: {type(e).__name__}")
+        return ""
+
+
+def learned_hint() -> str:
+    """No topic from the workflow: replicate the latest cross-channel hit (config/cross-weights.json next_long)."""
+    try:
+        nl = json.loads((ROOT / "config" / "cross-weights.json").read_text("utf-8")).get("next_long") or {}
+    except (OSError, ValueError):
+        return ""
+    if nl.get("hint"):
+        print("Topic steered by the learning loop:", nl.get("from"))
+    return nl.get("hint", "")
 
 
 def trend_titles(n: int = 8) -> str:
@@ -997,7 +1020,7 @@ def main():
     sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
     args = sys.argv[1:]
     today = datetime.now().strftime("%Y-%m-%d")
-    hint = f"Prefer this topic: {args[args.index('--topic') + 1]}." if "--topic" in args else ""
+    hint = f"Prefer this topic: {args[args.index('--topic') + 1]}." if "--topic" in args else learned_hint()
     if "--minutes" in args:  # e.g. 12-16 (owner 31/10/2026 for TON 618)
         lo, hi = (int(x) for x in args[args.index("--minutes") + 1].split("-"))
         LEN.update(mmin=lo, mmax=hi, wmin=lo * 163 + 60, wmax=hi * 150, cmin=max(6, lo // 2), cmax=max(8, hi // 2 + 1))

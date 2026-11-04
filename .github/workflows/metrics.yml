@@ -45,11 +45,17 @@ jobs:
       - name: Learn from the experiments
         continue-on-error: true
         run: python tools/experiments.py learn
+      # Cross-channel learning loop (owner 04/11/2026): every channel's numbers -> config/cross-weights.json, read by
+      # day_clip (which clip goes out), auto_clips (which chapters become clips) and longform-auto (next topic).
+      - name: Learn from every channel
+        continue-on-error: true
+        run: python tools/cross_learn.py learn
       - name: Save
         run: |
           git config user.name "cosmos-metrics[bot]"
           git config user.email "cosmos-metrics@users.noreply.github.com"
-          git add 07-analytics/metrics config/experiments-state.json
+          git add 07-analytics/metrics config/experiments-state.json config/cross-weights.json
+          git add reports/apprendimento-canali-*.md 2>/dev/null || true
           [ -f queues/ideas.json ] && git add queues/ideas.json
           git diff --cached --quiet && exit 0
           git commit -q -m "metrics: daily snapshot $(date +%F)"

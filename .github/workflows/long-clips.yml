@@ -33,7 +33,7 @@ concurrency: long-clips
 
 jobs:
   render:
-    if: vars.LONG_CLIPS_ENABLED != 'false' && (github.event_name == 'push' || inputs.id != '')
+    if: vars.LONG_CLIPS_ENABLED != 'false' && (github.event_name == 'push' || github.event_name == 'schedule' || inputs.id != '')
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -43,19 +43,45 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with: {fetch-depth: 2}
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.13", cache: pip}
+      - run: pip install -q requests PyYAML
+      # Learning loop (owner 04/11/2026): on the daily run, the first long video released without clips.yaml gets
+      # its clips from tools/auto_clips.py (chapters with the most motion graphics + what worked on every channel,
+      # config/cross-weights.json), committed here and rendered below: no clip is cut by hand any more.
       - name: Which video
         id: pick
         env:
           IN_ID: ${{ inputs.id }}
+          EV: ${{ github.event_name }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.GEMINIAPIKEY3 }}
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+          GLM_BASE_URL: ${{ secrets.GLM_BASE_URL }}
+          GLM_MODELS: ${{ secrets.GLM_MODELS }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: |
           if [ -n "$IN_ID" ]; then id="$IN_ID"
-          else id=$(git diff --name-only HEAD~1 HEAD -- 'longform/*/clips.yaml' | cut -d/ -f2 | sort -u | head -1)
+          elif [ "$EV" = "push" ]; then id=$(git diff --name-only HEAD~1 HEAD -- 'longform/*/clips.yaml' | cut -d/ -f2 | sort -u | head -1)
+          else
+            id=""
+            for tag in $(gh release list --limit 60 --json tagName --jq '.[].tagName' | grep '^lf-' || true); do
+              v="${tag#lf-}"
+              [ -f "longform/$v/script.yaml" ] && [ ! -f "longform/$v/clips.yaml" ] || continue
+              gh release view "$tag" --json assets --jq '.assets[].name' | grep -qx "$v.srt" || continue
+              id="$v"; break
+            done
+            if [ -n "$id" ]; then
+              mkdir -p /tmp/ac && gh release download "lf-$id" -p "$id.srt" -D /tmp/ac --clobber
+              python tools/auto_clips.py "$id" "/tmp/ac/$id.srt" || { echo "auto clips failed for $id"; exit 0; }
+              git config user.name "cosmos-bot"; git config user.email "cosmos-bot@users.noreply.github.com"
+              git add "longform/$id/clips.yaml"
+              git commit -q -m "clip automatiche di $id (auto_clips: motion graphics + dati di tutti i canali)"
+              bash tools/git_sync.sh
+            fi
           fi
           [ -n "$id" ] && gh release view "lf-$id" >/dev/null 2>&1 || { echo "no release lf-$id: longform-build first"; exit 0; }
           echo "id=$id" >> "$GITHUB_OUTPUT"
-      - uses: actions/setup-python@v7
-        if: steps.pick.outputs.id != ''
-        with: {python-version: "3.13", cache: pip}
       - if: steps.pick.outputs.id != ''
         run: pip install -q kokoro-onnx espeakng-loader phonemizer-fork onnxruntime soundfile numpy scipy pillow matplotlib fonttools imageio-ffmpeg PyYAML requests tzdata
       - name: Cut the missing clips
@@ -89,7 +115,7 @@ jobs:
 
   day:
     needs: render
-    if: always() && vars.LONG_CLIPS_ENABLED != 'false' && needs.render.result != 'failure'
+    if: always() && vars.LONG_CLIPS_ENABLED != 'false' && (needs.render.result != 'failure' || github.event_name == 'schedule')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:

@@ -1,0 +1,50 @@
+{
+ "_doc": "Temi dei contenuti per l'apprendimento incrociato (tools/cross_learn.py). 'match' = regex (minuscolo) sul titolo/didascalia/headline. Un contenuto può avere più temi. Aggiungere temi qui: il ciclo li misura da solo dal giorno dopo.",
+ "themes": {
+  "light_distance": {
+   "label": "Luce, distanze e anni luce",
+   "match": "light-?years?|light-?day|speed of light|how far|farthest|nearest star|distance|away\\b|light from|you see is|(seconds|minutes|years) old|left .* ago|\\bago\\b",
+   "en": "light, distances and light-years"
+  },
+  "scale_size": {
+   "label": "Scala e dimensioni",
+   "match": "\\bfits?\\b|earths|size|how big|bigger|largest|biggest|smallest|wide|diameter|width|times (the|earth)",
+   "en": "scale and size comparisons"
+  },
+  "records_missions": {
+   "label": "Record e missioni",
+   "match": "record|rover|perseverance|curiosity|voyager|clipper|artemis|mission|spacecraft|probe|flyby|fly past|drives?|joystick",
+   "en": "records and missions"
+  },
+  "extremes": {
+   "label": "Estremi (temperatura, velocità)",
+   "match": "°c|degrees|hottest|coldest|temperature|swings|fastest|speed|per second|km/s|mph",
+   "en": "extremes (temperature, speed)"
+  },
+  "deep_sky": {
+   "label": "Galassie, nebulose, stelle",
+   "match": "galax|nebula|andromeda|star\\b|stars\\b|supernova|black hole|quasar|cluster",
+   "en": "galaxies, nebulae, stars"
+  },
+  "planets": {
+   "label": "Pianeti e lune",
+   "match": "mercury|venus|mars|martian|jupiter|saturn|uranus|neptune|pluto|moon|europa|titan|enceladus|planet",
+   "en": "planets and moons"
+  },
+  "telescopes": {
+   "label": "Telescopi",
+   "match": "webb|hubble|roman|telescope|observatory|chandra|euclid",
+   "en": "telescopes"
+  },
+  "explainer": {
+   "label": "Spiegone di un concetto",
+   "match": "what (a|an|is)|really is|why |how (do|does|is|nasa)|explained|means",
+   "en": "explaining a familiar concept for real"
+  },
+  "news": {
+   "label": "Notizia del giorno",
+   "match": "just |new |announc|invites|launch|today|this week|falling to earth|reentry|upgrade",
+   "en": "news of the day"
+  }
+ }
+}

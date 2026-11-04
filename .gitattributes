@@ -1,0 +1,2 @@
+# Append-only logs: two runs appending at the same time merge both lines (tools/git_sync.sh, 04/11/2026)
+logs/*.jsonl merge=union

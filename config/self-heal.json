@@ -1,35 +1,186 @@
 {
-  "_note": "Self-heal (owner request 02/11/2026): retries = automatic re-runs of a failed run (only its failed jobs), after waits of backoff_s[0], backoff_s[1] seconds. Then autofix: an LLM reads the log and proposes a code fix (PR, merged only if safe). Workflows not listed here are never re-run nor fixed (launch9, threads-delete, tiktok-auth, backup-llm-check: one-off, interactive or destructive). The list must match 'workflows:' in .github/workflows/self-heal.yml.",
-  "backoff_s": [120, 360],
-  "workflows": {
-    "publish":          {"retries": 2, "autofix": true},
-    "youtube-upload":   {"retries": 2, "autofix": true},
-    "threads-build":    {"retries": 2, "autofix": true},
-    "queue-short-reel": {"retries": 2, "autofix": true},
-    "shorts-build":     {"retries": 1, "autofix": true, "after_recovery": [
-                          ["queue-short-reel.yml", {"dry_run": "false"}],
-                          ["threads-build.yml", {"dry_run": "false", "only": "video"}]]},
-    "reserve-build":    {"retries": 1, "autofix": true},
-    "longform-auto":    {"retries": 1, "autofix": true},
-    "longform-build":   {"retries": 1, "autofix": true},
-    "metrics":          {"retries": 2, "autofix": true},
-    "research":         {"retries": 1, "autofix": true},
-    "strategy":         {"retries": 1, "autofix": true},
-    "tokens":           {"retries": 2, "autofix": true},
-    "health":           {"retries": 1, "autofix": true},
-    "engage":           {"retries": 0, "autofix": true},
-    "sfx-library":      {"retries": 1, "autofix": true}
+ "_note": "Self-heal (owner request 02/11/2026): retries = automatic re-runs of a failed run (only its failed jobs), after waits of backoff_s[0], backoff_s[1] seconds. Then autofix: an LLM reads the log and proposes a code fix (PR, merged only if safe). Workflows not listed here are never re-run nor fixed (launch9, threads-delete, tiktok-auth, backup-llm-check: one-off, interactive or destructive). The list must match 'workflows:' in .github/workflows/self-heal.yml.",
+ "backoff_s": [
+  120,
+  360
+ ],
+ "workflows": {
+  "publish": {
+   "retries": 2,
+   "autofix": true
   },
-  "autofix": {
-    "max_per_workflow_hours": 20,
-    "max_per_day": 4,
-    "max_changed_lines": 80,
-    "risky_paths": [
-      "tools/run_slot.py", "tools/creds.py", "tools/meta_api.py", "tools/threads_api.py", "tools/x_api.py",
-      "tools/tiktok_api.py", "tools/yt_short_upload.py", "tools/yt_publish.py", "tools/media_cleanup.py",
-      "tools/autofix.py", "tools/self_heal.py", "video/gumroad_launch9.py", "video/ci_secrets.py",
-      "video/ytf/yt_api.py", "video/ytf/meta_api.py", "queues/", "logs/", "config/self-heal.json", ".github/", "secrets/"
+  "youtube-upload": {
+   "retries": 2,
+   "autofix": true
+  },
+  "threads-build": {
+   "retries": 2,
+   "autofix": true
+  },
+  "queue-short-reel": {
+   "retries": 2,
+   "autofix": true
+  },
+  "shorts-build": {
+   "retries": 1,
+   "autofix": true,
+   "after_recovery": [
+    [
+     "queue-short-reel.yml",
+     {
+      "dry_run": "false"
+     }
     ],
-    "risky_words": "\\.delete\\(|requests\\.delete|rmtree|os\\.remove|unlink\\(|secret|token|password|api_key|--force|release delete|gh issue close"
+    [
+     "threads-build.yml",
+     {
+      "dry_run": "false",
+      "only": "video"
+     }
+    ]
+   ]
+  },
+  "reserve-build": {
+   "retries": 1,
+   "autofix": true
+  },
+  "longform-auto": {
+   "retries": 1,
+   "autofix": true
+  },
+  "longform-build": {
+   "retries": 1,
+   "autofix": true
+  },
+  "metrics": {
+   "retries": 2,
+   "autofix": true
+  },
+  "research": {
+   "retries": 1,
+   "autofix": true
+  },
+  "strategy": {
+   "retries": 1,
+   "autofix": true
+  },
+  "tokens": {
+   "retries": 2,
+   "autofix": true
+  },
+  "health": {
+   "retries": 1,
+   "autofix": true
+  },
+  "engage": {
+   "retries": 0,
+   "autofix": true
+  },
+  "sfx-library": {
+   "retries": 1,
+   "autofix": true
+  },
+  "day-guard": {
+   "retries": 1,
+   "autofix": true
   }
+ },
+ "autofix": {
+  "max_per_workflow_hours": 20,
+  "max_per_day": 4,
+  "max_changed_lines": 80,
+  "risky_paths": [
+   "tools/run_slot.py",
+   "tools/creds.py",
+   "tools/meta_api.py",
+   "tools/threads_api.py",
+   "tools/x_api.py",
+   "tools/tiktok_api.py",
+   "tools/yt_short_upload.py",
+   "tools/yt_publish.py",
+   "tools/media_cleanup.py",
+   "tools/autofix.py",
+   "tools/self_heal.py",
+   "video/gumroad_launch9.py",
+   "video/ci_secrets.py",
+   "video/ytf/yt_api.py",
+   "video/ytf/meta_api.py",
+   "queues/",
+   "logs/",
+   "config/self-heal.json",
+   ".github/",
+   "secrets/"
+  ],
+  "risky_words": "\\.delete\\(|requests\\.delete|rmtree|os\\.remove|unlink\\(|secret|token|password|api_key|--force|release delete|gh issue close"
+ },
+ "_note_known": "Known failures (owner 04/11/2026: 'il sistema si deve autorisolvere'): after the normal retries, the first pattern found in the failed log picks fixed repairs: the workflows in 'before' (started and awaited), then a re-run after each wait in waits_s. Not counted in the autofix limits. code_fix=false: no LLM autofix afterwards (nothing to change in the code), the issue says what is left to the owner.",
+ "known": [
+  {
+   "kind": "git",
+   "label": "pull o push di git bloccato (file modificati o push concorrente)",
+   "issue_kind": "code",
+   "code_fix": true,
+   "pattern": "cannot pull with rebase|You have unstaged changes|failed to push some refs|non-fast-forward|could not push the logs|git_sync: push",
+   "waits_s": [
+    60,
+    300
+   ]
+  },
+  {
+   "kind": "clip",
+   "label": "clip o release del giorno mancante",
+   "issue_kind": "config",
+   "code_fix": true,
+   "pattern": "no Short release|no unused clip|no mp4 in the release|release not found|no clip of the day",
+   "waits_s": [
+    60,
+    600
+   ],
+   "before": [
+    [
+     "long-clips.yml",
+     {
+      "dry_run": "false"
+     }
+    ]
+   ],
+   "todo": "Serve un video lungo pubblico con clip non usate (longform/<id>/clips.yaml) o la riserva clip (config/clip-reserve.json)."
+  },
+  {
+   "kind": "upload",
+   "label": "caricamento del video non riuscito",
+   "issue_kind": "external",
+   "code_fix": false,
+   "pattern": "uploadLimitExceeded|upload (?:failed|error)|resumable upload|ERROR_MEDIA|media (?:is )?not ready|processing (?:failed|error)|container .*ERROR",
+   "waits_s": [
+    600,
+    1800
+   ],
+   "todo": "Controlla in YouTube Studio o Meta Business Suite se il video è stato rifiutato."
+  },
+  {
+   "kind": "quota",
+   "label": "quota del servizio esaurita",
+   "issue_kind": "quota",
+   "code_fix": false,
+   "pattern": "RESOURCE_EXHAUSTED|quota (?:exceeded|exhausted)|exceeded (?:your|the) .{0,30}quota|insufficient_quota|HTTP 429|429 Too Many|rate.?limit(?:ed| exceeded)",
+   "waits_s": [
+    900,
+    1800
+   ],
+   "todo": "Si sblocca da solo al reset della quota; se si ripete ogni giorno va ridotto l'uso."
+  },
+  {
+   "kind": "transient",
+   "label": "errore temporaneo di rete o del servizio",
+   "issue_kind": "transient",
+   "code_fix": false,
+   "pattern": "HTTP 5\\d\\d|\\b50[0234] (?:Server|Internal|Bad|Service|Gateway)|Read timed out|ConnectionError|Connection reset|ECONNRESET|ETIMEDOUT|RemoteDisconnected|Temporary failure in name resolution",
+   "waits_s": [
+    300,
+    1200
+   ],
+   "todo": "Di solito si risolve al run successivo."
+  }
+ ]
 }

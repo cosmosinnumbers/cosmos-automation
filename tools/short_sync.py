@@ -50,15 +50,12 @@ def queue(name: str) -> list[dict]:
     return json.loads(p.read_text("utf-8")) if p.exists() else []
 
 
-def main():
-    sys.stdout.reconfigure(encoding="utf-8")
-    a = sys.argv
-    day = datetime.strptime(a[a.index("--date") + 1], "%Y-%m-%d") if "--date" in a else creds.now_local().replace(tzinfo=None)
-    k = day_short.key(day)
-    rel = day_short.pick(json.loads(gh("api", f"repos/{REPO}/releases?per_page=30")), day)
+def check(day: datetime, rels: list[dict] | None = None) -> tuple[str | None, dict[str, set[str]], list[str]]:
+    """(Short of the day or None, refs seen per channel, divergences in Italian) for `day`."""
+    rels = rels if rels is not None else json.loads(gh("api", f"repos/{REPO}/releases?per_page=30"))
+    rel = day_short.pick(rels, day)
     if not rel:
-        print(f"{k}: no Short release for {day:%d/%m}: nothing to compare.")
-        return
+        return None, {}, []
     want = rel["tag_name"]
     k = want.split("-", 1)[0]  # a<MMDD> (news Short) or c<MMDD> (clip of a long video)
     of_day = lambda ref: ref.split("-", 1)[1] if ref.startswith(("sr-", "fr-", "si-", "sf-", "th-")) else ref  # noqa: E731
@@ -80,11 +77,26 @@ def main():
             problems.append(f"- {ch}: {', '.join(other)} invece di {want}")
         elif not tags:
             problems.append(f"- {ch}: nessun post con {want}")
+    return want, seen, problems
+
+
+def main():
+    sys.stdout.reconfigure(encoding="utf-8")
+    a = sys.argv
+    day = datetime.strptime(a[a.index("--date") + 1], "%Y-%m-%d") if "--date" in a else creds.now_local().replace(tzinfo=None)
+    want, seen, problems = check(day)
+    if not want:
+        print(f"{day_short.key(day)}: no Short release for {day:%d/%m}: nothing to compare.")
+        return
+    k = want.split("-", 1)[0]
     print(f"{k}: Short of the day {want}")
     for ch, tags in seen.items():
         print(f"  {ch}: {', '.join(sorted(tags)) or '-'}")
     if not problems:
         print("All channels agree.")
+        if not DRY:  # the days flagged before are over: their issues are closed (tools/day_guard.py)
+            import day_guard
+            day_guard.close_resolved(dry=False)
         return
     title = f"Canali non allineati {day:%d/%m/%Y}"
     body = (f"Short del giorno (tools/day_short.py): `{want}`.\n\n" + "\n".join(problems) +

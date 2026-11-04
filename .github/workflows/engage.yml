@@ -77,8 +77,7 @@ jobs:
           git add logs
           git diff --cached --quiet && exit 0
           git commit -q -m "engage: replies log"
-          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep $((i * 10)); done
-          exit 1
+          bash tools/git_sync.sh
       - name: Report problems
         if: steps.run.outcome == 'failure' || steps.cta.outcome == 'failure'
         run: |

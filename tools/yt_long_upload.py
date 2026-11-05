@@ -134,11 +134,16 @@ def main():
     when = next_sunday(datetime.now(TZ), taken)
     with tempfile.TemporaryDirectory() as d:
         pats = []
-        for f in (f"{vid_id}.mp4", "upload.md", f"{vid_id}.srt", "thumb_A.jpg"):
+        for f in (f"{vid_id}.mp4", "upload.md", f"{vid_id}.srt", "thumb_A.jpg", "qc.md"):
             if f in names:
                 pats += ["-p", f]
         gh("release", "download", ref, "--repo", REPO, *pats, "-D", d)
         md = (Path(d) / "upload.md").read_text("utf-8")
+        qcf = Path(d) / "qc.md"
+        if qcf.exists() and re.search(r"QC video .*BLOCCATO", qcf.read_text("utf-8")):
+            # 5/11/2026: a longform-build run that built nothing still woke this workflow, which uploaded the
+            # first cut of a video whose QC had found 7 s of black frames
+            sys.exit(f"{ref}: QC video BLOCCATO in qc.md: not uploaded (fix and rebuild first).")
         title = section(md, "Title").splitlines()[0].strip()
         desc = clean_description(section(md, "Description"))
         if not title or "LOOK UP" not in desc:

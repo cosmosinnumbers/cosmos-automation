@@ -1,0 +1,891 @@
+{
+ "id": "end-of-the-solar-system",
+ "title": "The Sun Will Swell 200 Times Wider: How It All Ends",
+ "alt_titles": [
+  "How the Solar System Ends, in 7 Real Numbers",
+  "Earth Has About 1 Billion Years. The Sun Has More"
+ ],
+ "description_intro": "How our Solar System ends, step by step, using ESA Gaia results on the Sun's past and future, NASA pages on stellar evolution and the Sun, and the 2025 Hubble and Gaia study on the Milky Way and Andromeda. Dates far in the future are model estimates, and NASA pages differ on some of them.",
+ "tags": [
+  "how the solar system ends",
+  "sun red giant",
+  "sun white dwarf",
+  "what happens when the sun dies",
+  "will the sun go supernova",
+  "milky way andromeda collision",
+  "earth uninhabitable 1 billion years",
+  "gaia sun future",
+  "end of the solar system",
+  "space documentary",
+  "real space data",
+  "sun future"
+ ],
+ "hashtags": [
+  "space",
+  "sun",
+  "astronomy"
+ ],
+ "thumbs": [
+  {
+   "lines": [
+    "200×",
+    "WIDER",
+    "SUN"
+   ],
+   "query": "red giant star"
+  },
+  {
+   "lines": [
+    "THE SUN",
+    "WON'T",
+    "EXPLODE"
+   ],
+   "query": "Sun Solar Dynamics Observatory"
+  },
+  {
+   "lines": [
+    "EARTH HAS",
+    "1 BILLION",
+    "YEARS"
+   ],
+   "query": "Earth from space",
+   "stickman": true
+  }
+ ],
+ "sources": [
+  {
+   "title": "ESA: Gaia reveals the past and future of the Sun",
+   "url": "https://www.esa.int/Science_Exploration/Space_Science/Gaia/Gaia_reveals_the_past_and_future_of_the_Sun"
+  },
+  {
+   "title": "ESA Gaia: how binary stars change their stellar dance with age",
+   "url": "https://www.cosmos.esa.int/web/gaia/iow_20240723"
+  },
+  {
+   "title": "NASA: Star types",
+   "url": "https://science.nasa.gov/universe/stars/types/"
+  },
+  {
+   "title": "NASA: Life and death of planetary systems, chapter 7",
+   "url": "https://science.nasa.gov/exoplanets/resources/life-and-death/chapter-7/"
+  },
+  {
+   "title": "NASA: Hubble casts doubt on certainty of galactic collision",
+   "url": "https://science.nasa.gov/missions/hubble/apocalypse-when-hubble-casts-doubt-on-certainty-of-galactic-collision/"
+  },
+  {
+   "title": "NASA Sun Fact Sheet",
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html"
+  },
+  {
+   "title": "NASA: Sun facts",
+   "url": "https://science.nasa.gov/sun/facts/"
+  },
+  {
+   "title": "NASA Space Place: All about the Sun",
+   "url": "https://spaceplace.nasa.gov/all-about-the-sun/en/"
+  },
+  {
+   "title": "ESA/Hubble: Hubble casts doubt on certainty of galactic collision",
+   "url": "https://esahubble.org/news/heic2508/"
+  }
+ ],
+ "chapters": [
+  {
+   "title": "Halfway",
+   "sources": [
+    "S1",
+    "S7",
+    "S8"
+   ],
+   "beats": [
+    {
+     "say": "How long do you think our Sun has left? The honest answer is stranger than any doomsday movie.",
+     "show": {
+      "type": "footage",
+      "query": "Sun Solar Dynamics Observatory"
+     }
+    },
+    {
+     "say": "ESA's Gaia mission puts the Sun's age at around 4.57 billion years. That is not old for a star. It is middle-aged.",
+     "show": {
+      "type": "counter",
+      "value": 4.57,
+      "suffix": " billion years",
+      "label": "AGE OF THE SUN",
+      "sub": "ESA Gaia"
+     }
+    },
+    {
+     "say": "By the end you'll know exactly how our Solar System ends, step by step, with the numbers from NASA and ESA.",
+     "show": {
+      "type": "image",
+      "query": "solar system planets"
+     }
+    },
+    {
+     "say": "Here is your first guess. Which goes first: the Earth's oceans, the planet Mercury, or the Sun itself?",
+     "show": {
+      "type": "kinetic",
+      "text": "WHAT GOES FIRST?",
+      "accent": [
+       "FIRST"
+      ]
+     }
+    },
+    {
+     "say": "Right now the Sun is calm. It fuses hydrogen into helium in a core of about 15 million degrees Celsius.",
+     "show": {
+      "type": "counter",
+      "value": 15,
+      "suffix": " million °C",
+      "label": "SUN'S CORE",
+      "sub": "NASA"
+     }
+    },
+    {
+     "say": "It sits about 150 million kilometers away, yet its light still warms every ocean you have ever swum in.",
+     "show": {
+      "type": "image",
+      "query": "Sun over Earth horizon"
+     }
+    },
+    {
+     "say": "That fusion pushes outward against gravity. As long as the push and the pull stay balanced, the Sun stays the Sun.",
+     "show": {
+      "type": "footage",
+      "query": "solar flare"
+     }
+    },
+    {
+     "say": "It is huge. According to NASA, it would take 1.3 million Earths to fill the Sun's volume.",
+     "show": {
+      "type": "scale",
+      "title": "FILL THE SUN",
+      "items": [
+       {
+        "label": "Earth",
+        "value": 1,
+        "display": "1"
+       },
+       {
+        "label": "Earths to fill the Sun",
+        "value": 1300000,
+        "display": "1.3 million"
+       }
+      ]
+     }
+    },
+    {
+     "say": "And it holds 99.8% of all the mass in our Solar System. Everything else, you included, is a rounding error.",
+     "show": {
+      "type": "image",
+      "query": "Earth from space",
+      "stickman": {
+       "label": "YOU",
+       "size": "tiny"
+      }
+     }
+    },
+    {
+     "say": "But fuel never lasts forever. So what runs out first, and what does that mean for the planet you are sitting on?",
+     "show": {
+      "type": "kinetic",
+      "text": "FUEL NEVER LASTS",
+      "accent": [
+       "FUEL"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "title": "Earth's deadline",
+   "sources": [
+    "S1",
+    "S5"
+   ],
+   "beats": [
+    {
+     "say": "Here is the twist most people miss. Earth does not wait for the Sun to die. Our deadline comes much sooner.",
+     "show": {
+      "type": "image",
+      "query": "Earth oceans"
+     }
+    },
+    {
+     "say": "NASA puts it plainly: the warming Sun makes Earth uninhabitable in roughly 1 billion years.",
+     "show": {
+      "type": "kinetic",
+      "text": "ROUGHLY 1 BILLION YEARS",
+      "accent": [
+       "1",
+       "BILLION"
+      ]
+     }
+    },
+    {
+     "say": "Today the Sun's surface glows at an effective temperature of 5772 Kelvin. A hotter, brighter Sun pours more heat onto us.",
+     "show": {
+      "type": "footage",
+      "query": "Sun ultraviolet"
+     }
+    },
+    {
+     "say": "The Sun keeps changing as it ages. Gaia's data show it reaches a maximum temperature at approximately 8 billion years of age.",
+     "show": {
+      "type": "bars",
+      "title": "THE SUN'S TIMELINE (AGE)",
+      "items": [
+       {
+        "label": "Today",
+        "value": 4.57,
+        "display": "4.57 billion"
+       },
+       {
+        "label": "Hottest",
+        "value": 8,
+        "display": "8 billion"
+       },
+       {
+        "label": "Red giant",
+        "value": 10.5,
+        "display": "10–11 billion"
+       }
+      ],
+      "log": false,
+      "note": "Source: ESA Gaia"
+     }
+    },
+    {
+     "say": "Subtract today's age and that peak is about 3.43 billion years away. Our oceans are gone long before that.",
+     "show": {
+      "type": "counter",
+      "value": 3.43,
+      "suffix": " billion years",
+      "label": "UNTIL THE HOTTEST SUN",
+      "sub": "8 − 4.57"
+     },
+     "calc": "8 - 4.57 = 3.43"
+    },
+    {
+     "say": "So the oceans lose the race, not Mercury and not the Sun. Did you guess that? Tell me in the comments.",
+     "show": {
+      "type": "image",
+      "query": "Earth clouds ocean"
+     },
+     "ask": "Did you guess the oceans would go first?"
+    },
+    {
+     "say": "To find this, Gaia's team picked stars with the same mass and chemistry as the Sun, but different ages.",
+     "show": {
+      "type": "footage",
+      "query": "Gaia spacecraft"
+     }
+    },
+    {
+     "say": "They found 5863 solar analogues. Lined up by age, those stars trace our Sun's past and its future.",
+     "show": {
+      "type": "counter",
+      "value": 5863,
+      "suffix": "",
+      "label": "SUN-LIKE STARS",
+      "sub": "ESA Gaia DR3"
+     }
+    },
+    {
+     "say": "That is the beauty of the method. You cannot watch one star for billions of years, but you can watch thousands at once.",
+     "show": {
+      "type": "image",
+      "query": "star field Milky Way"
+     }
+    },
+    {
+     "say": "And what those stars show next is far more dramatic than a hot planet. What happens when the core runs dry?",
+     "show": {
+      "type": "kinetic",
+      "text": "THE CORE RUNS DRY",
+      "accent": [
+       "DRY"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "title": "Red giant",
+   "sources": [
+    "S2",
+    "S3",
+    "S6",
+    "S7"
+   ],
+   "beats": [
+    {
+     "say": "When the hydrogen in the core runs out, the core contracts and heats up. The outside does the opposite.",
+     "show": {
+      "type": "footage",
+      "query": "Sun corona"
+     }
+    },
+    {
+     "say": "According to NASA, the Sun will become a red giant in about 5 billion years. Gaia's data say it happens around 10–11 billion years of age.",
+     "show": {
+      "type": "kinetic",
+      "text": "RED GIANT IN ~5 BILLION YEARS",
+      "accent": [
+       "RED",
+       "GIANT"
+      ]
+     }
+    },
+    {
+     "say": "The outer layers swell to up to about 200 times the current solar radius. Picture standing next to that.",
+     "show": {
+      "type": "image",
+      "query": "red giant star",
+      "stickman": {
+       "label": "YOU",
+       "size": "tiny"
+      }
+     }
+    },
+    {
+     "say": "Its diameter today is about 1.4 million kilometers. As a red giant, it would stretch across the orbits of Mercury and Venus.",
+     "show": {
+      "type": "kinetic",
+      "text": "ACROSS THE INNER ORBITS",
+      "accent": [
+       "ORBITS"
+      ]
+     }
+    },
+    {
+     "say": "Today the Sun's radius is 695,700 kilometers. Two hundred times that is about 139 million kilometers.",
+     "show": {
+      "type": "counter",
+      "value": 139,
+      "suffix": " million km",
+      "label": "RED GIANT RADIUS",
+      "sub": "695,700 km × 200"
+     },
+     "calc": "695700 * 200 / 1000000 = 139"
+    },
+    {
+     "say": "Now compare. Earth orbits at a mean distance of 149.6 million kilometers from the Sun.",
+     "show": {
+      "type": "compare",
+      "title": "HOW CLOSE IT GETS",
+      "items": [
+       {
+        "label": "Red giant radius",
+        "value": 139,
+        "suffix": " million km"
+       },
+       {
+        "label": "Earth's distance",
+        "value": 149.6,
+        "suffix": " million km"
+       }
+      ]
+     }
+    },
+    {
+     "say": "That is uncomfortably close. According to NASA, the red giant will engulf Mercury and Venus, and possibly Earth as well.",
+     "show": {
+      "type": "image",
+      "query": "Mercury MESSENGER"
+     }
+    },
+    {
+     "say": "Venus, the brightest planet in your evening sky, would be swallowed by a star that once kept it warm.",
+     "show": {
+      "type": "image",
+      "query": "Venus"
+     }
+    },
+    {
+     "say": "Astronomers can already tell apart red giants that have not reached their maximum radius from those that have ignited helium.",
+     "show": {
+      "type": "kinetic",
+      "text": "READING A GIANT'S AGE",
+      "accent": [
+       "AGE"
+      ]
+     }
+    },
+    {
+     "say": "So far: the oceans go first, then the Sun swells to a red giant and eats the inner planets. Does that count as an explosion?",
+     "show": {
+      "type": "footage",
+      "query": "Sun active region"
+     },
+     "recap": true
+    }
+   ]
+  },
+  {
+   "title": "No supernova",
+   "sources": [
+    "S3",
+    "S4"
+   ],
+   "beats": [
+    {
+     "say": "Here is the myth to drop. Our Sun will never go supernova. It does not have the mass.",
+     "show": {
+      "type": "kinetic",
+      "text": "NO SUPERNOVA",
+      "accent": [
+       "NO"
+      ]
+     }
+    },
+    {
+     "say": "NASA explains that neutron stars, the leftovers of supernovae, come from stars with between about eight and 20 times the Sun's mass.",
+     "show": {
+      "type": "bars",
+      "title": "WHO GETS TO EXPLODE",
+      "items": [
+       {
+        "label": "Our Sun",
+        "value": 1,
+        "display": "1 Sun"
+       },
+       {
+        "label": "Supernova stars",
+        "value": 20,
+        "display": "about 8 to 20 Suns"
+       }
+      ],
+      "log": false,
+      "note": "Source: NASA"
+     }
+    },
+    {
+     "say": "Those heavy stars burn through carbon, neon, oxygen and silicon, until the core collapses and rebounds in a huge explosion.",
+     "show": {
+      "type": "image",
+      "query": "Crab Nebula supernova"
+     }
+    },
+    {
+     "say": "Each new fuel buys the core less and less time. Once silicon turns into iron, the star runs out of fuel in a matter of days.",
+     "show": {
+      "type": "kinetic",
+      "text": "DAYS FROM DISASTER",
+      "accent": [
+       "DAYS"
+      ]
+     }
+    },
+    {
+     "say": "A star like ours below eight solar masses takes the quieter road: red giant, then a slow unravelling.",
+     "show": {
+      "type": "kinetic",
+      "text": "THE QUIET ROAD",
+      "accent": [
+       "QUIET"
+      ]
+     }
+    },
+    {
+     "say": "If calm cosmic numbers like these make your day, follow the channel. There is a new one every day.",
+     "show": {
+      "type": "image",
+      "query": "Hubble Space Telescope"
+     }
+    },
+    {
+     "say": "And if you want to find these objects in your own sky, our beginner's guide LOOK UP shows you where. The link in the description.",
+     "show": {
+      "type": "kinetic",
+      "text": "LOOK UP",
+      "accent": [
+       "LOOK",
+       "UP"
+      ]
+     },
+     "spot": true
+    },
+    {
+     "say": "Main sequence stars range from a tenth to 200 times the Sun's mass. Ours sits near the bottom of that range.",
+     "show": {
+      "type": "scale",
+      "title": "STAR MASSES (SUN = 1)",
+      "items": [
+       {
+        "label": "Smallest",
+        "value": 0.1,
+        "display": "a tenth"
+       },
+       {
+        "label": "Sun",
+        "value": 1,
+        "display": "1"
+       },
+       {
+        "label": "Biggest",
+        "value": 200,
+        "display": "200"
+       }
+      ]
+     }
+    },
+    {
+     "say": "Main sequence stars make up around 90% of the universe's stars. The Sun is ordinary, and ordinary stars die gently.",
+     "show": {
+      "type": "counter",
+      "value": 90,
+      "suffix": "%",
+      "label": "STARS ON THE MAIN SEQUENCE",
+      "sub": "NASA"
+     }
+    },
+    {
+     "say": "But gently does not mean quietly. What does a giant star do once it has swallowed its neighbours?",
+     "show": {
+      "type": "footage",
+      "query": "Ring Nebula"
+     }
+    }
+   ]
+  },
+  {
+   "title": "Shrinking",
+   "sources": [
+    "S2",
+    "S3"
+   ],
+   "beats": [
+    {
+     "say": "The red giant does not stay at full size. When its core gets hot enough, helium ignites.",
+     "show": {
+      "type": "image",
+      "query": "Betelgeuse"
+     }
+    },
+    {
+     "say": "Helium starts fusing into carbon, which also releases energy. For a while, that new fuel props the star up again.",
+     "show": {
+      "type": "kinetic",
+      "text": "HELIUM BECOMES CARBON",
+      "accent": [
+       "CARBON"
+      ]
+     }
+    },
+    {
+     "say": "ESA's Gaia team describes what happens next: the star recedes to a radius of about 10 times the current solar value.",
+     "show": {
+      "type": "compare",
+      "title": "SIZE OF THE SUN",
+      "items": [
+       {
+        "label": "Peak red giant",
+        "value": 200,
+        "suffix": "× today"
+       },
+       {
+        "label": "Helium burning",
+        "value": 10,
+        "suffix": "× today"
+       }
+      ]
+     }
+    },
+    {
+     "say": "Ten times wider is still enormous. Seen from what is left of the planets, it fills the sky.",
+     "show": {
+      "type": "image",
+      "query": "Sun SOHO"
+     }
+    },
+    {
+     "say": "Then the giant becomes unstable. In NASA's description it starts pulsating, expanding and throwing off parts of its atmosphere.",
+     "show": {
+      "type": "footage",
+      "query": "Sun coronal mass ejection"
+     }
+    },
+    {
+     "say": "Eventually all the outer layers blow away into an expanding cloud of dust and gas called a planetary nebula.",
+     "show": {
+      "type": "image",
+      "query": "Helix Nebula"
+     }
+    },
+    {
+     "say": "You have probably seen one in a photo. That glowing shell is a dying star giving its material back to the galaxy.",
+     "show": {
+      "type": "kinetic",
+      "text": "A STAR GIVES IT BACK",
+      "accent": [
+       "BACK"
+      ]
+     }
+    },
+    {
+     "say": "Those gases can end up in new stars and new planets. Our own atoms went through stars like this.",
+     "show": {
+      "type": "image",
+      "query": "Cat's Eye Nebula"
+     }
+    },
+    {
+     "say": "Gaia's catalogue of about 440,000 orbital solutions for binary stars helps astronomers measure exactly these late stages.",
+     "show": {
+      "type": "counter",
+      "value": 440000,
+      "suffix": "",
+      "label": "BINARY STAR ORBITS",
+      "sub": "ESA Gaia DR3"
+     }
+    },
+    {
+     "say": "Quick recap: oceans gone, inner planets swallowed, a giant that shrinks, pulses and sheds its skin. So what is left in the middle?",
+     "show": {
+      "type": "counter",
+      "value": 10,
+      "suffix": "×",
+      "label": "HELIUM-BURNING RADIUS",
+      "sub": "ESA Gaia"
+     },
+     "recap": true
+    }
+   ]
+  },
+  {
+   "title": "White dwarf",
+   "sources": [
+    "S3",
+    "S4",
+    "S6",
+    "S8"
+   ],
+   "beats": [
+    {
+     "say": "What remains is the bare core: a white dwarf. According to NASA, a white dwarf is usually Earth-size but hundreds of thousands of times more massive.",
+     "show": {
+      "type": "image",
+      "query": "white dwarf Sirius B"
+     }
+    },
+    {
+     "say": "Think about that squeeze. The Sun's radius today is 695,700 kilometers. Earth's is 6371.",
+     "show": {
+      "type": "compare",
+      "title": "RADIUS",
+      "items": [
+       {
+        "label": "Sun today",
+        "value": 695700,
+        "suffix": " km"
+       },
+       {
+        "label": "Earth",
+        "value": 6371,
+        "suffix": " km"
+       }
+      ]
+     }
+    },
+    {
+     "say": "That is a ratio of 109.2. Your future Sun shrinks by about that much while keeping most of its mass.",
+     "show": {
+      "type": "counter",
+      "value": 109.2,
+      "suffix": "×",
+      "label": "SUN WIDER THAN EARTH",
+      "sub": "NASA fact sheet"
+     }
+    },
+    {
+     "say": "A teaspoon of white dwarf material would weigh more than a pickup truck. Would you try to lift it?",
+     "show": {
+      "type": "image",
+      "query": "pickup truck",
+      "stickman": {
+       "label": "YOU",
+       "size": "small"
+      }
+     }
+    },
+    {
+     "say": "It makes no new heat. It just glows and slowly cools over billions of years.",
+     "show": {
+      "type": "footage",
+      "query": "white dwarf"
+     }
+    },
+    {
+     "say": "Despite the name, white dwarfs can glow from blue white to red as they slowly cool.",
+     "show": {
+      "type": "image",
+      "query": "white dwarf star illustration"
+     }
+    },
+    {
+     "say": "When does the Sun reach this stage? NASA pages give about 8 billion years and about 10 billion years from now.",
+     "show": {
+      "type": "bars",
+      "title": "WHITE DWARF SUN, YEARS FROM NOW",
+      "items": [
+       {
+        "label": "NASA estimate A",
+        "value": 8,
+        "display": "about 8 billion"
+       },
+       {
+        "label": "NASA estimate B",
+        "value": 10,
+        "display": "about 10 billion"
+       }
+      ],
+      "log": false,
+      "note": "Source: NASA"
+     }
+    },
+    {
+     "say": "And the surviving outer planets? NASA's Spitzer found about 40 white dwarfs with hot, dusty disks.",
+     "show": {
+      "type": "image",
+      "query": "Spitzer Space Telescope"
+     }
+    },
+    {
+     "say": "Astronomers think leftover planets can fling small rocky bodies inward, where the dead star tears them apart.",
+     "show": {
+      "type": "kinetic",
+      "text": "A STAR THAT EATS ROCKS",
+      "accent": [
+       "EATS"
+      ]
+     }
+    },
+    {
+     "say": "So the Solar System ends as a faint ember with a few cold planets. Or does something bigger arrive first?",
+     "show": {
+      "type": "image",
+      "query": "Jupiter"
+     }
+    }
+   ]
+  },
+  {
+   "title": "Andromeda",
+   "sources": [
+    "S5",
+    "S9"
+   ],
+   "beats": [
+    {
+     "say": "You have probably heard that our galaxy will crash into Andromeda. As far back as 1912, astronomers saw it heading our way.",
+     "show": {
+      "type": "image",
+      "query": "Andromeda galaxy"
+     }
+    },
+    {
+     "say": "In 2012, Hubble data made a direct impact look almost certain, in no more than 5 billion years.",
+     "show": {
+      "type": "kinetic",
+      "text": "ALMOST CERTAIN, 2012",
+      "accent": [
+       "2012"
+      ]
+     }
+    },
+    {
+     "say": "Then a new study used Hubble and Gaia together. It tested 22 different variables and ran 100,000 simulations.",
+     "show": {
+      "type": "counter",
+      "value": 100000,
+      "suffix": "",
+      "label": "SIMULATIONS",
+      "sub": "Hubble + Gaia study"
+     }
+    },
+    {
+     "say": "The result: approximately a 50-50 chance of the two galaxies colliding within the next 10 billion years.",
+     "show": {
+      "type": "compare",
+      "title": "COLLISION IN 10 BILLION YEARS",
+      "items": [
+       {
+        "label": "Collide",
+        "value": 50,
+        "suffix": "%"
+       },
+       {
+        "label": "Miss",
+        "value": 50,
+        "suffix": "%"
+       }
+      ]
+     }
+    },
+    {
+     "say": "The chance of a head-on collision in only 4 to 5 billion years is just around 2%.",
+     "show": {
+      "type": "image",
+      "query": "Milky Way galaxy"
+     }
+    },
+    {
+     "say": "Andromeda's satellite galaxy M33 pulls us a little toward it, while the Large Magellanic Cloud pulls the Milky Way away.",
+     "show": {
+      "type": "kinetic",
+      "text": "A TUG OF WAR",
+      "accent": [
+       "WAR"
+      ]
+     }
+    },
+    {
+     "say": "In about half the simulations the galaxies pass each other at around half a million light-years, then merge in the far future.",
+     "show": {
+      "type": "footage",
+      "query": "galaxy collision simulation"
+     }
+    },
+    {
+     "say": "So the Sun's own story ends first. As the researchers put it, Andromeda is the least of our cosmic worries.",
+     "show": {
+      "type": "image",
+      "query": "Hubble galaxies merging NGC 520"
+     }
+    },
+    {
+     "say": "Oceans in roughly 1 billion years, a red giant in about 5, a white dwarf after that. And the galaxy? A coin toss.",
+     "show": {
+      "type": "counter",
+      "value": 50,
+      "suffix": "%",
+      "label": "CHANCE OF A GALAXY CRASH",
+      "sub": "NASA, ESA"
+     },
+     "recap": true
+    },
+    {
+     "say": "If you want to see Andromeda yourself, a faint smudge you can find on a dark night, LOOK UP shows you how. Link in the description.",
+     "show": {
+      "type": "image",
+      "query": "Andromeda galaxy M31"
+     }
+    },
+    {
+     "say": "Which ending surprised you most: the oceans, the giant Sun or the coin toss? Write it below.",
+     "show": {
+      "type": "kinetic",
+      "text": "WHICH ENDING SURPRISED YOU?",
+      "accent": [
+       "YOU"
+      ]
+     },
+     "ask": "Which ending surprised you most?"
+    }
+   ]
+  }
+ ]
+}

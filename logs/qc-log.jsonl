@@ -1,3 +1,7 @@
 
 {"stage": "build", "p": "threads", "ref": "th-c1104-p4-clip-e", "ok": true, "score": 99, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-c1105-p4-clip-g", "ok": true, "score": 89, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1105-apod-enceladus-silhouette", "ok": true, "score": 82, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1105-hubble-reveals-cosmic", "ok": true, "score": 82, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1105-apod-not-so-hidden", "ok": true, "score": 89, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-quiz-1105-orbital-period-min", "ok": true, "score": 81, "errors": []}

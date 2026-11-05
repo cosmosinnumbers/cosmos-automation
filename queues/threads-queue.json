@@ -368,6 +368,32 @@
   "short": "c1104-p4-clip-e"
  },
  {
+  "ref": "th-news-1105-apod-not-so-hidden",
+  "at": "2026-11-05 12:00",
+  "tag": "Astronomy",
+  "text": "The Not-So-Hidden Galaxy, IC 342 (NASA Astronomy Picture of the Day)\n\n“I see” IC 342, the Hidden Galaxy! Today’s image peers through the plane of the Milky Way, through all its gas, dust and stars, to unveil this spiral galaxy.\n\nSource: NASA APOD (4 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-4-the-not-so-hidden-galaxy-ic-342/",
+  "replies": [
+   "IC 342 (or Caldwell 5) is one of the brightest members of the IC 342/Maffei group of galaxies. Located about 10 million light years away, this group is quite close to the Local Group that includes our Milky Way.\n\nImage: Artem Mironov."
+  ],
+  "news_title": "APOD: 2026 November 4 – The Not-So-Hidden Galaxy, IC 342"
+ },
+ {
+  "ref": "th-quiz-1105-orbital-period-min",
+  "at": "2026-11-05 17:55",
+  "tag": "Science",
+  "poll": [
+   "Saturn",
+   "Uranus",
+   "Mercury"
+  ],
+  "text": "Yesterday's answer: Uranus, 30,589 days per orbit (NASA Planetary Fact Sheet).\n\nToday's quiz 📅 Which of these planets has the shortest year?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Orbital Period-1",
+  "answer": "Mercury, 88.0 days per orbit (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1105-p4-clip-g",
   "at": "2026-11-05 21:00",
   "tag": "Mars",

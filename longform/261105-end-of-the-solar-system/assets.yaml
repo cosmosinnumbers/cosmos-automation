@@ -1,0 +1,317 @@
+vid_1:
+  file: assets/stock/nasa-GSFC_20170211_SDO_m12500_Year7.mp4
+  type: video
+  kind: footage
+  title: 'SDO: Year 7'
+  source: https://images.nasa.gov/details/GSFC_20170211_SDO_m12500_Year7
+  credit: NASA/GSFC (Scott Wiessinger, Tom Bridgman)
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_2:
+  file: assets/stock/nasa-img-PIA12365.jpg
+  type: image
+  kind: photo
+  title: A Color View of the Solar System Innermost Planet
+  source: https://images.nasa.gov/details/PIA12365
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_3:
+  file: assets/stock/nasa-img-iss036e002224.jpg
+  type: image
+  kind: photo
+  title: Earth Observation
+  source: https://images.nasa.gov/details/iss036e002224
+  credit: NASA/JSC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_4:
+  file: assets/stock/nasa-GSFC_20170403_Trio_m12563_SolarFlares.mp4
+  type: video
+  kind: footage
+  title: April 2017 Solar Flare Trio
+  source: https://images.nasa.gov/details/GSFC_20170403_Trio_m12563_SolarFlares
+  credit: NASA/GSFC (Genna Duberstein, Tom Bridgman)
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_5:
+  file: assets/stock/nasa-img-sl4-143-4707.jpg
+  type: image
+  kind: photo
+  title: View of Skylab space station cluster in Earth orbit from CSM
+  source: https://images.nasa.gov/details/sl4-143-4707
+  credit: NASA/JSC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_6:
+  file: assets/stock/nasa-img-s36-07-012.jpg
+  type: image
+  kind: photo
+  title: STS-36 Earth observation of sun beaming off cloud-covered ocean waters
+  source: https://images.nasa.gov/details/s36-07-012
+  credit: NASA/JSC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_7:
+  file: assets/stock/nasa-GSFC_20150630_SDO_m11908_ArchingEruption.mp4
+  type: video
+  kind: footage
+  title: Arching Eruption
+  source: https://images.nasa.gov/details/GSFC_20150630_SDO_m11908_ArchingEruption
+  credit: NASA/GSFC (Genna Duberstein, Tom Bridgman, Karen Fox)
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_8:
+  file: assets/stock/nasa-img-iss071e364425.jpg
+  type: image
+  kind: photo
+  title: Noctilucent clouds illuminated when the sun is below Earth's horizon
+  source: https://images.nasa.gov/details/iss071e364425
+  credit: NASA/JSC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_10:
+  file: assets/stock/nasa-img-PIA13044.jpg
+  type: image
+  kind: photo
+  title: IC 1795
+  source: https://images.nasa.gov/details/PIA13044
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_11:
+  file: assets/stock/nasa-GSFC_20180725_Parker_m12903_CoronalHeating_Short.mp4
+  type: video
+  kind: footage
+  title: The Sun’s Mysteriously Hot Atmosphere
+  source: https://images.nasa.gov/details/GSFC_20180725_Parker_m12903_CoronalHeating_Short
+  credit: NASA/GSFC (Joy Ng, Kathalina Tran, Eric Christian, Nour Raouafi, James A. Klimchuk, Ryan Milligan,
+    Sten Odenwald, Adrian Daw, Tom Bridgman, Walt Feimer, Michael Lentz)
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_12:
+  file: assets/stock/nasa-img-PIA08283.jpg
+  type: image
+  kind: photo
+  title: 'Flickering Aldebaran #1'
+  source: https://images.nasa.gov/details/PIA08283
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_13:
+  file: assets/stock/nasa-img-PIA12264.jpg
+  type: image
+  kind: photo
+  title: Today, MESSENGER Flies by Mercury!
+  source: https://images.nasa.gov/details/PIA12264
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_14:
+  file: assets/stock/nasa-img-PIA13001.jpg
+  type: image
+  kind: photo
+  title: Surface Warmth on a Venus Volcano
+  source: https://images.nasa.gov/details/PIA13001
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_15:
+  file: assets/stock/nasa-GSFC_20121023_SDO_m11120_Flare.mp4
+  type: video
+  kind: footage
+  title: Active Region on the Sun Emits Another Flare
+  source: https://images.nasa.gov/details/GSFC_20121023_SDO_m11120_Flare
+  credit: NASA/GSFC (Genna Duberstein, Scott Wiessinger, Karen Fox)
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_16:
+  file: assets/stock/nasa-img-PIA17563.jpg
+  type: image
+  kind: photo
+  title: Crab Nebula, as Seen by Herschel and Hubble
+  source: https://images.nasa.gov/details/PIA17563
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_17:
+  file: assets/stock/nasa-img-PIA05982.jpg
+  type: image
+  kind: photo
+  title: Saturn from Far and Near Hubble Space Telescope
+  source: https://images.nasa.gov/details/PIA05982
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_18:
+  file: assets/stock/nasa-First Images from the James Webb Space Telescope (Official NASA Highlights).mp4
+  type: video
+  kind: footage
+  title: First Images from the James Webb Space Telescope (Official NASA Highlights)
+  source: https://images.nasa.gov/details/First Images from the James Webb Space Telescope (Official NASA
+    Highlights)
+  credit: NASA/HQ
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_19:
+  file: assets/stock/nasa-img-PIA16680.jpg
+  type: image
+  kind: photo
+  title: Betelgeuse Enigmatic Environment
+  source: https://images.nasa.gov/details/PIA16680
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_20:
+  file: assets/stock/nasa-img-PIA03149.jpg
+  type: image
+  kind: photo
+  title: Handle-shaped Prominence
+  source: https://images.nasa.gov/details/PIA03149
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_21:
+  file: assets/stock/nasa-GSFC_20140709_SDO_m11605_Firework_Flare.mp4
+  type: video
+  kind: footage
+  title: Firework Flare
+  source: https://images.nasa.gov/details/GSFC_20140709_SDO_m11605_Firework_Flare
+  credit: NASA/GSFC (Genna Duberstein, Tom Bridgman)
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_22:
+  file: assets/stock/nasa-img-PIA15658.jpg
+  type: image
+  kind: photo
+  title: NGC 7293, the Helix Nebula
+  source: https://images.nasa.gov/details/PIA15658
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_24:
+  file: assets/stock/nasa-img-GSFC_20171208_Archive_e001783.jpg
+  type: image
+  kind: photo
+  title: Preview of a Forthcoming Supernova
+  source: https://images.nasa.gov/details/GSFC_20171208_Archive_e001783
+  credit: NASA/GSFC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_25:
+  file: assets/stock/nasa-img-KSC-2013-3232.jpg
+  type: image
+  kind: photo
+  title: KSC-2013-3232
+  source: https://images.nasa.gov/details/KSC-2013-3232
+  credit: NASA/KSC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_26:
+  file: assets/stock/nasa-Will the Sun Ever Burn Out.mp4
+  type: video
+  kind: footage
+  title: Will the Sun Ever Burn Out | We Asked a NASA Expert
+  source: https://images.nasa.gov/details/Will the Sun Ever Burn Out
+  credit: NASA/LaRC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_27:
+  file: assets/stock/nasa-img-PIA03652.jpg
+  type: image
+  kind: illustration
+  title: Comet Bites the Dust Around Dead Star  Artist Concept
+  source: https://images.nasa.gov/details/PIA03652
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_28:
+  file: assets/stock/nasa-img-PIA23643.jpg
+  type: image
+  kind: illustration
+  title: Spitzer Space Telescope (Illustration)
+  source: https://images.nasa.gov/details/PIA23643
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_29:
+  file: assets/stock/nasa-img-PIA01518.jpg
+  type: image
+  kind: photo
+  title: Jupiter Plume
+  source: https://images.nasa.gov/details/PIA01518
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_30:
+  file: assets/stock/nasa-img-PIA04921.jpg
+  type: image
+  kind: photo
+  title: Andromeda Galaxy
+  source: https://images.nasa.gov/details/PIA04921
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_31:
+  file: assets/stock/nasa-img-GSFC_20171208_Archive_e001326.jpg
+  type: image
+  kind: photo
+  title: Tracing the growth of Milky Way-like galaxies
+  source: https://images.nasa.gov/details/GSFC_20171208_Archive_e001326
+  credit: NASA/GSFC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_32:
+  file: assets/stock/nasa-GSFC_20181002_SMBH_m13043_Simulation.mp4
+  type: video
+  kind: footage
+  title: New Simulation Sheds Light on Spiraling Supermassive Black Holes
+  source: https://images.nasa.gov/details/GSFC_20181002_SMBH_m13043_Simulation
+  credit: NASA/GSFC (Scott Wiessinger)
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_33:
+  file: assets/stock/nasa-img-PIA10390.jpg
+  type: image
+  kind: photo
+  title: NGC 520
+  source: https://images.nasa.gov/details/PIA10390
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_34:
+  file: assets/stock/nasa-img-0002272.jpg
+  type: image
+  kind: photo
+  title: History of Chandra X-Ray Observatory
+  source: https://images.nasa.gov/details/0002272
+  credit: NASA/MSFC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+thumb_A:
+  file: assets/stock/nasa-img-PIA17843.jpg
+  type: image
+  kind: photo
+  title: Speedster Star Shocks the Galaxy
+  source: https://images.nasa.gov/details/PIA17843
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+thumb_B:
+  file: assets/stock/nasa-img-PIA26681.jpg
+  type: image
+  kind: photo
+  title: ' Image of Sun From NASA''s Solar Dynamics Observatory'
+  source: https://images.nasa.gov/details/PIA26681
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+thumb_C:
+  file: assets/stock/nasa-img-sl4-143-4706.jpg
+  type: image
+  kind: photo
+  title: View of Skylab space station cluster in Earth orbit from CSM
+  source: https://images.nasa.gov/details/sl4-143-4706
+  credit: NASA/JSC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok

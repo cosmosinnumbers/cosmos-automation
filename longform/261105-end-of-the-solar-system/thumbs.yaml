@@ -1,0 +1,42 @@
+A:
+  bg: thumb_A
+  lines:
+  - 200×
+  - WIDER
+  - SUN
+  accent: amber
+  badge: REAL NASA DATA
+  side: left
+  focus:
+  - 0.5
+  - 0.5
+  highlight: 0
+  stickman: false
+B:
+  bg: thumb_B
+  lines:
+  - THE SUN
+  - WON'T
+  - EXPLODE
+  accent: cyan
+  badge: REAL NASA DATA
+  side: left
+  focus:
+  - 0.5
+  - 0.5
+  highlight: 0
+  stickman: false
+C:
+  bg: thumb_C
+  lines:
+  - EARTH HAS
+  - 1 BILLION
+  - YEARS
+  accent: amber
+  badge: REAL NASA DATA
+  side: left
+  focus:
+  - 0.5
+  - 0.5
+  highlight: 0
+  stickman: true

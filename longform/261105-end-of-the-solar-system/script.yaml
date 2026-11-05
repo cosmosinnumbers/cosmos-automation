@@ -1,0 +1,714 @@
+id: 261105-end-of-the-solar-system
+title: 'The Sun Will Swell 200 Times Wider: How It All Ends'
+alt_titles:
+- How the Solar System Ends, in 7 Real Numbers
+- Earth Has About 1 Billion Years. The Sun Has More
+voice: af_heart
+speed: 1.1
+music:
+  seed: 309
+  mood: wonder
+hashtags:
+- space
+- sun
+- astronomy
+tags:
+- how the solar system ends
+- sun red giant
+- sun white dwarf
+- what happens when the sun dies
+- will the sun go supernova
+- milky way andromeda collision
+- earth uninhabitable 1 billion years
+- gaia sun future
+- end of the solar system
+- space documentary
+- real space data
+- sun future
+description_intro: How our Solar System ends, step by step, using ESA Gaia results on the Sun's past and
+  future, NASA pages on stellar evolution and the Sun, and the 2025 Hubble and Gaia study on the Milky
+  Way and Andromeda. Dates far in the future are model estimates, and NASA pages differ on some of them.
+progress_bar: true
+cut_sfx: true
+chapters: false
+approved: true
+approved_by: 'longform_auto.py (checks: facts, reviewer, script)'
+sources:
+- id: S1
+  title: 'ESA: Gaia reveals the past and future of the Sun'
+  url: https://www.esa.int/Science_Exploration/Space_Science/Gaia/Gaia_reveals_the_past_and_future_of_the_Sun
+- id: S2
+  title: 'ESA Gaia: how binary stars change their stellar dance with age'
+  url: https://www.cosmos.esa.int/web/gaia/iow_20240723
+- id: S3
+  title: 'NASA: Star types'
+  url: https://science.nasa.gov/universe/stars/types/
+- id: S4
+  title: 'NASA: Life and death of planetary systems, chapter 7'
+  url: https://science.nasa.gov/exoplanets/resources/life-and-death/chapter-7/
+- id: S5
+  title: 'NASA: Hubble casts doubt on certainty of galactic collision'
+  url: https://science.nasa.gov/missions/hubble/apocalypse-when-hubble-casts-doubt-on-certainty-of-galactic-collision/
+- id: S6
+  title: NASA Sun Fact Sheet
+  url: https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html
+- id: S7
+  title: 'NASA: Sun facts'
+  url: https://science.nasa.gov/sun/facts/
+- id: S8
+  title: 'NASA Space Place: All about the Sun'
+  url: https://spaceplace.nasa.gov/all-about-the-sun/en/
+segments:
+- id: c1
+  act: Intro
+  sources:
+  - S1
+  - S7
+  narration: 'How long do you think our Sun has left? The honest answer is stranger than any doomsday
+    movie. ESA''s article on Gaia gives our Sun an age of around 4.57 billion years: in its comfortable
+    middle age. By the end you''ll know what Gaia''s study of Sun-like stars says happens to our Sun as
+    it ages. Here is your first guess. What ends first: life on Earth, the planet Mercury, or the Sun
+    itself? Right now the Sun is stable. It fuses hydrogen into helium in a core of about 15 million degrees
+    Celsius. It sits about 150 million kilometers away, yet its light still warms every ocean you have
+    ever swum in. That fusion pushes outward against gravity. As long as the push and the pull stay balanced,
+    the Sun stays the Sun. It is huge. According to NASA, it would take 1.3 million Earths to fill the
+    Sun''s volume. And it holds 99.8% of all the mass in our Solar System. Everything else, you included,
+    is a rounding error. But fuel never lasts forever. So what runs out first, and what does that mean
+    for the planet you are sitting on?'
+  visuals:
+  - type: video
+    src: vid_1
+    start: 8.0
+    stickman:
+      label: YOU
+      size: tiny
+  - type: counter
+    value: 4.57
+    suffix: ' billion years'
+    label: AGE OF THE SUN
+    sub: ESA Gaia
+    count: 1.8
+    decimals: 1
+  - type: image
+    src: img_2
+    motion: zoom_out
+  - type: kinetic
+    text: WHAT GOES FIRST?
+    accent:
+    - FIRST
+    bg: img_2
+    dim: 0.7
+  - type: counter
+    value: 15.0
+    suffix: ' million °C'
+    label: SUN'S CORE
+    sub: NASA
+    count: 1.8
+    decimals: 0
+    bg: img_2
+    dim: 0.7
+  - type: image
+    src: img_3
+    motion: zoom_in
+  - type: video
+    src: vid_4
+    start: 8.0
+  - type: scale
+    title: FILL THE SUN
+    items:
+    - label: Earth
+      value: 1.0
+      display: '1'
+      decimals: 0
+    - label: Earths to fill the Sun
+      value: 1300000.0
+      display: 1.3 million
+      decimals: 0
+  - type: image
+    src: img_5
+    motion: pan_right
+    stickman:
+      label: YOU
+      size: tiny
+  - type: kinetic
+    text: FUEL NEVER LASTS
+    accent:
+    - FUEL
+    bg: img_5
+    dim: 0.7
+  weights:
+  - 18
+  - 19
+  - 19
+  - 18
+  - 20
+  - 19
+  - 21
+  - 17
+  - 20
+  - 22
+- id: c2
+  act: Earth's deadline
+  sources:
+  - S1
+  - S5
+  - S6
+  - S7
+  narration: 'Here is the twist most people miss. Earth does not wait for the Sun to die. Our deadline
+    comes much sooner. NASA''s article on the Hubble and Gaia galaxy study states it: the warming Sun
+    makes Earth uninhabitable in roughly 1 billion years. Today the Sun''s surface glows at an effective
+    temperature of 5772 Kelvin. A hotter, brighter Sun pours more heat onto us. Comparing it with Sun-like
+    stars of different ages, the Gaia team found it reaches a maximum temperature at approximately 8 billion
+    years of age. Subtract today''s age and that peak is about 3.43 billion years away. Earth''s deadline
+    comes long before that. So life on Earth runs out of time first, billions of years before the red
+    giant. Did you guess that? Tell me in the comments. To find this, Gaia''s team picked stars with the
+    same mass and chemistry as the Sun, but different ages. They found 5863 solar analogues. Lined up
+    by age, those stars trace our Sun''s past and its future. That is the beauty of the method. You cannot
+    watch one star for billions of years, but you can watch thousands at once. And what those stars show
+    next is far more dramatic than a hot planet. What happens when the core runs dry?'
+  visuals:
+  - type: image
+    src: img_6
+    motion: zoom_in
+  - type: kinetic
+    text: ROUGHLY 1 BILLION YEARS
+    accent:
+    - '1'
+    - BILLION
+    bg: img_6
+    dim: 0.7
+  - type: video
+    src: vid_7
+    start: 8.0
+  - type: bars
+    title: THE SUN'S TIMELINE (AGE)
+    items:
+    - label: Today
+      value: 4.57
+      display: 4.57 billion
+      decimals: 1
+    - label: Hottest
+      value: 8.0
+      display: 8 billion
+      decimals: 0
+    - label: Red giant
+      value: 10.5
+      display: 10–11 billion
+      decimals: 1
+    log: false
+    note: 'Source: ESA Gaia'
+  - type: counter
+    value: 3.43
+    suffix: ' billion years'
+    label: UNTIL THE HOTTEST SUN
+    sub: 8 − 4.57
+    count: 1.8
+    decimals: 1
+    bg: img_6
+    dim: 0.7
+  - type: image
+    src: img_8
+    motion: zoom_in
+    ask: Did you guess Earth would lose the race first?
+  - type: kinetic
+    text: To find this, Gaia's team picked stars
+    accent: []
+  - type: counter
+    value: 5863.0
+    suffix: ''
+    label: SUN-LIKE STARS
+    sub: ESA Gaia DR3
+    count: 1.8
+    decimals: 0
+    bg: img_8
+    dim: 0.7
+  - type: image
+    src: img_10
+    motion: pan_right
+  - type: kinetic
+    text: THE CORE RUNS DRY
+    accent:
+    - DRY
+    bg: img_10
+    dim: 0.7
+  weights:
+  - 21
+  - 22
+  - 21
+  - 24
+  - 18
+  - 25
+  - 19
+  - 18
+  - 23
+  - 21
+- id: c3
+  act: Red giant
+  sources:
+  - S1
+  - S2
+  - S3
+  - S6
+  - S7
+  narration: 'When the hydrogen in the core runs out, the core contracts and heats up. The outside does
+    the opposite. According to NASA, the Sun will become a red giant in about 5 billion years. ESA''s
+    Gaia study of Sun-like stars puts it around 10–11 billion years of age. The outer layers swell to
+    up to about 200 times the current solar radius. Picture standing next to that. Its diameter today
+    is about 1.4 million kilometers. As a red giant, it would stretch across the orbits of Mercury and
+    Venus. Today the Sun''s radius is 695,700 kilometers. Two hundred times that is about 139 million
+    kilometers. Now compare. Earth orbits at a mean distance of 149.6 million kilometers from the Sun.
+    That is uncomfortably close. According to NASA, the red giant will engulf Mercury and Venus, and possibly
+    Earth as well. Venus, our closest planetary neighbour, would be swallowed by the same star that has
+    kept it warm for billions of years. Astronomers can already tell apart red giants that have not reached
+    their maximum radius from those that have ignited helium. So far: a red giant up to about 200 times
+    wider, engulfing Mercury and Venus, and possibly Earth. Is that an explosion?'
+  visuals:
+  - type: video
+    src: vid_11
+    start: 8.0
+  - type: kinetic
+    text: RED GIANT IN ~5 BILLION YEARS
+    accent:
+    - RED
+    - GIANT
+    bg: img_10
+    dim: 0.7
+  - type: image
+    src: img_12
+    motion: zoom_out
+    stickman:
+      label: YOU
+      size: tiny
+  - type: kinetic
+    text: ACROSS THE INNER ORBITS
+    accent:
+    - ORBITS
+    bg: img_12
+    dim: 0.7
+  - type: counter
+    value: 139.0
+    suffix: ' million km'
+    label: RED GIANT RADIUS
+    sub: 695,700 km × 200
+    count: 1.8
+    decimals: 0
+    bg: img_12
+    dim: 0.7
+  - type: compare
+    title: HOW CLOSE IT GETS
+    items:
+    - label: Red giant radius
+      value: 139.0
+      suffix: ' million km'
+      decimals: 0
+    - label: Earth's distance
+      value: 149.6
+      suffix: ' million km'
+      decimals: 1
+    bg: img_12
+    dim: 0.7
+  - type: image
+    src: img_13
+    motion: pan_left
+    stickman:
+      label: YOU
+      size: tiny
+  - type: image
+    src: img_14
+    motion: zoom_out
+  - type: kinetic
+    text: READING A GIANT'S AGE
+    accent:
+    - AGE
+    bg: img_14
+    dim: 0.7
+  - type: video
+    src: vid_15
+    start: 7.6
+  weights:
+  - 19
+  - 29
+  - 19
+  - 22
+  - 16
+  - 15
+  - 20
+  - 21
+  - 20
+  - 22
+- id: c4
+  act: No supernova
+  sources:
+  - S3
+  narration: 'Here is the myth to drop. Our Sun will never go supernova. It does not have the mass. NASA
+    explains that neutron stars, the leftovers of supernovae, come from stars with between about eight
+    and 20 times the Sun''s mass. Those heavy stars fuse heavier and heavier elements, until the core
+    collapses, rebounds, and the star blows up as a supernova. What is left of them can be a neutron star.
+    Some of those, called pulsars, spin faster than blender blades. A star like ours below eight solar
+    masses takes the quieter road: red giant, then a slow unravelling. If calm cosmic numbers like these
+    make your day, follow the channel. There is a new one every day. And if you want to find these objects
+    in your own sky, our beginner''s guide LOOK UP shows you where. The link in the description. Main
+    sequence stars range from a tenth to 200 times the Sun''s mass. Ours sits near the bottom of that
+    range. Main sequence stars make up around 90% of the universe''s stars. The Sun is ordinary, and ordinary
+    stars die gently. But gently does not mean quietly. What does a giant star do once it has swallowed
+    its neighbours?'
+  visuals:
+  - type: kinetic
+    text: NO SUPERNOVA
+    accent:
+    - 'NO'
+    bg: img_14
+    dim: 0.7
+  - type: bars
+    title: WHO GETS TO EXPLODE
+    items:
+    - label: Our Sun
+      value: 1.0
+      display: 1 Sun
+      decimals: 0
+    - label: Supernova stars
+      value: 20.0
+      display: about 8 to 20 Suns
+      decimals: 0
+    log: false
+    note: 'Source: NASA'
+  - type: image
+    src: img_16
+    motion: zoom_out
+  - type: kinetic
+    text: FASTER THAN A BLENDER
+    accent:
+    - BLENDER
+    bg: img_16
+    dim: 0.7
+  - type: kinetic
+    text: THE QUIET ROAD
+    accent:
+    - QUIET
+    bg: img_16
+    dim: 0.7
+  - type: image
+    src: img_17
+    motion: zoom_in
+  - type: kinetic
+    text: LOOK UP · link in the description
+    accent:
+    - LOOK
+    - UP
+    spot: true
+  - type: scale
+    title: STAR MASSES (SUN = 1)
+    items:
+    - label: Smallest
+      value: 0.1
+      display: a tenth
+      decimals: 1
+    - label: Sun
+      value: 1.0
+      display: '1'
+      decimals: 0
+    - label: Biggest
+      value: 200.0
+      display: '200'
+      decimals: 0
+  - type: counter
+    value: 90.0
+    suffix: '%'
+    label: STARS ON THE MAIN SEQUENCE
+    sub: NASA
+    count: 1.8
+    decimals: 0
+    bg: img_17
+    dim: 0.7
+  - type: video
+    src: vid_18
+    start: 8.0
+  weights:
+  - 18
+  - 22
+  - 21
+  - 20
+  - 18
+  - 19
+  - 25
+  - 21
+  - 20
+  - 18
+- id: c5
+  act: Shrinking
+  sources:
+  - S1
+  - S2
+  - S3
+  narration: 'The red giant does not stay at full size. When its core gets hot enough, helium ignites.
+    Helium starts fusing into carbon, which also releases energy. For a while, that new fuel props the
+    star up again. ESA''s Gaia team describes what happens next: the star recedes to a radius of about
+    10 times the current solar value. Ten times wider than today is still a giant star, just far smaller
+    than its peak of about 200 times. Then the giant becomes unstable. In NASA''s description it starts
+    pulsating, expanding and throwing off parts of its atmosphere. Eventually all the outer layers blow
+    away into an expanding cloud of dust and gas called a planetary nebula. You have probably seen one
+    in a photo. That glowing shell is a dying star giving its material back to the galaxy. Sun-like stars
+    of every age in Gaia''s data are how astronomers piece together these late stages of a star like ours.
+    Gaia''s catalogue holds about 440,000 orbital solutions for binary stars: pairs born together, with
+    the same age, to test these stages. Quick recap: a giant that shrinks to about 10 times today''s size,
+    pulses, and blows away its outer layers. So what is left in the middle?'
+  visuals:
+  - type: image
+    src: img_19
+    motion: zoom_in
+  - type: kinetic
+    text: HELIUM BECOMES CARBON
+    accent:
+    - CARBON
+    bg: img_19
+    dim: 0.7
+  - type: compare
+    title: SIZE OF THE SUN
+    items:
+    - label: Peak red giant
+      value: 200.0
+      suffix: × today
+      decimals: 0
+    - label: Helium burning
+      value: 10.0
+      suffix: × today
+      decimals: 0
+    bg: img_19
+    dim: 0.7
+  - type: image
+    src: img_20
+    motion: pan_right
+  - type: video
+    src: vid_21
+    start: 8.0
+  - type: image
+    src: img_22
+    motion: zoom_in
+  - type: kinetic
+    text: A STAR GIVES IT BACK
+    accent:
+    - BACK
+    bg: img_22
+    dim: 0.7
+  - type: kinetic
+    text: Sun-like stars of every age in Gaia's
+    accent: []
+  - type: counter
+    value: 440000.0
+    suffix: ''
+    label: BINARY STAR ORBITS
+    sub: ESA Gaia DR3
+    count: 1.8
+    decimals: 0
+    bg: img_22
+    dim: 0.7
+  - type: counter
+    value: 10.0
+    suffix: ×
+    label: HELIUM-BURNING RADIUS
+    sub: ESA Gaia
+    count: 1.8
+    decimals: 0
+    bg: img_22
+    dim: 0.7
+  weights:
+  - 17
+  - 20
+  - 21
+  - 20
+  - 19
+  - 19
+  - 22
+  - 21
+  - 21
+  - 26
+- id: c6
+  act: White dwarf
+  sources:
+  - S3
+  - S4
+  - S6
+  - S8
+  narration: 'What remains is the bare core: a white dwarf. According to NASA, a white dwarf is usually
+    Earth-size but hundreds of thousands of times more massive. Think about that squeeze. The Sun''s radius
+    today is 695,700 kilometers. Earth''s is 6371. That is a ratio of 109.2. A white dwarf Sun would be
+    squeezed down to about Earth''s size. A teaspoon of white dwarf material would weigh more than a pickup
+    truck. Would you try to lift it? It makes no new heat. It just glows and slowly cools over billions
+    of years. Despite the name, white dwarfs can glow from blue white to red as they slowly cool. When
+    does the Sun reach this stage? NASA pages give about 8 billion years and about 10 billion years from
+    now. And the surviving outer planets? NASA''s Spitzer found about 40 white dwarfs with hot, dusty
+    disks. Astronomers think leftover planets can fling small rocky bodies inward, where the dead star
+    tears them apart. So the Sun ends as a faint, cooling ember. Or could something even bigger reach
+    us first?'
+  visuals:
+  - type: image
+    src: img_24
+    motion: zoom_in
+    stickman:
+      label: YOU
+      size: tiny
+  - type: compare
+    title: RADIUS
+    items:
+    - label: Sun today
+      value: 695700.0
+      suffix: ' km'
+      decimals: 0
+    - label: Earth
+      value: 6371.0
+      suffix: ' km'
+      decimals: 0
+    bg: img_24
+    dim: 0.7
+  - type: counter
+    value: 109.2
+    suffix: ×
+    label: SUN WIDER THAN EARTH
+    sub: NASA fact sheet
+    count: 1.8
+    decimals: 1
+    bg: img_24
+    dim: 0.7
+  - type: image
+    src: img_25
+    motion: pan_right
+    stickman:
+      label: YOU
+      size: small
+  - type: video
+    src: vid_26
+    start: 8.0
+  - type: image
+    src: img_27
+    motion: zoom_in
+  - type: bars
+    title: WHITE DWARF SUN, YEARS FROM NOW
+    items:
+    - label: NASA estimate A
+      value: 8.0
+      display: about 8 billion
+      decimals: 0
+    - label: NASA estimate B
+      value: 10.0
+      display: about 10 billion
+      decimals: 0
+    log: false
+    note: 'Source: NASA'
+  - type: image
+    src: img_28
+    motion: zoom_out
+  - type: kinetic
+    text: A STAR THAT EATS ROCKS
+    accent:
+    - EATS
+    bg: img_28
+    dim: 0.7
+  - type: image
+    src: img_29
+    motion: pan_up
+  weights:
+  - 26
+  - 14
+  - 18
+  - 19
+  - 15
+  - 16
+  - 21
+  - 16
+  - 17
+  - 17
+- id: c7
+  act: Andromeda
+  sources:
+  - S5
+  narration: 'You have probably heard that our galaxy will crash into Andromeda. As far back as 1912,
+    astronomers saw it heading our way. In 2012, a Hubble analysis made the collision seem much more likely,
+    indicating a direct impact in no more than 5 billion years. Then a new study used Hubble and Gaia
+    together. It tested 22 different variables and ran 100,000 simulations. The result: approximately
+    a 50-50 chance of the two galaxies colliding within the next 10 billion years. The chance of a head-on
+    collision in only 4 to 5 billion years is just around 2%. Andromeda''s satellite galaxy M33 pulls
+    us a little toward it, while the Large Magellanic Cloud pulls the Milky Way away. In about half the
+    simulations the galaxies pass each other at around half a million light-years, then merge in the far
+    future. So the Sun''s own story ends first. As the researchers put it, Andromeda is the least of our
+    cosmic worries. Earth uninhabitable in roughly 1 billion years, a red giant in about 5 billion, a
+    white dwarf after that. The galaxy? A coin toss. If you want to see Andromeda yourself, a faint smudge
+    you can find on a dark night, LOOK UP shows you how. Link in the description. Which ending surprised
+    you most: Earth''s deadline, the giant Sun or the coin toss? Write it below.'
+  visuals:
+  - type: image
+    src: img_30
+    motion: zoom_in
+  - type: kinetic
+    text: MUCH MORE LIKELY, 2012
+    accent:
+    - '2012'
+    bg: img_30
+    dim: 0.7
+  - type: counter
+    value: 100000.0
+    suffix: ''
+    label: SIMULATIONS
+    sub: Hubble + Gaia study
+    count: 1.8
+    decimals: 0
+    bg: img_30
+    dim: 0.7
+  - type: compare
+    title: COLLISION IN 10 BILLION YEARS
+    items:
+    - label: Collide
+      value: 50.0
+      suffix: '%'
+      decimals: 0
+    - label: Miss
+      value: 50.0
+      suffix: '%'
+      decimals: 0
+    bg: img_30
+    dim: 0.7
+  - type: image
+    src: img_31
+    motion: pan_up
+  - type: kinetic
+    text: A TUG OF WAR
+    accent:
+    - WAR
+    bg: img_31
+    dim: 0.7
+  - type: video
+    src: vid_32
+    start: 8.0
+  - type: image
+    src: img_33
+    motion: zoom_out
+  - type: counter
+    value: 50.0
+    suffix: '%'
+    label: CHANCE OF A GALAXY CRASH
+    sub: NASA, ESA
+    count: 1.8
+    decimals: 0
+    bg: img_33
+    dim: 0.7
+  - type: image
+    src: img_34
+    motion: pan_up
+  - type: kinetic
+    text: WHICH ENDING SURPRISED YOU?
+    accent:
+    - YOU
+    bg: img_34
+    dim: 0.7
+    ask: Which ending surprised you most?
+  weights:
+  - 22
+  - 23
+  - 18
+  - 17
+  - 17
+  - 20
+  - 22
+  - 20
+  - 24
+  - 26
+  - 17

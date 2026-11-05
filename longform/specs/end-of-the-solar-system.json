@@ -112,7 +112,7 @@
      }
     },
     {
-     "say": "By the end you'll know what NASA and ESA data say happens to the Sun, to Earth and to our galaxy.",
+     "say": "By the end you'll know what ESA's Gaia data and NASA say happens to our Sun as it ages.",
      "show": {
       "type": "image",
       "query": "solar system planets"
@@ -395,7 +395,7 @@
      }
     },
     {
-     "say": "Venus, the brightest planet in your evening sky, would be swallowed by a star that once kept it warm.",
+     "say": "Venus, our closest planetary neighbour, would be swallowed by the same star that has kept it warm for billions of years.",
      "show": {
       "type": "image",
       "query": "Venus"
@@ -591,7 +591,7 @@
      }
     },
     {
-     "say": "Ten times wider is still enormous. Seen from what is left of the planets, it fills the sky.",
+     "say": "Ten times wider than today is still a giant star, just far smaller than its peak of about 200 times.",
      "show": {
       "type": "image",
       "query": "Sun SOHO"

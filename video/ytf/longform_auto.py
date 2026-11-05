@@ -46,6 +46,7 @@ MOTION = {"counter", "scale", "timer", "compare", "bars", "kinetic"}
 REAL = {"footage", "image"}
 ANNOUNCE = re.compile(r"\bchapter\b|\bpart (?:one|two|three|four|five|six|seven|eight|\d)\b|\bin this (?:section|part)\b|"
                       r"\b(?:first|next|last|final) (?:part|section)\b", re.I)
+RECAP_LABEL = re.compile(r"^\s*\**\s*recap\s*\**\s*[:\-–—]\s*", re.I)
 VAGUE = re.compile(r"\b(secrets?|myster(?:y|ies)|amazing|insane|shocking|truth|crazy|unbelievable|incredible)\b", re.I)
 PRICE = re.compile(r"\$\s?\d|\b\d+ ?(?:dollars|euros?)\b|\bcode\b|\bdiscount\b|COSMOS9|LAUNCH9", re.I)
 CLICHES = [r"\bin this video\b", r"\bdid you know\b", r"\bsmash (?:that|the) like\b", r"\bwithout further ado\b",
@@ -622,6 +623,14 @@ def clean_flags(act: dict) -> dict:
         for k in ("spot", "recap"):
             if k in b:
                 b[k] = True
+    # the free writers often write the recap as a beat starting "Recap:" and forget the flag (4/11/2026: act 6
+    # failed 4 drafts on that alone): flag it and drop the label, the voice must not read "Recap:"
+    for b in act["beats"]:
+        m = RECAP_LABEL.match(str(b.get("say", "")))
+        if m:
+            b["say"] = b["say"][m.end():].lstrip()
+            b["say"] = b["say"][:1].upper() + b["say"][1:]
+            b["recap"] = True
     return act
 
 

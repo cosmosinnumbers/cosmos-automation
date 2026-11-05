@@ -1,0 +1,690 @@
+{
+ "videos": [
+  {
+   "id": "PdszJ0D_feo",
+   "title": "NASA Administrator Jared Isaacman shared his personal thoughts on the Lear Jet Crash In Florida",
+   "channel": "Kagan Dunlap",
+   "published": "2026-11-03",
+   "seconds": 123,
+   "views": 1718157,
+   "views_per_day": 859078,
+   "engagement": 0.0343,
+   "acceleration": -0.353,
+   "format": "mission_glitch",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "_fw3vnQconI",
+   "title": "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn",
+   "channel": "Helpyn Facts'",
+   "published": "2026-10-31",
+   "seconds": 60,
+   "views": 4250850,
+   "views_per_day": 850170,
+   "engagement": 0.0001,
+   "acceleration": -0.146,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "p0EqvHzr_X4",
+   "title": "Why NASA Is Paying to Destroy the ISS",
+   "channel": "Past the Blue",
+   "published": "2026-10-23",
+   "seconds": 91,
+   "views": 6376886,
+   "views_per_day": 531407,
+   "engagement": 0.0248,
+   "acceleration": -0.021,
+   "format": "mission_glitch",
+   "hook": "question",
+   "theme": "iss",
+   "emoji": false
+  },
+  {
+   "id": "dv-Czhabars",
+   "title": "SIZE OF SOLAR SYSTEM! 💀",
+   "channel": "Jase Cosmology",
+   "published": "2026-10-26",
+   "seconds": 29,
+   "views": 4201842,
+   "views_per_day": 466871,
+   "engagement": 0.0122,
+   "acceleration": -0.087,
+   "format": "scale_zoom",
+   "hook": "comparison",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "TGDF1889rGE",
+   "title": "The Lid NASA Couldn’t Open",
+   "channel": "BrainRush",
+   "published": "2026-10-16",
+   "seconds": 66,
+   "views": 7435499,
+   "views_per_day": 391342,
+   "engagement": 0.0251,
+   "acceleration": -0.027,
+   "format": "mission_glitch",
+   "hook": "paradox",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "XGespfNXeSk",
+   "title": "First evidence of a runaway black hole. #blackhole #jwst #hubble #galaxy #universe",
+   "channel": "Siddharth Choudhary",
+   "published": "2026-11-03",
+   "seconds": 106,
+   "views": 619117,
+   "views_per_day": 309558,
+   "engagement": 0.0489,
+   "acceleration": -0.267,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "CiMGXfEjF7c",
+   "title": "Solar System's Biggest Lie!💀☝",
+   "channel": "Astrryy",
+   "published": "2026-10-28",
+   "seconds": 32,
+   "views": 1825473,
+   "views_per_day": 260781,
+   "engagement": 0.0002,
+   "acceleration": -0.132,
+   "format": "scale_zoom",
+   "hook": "paradox",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "ppQmLxCxmGw",
+   "title": "Ant vs the Universe | Size Comparison 💀",
+   "channel": "The Scale Dive",
+   "published": "2026-10-07",
+   "seconds": 50,
+   "views": 6709886,
+   "views_per_day": 239638,
+   "engagement": 0.0062,
+   "acceleration": -0.008,
+   "format": "scale_zoom",
+   "hook": "comparison",
+   "theme": "galaxy",
+   "emoji": true
+  },
+  {
+   "id": "tKikZXrcZCQ",
+   "title": "Why Nothing Can Survive Venus",
+   "channel": "Facts' Mine",
+   "published": "2026-10-24",
+   "seconds": 57,
+   "views": 2403991,
+   "views_per_day": 200332,
+   "engagement": 0.0586,
+   "acceleration": -0.068,
+   "format": "survive_x",
+   "hook": "paradox",
+   "theme": "venus",
+   "emoji": false
+  },
+  {
+   "id": "x9fM_-eVCXI",
+   "title": "Kalpana Chawla Ki Kahani: Karnal Se NASA Aur Columbia Tak",
+   "channel": "StrategyLabIndia",
+   "published": "2026-10-15",
+   "seconds": 140,
+   "views": 3952438,
+   "views_per_day": 197621,
+   "engagement": 0.0274,
+   "acceleration": -0.025,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "bb4KirnWsB4",
+   "title": "NASA Is Making Big Changes To Artemis",
+   "channel": "The Space Race",
+   "published": "2026-10-31",
+   "seconds": 1204,
+   "views": 756378,
+   "views_per_day": 189094,
+   "engagement": 0.0189,
+   "acceleration": -0.21,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "artemis",
+   "emoji": false
+  },
+  {
+   "id": "nfuwtAeaPIU",
+   "title": "The Dead Wheel That Dug a Rover's Grave",
+   "channel": "Past the Blue",
+   "published": "2026-10-07",
+   "seconds": 77,
+   "views": 4297335,
+   "views_per_day": 153476,
+   "engagement": 0.0537,
+   "acceleration": -0.024,
+   "format": "mission_glitch",
+   "hook": "other",
+   "theme": "mars",
+   "emoji": false
+  },
+  {
+   "id": "G33L_lR5mjw",
+   "title": "How Fast Is Light Really 🤔🥶 #shorts #space #science #astronomy #speedoflight #universe #spacefacts",
+   "channel": "Galaxy Verse ",
+   "published": "2026-10-24",
+   "seconds": 31,
+   "views": 1685411,
+   "views_per_day": 153219,
+   "engagement": 0.0002,
+   "acceleration": -0.087,
+   "format": "myth_number",
+   "hook": "question",
+   "theme": "galaxy",
+   "emoji": true
+  },
+  {
+   "id": "DJv5hJ9qrOE",
+   "title": "What Happens Beyond The Speed Of Light",
+   "channel": "Facts' Mine",
+   "published": "2026-10-25",
+   "seconds": 45,
+   "views": 1560259,
+   "views_per_day": 141841,
+   "engagement": 0.0659,
+   "acceleration": -0.084,
+   "format": "survive_x",
+   "hook": "question",
+   "theme": "light_speed",
+   "emoji": false
+  },
+  {
+   "id": "uChNr2ebeys",
+   "title": "EARTH ONCE HAD TWO MOONS?!",
+   "channel": "Yash Facts 13",
+   "published": "2026-10-27",
+   "seconds": 59,
+   "views": 1127178,
+   "views_per_day": 140897,
+   "engagement": 0.0,
+   "acceleration": null,
+   "format": "other",
+   "hook": "question",
+   "theme": "earth",
+   "emoji": false
+  },
+  {
+   "id": "0JVJfyWCVKI",
+   "title": "Insane facts about Milky Way!",
+   "channel": "Dev",
+   "published": "2026-10-28",
+   "seconds": 71,
+   "views": 967158,
+   "views_per_day": 138165,
+   "engagement": 0.033,
+   "acceleration": null,
+   "format": "countdown_top",
+   "hook": "other",
+   "theme": "galaxy",
+   "emoji": false
+  },
+  {
+   "id": "BdRisD_BV8o",
+   "title": "ALERTA Super Niño: la NASA descubre anomalía en el océano que agravará el fenómeno",
+   "channel": "Ciudadano news",
+   "published": "2026-10-19",
+   "seconds": 53,
+   "views": 2174525,
+   "views_per_day": 135907,
+   "engagement": 0.0123,
+   "acceleration": -0.043,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "XCqFZpQaXew",
+   "title": "JWST Stared into Empty Space and Saw... Something",
+   "channel": "Anton Petrov",
+   "published": "2026-11-01",
+   "seconds": 974,
+   "views": 360307,
+   "views_per_day": 120102,
+   "engagement": 0.0264,
+   "acceleration": -0.297,
+   "format": "other",
+   "hook": "other",
+   "theme": "telescope",
+   "emoji": false
+  },
+  {
+   "id": "kGe6LHzmCXo",
+   "title": "Crew 12 successfully splashes down off coast",
+   "channel": "FOX 5 New York",
+   "published": "2026-10-08",
+   "seconds": 87,
+   "views": 3220731,
+   "views_per_day": 119286,
+   "engagement": 0.0077,
+   "acceleration": -0.018,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "dPLfNfy6Nv0",
+   "title": "TOXIC soil on the planet Mars #space #astronomy #science #nasa",
+   "channel": "ASTRO ALEXANDRA",
+   "published": "2026-10-13",
+   "seconds": 69,
+   "views": 2490655,
+   "views_per_day": 113211,
+   "engagement": 0.0434,
+   "acceleration": null,
+   "format": "other",
+   "hook": "other",
+   "theme": "mars",
+   "emoji": false
+  },
+  {
+   "id": "3T3F-LNnfMI",
+   "title": "Tesla unveils new flying car model",
+   "channel": "NBC News",
+   "published": "2026-10-16",
+   "seconds": 109,
+   "views": 2086197,
+   "views_per_day": 109799,
+   "engagement": 0.0034,
+   "acceleration": -0.044,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "QmwgYgTDC9M",
+   "title": "ÚLTIMA HORA: El James Webb Acaba de Encontrar ALGO IMPOSIBLE",
+   "channel": "Atraviesa lo desconocido",
+   "published": "2026-11-02",
+   "seconds": 895,
+   "views": 213827,
+   "views_per_day": 106913,
+   "engagement": 0.0534,
+   "acceleration": -0.444,
+   "format": "other",
+   "hook": "other",
+   "theme": "telescope",
+   "emoji": false
+  },
+  {
+   "id": "i7GMSizCdCc",
+   "title": "Did you know the Hunter's Moon actually helped us survive? #space #facts #astronomy",
+   "channel": "Gloy Space",
+   "published": "2026-10-25",
+   "seconds": 30,
+   "views": 966086,
+   "views_per_day": 96608,
+   "engagement": 0.01,
+   "acceleration": null,
+   "format": "survive_x",
+   "hook": "question",
+   "theme": "moon",
+   "emoji": false
+  },
+  {
+   "id": "sP_LxJomMUA",
+   "title": "जुपिटर के अंदर भेजा गया Probe आखिर कितनी देर ज़िंदा रहा? | Galileo Mission",
+   "channel": "What Happens If?",
+   "published": "2026-10-17",
+   "seconds": 181,
+   "views": 1508663,
+   "views_per_day": 83814,
+   "engagement": 0.0264,
+   "acceleration": null,
+   "format": "other",
+   "hook": "question",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "zJdZAh5wAy8",
+   "title": "Why TON 618 Is So Terrifying",
+   "channel": "Ridddle",
+   "published": "2026-10-12",
+   "seconds": 1055,
+   "views": 1914170,
+   "views_per_day": 83224,
+   "engagement": 0.0108,
+   "acceleration": null,
+   "format": "audience_question",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": false
+  }
+ ],
+ "formats": {
+  "mission_glitch": {
+   "score": 12.63,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.0345,
+   "ours_7d": 0,
+   "examples": [
+    "NASA Administrator Jared Isaacman shared his personal thoughts on the Lear Jet Crash In Florida",
+    "Why NASA Is Paying to Destroy the ISS"
+   ]
+  },
+  "other": {
+   "score": 12.19,
+   "videos": 9,
+   "accelerating": false,
+   "engagement": 0.0219,
+   "ours_7d": 0,
+   "examples": [
+    "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn",
+    "Kalpana Chawla Ki Kahani: Karnal Se NASA Aur Columbia Tak"
+   ]
+  },
+  "scale_zoom": {
+   "score": 6.31,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0062,
+   "ours_7d": 1,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "Solar System's Biggest Lie!💀☝"
+   ]
+  },
+  "news_angle": {
+   "score": 3.97,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0237,
+   "ours_7d": 0,
+   "examples": [
+    "First evidence of a runaway black hole. #blackhole #jwst #hubble #galaxy #universe",
+    "NASA Is Making Big Changes To Artemis"
+   ]
+  },
+  "survive_x": {
+   "score": 2.86,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0448,
+   "ours_7d": 0,
+   "examples": [
+    "Why Nothing Can Survive Venus",
+    "What Happens Beyond The Speed Of Light"
+   ]
+  },
+  "myth_number": {
+   "score": 1.0,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0002,
+   "ours_7d": 0,
+   "examples": [
+    "How Fast Is Light Really 🤔🥶 #shorts #space #science #astronomy #speedoflight #universe #spacefacts"
+   ]
+  },
+  "countdown_top": {
+   "score": 0.9,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.033,
+   "ours_7d": 0,
+   "examples": [
+    "Insane facts about Milky Way!"
+   ]
+  },
+  "audience_question": {
+   "score": 0.54,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0108,
+   "ours_7d": 0,
+   "examples": [
+    "Why TON 618 Is So Terrifying"
+   ]
+  }
+ },
+ "hooks": {
+  "other": {
+   "score": 15.88,
+   "videos": 11,
+   "accelerating": false,
+   "engagement": 0.0323,
+   "ours_7d": null,
+   "examples": [
+    "NASA Administrator Jared Isaacman shared his personal thoughts on the Lear Jet Crash In Florida",
+    "First evidence of a runaway black hole. #blackhole #jwst #hubble #galaxy #universe"
+   ]
+  },
+  "question": {
+   "score": 7.49,
+   "videos": 6,
+   "accelerating": false,
+   "engagement": 0.0212,
+   "ours_7d": null,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS",
+    "How Fast Is Light Really 🤔🥶 #shorts #space #science #astronomy #speedoflight #universe #spacefacts"
+   ]
+  },
+  "extreme_number": {
+   "score": 6.87,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0062,
+   "ours_7d": null,
+   "examples": [
+    "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn",
+    "Crew 12 successfully splashes down off coast"
+   ]
+  },
+  "paradox": {
+   "score": 5.56,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.028,
+   "ours_7d": null,
+   "examples": [
+    "The Lid NASA Couldn’t Open",
+    "Solar System's Biggest Lie!💀☝"
+   ]
+  },
+  "comparison": {
+   "score": 4.61,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0092,
+   "ours_7d": null,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "Ant vs the Universe | Size Comparison 💀"
+   ]
+  }
+ },
+ "themes": {
+  "other": {
+   "score": 18.47,
+   "videos": 9,
+   "accelerating": false,
+   "engagement": 0.0164,
+   "ours_7d": null,
+   "examples": [
+    "NASA Administrator Jared Isaacman shared his personal thoughts on the Lear Jet Crash In Florida",
+    "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn"
+   ]
+  },
+  "solar_system": {
+   "score": 4.75,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0062,
+   "ours_7d": null,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "Solar System's Biggest Lie!💀☝"
+   ]
+  },
+  "iss": {
+   "score": 3.47,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0248,
+   "ours_7d": null,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS"
+   ]
+  },
+  "galaxy": {
+   "score": 3.47,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0131,
+   "ours_7d": null,
+   "examples": [
+    "Ant vs the Universe | Size Comparison 💀",
+    "How Fast Is Light Really 🤔🥶 #shorts #space #science #astronomy #speedoflight #universe #spacefacts"
+   ]
+  },
+  "black_hole": {
+   "score": 2.02,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0489,
+   "ours_7d": null,
+   "examples": [
+    "First evidence of a runaway black hole. #blackhole #jwst #hubble #galaxy #universe"
+   ]
+  },
+  "mars": {
+   "score": 1.74,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0485,
+   "ours_7d": null,
+   "examples": [
+    "The Dead Wheel That Dug a Rover's Grave",
+    "TOXIC soil on the planet Mars #space #astronomy #science #nasa"
+   ]
+  },
+  "telescope": {
+   "score": 1.48,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0399,
+   "ours_7d": null,
+   "examples": [
+    "JWST Stared into Empty Space and Saw... Something",
+    "ÚLTIMA HORA: El James Webb Acaba de Encontrar ALGO IMPOSIBLE"
+   ]
+  },
+  "venus": {
+   "score": 1.31,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0586,
+   "ours_7d": null,
+   "examples": [
+    "Why Nothing Can Survive Venus"
+   ]
+  },
+  "artemis": {
+   "score": 1.23,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0189,
+   "ours_7d": null,
+   "examples": [
+    "NASA Is Making Big Changes To Artemis"
+   ]
+  },
+  "light_speed": {
+   "score": 0.93,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0659,
+   "ours_7d": null,
+   "examples": [
+    "What Happens Beyond The Speed Of Light"
+   ]
+  },
+  "earth": {
+   "score": 0.92,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0,
+   "ours_7d": null,
+   "examples": [
+    "EARTH ONCE HAD TWO MOONS?!"
+   ]
+  },
+  "moon": {
+   "score": 0.63,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.01,
+   "ours_7d": null,
+   "examples": [
+    "Did you know the Hunter's Moon actually helped us survive? #space #facts #astronomy"
+   ]
+  }
+ },
+ "short_share": 0.8,
+ "audience_questions": [
+  "14th November ki subah kitne baje????",
+  "To phir earth se lander moon par kaise bheja gya tha jab ki moon aur earth ke bich itna distance hai???",
+  "(what i asked chatgpt What is the difference between mercury and sun?",
+  "But my question is why does the moon look's close to earth in the sky?",
+  "Whats in here, rocks?",
+  "These aren't cheap, roughly milled screws. How did they get so stuck?",
+  "You know what is as old as the solar system?",
+  "But did they put the capsule in a vacuum to reopen it?",
+  "What was in it, you ask?",
+  "That's nice. Now what did they find from the asteroid?",
+  "(1) maybe some future, distant civilization will spot it?",
+  "Is it plausible for a black hole to sneak up on the solar system without us detecting it until it's too late?",
+  "If we could travel to the edge of the observable universe, would we see another 13.8 billion years of universe in every direction?",
+  "Can anyone help me identify these?",
+  "I can see Pleiades but what are these. Also any other things you saw that I missed?"
+ ],
+ "instagram_median_likes": {
+  "CAROUSEL_ALBUM": 13879,
+  "IMAGE": 9440
+ },
+ "median_views_per_day": 153219,
+ "niche": "cosmos",
+ "date": "2026-11-05",
+ "source": "2026-W45.json",
+ "sky": [
+  {
+   "date": "2026-11-05",
+   "name": "Southern Taurids peak",
+   "hint": "the Southern Taurid meteor shower peak and the fireballs it is known for",
+   "in_days": 0
+  },
+  {
+   "date": "2026-11-12",
+   "name": "Northern Taurids peak",
+   "hint": "the Northern Taurid meteor shower peak, debris of Comet Encke",
+   "in_days": 7
+  }
+ ]
+}

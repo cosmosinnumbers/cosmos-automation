@@ -272,8 +272,11 @@ def plan(today: str, hint: str) -> dict:
 def fetch_sources(p: dict) -> list[dict]:
     out = []
     for s in p.get("sources", [])[:11]:
-        try:
-            text = " ".join(a.page_text(s["url"]).split())
+        try:   # article paragraphs first: the whole page text spent the 7,000 chars on menus (5/11/2026: ESA pages
+            # reached the Sun's red-giant numbers only after ~6,000 chars of navigation)
+            text = " ".join(a.article_text(s["url"]).split())
+            if len(text) < 400:
+                text = " ".join(a.page_text(s["url"]).split())
         except Exception as e:  # noqa: BLE001
             print("  source refused:", s.get("url"), str(e)[:80])
             continue

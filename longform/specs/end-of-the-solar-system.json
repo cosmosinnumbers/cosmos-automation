@@ -112,7 +112,7 @@
      }
     },
     {
-     "say": "By the end you'll know what ESA's Gaia data and NASA say happens to our Sun as it ages.",
+     "say": "By the end you'll know what Gaia's study of Sun-like stars says happens to our Sun as it ages.",
      "show": {
       "type": "image",
       "query": "solar system planets"
@@ -199,7 +199,8 @@
    "sources": [
     "S1",
     "S5",
-    "S6"
+    "S6",
+    "S7"
    ],
    "beats": [
     {
@@ -265,7 +266,7 @@
      "calc": "8 - 4.57 = 3.43"
     },
     {
-     "say": "So Earth loses the race, not Mercury and not the Sun. Did you guess that? Tell me in the comments.",
+     "say": "So life on Earth runs out of time first, billions of years before the red giant. Did you guess that? Tell me in the comments.",
      "show": {
       "type": "image",
       "query": "Earth clouds ocean"
@@ -326,7 +327,7 @@
      }
     },
     {
-     "say": "According to NASA, the Sun will become a red giant in about 5 billion years. Gaia's data say it happens around 10–11 billion years of age.",
+     "say": "According to NASA, the Sun will become a red giant in about 5 billion years. ESA's Gaia study of Sun-like stars puts it around 10–11 billion years of age.",
      "show": {
       "type": "kinetic",
       "text": "RED GIANT IN ~5 BILLION YEARS",

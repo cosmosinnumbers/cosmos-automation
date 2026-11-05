@@ -112,7 +112,7 @@
      }
     },
     {
-     "say": "By the end you'll know what ESA's Gaia data and NASA say happens to our Sun as it ages.",
+     "say": "By the end you'll know what Gaia's study of Sun-like stars says happens to our Sun as it ages.",
      "show": {
       "type": "image",
       "query": "solar system planets"
@@ -199,7 +199,8 @@
    "sources": [
     "S1",
     "S5",
-    "S6"
+    "S6",
+    "S7"
    ],
    "beats": [
     {
@@ -228,7 +229,7 @@
      }
     },
     {
-     "say": "The Sun keeps changing as it ages. Gaia's data show it reaches a maximum temperature at approximately 8 billion years of age.",
+     "say": "Comparing it with Sun-like stars of different ages, the Gaia team found it reaches a maximum temperature at approximately 8 billion years of age.",
      "show": {
       "type": "bars",
       "title": "THE SUN'S TIMELINE (AGE)",
@@ -265,7 +266,7 @@
      "calc": "8 - 4.57 = 3.43"
     },
     {
-     "say": "So Earth loses the race, not Mercury and not the Sun. Did you guess that? Tell me in the comments.",
+     "say": "So life on Earth runs out of time first, billions of years before the red giant. Did you guess that? Tell me in the comments.",
      "show": {
       "type": "image",
       "query": "Earth clouds ocean"
@@ -326,7 +327,7 @@
      }
     },
     {
-     "say": "According to NASA, the Sun will become a red giant in about 5 billion years. Gaia's data say it happens around 10–11 billion years of age.",
+     "say": "According to NASA, the Sun will become a red giant in about 5 billion years. ESA's Gaia study of Sun-like stars puts it around 10–11 billion years of age.",
      "show": {
       "type": "kinetic",
       "text": "RED GIANT IN ~5 BILLION YEARS",
@@ -550,6 +551,7 @@
   {
    "title": "Shrinking",
    "sources": [
+    "S1",
     "S2",
     "S3"
    ],
@@ -622,7 +624,7 @@
      }
     },
     {
-     "say": "From far away, the dying Sun would look much like these glowing shells we photograph around other stars today.",
+     "say": "Sun-like stars of every age in Gaia's data are how astronomers piece together these late stages of a star like ours.",
      "show": {
       "type": "image",
       "query": "Cat's Eye Nebula"
@@ -782,10 +784,10 @@
      }
     },
     {
-     "say": "In 2012, Hubble data made a direct impact look almost certain, in no more than 5 billion years.",
+     "say": "In 2012, a Hubble analysis made the collision seem much more likely, indicating a direct impact in no more than 5 billion years.",
      "show": {
       "type": "kinetic",
-      "text": "ALMOST CERTAIN, 2012",
+      "text": "MUCH MORE LIKELY, 2012",
       "accent": [
        "2012"
       ]

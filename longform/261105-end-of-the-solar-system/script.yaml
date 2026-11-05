@@ -307,12 +307,12 @@ segments:
       decimals: 1
     bg: img_12
     dim: 0.7
-  - type: image
-    src: img_13
-    motion: pan_left
-    stickman:
-      label: YOU
-      size: tiny
+  - type: kinetic
+    text: MERCURY. VENUS. MAYBE EARTH.
+    accent:
+    - EARTH
+    bg: img_12
+    dim: 0.6
   - type: image
     src: img_14
     motion: zoom_out
@@ -575,9 +575,12 @@ segments:
     stickman:
       label: YOU
       size: small
-  - type: video
-    src: vid_26
-    start: 8.0
+  - type: kinetic
+    text: NO NEW HEAT. JUST A SLOW FADE.
+    accent:
+    - FADE
+    bg: img_27
+    dim: 0.6
   - type: image
     src: img_27
     motion: zoom_in

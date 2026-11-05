@@ -228,7 +228,7 @@
      }
     },
     {
-     "say": "The Sun keeps changing as it ages. Gaia's data show it reaches a maximum temperature at approximately 8 billion years of age.",
+     "say": "Comparing it with Sun-like stars of different ages, the Gaia team found it reaches a maximum temperature at approximately 8 billion years of age.",
      "show": {
       "type": "bars",
       "title": "THE SUN'S TIMELINE (AGE)",
@@ -550,6 +550,7 @@
   {
    "title": "Shrinking",
    "sources": [
+    "S1",
     "S2",
     "S3"
    ],
@@ -622,7 +623,7 @@
      }
     },
     {
-     "say": "From far away, the dying Sun would look much like these glowing shells we photograph around other stars today.",
+     "say": "Sun-like stars of every age in Gaia's data are how astronomers piece together these late stages of a star like ours.",
      "show": {
       "type": "image",
       "query": "Cat's Eye Nebula"

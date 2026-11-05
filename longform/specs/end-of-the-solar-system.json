@@ -84,10 +84,6 @@
   {
    "title": "NASA Space Place: All about the Sun",
    "url": "https://spaceplace.nasa.gov/all-about-the-sun/en/"
-  },
-  {
-   "title": "ESA/Hubble: Hubble casts doubt on certainty of galactic collision",
-   "url": "https://esahubble.org/news/heic2508/"
   }
  ],
  "chapters": [
@@ -95,8 +91,7 @@
    "title": "Halfway",
    "sources": [
     "S1",
-    "S7",
-    "S8"
+    "S7"
    ],
    "beats": [
     {
@@ -203,7 +198,8 @@
    "title": "Earth's deadline",
    "sources": [
     "S1",
-    "S5"
+    "S5",
+    "S6"
    ],
    "beats": [
     {
@@ -315,6 +311,7 @@
   {
    "title": "Red giant",
    "sources": [
+    "S1",
     "S2",
     "S3",
     "S6",
@@ -427,8 +424,7 @@
   {
    "title": "No supernova",
    "sources": [
-    "S3",
-    "S4"
+    "S3"
    ],
    "beats": [
     {
@@ -775,8 +771,7 @@
   {
    "title": "Andromeda",
    "sources": [
-    "S5",
-    "S9"
+    "S5"
    ],
    "beats": [
     {

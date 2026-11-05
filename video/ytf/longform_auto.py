@@ -700,7 +700,29 @@ def act_sources(sources: list[dict], ids: list, budget: int = 6500, hint: str = 
         if s not in pick and any(n in flat for n in nums) and len(pick) < 4:
             pick.append(s)
     per = max(1200, budget // len(pick))
-    return [{**s, "text": s["text"][:per]} for s in pick]
+    return [{**s, "text": relevant(s["text"], hint, per)} for s in pick]
+
+
+def relevant(text: str, hint: str, per: int) -> str:
+    """The first `per` characters, or, when a hint (the act's text) is given and the source is longer, the sentences
+    that share its numbers and words, in page order. 5/11/2026: the reviewer saw only the start of each source and
+    called "4.57 billion years" (ESA Gaia, ~3,500 characters in) unsupported."""
+    if not hint or len(text) <= per:
+        return text[:per]
+    sents = re.split(r"(?<=[.!?])\s+", text)
+    want = {w for w in re.findall(r"[a-z]{5,}", hint.lower())} | {n.replace(",", "") for n in a.numbers(hint)}
+    def score(x: str) -> float:
+        ws = set(re.findall(r"[a-z]{5,}", x.lower())) | {n.replace(",", "") for n in a.numbers(x)}
+        nums = sum(1 for n in a.numbers(x) if n.replace(",", "") in want and len(n) > 1)
+        return len(ws & want) + 6 * nums
+    ranked = sorted(range(len(sents)), key=lambda i: -score(sents[i]))
+    keep, size = set(), 0
+    for i in ranked:
+        if size + len(sents[i]) > per:
+            continue
+        keep.add(i)
+        size += len(sents[i]) + 1
+    return " ".join(sents[i] for i in sorted(keep))
 
 
 EXTEND = """The act below is {short} words too short. Write {k} NEW beats (18-28 words each, same rules, only facts and
@@ -805,7 +827,8 @@ def review_by_acts(spec: dict, sources: list[dict]) -> list[str]:
     out = []
     for ci, ch in enumerate(spec.get("chapters", []), 1):
         part = {"chapters": [ch]}
-        out += [f"act {ci}: {x}" for x in review(part, act_sources(sources, ch.get("sources"), 7000))]
+        hint = " ".join(str(b.get("say", "")) for b in ch.get("beats", []) if isinstance(b, dict))
+        out += [f"act {ci}: {x}" for x in review(part, act_sources(sources, ch.get("sources"), 7000, hint))]
     return out
 
 

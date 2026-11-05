@@ -18,6 +18,9 @@ on:
       sources:
         description: "Comma-separated primary pages to use instead of Google Search (optional)"
         default: ""
+      spec:
+        description: "Hand-written script JSON in the repo, e.g. longform/specs/x.json (skips the writer, same checks)"
+        default: ""
       dry_run:
         description: "Dry run: plan, write and check the script only (no assets, no commit, no build)"
         type: boolean
@@ -59,12 +62,14 @@ jobs:
           IN_TOPIC: ${{ inputs.topic }}
           IN_MIN: ${{ inputs.minutes }}
           IN_SRC: ${{ inputs.sources }}
+          IN_SPEC: ${{ inputs.spec }}
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
         run: |
           args=()
           [ -n "$IN_TOPIC" ] && args+=(--topic "$IN_TOPIC")
           [ -n "$IN_MIN" ] && args+=(--minutes "$IN_MIN")
           [ -n "$IN_SRC" ] && args+=(--sources "$IN_SRC")
+          [ -n "$IN_SPEC" ] && args+=(--spec "$IN_SPEC")
           [ "$IN_DRY" = "true" ] && args+=(--dry-run)
           python video/ytf/longform_auto.py "${args[@]}"
       - name: Commit and start the build

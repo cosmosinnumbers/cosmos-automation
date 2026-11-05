@@ -1,6 +1,7 @@
 """Weekly long video written, checked and approved by code (owner 30/10/2026: "approva i video in automatico").
 
   python longform_auto.py [--topic "<hint>"] [--dry-run]
+  python longform_auto.py --spec longform/specs/<name>.json [--dry-run]   (script written by hand, same checks)
 
 1. Plan: Gemini with Google Search picks ONE topic for an 8-10 minute video and 3-6 primary pages (NASA, JPL, ESA,
    ESO, STScI...). Without grounding quota: the NASA fact sheets. The code downloads every page (allowed domain,
@@ -271,8 +272,11 @@ def plan(today: str, hint: str) -> dict:
 def fetch_sources(p: dict) -> list[dict]:
     out = []
     for s in p.get("sources", [])[:11]:
-        try:
-            text = " ".join(a.page_text(s["url"]).split())
+        try:   # article paragraphs first: the whole page text spent the 7,000 chars on menus (5/11/2026: ESA pages
+            # reached the Sun's red-giant numbers only after ~6,000 chars of navigation)
+            text = " ".join(a.article_text(s["url"]).split())
+            if len(text) < 400:
+                text = " ".join(a.page_text(s["url"]).split())
         except Exception as e:  # noqa: BLE001
             print("  source refused:", s.get("url"), str(e)[:80])
             continue
@@ -696,7 +700,29 @@ def act_sources(sources: list[dict], ids: list, budget: int = 6500, hint: str = 
         if s not in pick and any(n in flat for n in nums) and len(pick) < 4:
             pick.append(s)
     per = max(1200, budget // len(pick))
-    return [{**s, "text": s["text"][:per]} for s in pick]
+    return [{**s, "text": relevant(s["text"], hint, per)} for s in pick]
+
+
+def relevant(text: str, hint: str, per: int) -> str:
+    """The first `per` characters, or, when a hint (the act's text) is given and the source is longer, the sentences
+    that share its numbers and words, in page order. 5/11/2026: the reviewer saw only the start of each source and
+    called "4.57 billion years" (ESA Gaia, ~3,500 characters in) unsupported."""
+    if not hint or len(text) <= per:
+        return text[:per]
+    sents = re.split(r"(?<=[.!?])\s+", text)
+    want = {w for w in re.findall(r"[a-z]{5,}", hint.lower())} | {n.replace(",", "") for n in a.numbers(hint)}
+    def score(x: str) -> float:
+        ws = set(re.findall(r"[a-z]{5,}", x.lower())) | {n.replace(",", "") for n in a.numbers(x)}
+        nums = sum(1 for n in a.numbers(x) if n.replace(",", "") in want and len(n) > 1)
+        return len(ws & want) + 6 * nums
+    ranked = sorted(range(len(sents)), key=lambda i: -score(sents[i]))
+    keep, size = set(), 0
+    for i in ranked:
+        if size + len(sents[i]) > per:
+            continue
+        keep.add(i)
+        size += len(sents[i]) + 1
+    return " ".join(sents[i] for i in sorted(keep))
 
 
 EXTEND = """The act below is {short} words too short. Write {k} NEW beats (18-28 words each, same rules, only facts and
@@ -801,7 +827,12 @@ def review_by_acts(spec: dict, sources: list[dict]) -> list[str]:
     out = []
     for ci, ch in enumerate(spec.get("chapters", []), 1):
         part = {"chapters": [ch]}
-        out += [f"act {ci}: {x}" for x in review(part, act_sources(sources, ch.get("sources"), 7000))]
+        hint = " ".join(str(b.get("say", "")) for b in ch.get("beats", []) if isinstance(b, dict))
+        # only the act's own sources, cut to the sentences about the act: extra sources pulled in by a shared
+        # number left each one too short to show the claims (5/11/2026)
+        own = [s for s in sources if s["id"] in set(ch.get("sources") or [])] or sources[:2]
+        per = max(1200, 7000 // len(own))
+        out += [f"act {ci}: {x}" for x in review(part, [{**s, "text": relevant(s["text"], hint, per)} for s in own])]
     return out
 
 
@@ -1025,9 +1056,50 @@ def build_folder(spec: dict, sources: list[dict], report: str) -> Path:
     return vdir
 
 
+def from_spec(path: str) -> None:
+    """A script written by hand (owner 05/11/2026: when the free writers fail the checks, Claude writes it): the
+    same spec JSON the writer returns, plus "sources" [{title, url}]. Same fact check (every number in the source
+    text), script check and reviewer; no writer, no retries. Dry run prints the source texts the check sees."""
+    spec = json.loads(Path(path).read_text("utf-8"))
+    for ch in spec.get("chapters", []):
+        clean_flags(ch)
+    sources = fetch_sources({"sources": spec.get("sources", [])})
+    if DRY:
+        for s in sources:
+            print(f"--- [{s['id']}] {s['url']} ({len(s['text'])} chars)\n{s['text']}\n")
+    problems = fact_check(spec, sources) + script_check(spec)
+    if not [x for x in problems if x.startswith("number")]:
+        problems += review_by_acts(spec, sources)
+    _, scores = retention_review(spec) if not problems else ([], {})
+    words = sum(len(b.get("say", "").split()) for _, b in beats(spec))
+    print(f"Hand-written script: {words} words, {len(spec.get('chapters', []))} acts, {len(beats(spec))} beats")
+    for x in problems:
+        print("  -", x)
+    if problems:
+        sys.exit(f"CHECKS FAILED on the hand-written script: {len(problems)} problem(s)")
+    report = "\n".join([f"# Controlli automatici ({datetime.now():%Y-%m-%d %H:%M})", "",
+                        f"Script scritto a mano ({path}), stessi controlli del codice.", f"Parole: {words}; atti: "
+                        f"{len(spec['chapters'])}; battute: {len(beats(spec))}", "",
+                        "## Fonti", *[f"- {s['id']} {s['title']}: {s['url']}" for s in sources], "",
+                        f"Punteggi del critico di ritenzione (0-10): {', '.join(f'{k} {v:.0f}' for k, v in scores.items()) or 'critico non disponibile'}", "",
+                        "Approvato dal codice: ogni numero è nelle fonti, il revisore non ha trovato problemi gravi, "
+                        "struttura e ritmo nei limiti."]) + "\n"
+    print(report)
+    if DRY:
+        return
+    vdir = build_folder(spec, sources, report)
+    print("OK", vdir.name)
+    import os
+    if os.environ.get("GITHUB_OUTPUT"):
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+            fh.write(f"id={vdir.name}\n")
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
     args = sys.argv[1:]
+    if "--spec" in args:
+        return from_spec(args[args.index("--spec") + 1])
     today = datetime.now().strftime("%Y-%m-%d")
     hint = f"Prefer this topic: {args[args.index('--topic') + 1]}." if "--topic" in args else learned_hint()
     if "--minutes" in args:  # e.g. 12-16 (owner 31/10/2026 for TON 618)

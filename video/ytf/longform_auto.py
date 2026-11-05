@@ -828,7 +828,11 @@ def review_by_acts(spec: dict, sources: list[dict]) -> list[str]:
     for ci, ch in enumerate(spec.get("chapters", []), 1):
         part = {"chapters": [ch]}
         hint = " ".join(str(b.get("say", "")) for b in ch.get("beats", []) if isinstance(b, dict))
-        out += [f"act {ci}: {x}" for x in review(part, act_sources(sources, ch.get("sources"), 7000, hint))]
+        # only the act's own sources, cut to the sentences about the act: extra sources pulled in by a shared
+        # number left each one too short to show the claims (5/11/2026)
+        own = [s for s in sources if s["id"] in set(ch.get("sources") or [])] or sources[:2]
+        per = max(1200, 7000 // len(own))
+        out += [f"act {ci}: {x}" for x in review(part, [{**s, "text": relevant(s["text"], hint, per)} for s in own])]
     return out
 
 

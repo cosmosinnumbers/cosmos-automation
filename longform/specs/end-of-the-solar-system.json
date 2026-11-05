@@ -102,7 +102,7 @@
      }
     },
     {
-     "say": "ESA's Gaia mission puts the Sun's age at around 4.57 billion years. That is not old for a star. It is middle-aged.",
+     "say": "ESA's article on Gaia gives our Sun an age of around 4.57 billion years: in its comfortable middle age.",
      "show": {
       "type": "counter",
       "value": 4.57,
@@ -129,7 +129,7 @@
      }
     },
     {
-     "say": "Right now the Sun is calm. It fuses hydrogen into helium in a core of about 15 million degrees Celsius.",
+     "say": "Right now the Sun is stable. It fuses hydrogen into helium in a core of about 15 million degrees Celsius.",
      "show": {
       "type": "counter",
       "value": 15,
@@ -210,7 +210,7 @@
      }
     },
     {
-     "say": "A 2025 NASA Hubble release puts it plainly: the warming Sun makes Earth uninhabitable in roughly 1 billion years.",
+     "say": "NASA's article on the Hubble and Gaia galaxy study states it: the warming Sun makes Earth uninhabitable in roughly 1 billion years.",
      "show": {
       "type": "kinetic",
       "text": "ROUGHLY 1 BILLION YEARS",
@@ -412,7 +412,7 @@
      }
     },
     {
-     "say": "So far: Earth turns uninhabitable first, then the Sun becomes a red giant that engulfs Mercury and Venus. Is that an explosion?",
+     "say": "So far: a red giant up to about 200 times wider, engulfing Mercury and Venus, and possibly Earth. Is that an explosion?",
      "show": {
       "type": "footage",
       "query": "Sun active region"
@@ -639,7 +639,7 @@
      }
     },
     {
-     "say": "Quick recap: Earth uninhabitable, Mercury and Venus engulfed, a giant that shrinks, pulses and sheds its skin. So what is left in the middle?",
+     "say": "Quick recap: a giant that shrinks to about 10 times today's size, pulses, and blows away its outer layers. So what is left in the middle?",
      "show": {
       "type": "counter",
       "value": 10,
@@ -687,7 +687,7 @@
      }
     },
     {
-     "say": "That is a ratio of 109.2. Your future Sun shrinks by about that much while keeping most of its mass.",
+     "say": "That is a ratio of 109.2. A white dwarf Sun would be squeezed down to about Earth's size.",
      "show": {
       "type": "counter",
       "value": 109.2,

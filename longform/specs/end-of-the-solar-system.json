@@ -784,10 +784,10 @@
      }
     },
     {
-     "say": "In 2012, Hubble data made a direct impact look almost certain, in no more than 5 billion years.",
+     "say": "In 2012, a Hubble analysis made the collision seem much more likely, indicating a direct impact in no more than 5 billion years.",
      "show": {
       "type": "kinetic",
-      "text": "ALMOST CERTAIN, 2012",
+      "text": "MUCH MORE LIKELY, 2012",
       "accent": [
        "2012"
       ]

@@ -11,6 +11,10 @@ item's slot is at least 24 h + 2 min after the last one of the same kind (publis
 or already queued), between 20:48 and 21:10 Rome time; otherwise the next day. meta_api.guard() checks again at
 publish time (warm-up limits until 15/11). A slot more than 2 days away is news that went stale: that kind is not
 queued. Published media files are removed by tools/media_cleanup.py. Needs GH_TOKEN and GITHUB_REPOSITORY.
+
+The 15:00 Short (b<MMDD>-*, Katana motion graphics) also goes out as a Facebook Reel at 16:00 (the publish.yml slot after it) from FB15_FROM
+(owner 06/11/2026: Facebook from 15/11, when the warm-up ends and FB allows 2 Reels a day 3 h apart; Instagram
+keeps its 1 Reel a day, the clip). Those items (ref fr-b...) never move the 20:50 slot of the clip.
 """
 from __future__ import annotations
 
@@ -70,8 +74,16 @@ KINDS = {"ig-reel": ("ig", "reel", "sr"), "fb-reel": ("fb", "reel", "fr"), "ig-s
          "fb-story": ("fb", "story", "sf")}
 
 
+FB15_FROM = datetime(2026, 11, 15, tzinfo=TZ)
+
+
+def is_fb15(ref: str) -> bool:
+    """The 15:00 Facebook Reel of the news Short: kept out of the 20:50 pacing of the clip."""
+    return ref.startswith("fr-b")
+
+
 def last_of(queue: list, action: str) -> datetime | None:
-    """Latest Meta action of this kind, published (real time in the log) or still queued."""
+    """Latest Meta action of this kind, published (real time in the log) or still queued (15:00 FB Reels excluded)."""
     p, k, _ = KINDS[action]
     times = []
     if LOG.exists():
@@ -80,9 +92,9 @@ def last_of(queue: list, action: str) -> datetime | None:
                 e = json.loads(line)
             except ValueError:
                 continue
-            if e.get("p") == p and e.get("k") == k:
+            if e.get("p") == p and e.get("k") == k and not is_fb15(e.get("item", "")):
                 times.append(datetime.fromtimestamp(int(e["at"]), TZ))
-    times += [stamp(i["at"]) for i in queue if i.get("action") == action]
+    times += [stamp(i["at"]) for i in queue if i.get("action") == action and not is_fb15(i.get("ref", ""))]
     return max(times) if times else None
 
 
@@ -151,8 +163,36 @@ def queue_tiktok(rel: dict, now: datetime, video: str) -> dict | None:
     return item
 
 
+def queue_fb15(now: datetime) -> None:
+    """The 15:00 news Short of today as a Facebook Reel at 16:00 (publish.yml runs at 15:45 for it), from FB15_FROM. meta_api.guard() checks the
+    limits again at publish time (FB: 2 Reels in 24 h, 3 h apart)."""
+    if now < FB15_FROM or now.hour * 60 + now.minute > 15 * 60 + 30 or "--tag" in sys.argv:
+        return
+    rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=30"))
+    rel = day_short.pick(rels, now, "b")
+    if not rel:
+        return
+    tag = rel["tag_name"]
+    queue = json.loads(QUEUE.read_text("utf-8")) if QUEUE.exists() else []
+    ref = f"fr-{tag}"
+    if any(i.get("ref") == ref for i in queue):
+        print(f"{ref}: already queued")
+        return
+    item = {"ref": ref, "at": f"{now:%Y-%m-%d} 16:00", "action": "fb-reel", "video_url": f"media/shorts/{tag}.mp4",
+            "caption": caption(rel["name"], now, fb=True)}
+    print(json.dumps(item, ensure_ascii=False, indent=1))
+    if DRY:
+        return
+    ensure_video(rel, tag)
+    queue.append(item)
+    queue.sort(key=lambda i: i["at"])
+    QUEUE.write_text(json.dumps(queue, ensure_ascii=False, indent=1) + "\n", "utf-8")
+    print(f"queued {ref} {item['at']}")
+
+
 def main():
     now = datetime.now(TZ)
+    queue_fb15(now)
     rel = release(now)
     tag = rel["tag_name"]
     if not tag.startswith("c") and os.environ.get("NEWS_TO_META") == "false" and "--tag" not in sys.argv:

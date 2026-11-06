@@ -21,6 +21,9 @@ on:
       id:
         description: "Folder in longform/ to render clips for (empty = only the clip of the day)"
         default: ""
+      recut:
+        description: "Clips to cut again even if the release has them (comma list of clip ids, or all)"
+        default: ""
       dry_run:
         description: "Dry run: render and release nothing, print what would happen"
         type: boolean
@@ -89,8 +92,12 @@ jobs:
         env:
           ID: ${{ steps.pick.outputs.id }}
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+          IN_RECUT: ${{ inputs.recut }}
         run: |
           have=$(gh release view "lf-$ID" --json assets --jq '.assets[].name')
+          # recut (06/11/2026, new clip look): the listed clips count as missing, upload --clobber replaces them
+          if [ "$IN_RECUT" = "all" ]; then have=""
+          elif [ -n "$IN_RECUT" ]; then have=$(grep -vxF -f <(tr ',' '\n' <<< "$IN_RECUT" | sed 's/ //g; s/$/.mp4/') <<< "$have" || true); fi
           python - <<'PY' > /tmp/clips.txt
           import os, yaml
           for c in yaml.safe_load(open(f"longform/{os.environ['ID']}/clips.yaml", encoding="utf-8")) or []:

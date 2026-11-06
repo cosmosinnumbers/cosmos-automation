@@ -136,6 +136,8 @@ def main():
         free = [c for c in clips if c not in used]
         print(f"{lv['ref']}: {len(clips)} clips, {len(free)} unused")
         heads = headlines(lv["ref"])
+        if heads:   # a clip taken out of clips.yaml is never used, even if the release still has it (p4-clip-i)
+            free = [c for c in free if c in heads]
         cands += [(lv, rel, c, heads.get(c, c.replace("-", " ")), n, i) for i, c in enumerate(free)]
     pick = choose(cands, day)
     reuse = False

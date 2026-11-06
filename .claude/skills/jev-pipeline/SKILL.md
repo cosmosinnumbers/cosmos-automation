@@ -23,6 +23,11 @@ Riferimento dei tool e dei payload: `.claude/skills/jev/references/tools.md` (sk
    cloud o segreto GitHub), mai in file, log, memoria o commit.
 2. Se i tool `mcp__jev__*` non sono registrati nella sessione, usa la CLI con gli stessi payload:
    `npx -y @french-castle/jev-code@0.5.0 classify --input payload.json` (anche `rank`, `score`, `check`).
+   **Thread cloud di Claude:** la chiave è un *network secret* dell'ambiente: il proxy la inserisce da solo
+   nell'header `Authorization` verso api.typesafe.ai. Servono comunque `TYPESAFE_API_KEY` con un valore
+   segnaposto qualsiasi (la CLI rifiuta di partire senza) e `NODE_USE_ENV_PROXY=1` (il fetch di Node non
+   usa il proxy da solo). Se non sono già nell'ambiente, esportali nel comando:
+   `TYPESAFE_API_KEY=placeholder NODE_USE_ENV_PROXY=1 npx -y @french-castle/jev-code@0.5.0 doctor --live`.
 3. Se manca la chiave o l'host non risponde (proxy 403, timeout): **non bloccare la pipeline**. Segnalalo una
    volta e lascia decidere `post_qc.py` come oggi. Non inventare mai risultati Jev.
 
@@ -68,7 +73,9 @@ Livelli (dal peggiore al migliore):
 3. "Buono: numero chiaro in apertura, un solo messaggio, fonte citata"
 4. "Ottimo: numero sorprendente nella prima riga, frasi brevi, fa venire voglia di vedere il video"
 
-Pubblica solo con `level >= 2` (Buono). Il punteggio si somma allo score 0-100 di `post_qc`, non lo sostituisce.
+`level` va da 0 (Debole) a 3 (Ottimo). Scarta solo `level 0` con `decision: auto`. Per il resto il punteggio
+serve a scegliere tra candidati dello stesso slot e si somma allo score 0-100 di `post_qc`, non lo sostituisce
+(test del 6/11: news APOD e quiz del giorno sono usciti a livello 1 con confidenza bassa, la clip a livello 3).
 
 ### 6. jev_check: brand voice
 `state`: `{ "post": <testo>, "source": <testo della pagina fonte>, "platform": <threads|ig|fb|tiktok|x> }`.

@@ -21,6 +21,14 @@ on:
         description: "videoId of our long video to DELETE and upload again from its rebuilt release (owner's ok only)"
         type: string
         default: ""
+      reschedule:
+        description: "videoId of our scheduled long video to move to the date in 'at' (owner's ok only)"
+        type: string
+        default: ""
+      at:
+        description: "New public date and time for reschedule, Italian time: YYYY-MM-DD HH:MM"
+        type: string
+        default: ""
       dry_run:
         description: "Dry run: check release, title and slot, upload nothing"
         type: boolean
@@ -56,11 +64,14 @@ jobs:
           YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
           IN_TAG: ${{ inputs.tag }}
           IN_REPLACE: ${{ inputs.replace }}
+          IN_RESCHEDULE: ${{ inputs.reschedule }}
+          IN_AT: ${{ inputs.at }}
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
         run: |
           args=()
           [ -n "$IN_TAG" ] && args+=(--tag "$IN_TAG")
           [ -n "$IN_REPLACE" ] && args+=(--replace "$IN_REPLACE")
+          [ -n "$IN_RESCHEDULE" ] && args+=(--reschedule "$IN_RESCHEDULE" --at "$IN_AT")
           [ "$IN_DRY" = "true" ] && args+=(--dry-run)
           python tools/yt_long_upload.py "${args[@]}"
       - name: Save the log

@@ -9,6 +9,8 @@ by itself. Then: English captions from <id>.srt, thumbnail thumb_A.jpg (needs a 
 only a warning). Title, description and tags from upload.md; an old launch code in the text becomes COSMOS9.
 --replace <videoId> (owner's ok needed: it deletes a video): first deletes that video of ours from the channel and
 drops its lines from the log, so the same release (e.g. rebuilt with new animations) is uploaded again on the same Sunday.
+--reschedule <videoId> --at "YYYY-MM-DD HH:MM" (owner 06/11/2026: "Sì, lungo il 7/11, clip dall'8/11"): moves the
+publishAt of a long video of ours that is still scheduled, and the date in the log (its clips follow the new date).
 Credentials: secret YOUTUBE_TOKEN_JSON (same as the Shorts), never printed. Quota: about 2,100 of 10,000 units.
 """
 from __future__ import annotations
@@ -89,6 +91,37 @@ def drop_from_log(vid: str) -> int:
     return len(lines) - len(keep)
 
 
+def reschedule(vid: str, at: str) -> None:
+    when = datetime.strptime(at, "%Y-%m-%d %H:%M").replace(tzinfo=TZ)
+    rows = [e for e in creds.events(LOG) if e.get("id") == vid and e.get("k") == "long"]
+    if not rows:
+        sys.exit(f"--reschedule {vid}: not a long video in the log.")
+    if when < datetime.now(TZ) + timedelta(minutes=30):
+        sys.exit(f"--reschedule {vid}: {at} is in the past or too close.")
+    print(f"{vid} ({rows[0]['ref']}): public at {when:%a %d/%m %H:%M} (Rome)")
+    if DRY:
+        print("DRY-RUN: nothing changed.")
+        return
+    yt = youtube()
+    st = yt.videos().list(part="status", id=vid).execute()["items"][0]["status"]
+    if st.get("privacyStatus") != "private" or not st.get("publishAt"):
+        sys.exit(f"{vid} is not a scheduled private video ({st.get('privacyStatus')}): not changed.")
+    body = {"id": vid, "status": {"privacyStatus": "private", "publishAt": when.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                                  "selfDeclaredMadeForKids": False, "embeddable": True, "license": "youtube"}}
+    yt.videos().update(part="status", body=body).execute()
+    p = creds.LOGS / LOG
+    out = []
+    for l in p.read_text("utf-8").splitlines():
+        if l.strip():
+            e = json.loads(l)
+            if e.get("id") == vid and e.get("k") == "long":
+                e["publish_at"], e["publish_day"] = int(when.timestamp()), when.date().isoformat()
+                l = json.dumps(e, ensure_ascii=False)
+        out.append(l)
+    p.write_text("\n".join(out) + "\n", "utf-8")
+    print(f"rescheduled: https://youtu.be/{vid} public {when:%d/%m %H:%M}")
+
+
 def pending(tag: str | None) -> list[dict]:
     rels = json.loads(gh("api", f"repos/{REPO}/releases?per_page=100"))
     done = {e.get("ref") for e in creds.events(LOG)}
@@ -101,6 +134,9 @@ def main():
     a = sys.argv[1:]
     tag = a[a.index("--tag") + 1] if "--tag" in a else None
     replace = a[a.index("--replace") + 1] if "--replace" in a else None
+    if "--reschedule" in a:
+        reschedule(a[a.index("--reschedule") + 1], a[a.index("--at") + 1])
+        return
     if replace:
         old = [e for e in creds.events(LOG) if e.get("id") == replace and e.get("k") == "long"]
         if not old:

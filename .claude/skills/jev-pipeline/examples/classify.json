@@ -1,0 +1,30 @@
+{
+  "instructions": "Classify each Cosmos in Numbers post candidate (space explained with verified numbers, sources NASA/ESA/ESO) by what kind of content it is, to decide when and whether it is published.",
+  "items": [
+    {
+      "id": "th-news-1106-apod-enceladus-silhouette",
+      "text": "Enceladus in Silhouette (NASA Astronomy Picture of the Day)\n\nOne of our Solar System's most tantalizing worlds, Enceladus is backlit by the Sun in this Cassini spacecraft image from November 1, 2009. The dramatic illumination reveals the plumes that continuously spew into space from the south pole of Saturn's 500 kilometer diameter moon.\n\nSource: NASA APOD (5 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-5-enceladus-in-silhouette/"
+    },
+    {
+      "id": "th-quiz-1106-mass-max",
+      "text": "Yesterday's answer: Mercury, 88.0 days per orbit (NASA Planetary Fact Sheet).\n\nToday's quiz ⚖️ Which of these planets is the most massive?\n\nAnswer tomorrow."
+    },
+    {
+      "id": "th-c1106-p4-clip-f",
+      "text": "The Sun you see is 8 minutes old\n\nStep two: the Sun. The average distance between Earth and the Sun is so useful that astronomers gave it its own unit, the astronomical unit, fixed by the IAU in 2012 at 149,597,870.7 kilometers. Light covers it in 499 seconds. That is 8 minutes and 19 seconds. The Sun you see is always the Sun of eight minutes ago.\n\nSource: NASA.\nNarration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers"
+    },
+    {
+      "id": "th-cta-lookup",
+      "text": "📘 Want to go further? LOOK UP, our beginner's stargazing guide (no telescope needed): https://cosmosinnumbers.gumroad.com/l/look-up\nCode COSMOS9 → $9 until Nov 30."
+    }
+  ],
+  "classes": {
+    "breaking": "Fresh news from a space agency (last 3 days), with a precise date, discovery or new image",
+    "evergreen": "Fact or curiosity that stays valid over time: fact-sheet data, quiz, clip of a long video",
+    "promo": "The main message is to sell something: the LOOK UP guide, a Gumroad link, a discount code",
+    "skip": "Off-niche, broken or cut text, clickbait without a number, or nothing worth saying"
+  },
+  "context": "Channel: Cosmos in Numbers (YouTube, Threads, Instagram, Facebook, TikTok, X). Today: 2026-11-06.",
+  "auto_accept": 0.8,
+  "min_margin": 0.4
+}

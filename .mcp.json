@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "jev": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@french-castle/jev-code@0.5.0",
+        "mcp"
+      ],
+      "env": {}
+    }
+  }
+}

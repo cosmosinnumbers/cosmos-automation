@@ -404,6 +404,32 @@
   "short": "c1105-p4-clip-g"
  },
  {
+  "ref": "th-news-1106-apod-enceladus-silhouette",
+  "at": "2026-11-06 12:00",
+  "tag": "Moon",
+  "text": "Enceladus in Silhouette (NASA Astronomy Picture of the Day)\n\nOne of our Solar System's most tantalizing worlds, Enceladus is backlit by the Sun in this Cassini spacecraft image from November 1, 2009. The dramatic illumination reveals the plumes that continuously spew into space from the south pole of Saturn's 500 kilometer diameter moon.\n\nSource: NASA APOD (5 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-5-enceladus-in-silhouette/",
+  "replies": [
+   "Discovered by Cassini in 2005, the icy plumes are likely connected to an ocean beneath the ice shell of Enceladus. They supply material directly to Saturn's outer, tenuous E ring and make the surface of Enceladus as reflective as snow.\n\nImage: Cassini Imaging Team, SSI, JPL, ESA, NASA."
+  ],
+  "news_title": "APOD: 2026 November 5 – Enceladus in Silhouette"
+ },
+ {
+  "ref": "th-quiz-1106-mass-max",
+  "at": "2026-11-06 17:55",
+  "tag": "Science",
+  "poll": [
+   "Uranus",
+   "Mars",
+   "Mercury"
+  ],
+  "text": "Yesterday's answer: Mercury, 88.0 days per orbit (NASA Planetary Fact Sheet).\n\nToday's quiz ⚖️ Which of these planets is the most massive?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Mass-0",
+  "answer": "Uranus, 86.8 × 10^24 kg (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1106-p4-clip-f",
   "at": "2026-11-06 21:00",
   "tag": "Sun",

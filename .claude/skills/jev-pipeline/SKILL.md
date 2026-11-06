@@ -26,7 +26,7 @@ Riferimento dei tool e dei payload: `.claude/skills/jev/references/tools.md` (sk
    **Thread cloud di Claude:** la chiave è un *network secret* dell'ambiente: il proxy la inserisce da solo
    nell'header `Authorization` verso api.typesafe.ai. Servono comunque `TYPESAFE_API_KEY` con un valore
    segnaposto qualsiasi (la CLI rifiuta di partire senza) e `NODE_USE_ENV_PROXY=1` (il fetch di Node non
-   usa il proxy da solo). Se non sono già nell'ambiente, esportali nel comando:
+   usa il proxy da solo). Il server MCP li ha già in `.mcp.json`; per la CLI esportali nel comando:
    `TYPESAFE_API_KEY=placeholder NODE_USE_ENV_PROXY=1 npx -y @french-castle/jev-code@0.5.0 doctor --live`.
 3. Se manca la chiave o l'host non risponde (proxy 403, timeout): **non bloccare la pipeline**. Segnalalo una
    volta e lascia decidere `post_qc.py` come oggi. Non inventare mai risultati Jev.

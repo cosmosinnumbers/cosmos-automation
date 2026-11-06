@@ -124,7 +124,8 @@ def main():
         return
     rels = json.loads(qsr.gh("api", f"repos/{qsr.REPO}/releases?per_page=100"))
     k = day_short.key(day, "c")
-    have = next((r["tag_name"] for r in rels if r["tag_name"].startswith(f"{k}-")), None)
+    pinned = day_short.pins().get(k)   # a pin (config/day-short.json) wins over a clip made earlier for that day
+    have = next((r["tag_name"] for r in rels if r["tag_name"].startswith(f"{k}-") and (not pinned or r["tag_name"] == pinned)), None)
     if have:
         print(f"{have}: the clip of the day is already out.")
         return
@@ -139,7 +140,17 @@ def main():
         if heads:   # a clip taken out of clips.yaml is never used, even if the release still has it (p4-clip-i)
             free = [c for c in free if c in heads]
         cands += [(lv, rel, c, heads.get(c, c.replace("-", " ")), n, i) for i, c in enumerate(free)]
-    pick = choose(cands, day)
+    # a series first (owner 06/11/2026: the new reels before the old clips): config/short-source.json "first" lists
+    # long videos whose clips go out before all others, one a day in name order (episodes a, b, c...)
+    src = json.loads((qsr.ROOT / "config" / "short-source.json").read_text("utf-8"))
+    first = src.get("first", [])
+    if f"{day:%Y-%m-%d}" < src.get("first_from", ""):   # the series starts on its day, not earlier
+        cands, first = [c for c in cands if c[0]["ref"] not in first], []
+    series = [c for c in cands if c[0]["ref"] in first]
+    if series:
+        series.sort(key=lambda c: (first.index(c[0]["ref"]), c[2]))
+        print(f"series first: {series[0][2]} ({len(series)} left)")
+    pick = series[0][:3] if series else choose(cands, day)
     reuse = False
     if not pick:
         pick = reserve(day, rels)

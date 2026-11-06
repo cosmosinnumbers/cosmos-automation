@@ -7,7 +7,7 @@ second build on the same day (manual dispatch, reserve) never splits the channel
   3. else the first release of that day by creation time: later builds the same day are spares, never replacements.
 From config/short-source.json "clips_from" (owner 03/11/2026: "tutti i video corti devono essere clippate dei video
 lunghi", every channel) the Short of the day is the clip release c<MMDD>-* made by tools/day_clip.py; the news
-Shorts a<MMDD>-* and b<MMDD>-* are still built as a reserve but never picked.
+Shorts a<MMDD>-* stay a reserve; b<MMDD>-* is the 15:00 YouTube Short every day (owner 06/11/2026).
 tools/short_sync.py checks every evening that the channels agree and opens an issue when they do not.
 """
 from __future__ import annotations
@@ -56,10 +56,10 @@ def on_youtube() -> list[str]:
 
 def pick(rels: list[dict], day: datetime, prefix: str = "a") -> dict | None:
     """The release that is the Short of `day` (releases as returned by the GitHub API), or None."""
-    if clips_mode(day):
-        if prefix != "a":
-            return None  # no second (news) Short of the day in clips mode
-        prefix = "c"
+    if clips_mode(day) and prefix == "a":
+        prefix = "c"   # the 21:00 Short is the clip of a long video
+    # prefix "b": the 15:00 news Short (Katana motion graphics) goes out every day on YouTube, clips mode or not
+    # (owner 06/11/2026: "Perché non l'hai caricato?" about the 15:00 Short)
     k = key(day, prefix)
     cands = [r for r in rels if r["tag_name"].startswith(f"{k}-") and not r.get("draft")]
     if not cands:

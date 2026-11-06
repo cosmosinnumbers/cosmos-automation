@@ -642,6 +642,10 @@ def render_video(script: dict, video: Path, assets: dict, timings: dict) -> list
                 f = motion.glitch(f, i, 8, seed=k)
             elif trans == "zoomthrough" and i < 7:
                 f = motion.zoom_into(f, (i + 1) / 7)
+            elif trans == "whip" and i < 7:
+                f = motion.whip_in(f, (i + 1) / 7)
+            elif trans == "dither" and i < 8:
+                f = motion.dither(f, i, 8)
             elif prev_last is not None and i < XFADE:
                 f = Image.blend(prev_last, f, ease((i + 1) / XFADE))
             if script.get("progress_bar"):  # thin progress line at the bottom (retention cue)
@@ -678,7 +682,7 @@ def motion_plan(script: dict, video: Path, assets: dict, shots: list[dict], timi
     for k, f in p["fx"].items():
         frames = max(8, round((shots[k]["end"] - shots[k]["start"]) * FPS))
         props = {"brand": brand, "tiles": tiles, **f["props"], "width": W, "height": H, "fps": FPS, "frames": frames}
-        if f["effect"] == "framebreak" and f.get("src") in assets and assets[f["src"]]["type"] == "image":
+        if f["effect"] in ("framebreak", "katanatype", "impactframe") and f.get("src") in assets and assets[f["src"]]["type"] == "image":
             props["poster"] = motion._uri(Image.open(video / assets[f["src"]]["file"]), 720)
         jobs.append({"effect": f["effect"], "out": str(build / f"fx_{k:03d}_{f['effect']}.mp4"), "props": props, "k": k})
     hook_out = str(build / "fx_hook_orbit.mp4")

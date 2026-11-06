@@ -332,10 +332,15 @@ def main():
             if cut is not None and trans[cut] == "zoomthrough":
                 frame_vis = (motion.zoom_out_of(frame_vis, (fi - cut + 6) / 6) if fi < cut
                              else motion.zoom_into(frame_vis, (fi - cut + 1) / 5))
+            elif cut is not None and trans[cut] == "whip":   # Katana whip pan (06/11/2026)
+                frame_vis = (motion.whip_out(frame_vis, (fi - cut + 6) / 6) if fi < cut
+                             else motion.whip_in(frame_vis, (fi - cut + 1) / 5))
             f = backdrop(frame_vis)
             f.paste(frame_vis, (0, VIS_Y))
             if cut is not None and trans[cut] == "glitch" and cut - 4 <= fi < cut + 4:
                 f = motion.glitch(f, fi - cut + 4, 8, seed=cut)
+            elif cut is not None and trans[cut] == "dither" and cut - 4 <= fi < cut + 4:
+                f = motion.dither(f, fi - cut + 4, 8)
             show_caps = True
         d = ImageDraw.Draw(f)
         if ins_k is None and credit:

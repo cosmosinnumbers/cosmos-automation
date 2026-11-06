@@ -14,7 +14,7 @@ automatico (Openverse → suoni al frame giusto → sintesi in codice) e una var
   delle fonti in Headlines, glitch/zoom-through ai cambi capitolo, telefono con LOOK UP sulla chiusura.
   I clip verticali presi dai lunghi (clip.py) ereditano tutto.
 
-## Gli 11 effetti (`motion/src/scenes/`, Remotion 4.0.536)
+## Gli effetti (`motion/src/scenes/`, Remotion 4.0.536)
 | # | Effetto | Quando lo usa il regista (`video/ytf/director.py`) |
 |---|---|---|
 | 01 | Orbit | primo 1,8 s di ogni video (hook), etichetta con l'agenzia della fonte |
@@ -28,6 +28,20 @@ automatico (Openverse → suoni al frame giusto → sintesi in codice) e una var
 | 09 | Pullback | frase "quadro d'insieme" (whole, entire, total, system...) |
 | 10 | Glitch | taglio prima di una frase di contrasto |
 | 11 | Typewriter | ultima riga, invito a seguire + link in bio |
+
+### Kit Katana (06/11/2026)
+Richiesta di simone: "le motion graphics di Higgsfield Katana nei miei video". Katana (Higgsfield, ott. 2026) scrive le
+motion graphics come codice dentro Claude, nello stile dei montaggi virali (tipografia cinetica a tempo, impact frame,
+reveal da lancio prodotto, montaggi a raffica, whip pan). Il kit le rifà in Remotion, tutto disegnato in codice:
+| # | Effetto | Dove |
+|---|---|---|
+| 12 | Katana Type: parole giganti che sbattono a tempo con la voce, flash, shake, stile che ruota (pieno/contorno/barra), numeri in arancione con RGB split | Short: al posto di Paper Cut; lunghi: alterna con Paper Cut |
+| 13 | Impact Frame: freeze in bianco e nero 1-bit stile manga, retino, linee di velocità, numero che sbatte, il colore torna alla fine | Short: numero "shock" (al posto di Vertigo); lunghi: alterna con Vertigo |
+| 14 | Light Sweep: numero metallico in 3D che si alza dal pavimento contando, lama di luce, flare anamorfico, riflesso | lunghi: un contatore su due (gli altri restano Charts) |
+| 15 | Flash Cuts: raffica di fotogrammi nostri che accelera, punch-in diversi, lampi bianchi, letterbox, frase fissa al centro | secondo "quadro d'insieme" (il primo resta Pullback) |
+| — | whip / dither: whip pan con motion blur e dissolvenza 1-bit a retino | tagli tra clip: ruotano whip → zoom-through → dither (glitch resta prima di un "but") |
+Grana in movimento (`Grain` in lib.jsx) su tutte le scene nuove. Suoni: slap/pop su ogni parola, impact sui numeri,
+shatter sull'impact frame, riser + impact sul reveal, tick su ogni taglio della raffica.
 
 Le card delle scene mostrano fotogrammi del nostro stesso materiale NASA/ESA; personaggi, telefono, copertina di
 LOOK UP e grafiche sono disegnati in codice. Tema `brand: cosmos` o `brand: companies` (palette Companies in

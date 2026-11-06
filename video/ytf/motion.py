@@ -5,6 +5,8 @@
   glitch(frame, k, n, seed) / zoom_out(frame, p) / zoom_in(frame, p)
                                                     the Glitch (10) and Zoom-through (03) transitions applied to the
                                                     live frames at a cut between two real clips
+  whip_out(frame, p) / whip_in(frame, p) / dither(frame, k, n)
+                                                    the Katana whip-pan and 1-bit dither transitions, same idea
   typewriter_keys(text, fps, start)                 keystroke frames (scene props) = click times (sound design)
 
 If Node or the motion/ project are missing, or a scene fails, the caller keeps the plain footage: a video is never
@@ -29,7 +31,10 @@ MOTION = ROOT / "motion"
 
 # frames of each scene when the director gives no length (30 fps)
 DEFAULT_FRAMES = {"orbit": 54, "vertigo": 75, "zoomthrough": 10, "headlines": 90, "papercut": 90, "charts": 90,
-                  "phonescreens": 75, "framebreak": 75, "pullback": 75, "glitch": 8, "typewriter": 90}
+                  "phonescreens": 75, "framebreak": 75, "pullback": 75, "glitch": 8, "typewriter": 90,
+                  # Katana kit (06/11/2026): kinetic slam type, 1-bit impact frame, product-launch light sweep,
+                  # rapid flash-cut montage
+                  "katanatype": 75, "impactframe": 66, "lightsweep": 84, "flashcuts": 75}
 EFFECTS = tuple(DEFAULT_FRAMES)
 
 
@@ -156,3 +161,51 @@ def zoom_into(frame: Image.Image, p: float) -> Image.Image:
     if p < 0.35:
         f = Image.blend(f, Image.new("RGB", f.size, (247, 250, 252)), 0.5 * (1 - p / 0.35))
     return f
+
+
+# ---------- Katana kit transitions (06/11/2026) ----------
+def _hblur(a: np.ndarray, px: int) -> np.ndarray:
+    """Horizontal motion blur: average of `px` shifted copies (box blur along x), cheap enough per frame."""
+    if px < 2:
+        return a
+    c = np.cumsum(np.pad(a.astype(np.float32), ((0, 0), (px, 0), (0, 0)), mode="edge"), axis=1)
+    return ((c[:, px:] - c[:, :-px]) / px).astype(np.uint8)
+
+
+def whip_out(frame: Image.Image, p: float) -> Image.Image:
+    """Outgoing half of the whip pan: the picture slides left faster and faster, smeared by motion blur (p 0->1)."""
+    a = np.asarray(frame.convert("RGB"))
+    w = a.shape[1]
+    e = p ** 2.4
+    out = np.roll(a, -int(w * 0.45 * e), axis=1)
+    return Image.fromarray(_hblur(out, int(w * 0.25 * e)))
+
+
+def whip_in(frame: Image.Image, p: float) -> Image.Image:
+    """Incoming half: the new picture arrives from the right with the blur settling to sharp (p 0->1)."""
+    a = np.asarray(frame.convert("RGB"))
+    w = a.shape[1]
+    e = (1 - p) ** 2.4
+    out = np.roll(a, int(w * 0.45 * e), axis=1)
+    return Image.fromarray(_hblur(out, int(w * 0.25 * e)))
+
+
+_BAYER = np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]], dtype=np.float32) / 16.0
+
+
+def dither(frame: Image.Image, k: int, n: int = 8, dark=(11, 16, 38), light=(247, 250, 252)) -> Image.Image:
+    """Frame k of n of the 1-bit dither transition: the picture turns into a two-colour ordered-dither print
+    (brand navy and white) at the middle of the n frames, with big pixels, then dissolves back to colour."""
+    a = np.asarray(frame.convert("RGB")).astype(np.float32)
+    h, w, _ = a.shape
+    s = 1 - abs((k + 0.5) / n - 0.5) * 2            # 0 at the ends, 1 in the middle
+    cell = max(2, int(round(2 + s * 4)))           # bigger pixels at the peak
+    small = Image.fromarray(a.astype(np.uint8)).resize((max(1, w // cell), max(1, h // cell)), Image.BILINEAR)
+    g = np.asarray(small.convert("L")).astype(np.float32) / 255.0
+    g = np.clip((g - 0.5) * 1.6 + 0.5, 0, 1)
+    th = np.tile(_BAYER, (g.shape[0] // 4 + 1, g.shape[1] // 4 + 1))[: g.shape[0], : g.shape[1]]
+    bit = (g > th)[..., None]
+    one = np.where(bit, np.array(light, np.float32), np.array(dark, np.float32))
+    one = np.asarray(Image.fromarray(one.astype(np.uint8)).resize((w, h), Image.NEAREST)).astype(np.float32)
+    mix = min(1.0, s * 1.6)
+    return Image.fromarray((a * (1 - mix) + one * mix).astype(np.uint8))

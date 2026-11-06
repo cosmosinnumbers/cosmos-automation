@@ -2,7 +2,7 @@
 // Everything is drawn in code (CSS/SVG): no third-party footage, images or music. Tiles can show stills of the
 // video's own public-domain footage (NASA/ESA), passed in by video/ytf/motion.py as small data URIs.
 import React from "react";
-import { continueRender, delayRender, Img, interpolate, staticFile, useVideoConfig, Easing } from "remotion";
+import { AbsoluteFill, continueRender, delayRender, Img, interpolate, staticFile, useVideoConfig, Easing } from "remotion";
 import "@fontsource/jetbrains-mono/700.css";
 
 export const THEMES = {
@@ -130,3 +130,49 @@ export const Phone = ({ w, t, children, u }) => {
     </div>
   );
 };
+
+// ---------- Katana kit (06/11/2026): the look of the viral "Katana" edits, all drawn in code ----------
+// Film grain: an SVG noise layer whose seed changes every 2 frames (moving grain, not a static texture).
+export const Grain = ({ f, opacity = 0.14, u = 1 }) => (
+  <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "overlay", opacity }}>
+    <svg width="100%" height="100%">
+      <filter id={`grain${Math.floor(f / 2) % 24}`}>
+        <feTurbulence type="fractalNoise" baseFrequency={0.9 / Math.max(0.5, u)} numOctaves="2"
+                      seed={Math.floor(f / 2) % 24} stitchTiles="stitch" />
+        <feColorMatrix type="saturate" values="0" />
+      </filter>
+      <rect width="100%" height="100%" filter={`url(#grain${Math.floor(f / 2) % 24})`} />
+    </svg>
+  </AbsoluteFill>
+);
+
+// Hand-held camera shake that decays after each hit (frames in `hits`).
+export const shakeAt = (f, hits, amp, seed = 3) => {
+  let x = 0, y = 0, r = 0;
+  for (const h of hits || []) {
+    const d = f - h;
+    if (d < 0 || d > 9) continue;
+    const k = Math.pow(1 - d / 9, 2) * amp;
+    const g = rng(h * 31 + d * 7 + seed);
+    x += (g() - 0.5) * 2 * k;
+    y += (g() - 0.5) * 2 * k;
+    r += (g() - 0.5) * 0.6 * k / Math.max(1, amp);
+  }
+  return { x, y, r };
+};
+
+// White flash that fades out over `len` frames after each hit.
+export const flashAt = (f, hits, len = 4, peak = 0.75) => {
+  let a = 0;
+  for (const h of hits || []) {
+    const d = f - h;
+    if (d >= 0 && d < len) a = Math.max(a, peak * (1 - d / len));
+  }
+  return a;
+};
+
+// The still behind a Katana scene: the shot's own poster, else one of the footage tiles.
+export const posterOf = (p, i = 0) => p.poster || p.src || tileAt(p, i);
+
+// Red/cyan split text shadow (chromatic aberration) of strength `k` px.
+export const rgbSplit = (k) => k > 0.2 ? `${k}px 0 0 #ff2b5ccc, ${-k}px 0 0 #22e6ffcc` : "none";

@@ -13,6 +13,13 @@ Rules (one effect per job, never two heavy scenes closer than MIN_GAP seconds):
 The CTA on screen never shows a discount code (the same file goes to TikTok, where codes are not allowed):
 the code is only in the YouTube/Meta descriptions.
 Every placed effect also returns its sound events (sfx.py): the sound lands on the exact frame of the visual hit.
+
+Katana kit (owner 06/11/2026: "the motion graphics of Higgsfield Katana in my videos"), the viral-edit look:
+  12 Katana Type   the short punchy line (was Paper Cut in Shorts): words slam on the beat of the voice
+  13 Impact Frame  the shock number (Shorts; alternates with Vertigo in long videos): 1-bit manga freeze + speed lines
+  14 Light Sweep   every other counter of a long video: the number revealed like a product launch
+  15 Flash Cuts    the second big-picture line (after Pullback): rapid-fire montage of our own stills
+  whip / dither    two more live-frame transitions at the cuts, rotating with Zoom-through and Glitch
 """
 from __future__ import annotations
 
@@ -132,8 +139,36 @@ def _short_title(t: str, n: int = 60) -> str:
     return t if len(t) <= n else t[: n - 1].rsplit(" ", 1)[0] + "…"
 
 
+# cut transitions in rotation (glitch is kept for the cut before a contrast line)
+CUT_CYCLE = ("whip", "zoomthrough", "dither")
+# lead of the transition sound before the cut (seconds): these hit in the middle of their frames
+TRANS_LEAD = {"glitch": 4 / FPS, "dither": 4 / FPS, "whip": 5 / FPS, "zoomthrough": 6 / FPS}
+
+
 # ---------- sound events of each effect (seconds from the start of the effect) ----------
 def effect_sounds(effect: str, dur: float, props: dict) -> list[tuple[float, str]]:
+    if effect == "katanatype":
+        acc = {str(a).upper().strip(".,!?") for a in props.get("accent", [])}
+        hot = lambda w: w.upper().strip(".,!?;:") in acc or any(c.isdigit() for c in w)   # noqa: E731
+        ws = props.get("words", [])
+        return [(0.0, "whoosh")] + [(w["at"], "impact" if hot(w["text"]) else ("slap" if k == 0 else "pop"))
+                                    for k, w in enumerate(ws)]
+    if effect == "impactframe":
+        return [(0.0, "impact"), (1 / FPS, "shatter"), (0.3, "shimmer"), (max(0.5, dur - 10 / FPS), "swish")]
+    if effect == "lightsweep":
+        land = min(round(dur * FPS * 0.55), 54) / FPS
+        return [(0.0, "riser"), (land, "impact"), (land + 0.05, "shimmer")]
+    if effect == "flashcuts":
+        out, c, step = [(0.0, "whoosh")], 0.0, 7.0
+        while c < dur * FPS - 2:
+            out.append((c / FPS, "tick"))
+            c += round(step)
+            step = max(3.0, step * 0.82)
+        return out + [(min(dur, 0.9), "impact")]
+    if effect == "whip":
+        return [(0.0, "whoosh")]
+    if effect == "dither":
+        return [(0.0, "glitch"), (4 / FPS, "pop")]
     if effect == "orbit":
         return [(0.0, "whoosh"), (8 / FPS, "pop"), (0.55, "impact")]
     if effect == "vertigo":
@@ -206,16 +241,17 @@ def plan_short(spec: dict, timings: dict, brand: str = "cosmos", n_cuts: int = 0
                 add("framebreak", t0, t1, {"text": ""})
                 used.add(i)
         elif info and SHOCK.search(txt):
-            t1 = min(t0 + 2.6, dur - 3.5)
-            if t1 - t0 >= 2.0 and free(t0, t1):
-                add("vertigo", t0, t1, {"text": info["display"], "sub": info["sub"]})
+            t1 = min(t0 + 2.2, dur - 3.5)
+            if t1 - t0 >= 1.8 and free(t0, t1):   # Katana impact frame: the number hits like a manga panel
+                add("impactframe", t0, t1, {"text": info["display"], "sub": info["sub"]})
                 used.add(i)
         elif BIG.search(txt):
             t1 = min(t0 + 2.6, dur - 3.5)
             if t1 - t0 >= 2.2 and free(t0, t1):
-                add("pullback", t0, t1, {"text": _short_title(txt, 46)})
+                eff = "flashcuts" if any(x["effect"] == "pullback" for x in inserts) else "pullback"
+                add(eff, t0, t1, {"text": _short_title(txt, 46 if eff == "pullback" else 28)})
                 used.add(i)
-    if len(inserts) < 4:   # 05 Paper Cut on a short sentence of the middle third, else 04 Headlines
+    if len(inserts) < 4:   # 12 Katana Type on a short sentence of the middle third, else 04 Headlines
         for i, s in enumerate(sents):
             words = s["text"].split()
             if i in used or not (dur * 0.3 <= s["start"] <= dur * 0.72) or not 3 <= len(words) <= 10:
@@ -223,7 +259,7 @@ def plan_short(spec: dict, timings: dict, brand: str = "cosmos", n_cuts: int = 0
             t0, t1 = s["start"] - 0.15, min(s["end"] + 0.5, s["start"] + 3.2)
             if free(t0, t1):
                 ws = [{"text": w, "at": round(max(0.0, wt - t0), 2)} for wt, w in word_times(s)]
-                add("papercut", t0, t1, {"words": ws, "accent": [w for w in words if real_numbers(w)][:2]}, captions=False)
+                add("katanatype", t0, t1, {"words": ws, "accent": [w for w in words if real_numbers(w)][:2]}, captions=False)
                 break
         else:
             if len(src) >= 2:
@@ -237,7 +273,7 @@ def plan_short(spec: dict, timings: dict, brand: str = "cosmos", n_cuts: int = 0
         if not free(t - 0.3, t + 0.3, gap=0.2):
             continue
         nxt = next((s for s in sents if s["start"] >= t - 0.4), None)
-        transitions.append((t, "glitch" if nxt and CONTRAST.search(nxt["text"]) else "zoomthrough"))
+        transitions.append((t, "glitch" if nxt and CONTRAST.search(nxt["text"]) else CUT_CYCLE[len(transitions) % len(CUT_CYCLE)]))
     # 07 + 11: closing CTA after the voice (only if the Short stays under max_total)
     cta = PRODUCT.get(brand, PRODUCT["cosmos"])
     tail = 0.0
@@ -255,7 +291,7 @@ def plan_short(spec: dict, timings: dict, brand: str = "cosmos", n_cuts: int = 0
     for ins in inserts:
         events += [(ins["t0"] + a, k) for a, k in effect_sounds(ins["effect"], ins["t1"] - ins["t0"], ins["props"])]
     for t, eff in transitions:
-        events += [(t + a - (4 / FPS if eff == "glitch" else 6 / FPS), k) for a, k in effect_sounds(eff, 0.3, {})]
+        events += [(t + a - TRANS_LEAD.get(eff, 6 / FPS), k) for a, k in effect_sounds(eff, 0.3, {})]
     return {"inserts": sorted(inserts, key=lambda x: x["t0"]), "transitions": transitions, "tail": tail,
             "events": sorted(events)}
 
@@ -279,7 +315,7 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
     say = {}
     for seg in script.get("segments", []):
         say[seg["id"]] = seg.get("narration", "")
-    counters = chapters = pullbacks = 0
+    counters = chapters = pullbacks = shocks = kinetics = 0
     mid_done = False
     shown = script.get("chapters", True) is not False   # owner 03/11/2026: no chapters for the viewer
     for i, sh in enumerate(shots):
@@ -302,7 +338,7 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
             continue
         act = sh.get("chapter") or sh.get("act")
         if i and act and act.lower() not in ("intro",):
-            transitions[i] = "glitch" if len(transitions) % 2 else "zoomthrough"
+            transitions[i] = ("zoomthrough", "whip", "glitch", "dither")[len(transitions) % 4]
             events.append((max(0.0, t0 - 1.2), "riser"))   # tension before every new chapter (owner 03/11/2026)
             chapters += 1
             # 11 Typewriter: every other chapter opens with its title typed on screen (the 11th effect in long videos)
@@ -321,24 +357,29 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
         pick = None
         if kind == "counter":
             counters += 1
-            if counters % 2 == 1:
-                info = {"value": v["value"], "decimals": v.get("decimals", 0), "prefix": v.get("prefix", ""),
-                        "suffix": v.get("suffix", ""), "label": v.get("label", "Real data"), "sub": v.get("sub", "")}
-                pick = ("charts", info)
+            info = {"value": v["value"], "decimals": v.get("decimals", 0), "prefix": v.get("prefix", ""),
+                    "suffix": v.get("suffix", ""), "label": v.get("label", "Real data"), "sub": v.get("sub", "")}
+            # odd counters: Charts dashboard; even ones: the Katana product-launch reveal (were plain counters)
+            pick = ("charts", info) if counters % 2 == 1 else ("lightsweep", info)
         elif kind == "kinetic":
             words = v.get("text", "").split()
             if SHOCK.search(v.get("text", "")) and real_numbers(v.get("text", "")):
                 info = number_info(v["text"]) or {}
-                pick = ("vertigo", {"text": info.get("display", v["text"]), "sub": info.get("sub", "")})
+                shocks += 1
+                pick = ("impactframe" if shocks % 2 else "vertigo", {"text": info.get("display", v["text"]), "sub": info.get("sub", "")})
             elif 2 <= len(words) <= 9:
                 step = min(0.38, d * 0.6 / max(1, len(words)))
-                pick = ("papercut", {"words": [{"text": w, "at": round(0.2 + k * step, 2)} for k, w in enumerate(words)],
-                                     "accent": v.get("accent", [])})
+                kinetics += 1   # Katana Type and Paper Cut take turns: the slam stays special
+                pick = ("katanatype" if kinetics % 2 else "papercut",
+                        {"words": [{"text": w, "at": round(0.2 + k * step, 2)} for k, w in enumerate(words)],
+                         "accent": v.get("accent", [])})
         elif kind in ("image", "video") and not mid_done and abs(t0 - dur / 2) < dur * 0.12 and CONTRAST.search(text):
             pick = ("framebreak", {"text": ""})
             mid_done = True
         elif kind in ("image", "video") and BIG.search(text) and t0 > dur * 0.6 and pullbacks < 2:
-            pick = ("pullback", {"text": _short_title(text.split(".")[0], 46)})   # max 2: the same move tires
+            # first Pullback, then the Katana flash-cut montage: the same move tires
+            pick = ("pullback", {"text": _short_title(text.split(".")[0], 46)}) if pullbacks == 0 else \
+                ("flashcuts", {"text": _short_title(text.split(".")[0], 28)})
             pullbacks += 1
         if pick:
             fx[i] = {"effect": pick[0], "props": pick[1], "src": v.get("src")}
@@ -358,7 +399,7 @@ def plan_long(script: dict, shots: list[dict], timings: dict, brand: str = "cosm
                                                   "sources": [agency([s]) for s in srcs]}, "src": shots[1]["visual"].get("src")}
         events += [(shots[1]["start"] + a, k) for a, k in effect_sounds("headlines", 2.6, {})]
     for i, eff in transitions.items():
-        events += [(shots[i]["start"] + a - (4 / FPS if eff == "glitch" else 6 / FPS), k) for a, k in effect_sounds(eff, 0.3, {})]
+        events += [(shots[i]["start"] + a - TRANS_LEAD.get(eff, 6 / FPS), k) for a, k in effect_sounds(eff, 0.3, {})]
     hook = {"effect": "orbit", "t0": 0.0, "t1": 1.8, "props": {"label": agency(srcs) + " · REAL DATA"}}
     events += effect_sounds("orbit", 1.8, {})
     return {"fx": fx, "transitions": transitions, "events": sorted(events), "hook": hook}

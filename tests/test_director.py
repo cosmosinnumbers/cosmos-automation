@@ -138,3 +138,52 @@ def test_long_stickmen_added_and_length_hint():
     spec = {"title": "x", "chapters": [{"title": "a", "beats": [{"say": "word " * 100, "show": {"type": "image"}}]}]}
     msg = next(m for m in lf.script_check(spec) if m.startswith("narration has"))
     assert "ADD about" in msg and "act 1 100 words" in msg
+
+
+def test_katana_kit_in_shorts():
+    """Owner 06/11/2026: the Katana look. Shock numbers hit as an Impact Frame, the short line slams as Katana Type,
+    cuts rotate whip / zoom-through / dither, and every new sound has a level."""
+    txt = ["NASA will fly past Europa 49 times.", "Each flyby lasts only minutes.", "The ice hides an ocean.",
+           "Scientists have waited decades for this moment to arrive.",
+           "It is the largest planetary probe NASA ever built, 6000 kilograms.", "Scientists want to taste it.",
+           "Nobody has been this close.", "Each pass maps a new strip of ice.", "It arrives at Jupiter in 2030 after a long cruise."]
+    tm = timings(txt)
+    d = tm["duration"]
+    p = director.plan_short({"sources_full": []}, tm, cut_times=[k * 1.3 for k in range(1, int(d / 1.3))])
+    effects = [i["effect"] for i in p["inserts"]]
+    assert "impactframe" in effects and "vertigo" not in effects
+    assert "katanatype" in effects and "papercut" not in effects
+    assert {e for _, e in p["transitions"]} <= {"whip", "zoomthrough", "dither", "glitch"}
+    assert p["transitions"] and p["transitions"][0][1] == "whip"
+    assert all(k in sfx.LEVEL for _, k in p["events"])
+    for a, b in zip(p["inserts"], p["inserts"][1:]):
+        assert a["t1"] <= b["t0"]
+
+
+def test_katana_kit_sounds_and_transitions():
+    from PIL import Image
+    import motion
+    for eff, props in [("katanatype", {"words": [{"text": "49", "at": 0.2}, {"text": "flybys", "at": 0.5}]}),
+                       ("impactframe", {}), ("lightsweep", {}), ("flashcuts", {}), ("whip", {}), ("dither", {})]:
+        ev = director.effect_sounds(eff, 2.4, props)
+        assert ev and all(k in sfx.LEVEL for _, k in ev), eff
+    assert director.effect_sounds("katanatype", 2, {"words": [{"text": "49", "at": 0.2}]})[1][1] == "impact"
+    im = Image.new("RGB", (320, 180), (200, 120, 40))
+    for fr in (motion.whip_out(im, 0.7), motion.whip_in(im, 0.3), motion.dither(im, 4, 8)):
+        assert fr.size == im.size and fr.mode == "RGB"
+    assert set(director.CUT_CYCLE) <= set(director.TRANS_LEAD)
+    assert {"katanatype", "impactframe", "lightsweep", "flashcuts"} <= set(motion.DEFAULT_FRAMES)
+
+
+def test_katana_kit_in_long_videos():
+    shots, t = [], 0.0
+    vis = [{"type": "counter", "value": 49, "label": "flybys"}, {"type": "kinetic", "text": "The ice hides an ocean"},
+           {"type": "kinetic", "text": "It is the largest moon ocean, 2 times Earth's water"}]
+    for k in range(18):
+        shots.append({"start": t, "end": t + 6.0, "segment": "s1", "visual": vis[k % 3] if k else {"type": "image", "src": "i"},
+                      "chapter": None})
+        t += 6.0
+    p = director.plan_long({"segments": [{"id": "s1", "narration": "x"}], "sources": []}, shots, {"duration": t})
+    effects = [f["effect"] for f in p["fx"].values()]
+    assert "lightsweep" in effects and "charts" in effects
+    assert "katanatype" in effects and "impactframe" in effects

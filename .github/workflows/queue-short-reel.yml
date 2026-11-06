@@ -24,8 +24,8 @@ concurrency: queue-short-reel
 
 jobs:
   queue:
-    # news Shorts are off (SHORT_REEL_ENABLED=false, owner 03/11/2026); the clip of the day (long-clips) always queues
-    if: (vars.SHORT_REEL_ENABLED != 'false' || github.event.workflow_run.name == 'long-clips') && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
+    # news Shorts are off on Meta (NEWS_TO_META), except the 15:00 FB Reel from 15/11 (owner 06/11/2026): the job always runs
+    if: (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

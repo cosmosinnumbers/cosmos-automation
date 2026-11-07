@@ -10,3 +10,4 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1106-hubble-learns-galactic", "ok": true, "score": 76, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-news-1106-apod-enceladus-silhouette", "ok": true, "score": 82, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1106-mass-max", "ok": true, "score": 82, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-c1107-p4-clip-h", "ok": true, "score": 91, "errors": []}

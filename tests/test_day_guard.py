@@ -233,4 +233,4 @@ def test_quota_still_failing_skips_the_llm(monkeypatch, tmp_path):
     monkeypatch.setattr(s, "run_info", lambda: {"path": ".github/workflows/publish.yml", "head_sha": "x"})
     s.cmd_diagnose()
     st = __import__("json").loads((tmp_path / "state.json").read_text("utf-8"))
-    assert outs["status"] == "skip" and st["kind"] == "quota" and "2 tentativi" in st["diagnosis"]
+    assert outs["status"] == "skip" and st["kind"] == "quota" and "1 tentativi" in st["diagnosis"]

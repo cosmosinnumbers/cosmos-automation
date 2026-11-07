@@ -76,3 +76,22 @@ def test_limits(tmp_path, monkeypatch):
     monkeypatch.setattr(s, "WF", "research")
     log.write_text("".join(json.dumps({"wf": f"w{i}", "at": now - 60}) + "\n" for i in range(4)), "utf-8")
     assert "al giorno" in s.over_limit()
+
+
+def test_no_retry_and_no_runner(monkeypatch):
+    """07/11/2026: longform-auto failed its script checks and was re-run 3 times (~4 h of Actions minutes)."""
+    log = ("backup writer qwen HTTP 429 (tokens per minute): waiting 25 s\n"
+           "CHECKS FAILED: act 1 still fails after 4 drafts: no long video this week.\n")
+    import re
+    assert re.search(s.CFG["no_retry"], log, re.I | re.M)
+    assert not re.search(s.CFG["no_retry"], "HTTP 429 Too Many Requests\nHTTP 503", re.I | re.M)
+
+    class R:
+        def __init__(self, data): self.data = data
+        def json(self): return self.data
+    jobs = {"jobs": [{"name": "build", "conclusion": "failure", "steps": [], "runner_id": 0}]}
+    monkeypatch.setattr(s, "gh_api", lambda *a, **k: R(jobs))
+    assert s.no_runner()
+    assert "no runner" in s.skip_retry()
+    jobs["jobs"][0].update(steps=[{"name": "x", "conclusion": "failure"}], runner_id=7)
+    assert not s.no_runner()

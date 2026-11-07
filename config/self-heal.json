@@ -45,7 +45,7 @@
    "autofix": true
   },
   "longform-auto": {
-   "retries": 1,
+   "retries": 0,
    "autofix": true
   },
   "longform-build": {
@@ -122,8 +122,7 @@
    "code_fix": true,
    "pattern": "cannot pull with rebase|You have unstaged changes|failed to push some refs|non-fast-forward|could not push the logs|git_sync: push",
    "waits_s": [
-    60,
-    300
+    60
    ]
   },
   {
@@ -133,8 +132,7 @@
    "code_fix": true,
    "pattern": "no Short release|no unused clip|no mp4 in the release|release not found|no clip of the day",
    "waits_s": [
-    60,
-    600
+    60
    ],
    "before": [
     [
@@ -153,8 +151,7 @@
    "code_fix": false,
    "pattern": "uploadLimitExceeded|upload (?:failed|error)|resumable upload|ERROR_MEDIA|media (?:is )?not ready|processing (?:failed|error)|container .*ERROR",
    "waits_s": [
-    600,
-    1800
+    600
    ],
    "todo": "Controlla in YouTube Studio o Meta Business Suite se il video è stato rifiutato."
   },
@@ -165,8 +162,7 @@
    "code_fix": false,
    "pattern": "RESOURCE_EXHAUSTED|quota (?:exceeded|exhausted)|exceeded (?:your|the) .{0,30}quota|insufficient_quota|HTTP 429|429 Too Many|rate.?limit(?:ed| exceeded)",
    "waits_s": [
-    900,
-    1800
+    900
    ],
    "todo": "Si sblocca da solo al reset della quota; se si ripete ogni giorno va ridotto l'uso."
   },
@@ -177,10 +173,11 @@
    "code_fix": false,
    "pattern": "HTTP 5\\d\\d|\\b50[0234] (?:Server|Internal|Bad|Service|Gateway)|Read timed out|ConnectionError|Connection reset|ECONNRESET|ETIMEDOUT|RemoteDisconnected|Temporary failure in name resolution",
    "waits_s": [
-    300,
-    1200
+    300
    ],
    "todo": "Di solito si risolve al run successivo."
   }
- ]
+ ],
+ "_note_no_retry": "Minutes guard (07/11/2026: the 2,000 free Actions minutes of the month ran out on day 7, self-heal was the biggest user). A failed log matching no_retry is never re-run: content checks that fail the same way on every attempt, or a job that got no runner (minutes or spending limit). Every wait below is a billed idle runner.",
+ "no_retry": "CHECKS FAILED|still fails after \\d+ drafts|no long video this week|spending limit|recent account payments have failed"
 }

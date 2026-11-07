@@ -36,7 +36,7 @@ jobs:
       github.event.workflow_run.run_attempt == 1 && github.event.workflow_run.head_branch == 'main' &&
       (github.event.workflow_run.event != 'workflow_dispatch' || github.event.workflow_run.triggering_actor.login == 'github-actions[bot]')
     runs-on: ubuntu-latest
-    timeout-minutes: 240  # known failures wait up to 45 min more (config "known")
+    timeout-minutes: 120  # known failures wait up to 15 min more (config "known"); every minute here is billed
     env:
       TZ: Europe/Rome
       PYTHONIOENCODING: utf-8

@@ -1,37 +1,37 @@
 {
- "updated": "2026-11-06",
- "items": 33,
- "posts": 65,
+ "updated": "2026-11-07",
+ "items": 34,
+ "posts": 70,
  "channels": {
   "youtube:short": {
-   "posts": 24,
-   "median_views": 237.5
+   "posts": 26,
+   "median_views": 224.0
   },
   "youtube:long": {
    "posts": 5,
    "median_views": 33
   },
   "instagram:reel": {
-   "posts": 14,
-   "median_views": 129.5
+   "posts": 15,
+   "median_views": 130
   },
   "facebook:reel": {
-   "posts": 15,
-   "median_views": 5
+   "posts": 16,
+   "median_views": 4.5
   },
   "threads:video": {
-   "posts": 7,
-   "median_views": 19
+   "posts": 8,
+   "median_views": 27.5
   }
  },
  "top": [
   {
    "title": "What a light-year really is",
-   "score": 3.788,
-   "views": 1184,
+   "score": 3.797,
+   "views": 1187,
    "channels": {
-    "instagram": 4.85,
-    "facebook": 0.6
+    "instagram": 4.84,
+    "facebook": 0.67
    },
    "themes": [
     "Luce, distanze e anni luce",
@@ -46,10 +46,10 @@
   },
   {
    "title": "NASA's Roman Telescope Got Sharper by Moving a Mirror",
-   "score": 2.385,
-   "views": 929,
+   "score": 2.5,
+   "views": 930,
    "channels": {
-    "youtube": 2.38
+    "youtube": 2.5
    },
    "themes": [
     "Telescopi"
@@ -62,10 +62,10 @@
   },
   {
    "title": "The Moon Swings 295 °C in One Day. Here's Why",
-   "score": 1.971,
-   "views": 745,
+   "score": 2.062,
+   "views": 746,
    "channels": {
-    "youtube": 1.97
+    "youtube": 2.06
    },
    "themes": [
     "Estremi (temperatura, velocità)",
@@ -79,13 +79,51 @@
    "hour": 13
   },
   {
+   "title": "Every Type of Planet We've Actually Found Beyond Our Solar System",
+   "score": 1.767,
+   "views": 94,
+   "channels": {
+    "youtube": 1.77
+   },
+   "themes": [
+    "Pianeti e lune"
+   ],
+   "themes_en": [
+    "planets and moons"
+   ],
+   "published": "2026-10-14",
+   "hour": 20
+  },
+  {
+   "title": "11 Earths Fit Across Jupiter",
+   "score": 1.669,
+   "views": 1087,
+   "channels": {
+    "youtube": 2.61,
+    "facebook": 1.33,
+    "instagram": 0.84
+   },
+   "themes": [
+    "Scala e dimensioni",
+    "Pianeti e lune",
+    "Notizia del giorno"
+   ],
+   "themes_en": [
+    "scale and size comparisons",
+    "planets and moons",
+    "news of the day"
+   ],
+   "published": "2026-10-23",
+   "hour": 20
+  },
+  {
    "title": "Why Is Venus Hotter Than Mercury?",
-   "score": 1.808,
+   "score": 1.542,
    "views": 404,
    "channels": {
-    "facebook": 1.6,
-    "instagram": 1.23,
-    "threads": 5.26,
+    "facebook": 1.78,
+    "instagram": 1.22,
+    "threads": 3.64,
     "youtube": 0.73
    },
    "themes": [
@@ -100,51 +138,12 @@
    ],
    "published": "2026-10-15",
    "hour": 13
-  },
-  {
-   "title": "Every Type of Planet We've Actually Found Beyond Our Solar System",
-   "score": 1.756,
-   "views": 94,
-   "channels": {
-    "youtube": 1.76
-   },
-   "themes": [
-    "Pianeti e lune"
-   ],
-   "themes_en": [
-    "planets and moons"
-   ],
-   "published": "2026-10-14",
-   "hour": 20
-  },
-  {
-   "title": "Webb Found the Home of the Farthest Radio Burst Ever Seen",
-   "score": 1.646,
-   "views": 492,
-   "channels": {
-    "facebook": 1.6,
-    "instagram": 0.82,
-    "threads": 4.37,
-    "youtube": 1.12
-   },
-   "themes": [
-    "Luce, distanze e anni luce",
-    "Galassie, nebulose, stelle",
-    "Telescopi"
-   ],
-   "themes_en": [
-    "light, distances and light-years",
-    "galaxies, nebulae, stars",
-    "telescopes"
-   ],
-   "published": "2026-10-15",
-   "hour": 12
   }
  ],
  "bottom": [
   {
    "title": "The Nearest Star to the Sun Is Invisible to the Naked Eye",
-   "score": 0.423,
+   "score": 0.421,
    "views": 23,
    "channels": {
     "youtube": 0.42
@@ -162,10 +161,10 @@
   },
   {
    "title": "The 10 Largest Moons, Ranked by JPL's Real Measurements",
-   "score": 0.56,
-   "views": 32,
+   "score": 0.574,
+   "views": 33,
    "channels": {
-    "youtube": 0.56
+    "youtube": 0.57
    },
    "themes": [
     "Scala e dimensioni",
@@ -179,213 +178,218 @@
    "hour": 18
   },
   {
-   "title": "NASA's Perseverance rover has now driven 45.22 km on Mars: the longest drive ever on anoth",
-   "score": 0.6,
-   "views": 3,
+   "title": "Why nobody drives a Mars rover with a joystick",
+   "score": 0.661,
+   "views": 276,
    "channels": {
-    "facebook": 0.6
-   },
-   "themes": [
-    "Record e missioni",
-    "Pianeti e lune"
-   ],
-   "themes_en": [
-    "records and missions",
-    "planets and moons"
-   ],
-   "published": "2026-10-24",
-   "hour": null
-  },
-  {
-   "title": "The Moon you see is 1.3 seconds old",
-   "score": 0.608,
-   "views": 230,
-   "channels": {
-    "youtube": 0.42,
-    "instagram": 0.93,
-    "facebook": 0.2
+    "threads": 0.76,
+    "youtube": 0.55,
+    "instagram": 0.94,
+    "facebook": 0.0
    },
    "themes": [
     "Luce, distanze e anni luce",
-    "Pianeti e lune"
+    "Record e missioni",
+    "Pianeti e lune",
+    "Spiegone di un concetto"
    ],
    "themes_en": [
     "light, distances and light-years",
+    "records and missions",
+    "planets and moons",
+    "explaining a familiar concept for real"
+   ],
+   "published": "2026-11-05",
+   "hour": 20
+  },
+  {
+   "title": "754 Giant Planets Circle Their Star in Under 10 Days",
+   "score": 0.667,
+   "views": 34,
+   "channels": {
+    "youtube": 0.67
+   },
+   "themes": [
+    "Galassie, nebulose, stelle",
+    "Pianeti e lune"
+   ],
+   "themes_en": [
+    "galaxies, nebulae, stars",
     "planets and moons"
    ],
-   "published": "2026-11-04",
-   "hour": 20
+   "published": "2026-10-27",
+   "hour": 13
   }
  ],
  "features": {
   "theme": {
    "explainer": {
-    "mean": 1.551,
+    "mean": 1.52,
     "n": 4,
-    "lift": 0.402
+    "lift": 0.35
    },
    "extremes": {
-    "mean": 1.318,
+    "mean": 1.298,
     "n": 4,
-    "lift": 0.145
+    "lift": 0.112
    },
    "telescopes": {
-    "mean": 1.284,
+    "mean": 1.274,
     "n": 6,
-    "lift": 0.118
+    "lift": 0.094
    },
    "news": {
-    "mean": 1.176,
+    "mean": 1.191,
     "n": 6,
-    "lift": -0.002
+    "lift": 0.004
    },
    "light_distance": {
-    "mean": 1.165,
-    "n": 10,
-    "lift": -0.016
-   },
-   "scale_size": {
-    "mean": 1.09,
-    "n": 4,
-    "lift": -0.088
+    "mean": 1.173,
+    "n": 11,
+    "lift": -0.019
    },
    "planets": {
-    "mean": 1.059,
+    "mean": 1.086,
     "n": 18,
-    "lift": -0.196
+    "lift": -0.165
    },
-   "deep_sky": {
-    "mean": 1.03,
-    "n": 7,
-    "lift": -0.16
+   "scale_size": {
+    "mean": 1.081,
+    "n": 4,
+    "lift": -0.105
    },
    "records_missions": {
-    "mean": 0.981,
+    "mean": 1.009,
     "n": 6,
-    "lift": -0.204
+    "lift": -0.183
+   },
+   "deep_sky": {
+    "mean": 0.994,
+    "n": 7,
+    "lift": -0.203
    }
   },
   "format": {
    "scale_zoom": {
-    "mean": 1.351,
-    "n": 7,
-    "lift": 0.203
+    "mean": 1.316,
+    "n": 8,
+    "lift": 0.153
    },
    "myth_number": {
-    "mean": 1.252,
+    "mean": 1.256,
     "n": 1,
-    "lift": 0.069
+    "lift": 0.062
    },
    "quiz_guess": {
-    "mean": 1.242,
+    "mean": 1.203,
     "n": 3,
-    "lift": 0.063
+    "lift": 0.015
    },
    "mission_glitch": {
-    "mean": 1.132,
+    "mean": 1.117,
     "n": 4,
-    "lift": -0.046
+    "lift": -0.07
    },
    "news_angle": {
-    "mean": 1.11,
+    "mean": 1.083,
     "n": 3,
-    "lift": -0.066
+    "lift": -0.1
    },
    "countdown_top": {
-    "mean": 0.903,
+    "mean": 0.911,
     "n": 2,
-    "lift": -0.255
+    "lift": -0.254
    },
    "sky_tonight": {
-    "mean": 0.808,
+    "mean": 0.807,
     "n": 1,
-    "lift": -0.333
+    "lift": -0.339
    }
   },
   "hook": {
    "question": {
-    "mean": 1.447,
+    "mean": 1.455,
     "n": 3,
-    "lift": 0.274
+    "lift": 0.268
    },
    "comparison": {
-    "mean": 1.164,
+    "mean": 1.115,
     "n": 1,
-    "lift": -0.013
+    "lift": -0.066
    },
    "extreme_number": {
-    "mean": 1.095,
-    "n": 21,
-    "lift": -0.166
+    "mean": 1.109,
+    "n": 22,
+    "lift": -0.162
    },
    "you": {
-    "mean": 1.092,
+    "mean": 1.099,
     "n": 1,
-    "lift": -0.079
+    "lift": -0.081
    },
    "paradox": {
-    "mean": 0.954,
+    "mean": 0.969,
     "n": 3,
-    "lift": -0.213
+    "lift": -0.206
    }
   },
   "hour": {
    "20": {
-    "mean": 1.372,
-    "n": 7,
-    "lift": 0.23
-   },
-   "12": {
-    "mean": 1.215,
-    "n": 1,
-    "lift": 0.035
-   },
-   "13": {
-    "mean": 1.2,
-    "n": 5,
-    "lift": 0.024
+    "mean": 1.353,
+    "n": 8,
+    "lift": 0.199
    },
    "21": {
-    "mean": 1.163,
-    "n": 12,
-    "lift": -0.02
+    "mean": 1.205,
+    "n": 11,
+    "lift": 0.022
+   },
+   "13": {
+    "mean": 1.19,
+    "n": 5,
+    "lift": 0.003
+   },
+   "12": {
+    "mean": 1.146,
+    "n": 1,
+    "lift": -0.038
    },
    "22": {
-    "mean": 1.026,
+    "mean": 1.039,
     "n": 1,
-    "lift": -0.139
+    "lift": -0.135
    },
    "17": {
-    "mean": 1.015,
-    "n": 2,
-    "lift": -0.152
+    "mean": 1.023,
+    "n": 3,
+    "lift": -0.156
    },
    "15": {
     "mean": 0.939,
     "n": 1,
-    "lift": -0.217
+    "lift": -0.223
    },
    "16": {
-    "mean": 0.926,
+    "mean": 0.925,
     "n": 1,
-    "lift": -0.228
+    "lift": -0.236
    },
    "18": {
-    "mean": 0.853,
+    "mean": 0.858,
     "n": 1,
-    "lift": -0.293
+    "lift": -0.294
    }
   },
   "short_headline": {
    "yes": {
-    "mean": 1.402,
-    "n": 7,
-    "lift": 0.267
+    "mean": 1.384,
+    "n": 8,
+    "lift": 0.239
    },
    "no": {
-    "mean": 1.106,
+    "mean": 1.118,
     "n": 26,
-    "lift": -0.211
+    "lift": -0.193
    }
   }
  },
@@ -394,7 +398,7 @@
    "dim": "theme",
    "value": "explainer",
    "label": "Spiegone di un concetto",
-   "lift": 0.402,
+   "lift": 0.35,
    "n": 4,
    "do": true
   },
@@ -402,7 +406,7 @@
    "dim": "hook",
    "value": "question",
    "label": "Domanda",
-   "lift": 0.274,
+   "lift": 0.268,
    "n": 3,
    "do": true
   },
@@ -410,49 +414,25 @@
    "dim": "short_headline",
    "value": "yes",
    "label": "headline di 40 caratteri o meno",
-   "lift": 0.267,
-   "n": 7,
-   "do": true
-  },
-  {
-   "dim": "hour",
-   "value": "20",
-   "label": "ore 20",
-   "lift": 0.23,
-   "n": 7,
+   "lift": 0.239,
+   "n": 8,
    "do": true
   },
   {
    "dim": "hook",
    "value": "paradox",
    "label": "Paradosso",
-   "lift": -0.213,
+   "lift": -0.206,
    "n": 3,
    "do": false
   },
   {
-   "dim": "short_headline",
-   "value": "no",
-   "label": "headline lunga",
-   "lift": -0.211,
-   "n": 26,
-   "do": false
-  },
-  {
    "dim": "theme",
-   "value": "records_missions",
-   "label": "Record e missioni",
-   "lift": -0.204,
-   "n": 6,
-   "do": false
-  },
-  {
-   "dim": "format",
-   "value": "scale_zoom",
-   "label": "Confronto di scala",
-   "lift": 0.203,
+   "value": "deep_sky",
+   "label": "Galassie, nebulose, stelle",
+   "lift": -0.203,
    "n": 7,
-   "do": true
+   "do": false
   }
  ],
  "prefer": [
@@ -473,15 +453,15 @@
  "avoid_en": [],
  "next_long": {
   "from": "What a light-year really is",
-  "score": 3.788,
+  "score": 3.797,
   "channels": {
-   "instagram": 4.85,
-   "facebook": 0.6
+   "instagram": 4.84,
+   "facebook": 0.67
   },
   "themes": [
    "light_distance",
    "explainer"
   ],
-  "hint": "Our clip 'What a light-year really is' was a hit (3.788x our median across channels: instagram 4.85x, facebook 0.6x). Make the next long video in the same vein (light, distances and light-years, explaining a familiar concept for real): a question with a surprising, measurable answer, explained step by step with animated numbers, built so every chapter works as a 30-50 s clip on its own. New topic and NEW measured numbers, never the same facts."
+  "hint": "Our clip 'What a light-year really is' was a hit (3.797x our median across channels: instagram 4.84x, facebook 0.67x). Make the next long video in the same vein (light, distances and light-years, explaining a familiar concept for real): a question with a surprising, measurable answer, explained step by step with animated numbers, built so every chapter works as a 30-50 s clip on its own. New topic and NEW measured numbers, never the same facts."
  }
 }

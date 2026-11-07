@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-06",
- "n_shorts": 22,
+ "updated": "2026-11-07",
+ "n_shorts": 23,
  "formats": {
   "scale_zoom": {
    "n": 5,
@@ -10,15 +10,15 @@
    "decision": "esplora"
   },
   "other": {
-   "n": 11,
-   "wins": 5.04,
-   "losses": 4.4,
-   "mean": 1.14,
+   "n": 12,
+   "wins": 5.88,
+   "losses": 4.2,
+   "mean": 1.15,
    "decision": "esplora"
   },
   "news_angle": {
    "n": 2,
-   "wins": 1.8,
+   "wins": 1.64,
    "losses": 0.0,
    "mean": 1.09,
    "decision": "esplora"
@@ -47,15 +47,15 @@
  },
  "hooks": {
   "extreme_number": {
-   "n": 11,
-   "wins": 5.24,
-   "losses": 4.4,
+   "n": 12,
+   "wins": 6.24,
+   "losses": 4.2,
    "mean": 1.18,
    "decision": "esplora"
   },
   "other": {
    "n": 5,
-   "wins": 2.24,
+   "wins": 1.92,
    "losses": 1.6,
    "mean": 1.16,
    "decision": "esplora"
@@ -87,19 +87,19 @@
    "n": 1,
    "wins": 0.64,
    "losses": 0.0,
-   "mean": 2.46,
+   "mean": 2.47,
    "decision": "esplora"
   },
   "moon": {
-   "n": 2,
-   "wins": 0.8,
+   "n": 3,
+   "wins": 1.8,
    "losses": 0.8,
-   "mean": 1.46,
+   "mean": 1.41,
    "decision": "esplora"
   },
   "telescope": {
    "n": 3,
-   "wins": 1.44,
+   "wins": 1.28,
    "losses": 0.8,
    "mean": 1.37,
    "decision": "esplora"
@@ -108,7 +108,7 @@
    "n": 1,
    "wins": 1.0,
    "losses": 0.0,
-   "mean": 1.35,
+   "mean": 1.33,
    "decision": "esplora"
   },
   "mars": {
@@ -120,7 +120,7 @@
   },
   "other": {
    "n": 5,
-   "wins": 2.6,
+   "wins": 2.44,
    "losses": 1.6,
    "mean": 0.98,
    "decision": "esplora"
@@ -129,7 +129,7 @@
    "n": 3,
    "wins": 1.31,
    "losses": 0.8,
-   "mean": 0.96,
+   "mean": 0.95,
    "decision": "esplora"
   },
   "saturn": {
@@ -142,8 +142,8 @@
   "iss": {
    "n": 1,
    "wins": 0.0,
-   "losses": 1.0,
-   "mean": 0.76,
+   "losses": 0.8,
+   "mean": 0.75,
    "decision": "esplora"
   },
   "venus": {
@@ -172,37 +172,37 @@
   {
    "title": "11 Earths Fit Across Jupiter (NASA data)",
    "id": "Z0e8oVP51bo",
-   "score": 2.46,
-   "views": 955,
+   "score": 2.47,
+   "views": 956,
    "pct": 59.3
   },
   {
    "title": "NASA's Roman Telescope Got Sharper by Moving a Mirror",
    "id": "fD8pNtTwvXs",
-   "score": 2.35,
-   "views": 929,
+   "score": 2.36,
+   "views": 930,
    "pct": 52.8
   },
   {
    "title": "The Moon Swings 295 °C in One Day. Here's Why (NASA data)",
    "id": "6qv4TZ6AqdU",
-   "score": 1.94,
-   "views": 745,
+   "score": 1.95,
+   "views": 746,
    "pct": 49.5
   },
   {
    "title": "A 3,200-Pound Space Telescope Is Falling to Earth",
    "id": "rXEds3znnhI",
-   "score": 1.35,
-   "views": 235,
-   "pct": 106.5
+   "score": 1.33,
+   "views": 236,
+   "pct": 104.8
   },
   {
-   "title": "The Most Common Planet Size Doesn't Exist in Our Solar System",
-   "id": "8Tb7dHT1vek",
-   "score": 1.18,
-   "views": 338,
-   "pct": 58.6
+   "title": "The Moon you see is 1.3 seconds old",
+   "id": "xSbJ7aeMYmg",
+   "score": 1.29,
+   "views": 112,
+   "pct": 131.1
   }
  ]
 }

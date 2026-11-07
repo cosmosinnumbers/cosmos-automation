@@ -47,6 +47,7 @@ def youtube():
     from google.oauth2.credentials import Credentials
     from googleapiclient.discovery import build
     info = json.loads(os.environ.get("YOUTUBE_TOKEN_JSON") or (creds.LOCAL_SECRETS / "token.json").read_text("utf-8"))
+    creds.mask(info)
     return build("youtube", "v3", credentials=Credentials.from_authorized_user_info(info), cache_discovery=False)
 
 

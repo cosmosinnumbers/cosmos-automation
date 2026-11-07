@@ -36,6 +36,7 @@ def main():
         print("Nothing to schedule on YouTube.")
         return
     info = json.loads(os.environ.get("YOUTUBE_TOKEN_JSON") or (creds.LOCAL_SECRETS / "token.json").read_text("utf-8"))
+    creds.mask(info)
     yt = build("youtube", "v3", credentials=Credentials.from_authorized_user_info(info), cache_discovery=False)
     for it in todo:
         when = datetime.fromtimestamp(creds.stamp(it["at"]), timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")

@@ -84,6 +84,7 @@ def main():
         from googleapiclient.discovery import build
         from googleapiclient.http import MediaFileUpload
         info = json.loads(os.environ.get("YOUTUBE_TOKEN_JSON") or (creds.LOCAL_SECRETS / "token.json").read_text("utf-8"))
+        creds.mask(info)
         yt = build("youtube", "v3", credentials=Credentials.from_authorized_user_info(info), cache_discovery=False)
         ch = yt.channels().list(part="contentDetails", mine=True).execute()["items"][0]
         uploads = ch["contentDetails"]["relatedPlaylists"]["uploads"]

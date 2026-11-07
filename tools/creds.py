@@ -25,10 +25,26 @@ LOCAL_SECRETS = Path(os.environ.get("COSMOS_SECRETS", REPO.parent / "Progetto-Yo
 TZ = ZoneInfo("Europe/Rome")  # every "at" in the queues is Italian local time "YYYY-MM-DD HH:MM"
 
 
+def mask(data) -> None:
+    """Hide every credential value in the Actions log (the repo is public since 07/11/2026, and so are its run logs).
+    GitHub masks a secret only as the whole string: the single values inside a JSON secret and refreshed tokens
+    would otherwise show in clear if an error message ever printed them."""
+    if not os.environ.get("GITHUB_ACTIONS"):
+        return
+    vals = data.values() if isinstance(data, dict) else data if isinstance(data, list) else [data]
+    for v in vals:
+        if isinstance(v, (dict, list)):
+            mask(v)
+        elif isinstance(v, str) and len(v) >= 8 and "\n" not in v:
+            print(f"::add-mask::{v}", flush=True)
+
+
 def load(name: str) -> dict:
     env = os.environ.get(f"{name.upper()}_JSON")
     if env:
-        return json.loads(env)
+        data = json.loads(env)
+        mask(data)
+        return data
     if name == "tiktok" and os.environ.get("TIKTOK_CLIENT_KEY"):  # first setup: two plain secrets, no JSON to type
         return {"client_key": os.environ["TIKTOK_CLIENT_KEY"].strip(),
                 "client_secret": os.environ.get("TIKTOK_CLIENT_SECRET", "").strip(),
@@ -41,6 +57,7 @@ def load(name: str) -> dict:
 
 def save(name: str, data: dict):
     var = f"{name.upper()}_JSON"
+    mask(data)
     if os.environ.get(var) or os.environ.get("GITHUB_ACTIONS"):  # in Actions the secret is created if missing
         tok, repo = os.environ.get("GH_SECRETS_TOKEN"), os.environ.get("GITHUB_REPOSITORY")
         if not (tok and repo):

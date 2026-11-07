@@ -175,5 +175,31 @@
   "at": "2026-11-07 20:52",
   "action": "fb-story",
   "video_url": "media/shorts/c1106-p4-clip-f_story.mp4"
+ },
+ {
+  "ref": "sr-c1107-p4-clip-h",
+  "at": "2026-11-08 20:54",
+  "action": "ig-reel",
+  "video_url": "media/shorts/c1107-p4-clip-h.mp4",
+  "caption": "Your eyes see light older than 1,500 years\n\nFull video on YouTube: @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "fr-c1107-p4-clip-h",
+  "at": "2026-11-08 20:54",
+  "action": "fb-reel",
+  "video_url": "media/shorts/c1107-p4-clip-h.mp4",
+  "caption": "Your eyes see light older than 1,500 years\n\nFull video on YouTube: @CosmosinNumbers\n📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "si-c1107-p4-clip-h",
+  "at": "2026-11-08 20:54",
+  "action": "ig-story",
+  "video_url": "media/shorts/c1107-p4-clip-h_story.mp4"
+ },
+ {
+  "ref": "sf-c1107-p4-clip-h",
+  "at": "2026-11-08 20:54",
+  "action": "fb-story",
+  "video_url": "media/shorts/c1107-p4-clip-h_story.mp4"
  }
 ]

@@ -440,6 +440,32 @@
   "short": "c1106-p4-clip-f"
  },
  {
+  "ref": "th-news-1107-apod-farewell-swift",
+  "at": "2026-11-07 12:00",
+  "tag": "NASA",
+  "text": "A Farewell to Swift (NASA Astronomy Picture of the Day)\n\nIt is time to say goodbye to NASA's Neil Gehrels Swift Observatory. After nearly 22 years of service, the satellite re-entered Earth's atmosphere on November 4 at 7:39 EST over the North Sumatra region of Indonesia.\n\nSource: NASA APOD (6 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-6-a-farewell-to-swift/",
+  "replies": [
+   "The featured image is a mosaic created in 2018 using some of the first million images captured by the satellite's Ultraviolet/Optical Telescope. Swift had a combination of instruments, including an X-ray telescope and a gamma-ray telescope, that worked together to enable humanity to study, in unprecedented detail, the fastest and most energetic explosions in the universe."
+  ],
+  "news_title": "APOD: 2026 November 6 – A Farewell to Swift"
+ },
+ {
+  "ref": "th-quiz-1107-orbital-velocity-min",
+  "at": "2026-11-07 16:00",
+  "tag": "Science",
+  "poll": [
+   "Uranus",
+   "Mars",
+   "Earth"
+  ],
+  "text": "Yesterday's answer: Uranus, 86.8 × 10^24 kg (NASA Planetary Fact Sheet).\n\nToday's quiz 💨 Which of these planets orbits the Sun slowest?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Orbital Velocity-1",
+  "answer": "Uranus, 6.8 km/s around the Sun (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1107-p4-clip-h",
   "at": "2026-11-07 21:00",
   "tag": "Astronomy",

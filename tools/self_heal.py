@@ -144,8 +144,34 @@ def heal_known(k: dict) -> bool:
     return False
 
 
+def no_runner() -> bool:
+    """True when every failed job never got a runner (no steps): Actions minutes or spending limit used up.
+    A re-run would fail the same way in 2 seconds (07/11/2026)."""
+    jobs = gh_api("GET", f"/actions/runs/{RUN_ID}/jobs", params={"filter": "latest"}).json().get("jobs", [])
+    failed = [j for j in jobs if j.get("conclusion") == "failure"]
+    return bool(failed) and all(not j.get("steps") and not j.get("runner_id") for j in failed)
+
+
+def skip_retry() -> str:
+    """Why a re-run is useless ('' when it may help): no runner, or a failure that repeats on every attempt
+    (config "no_retry", e.g. the script checks of longform-auto). Each re-run and each wait costs Actions minutes."""
+    if no_runner():
+        return "no runner (Actions minutes or spending limit used up)"
+    pat = CFG.get("no_retry", "")
+    if pat:
+        m = re.search(pat, failed_logs()[1], re.I | re.M)
+        if m:
+            return f"failure that repeats on every attempt ('{m.group(0)}')"
+    return ""
+
+
 def cmd_retry():
     retries = int(wf_cfg().get("retries", 0))
+    why = skip_retry() if retries else ""
+    if why:
+        print(f"{WF}: no re-run: {why}", flush=True)
+        output(result="failed")
+        return
     backoff = CFG.get("backoff_s", [120, 360])
     for i in range(retries):
         wait = backoff[min(i, len(backoff) - 1)]

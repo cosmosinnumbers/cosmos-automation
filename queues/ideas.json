@@ -61,5 +61,55 @@
   "created": "2026-11-03",
   "score_from": 2.05,
   "hint": "Our Short 'The Moon Swings 295 °C in One Day. Here's Why (NASA data)' did 2.05x our median. Make the same format and angle on a different object. Same format and pace, NEW measured numbers from primary sources, never the same facts."
+ },
+ {
+  "id": "lightyear-series-1",
+  "from": "What a light-year really is",
+  "from_id": "p4-clip-d",
+  "format": "concept_explainer",
+  "priority": 3,
+  "created": "2026-11-09",
+  "score_from": 3.8,
+  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What an astronomical unit really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what an astronomical unit really is."
+ },
+ {
+  "id": "lightyear-series-2",
+  "from": "What a light-year really is",
+  "from_id": "p4-clip-d",
+  "format": "concept_explainer",
+  "priority": 3,
+  "created": "2026-11-09",
+  "score_from": 3.8,
+  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What a black hole really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what a black hole really is."
+ },
+ {
+  "id": "lightyear-series-3",
+  "from": "What a light-year really is",
+  "from_id": "p4-clip-d",
+  "format": "concept_explainer",
+  "priority": 2,
+  "created": "2026-11-09",
+  "score_from": 3.8,
+  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What a day on Venus really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what a day on Venus really is."
+ },
+ {
+  "id": "lightyear-series-4",
+  "from": "What a light-year really is",
+  "from_id": "p4-clip-d",
+  "format": "concept_explainer",
+  "priority": 2,
+  "created": "2026-11-09",
+  "score_from": 3.8,
+  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What an orbit really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what an orbit really is."
+ },
+ {
+  "id": "lightyear-series-5",
+  "from": "What a light-year really is",
+  "from_id": "p4-clip-d",
+  "format": "concept_explainer",
+  "priority": 1,
+  "created": "2026-11-09",
+  "score_from": 3.8,
+  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What a light-second really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what a light-second really is."
  }
 ]

@@ -203,3 +203,4 @@ jobs:
             echo "$title: self-heal.yml re-runs it once, then tries a fix and opens the issue if nothing works."
           fi
           exit 1
+# cron re-registered after account reinstatement (09/11/2026)

@@ -54,3 +54,4 @@ jobs:
           git add assets/sfx; git diff --cached --quiet && exit 0
           git commit -q -m "sfx: libreria Openverse CC0 aggiornata"
           bash tools/git_sync.sh
+# cron re-registered after account reinstatement (09/11/2026)

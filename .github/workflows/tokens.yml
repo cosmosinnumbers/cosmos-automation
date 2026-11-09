@@ -39,3 +39,4 @@ jobs:
           TIKTOK_JSON: ${{ secrets.TIKTOK_JSON }}
           GH_SECRETS_TOKEN: ${{ secrets.GH_SECRETS_TOKEN }}
         run: python tools/tiktok_api.py refresh
+# cron re-registered after account reinstatement (09/11/2026)

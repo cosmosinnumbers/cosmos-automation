@@ -69,3 +69,4 @@ jobs:
           git add queues/meta-queue.json; git diff --cached --quiet && exit 0
           git commit -q -m "coda Meta: carosello dal Short vincente"
           bash tools/git_sync.sh
+# cron re-registered after account reinstatement (09/11/2026)

@@ -58,3 +58,4 @@ jobs:
           git add reports; git diff --cached --quiet && exit 0
           git commit -q -m "scaletta: settimana $(date +%G-W%V -d '+1 day')"
           bash tools/git_sync.sh
+# cron re-registered after account reinstatement (09/11/2026)

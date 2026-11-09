@@ -41,3 +41,4 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -q -m "gumroad: utm $(date +%F)"
           bash tools/git_sync.sh
+# cron re-registered after account reinstatement (09/11/2026)

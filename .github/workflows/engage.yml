@@ -83,3 +83,4 @@ jobs:
         run: |
           echo "::error::engage.py reported problems: open the 'Reply to comments' / 'LOOK UP comment' step log."
           exit 1
+# cron re-registered after account reinstatement (09/11/2026)

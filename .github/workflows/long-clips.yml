@@ -142,3 +142,4 @@ jobs:
           args=()
           [ "$IN_DRY" = "true" ] && args+=(--dry-run)
           python tools/day_clip.py "${args[@]}"
+# cron re-registered after account reinstatement (09/11/2026)

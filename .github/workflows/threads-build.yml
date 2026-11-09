@@ -72,3 +72,4 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "coda Threads: post del giorno (news, quiz, video)"
           bash tools/git_sync.sh
+# cron re-registered after account reinstatement (09/11/2026)

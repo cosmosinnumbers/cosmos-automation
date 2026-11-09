@@ -112,3 +112,4 @@ jobs:
           git add "reserve/$ID"
           git commit -q -m "riserva: nuovo Short $ID"
           bash tools/git_sync.sh
+# cron re-registered after account reinstatement (09/11/2026)

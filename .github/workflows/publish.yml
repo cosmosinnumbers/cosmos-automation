@@ -107,3 +107,4 @@ jobs:
           git config user.name "cosmos-automation[bot]"
           git config user.email "cosmos-automation@users.noreply.github.com"
           python tools/yt_publish.py
+# cron re-registered after account reinstatement (09/11/2026)

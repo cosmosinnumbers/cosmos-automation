@@ -72,3 +72,4 @@ jobs:
           for item in ${LATE//,/ }; do
             gh workflow run publish.yml --ref main -f dry_run=false -f only="${item%%:*}" -f ref="${item#*:}"
           done
+# cron re-registered after account reinstatement (09/11/2026)

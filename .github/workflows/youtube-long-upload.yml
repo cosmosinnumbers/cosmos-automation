@@ -88,3 +88,4 @@ jobs:
           gh issue create --title "YouTube: video lungo non caricato $(date +%d/%m/%Y)" --label alert --assignee Redwraith \
             --body "Log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             || gh issue create --title "YouTube: video lungo non caricato $(date +%d/%m/%Y)" --label alert --body "Log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+# cron re-registered after account reinstatement (09/11/2026)

@@ -30,3 +30,4 @@ jobs:
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
         run: |
           if [ "$IN_DRY" = "true" ]; then python video/gumroad_launch9.py --dry-run; else python video/gumroad_launch9.py; fi
+# cron re-registered after account reinstatement (09/11/2026)

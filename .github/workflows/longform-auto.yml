@@ -88,3 +88,4 @@ jobs:
           gh label create alert --color B60205 --description "Automazione fallita" 2>/dev/null || true
           gh issue create --title "Video lungo della settimana non approvato $(date +%d/%m/%Y)" --label alert \
             --body "I controlli automatici non sono passati. Log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+# cron re-registered after account reinstatement (09/11/2026)

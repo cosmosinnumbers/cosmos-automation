@@ -189,7 +189,7 @@ def write_upload(sd, spec, src_dir, assets, dur):
     used = [s for s in long_src if s["id"] in set(spec.get("sources", []))]
     imgs = [assets[v["src"]] for v in spec["visuals"] if assets[v["src"]]["type"] in ("image", "video")]
     credits = sorted({a["credit"] for a in imgs if a.get("credit")})
-    product = "📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up (code COSMOS9 → $7.41 until Nov 30)"
+    product = meta.PRODUCT   # free PDF first, then the paid guide (same lines as the long videos)
     lines = [product, "", spec["description_intro"].strip(), "", "Sources:", *[f"- {s['title']} — {s['url']}" for s in used], ""]
     if credits:
         lines += ["Images and footage: " + "; ".join(credits) + ".", meta.NO_ENDORSEMENT, ""]

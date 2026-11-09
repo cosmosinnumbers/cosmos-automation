@@ -24,9 +24,11 @@ def hms(t: float) -> str:
     return f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
 
 
-PRODUCT = ("📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up "
-           "(code COSMOS9 → $7.41 until Nov 30)\n"
-           "🆓 Free PDF, The Solar System in 20 Numbers: https://cosmosinnumbers.gumroad.com/l/solar-system-20")   # product line first in every YouTube description (owner, 19/10/2026)
+# free PDF first (review 9/11/2026: 0 free downloads and 4 clicks in a month, a free offer is the easier first click
+# and leaves an email), the paid guide right under it
+PRODUCT = ("🆓 Free PDF, The Solar System in 20 Numbers: https://cosmosinnumbers.gumroad.com/l/solar-system-20\n"
+           "📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up "
+           "(code COSMOS9 → $7.41 until Nov 30)")   # product line first in every YouTube description (owner, 19/10/2026)
 
 
 def description(script: dict, timings: dict, assets: dict) -> str:

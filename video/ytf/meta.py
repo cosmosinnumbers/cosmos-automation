@@ -25,7 +25,7 @@ def hms(t: float) -> str:
 
 
 PRODUCT = ("📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up "
-           "(code COSMOS9 → $9 until Nov 30)\n"
+           "(code COSMOS9 → $7.41 until Nov 30)\n"
            "🆓 Free PDF, The Solar System in 20 Numbers: https://cosmosinnumbers.gumroad.com/l/solar-system-20")   # product line first in every YouTube description (owner, 19/10/2026)
 
 

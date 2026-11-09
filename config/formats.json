@@ -54,13 +54,39 @@
    "match": "^why |^how |why does|why is|why do|how does|how do",
    "writer": "FORMAT audience_question: answer ONE real question people ask in the comments (given in the hint). Say the question in the first sentence in plain words, answer it with measured numbers.",
    "evergreen": true
+  },
+  "concept_explainer": {
+   "label": "Spiegone: cos'è davvero X",
+   "match": "really is|what (is|are) (a|an|the)?|explained|actually means|what .* means",
+   "writer": "FORMAT concept_explainer: explain ONE concept everybody has heard of but few can picture (a light-year, a black hole, an orbit, a day on Venus). Headline shape: 'What a X really is' (40 characters or fewer). Sentence 1 asks the question in plain words. Then turn the abstract idea into something physical with 2-3 measured numbers from the sources, each one animated as a counter, ending on the number that makes it click. It must stand alone: no 'part 2', no news context.",
+   "evergreen": true
   }
  },
  "hooks": {
-  "paradox": {"label": "Paradosso", "match": "couldn.?t|can.?t|but |despite|lie|wrong|nothing", "writer": "HOOK paradox: the first sentence puts two things that should not go together side by side."},
-  "extreme_number": {"label": "Numero estremo", "match": "\\d", "writer": "HOOK extreme_number: the first sentence is the most extreme measured number, with its unit, in 8 words or fewer."},
-  "comparison": {"label": "Confronto", "match": "\\bvs\\b|than|\\bfits?\\b|size|times", "writer": "HOOK comparison: the first sentence is a comparison with something familiar (a city, a car, the Earth)."},
-  "question": {"label": "Domanda", "match": "\\?|^why|^how|^what", "writer": "HOOK question: the first sentence is a direct question the viewer cannot answer yet (never 'did you know')."},
-  "you": {"label": "Seconda persona", "match": "\\byou\\b|\\byour\\b", "writer": "HOOK you: the first sentence puts the viewer in the scene ('If you stood on...', 'Your body would...')."}
+  "paradox": {
+   "label": "Paradosso",
+   "match": "couldn.?t|can.?t|but |despite|lie|wrong|nothing",
+   "writer": "HOOK paradox: the first sentence puts two things that should not go together side by side."
+  },
+  "extreme_number": {
+   "label": "Numero estremo",
+   "match": "\\d",
+   "writer": "HOOK extreme_number: the first sentence is the most extreme measured number, with its unit, in 8 words or fewer."
+  },
+  "comparison": {
+   "label": "Confronto",
+   "match": "\\bvs\\b|than|\\bfits?\\b|size|times",
+   "writer": "HOOK comparison: the first sentence is a comparison with something familiar (a city, a car, the Earth)."
+  },
+  "question": {
+   "label": "Domanda",
+   "match": "\\?|^why|^how|^what",
+   "writer": "HOOK question: the first sentence is a direct question the viewer cannot answer yet (never 'did you know')."
+  },
+  "you": {
+   "label": "Seconda persona",
+   "match": "\\byou\\b|\\byour\\b",
+   "writer": "HOOK you: the first sentence puts the viewer in the scene ('If you stood on...', 'Your body would...')."
+  }
  }
 }

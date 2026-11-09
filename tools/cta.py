@@ -9,7 +9,7 @@ import zlib
 
 LINK = "https://cosmosinnumbers.gumroad.com/l/look-up"
 FREE = "https://cosmosinnumbers.gumroad.com/l/solar-system-20"
-CODE = "Code COSMOS9 → $9 until Nov 30."
+CODE = "Code COSMOS9 → $7.41 until Nov 30."
 TEXTS = [  # each under 280 characters with the link (X counts a URL as 23)
     f"📘 Want to go further? LOOK UP, our beginner's stargazing guide (no telescope needed): {LINK}\n{CODE}",
     f"🔭 Learn to find these things in the real sky with LOOK UP, our stargazing guide by the numbers: {LINK}\n{CODE}",
@@ -18,6 +18,10 @@ TEXTS = [  # each under 280 characters with the link (X counts a URL as 23)
     f"If you like these numbers, you'll like LOOK UP: what to see, when, and how to find it. {LINK}\n{CODE}",
     f"New here? Start with our free PDF, The Solar System in 20 Numbers: {FREE}\nThen take LOOK UP outside: {LINK}\n{CODE}",
     f"Free: 20 checked Solar System numbers in one PDF ({FREE}). Ready for the real sky? LOOK UP: {LINK}\n{CODE}",
+    # free-first variants (review 9/11/2026): cold followers grab a free PDF far more often than they buy, and every
+    # free download leaves an email Gumroad can follow up with; the paid guide stays in the same reply
+    f"🆓 Grab the free PDF, The Solar System in 20 Numbers: {FREE}\nWant the night-sky version? LOOK UP: {LINK}\n{CODE}",
+    f"Every number above, and 19 more, in a free PDF: {FREE}\nThe full stargazing guide is LOOK UP: {LINK}\n{CODE}",
 ]
 
 

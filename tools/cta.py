@@ -9,7 +9,7 @@ import zlib
 
 LINK = "https://cosmosinnumbers.gumroad.com/l/look-up"
 FREE = "https://cosmosinnumbers.gumroad.com/l/solar-system-20"
-CODE = "Code COSMOS9 → $9 until Nov 30."
+CODE = "Code COSMOS9 → $7.41 until Nov 30."
 TEXTS = [  # each under 280 characters with the link (X counts a URL as 23)
     f"📘 Want to go further? LOOK UP, our beginner's stargazing guide (no telescope needed): {LINK}\n{CODE}",
     f"🔭 Learn to find these things in the real sky with LOOK UP, our stargazing guide by the numbers: {LINK}\n{CODE}",

@@ -165,7 +165,7 @@ def main():
     elif cmd == "product-line":
         # product-line [VIDEO_ID ...] [--go]: prepend the paid-product line to descriptions (owner 18-19/10/2026,
         # idempotent). No ids = every upload. Dry-run unless --go. Keep title/tags/category as they are.
-        LINE = "📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up (code COSMOS9 → $9 until Nov 30)"
+        LINE = "📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up (code COSMOS9 → $7.41 until Nov 30)"
         MARK = "gumroad.com/l/look-up"
         go = "--go" in args
         ids = [a for a in args if a != "--go"]

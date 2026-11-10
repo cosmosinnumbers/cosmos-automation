@@ -71,6 +71,7 @@ jobs:
           X_JSON: ${{ secrets.X_JSON }}
           TIKTOK_JSON: ${{ secrets.TIKTOK_JSON }}
           GH_SECRETS_TOKEN: ${{ secrets.GH_SECRETS_TOKEN }}
+          PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}  # Reel covers on cosmosinnumbers.github.io (tools/reel_cover.py)
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
           IN_ONLY: ${{ inputs.only }}
           IN_REF: ${{ inputs.ref }}

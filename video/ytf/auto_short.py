@@ -61,6 +61,8 @@ VIRAL_RULES = """Retention rules (the Short is judged on how many people stay to
 """
 
 
+EVERGREEN_FORMATS = ("concept_explainer",)   # written from the NASA fact sheets when they come with a topic
+EVERGREEN_IDEA = False   # set by main()
 FORMAT_RULES = ""   # set by main() from --format/--hook (tools/experiments.py plan): the variant under test
 
 
@@ -476,6 +478,7 @@ real NASA footage and data, every number with a primary source. Today is {today}
 Below are NASA fact sheets. Write ONE evergreen "data" Short (numbers that do not expire, no news) about the
 single most surprising measured number or comparison you can build from ONE or TWO of these sheets, NOT in this
 list of topics already used: {used}
+{hint}
 {items}
 
 Write the Short using ONLY numbers that appear in the sheets you use. ONE idea, told as a story, not a list:
@@ -508,10 +511,15 @@ def reserve_problems(spec) -> list[str]:
     return out
 
 
-def write_reserve_spec(today):
-    """Evergreen data Short from the NASA fact sheets, no grounding: same writers and same check() as the news."""
+def write_reserve_spec(today, hint=""):
+    """Evergreen data Short from the NASA fact sheets, no grounding: same writers and same check() as the news.
+    With a hint (an evergreen series idea, e.g. 'what a day on Venus really is') the sheets it names come first."""
     week = int(datetime.now().strftime("%W"))
     pages = REF_PAGES[week % len(REF_PAGES):] + REF_PAGES[:week % len(REF_PAGES)]
+    named = [u for u in pages if re.search(r"/(\w+)fact\.html", u).group(1) in hint.lower()]
+    pages = named + [u for u in pages if u not in named]
+    if hint:
+        hint = ("TOPIC OF TODAY (follow it; the variant rules below win over the first-sentence and title rules): " + hint)
     blocks = []
     for i, url in enumerate(pages[:5], 1):
         try:
@@ -522,7 +530,7 @@ def write_reserve_spec(today):
         blocks.append(f"[{i}] URL: {url}\nSHEET: {text}")
     if not blocks:
         sys.exit("No NASA fact sheet readable: no reserve Short.")
-    msgs = [{"role": "user", "parts": [{"text": REF_PROMPT.format(today=today, used=used_topics(), items="\n\n".join(blocks), rules=viral_rules())}]}]
+    msgs = [{"role": "user", "parts": [{"text": REF_PROMPT.format(today=today, used=used_topics(), hint=hint, items="\n\n".join(blocks), rules=viral_rules())}]}]
     raw, spec = gemini(msgs, search=False)
     return msgs, raw, spec, False
 
@@ -808,11 +816,12 @@ def same_story(slug: str, days: int = 5) -> str | None:
 
 def write_checked(a, today, hint):
     """Write the Short, fact-check it, one rewrite if needed: (spec, missing numbers, problems, report)."""
-    msgs, raw, spec, search = write_reserve_spec(today) if "--reserve" in a else write_spec(today, hint)
+    sheets = "--reserve" in a or EVERGREEN_IDEA   # numbers that do not expire: NASA fact sheets, not today's news
+    msgs, raw, spec, search = write_reserve_spec(today, hint if EVERGREEN_IDEA else "") if sheets else write_spec(today, hint)
     if spec.get("skip"):
         return spec, [], [], ""
     missing, problems, report = check(spec)
-    if "--reserve" in a:
+    if sheets:
         problems += reserve_problems(spec)
     if missing or problems:
         print("first draft rejected:", missing, problems)
@@ -823,14 +832,14 @@ def write_checked(a, today, hint):
         if not spec or not spec.get("narration"):
             return {"skip": "the rewrite came back without a narration (" + str((spec or {}).get("skip", "no JSON"))[:120] + ")"}, [], [], ""
         missing, problems, report = check(spec)
-        if "--reserve" in a:
+        if sheets:
             problems += reserve_problems(spec)
     return spec, missing, problems, report
 
 
 def main():
     sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)  # log lines in order in Actions
-    global FORMAT_RULES
+    global FORMAT_RULES, EVERGREEN_IDEA
     a = sys.argv[1:]
     today = datetime.now().strftime("%Y-%m-%d")
     opt = {k: a[a.index(f"--{k}") + 1] for k in ("format", "hook", "idea", "source") if f"--{k}" in a}
@@ -843,6 +852,10 @@ def main():
         missing, problems, report = check(spec)
     else:
         hint = f"Prefer this topic if there is fresh news on it: {a[a.index('--topic') + 1]}." if "--topic" in a else ""
+        # an evergreen series idea ('What X really is') has no news of the day: the news feeds made it fail on 10/11/2026
+        EVERGREEN_IDEA = opt.get("format") in EVERGREEN_FORMATS and "--topic" in a and not HOT
+        if EVERGREEN_IDEA:
+            hint = a[a.index("--topic") + 1]
         if HOT:
             hint += (" HOT NEWS slot: pick ONLY a story published in the last 48 hours, the one people will talk about today,"
                      " and NOT the topic of today's first Short (in the list of used topics).")
@@ -851,6 +864,7 @@ def main():
             # the variant under test did not fit today's material: one plain attempt, never a lost day for a test
             print("variant failed, plain Short instead:", missing, problems, spec.get("skip", ""))
             FORMAT_RULES = ""
+            EVERGREEN_IDEA = False
             opt = {"source": "fallback", "tried": opt.get("format", "")}   # counted by the weekly cap, never as a result
             hint = ""
             spec, missing, problems, report = write_checked(a, today, hint)

@@ -70,7 +70,7 @@
   "priority": 3,
   "created": "2026-11-09",
   "score_from": 3.8,
-  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What an astronomical unit really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what an astronomical unit really is."
+  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What an astronomical unit really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what a day on Venus (Venus fact sheet: its rotation period against its year) really is. Use only numbers in the NASA fact sheets."
  },
  {
   "id": "lightyear-series-2",
@@ -80,7 +80,7 @@
   "priority": 3,
   "created": "2026-11-09",
   "score_from": 3.8,
-  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What a black hole really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what a black hole really is."
+  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What a black hole really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what an astronomical unit (Earth fact sheet: Earth's distance from the Sun, and how the other planets compare) really is. Use only numbers in the NASA fact sheets."
  },
  {
   "id": "lightyear-series-3",
@@ -90,7 +90,7 @@
   "priority": 2,
   "created": "2026-11-09",
   "score_from": 3.8,
-  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What a day on Venus really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what a day on Venus really is."
+  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What a day on Venus really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what a year on Neptune (Neptune fact sheet: its orbital period) really is. Use only numbers in the NASA fact sheets."
  },
  {
   "id": "lightyear-series-4",
@@ -100,16 +100,16 @@
   "priority": 2,
   "created": "2026-11-09",
   "score_from": 3.8,
-  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What an orbit really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what an orbit really is."
+  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What an orbit really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what an orbit (Mercury fact sheet: orbital speed, perihelion and aphelion) really is. Use only numbers in the NASA fact sheets."
  },
  {
   "id": "lightyear-series-5",
   "from": "What a light-year really is",
   "from_id": "p4-clip-d",
   "format": "concept_explainer",
-  "priority": 1,
+  "priority": 2,
   "created": "2026-11-09",
   "score_from": 3.8,
-  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What a light-second really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what a light-second really is."
+  "hint": "Our clip 'What a light-year really is' did 3.8x our median across channels (IG 1,172 views, record watch time). Same series, same shape: 'What a light-second really is'. ONE concept, 2-3 measured numbers from primary sources as animated counters, headline 40 characters or fewer, never the same facts. Topic: what gravity on Jupiter (Jupiter fact sheet: surface gravity and escape velocity against Earth) really is. Use only numbers in the NASA fact sheets."
  }
 ]

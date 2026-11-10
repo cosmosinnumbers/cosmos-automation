@@ -468,7 +468,9 @@ def script_check(spec: dict) -> list[str]:
 
 def review(spec: dict, sources: list[dict]) -> list[str]:
     src = "\n\n".join(f"[{s['id']}] {s['url']}\n{s['text'][:6000]}" for s in sources)
-    scr = "\n".join(f"- {b.get('say', '')}" for _, b in beats(spec))
+    # our own guide lines are not facts to find in the sources (script_check covers them): on 10/11/2026 the reviewer
+    # rejected a whole video because "LOOK UP is not in the NASA fact sheets"
+    scr = "\n".join(f"- {b.get('say', '')}" for _, b in beats(spec) if "LOOK UP" not in str(b.get("say", "")))
     msgs = [{"role": "user", "parts": [{"text": REVIEW.format(sources=src, script=scr)}]}]
     # the reviewer is GLM with reasoning on (the strongest model, and not the Gemini that wrote the script) when
     # GLM_API_KEY exists; else Groq/xAI as before

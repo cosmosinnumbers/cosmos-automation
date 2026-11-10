@@ -8,7 +8,7 @@ import auto_short as a  # noqa: E402
 def test_prompts_format():
     a.PROMPT.format(today="x", hint="", used="", rules=a.VIRAL_RULES)
     a.RSS_PROMPT.format(today="x", hint="", used="", items="", rules=a.VIRAL_RULES)
-    a.REF_PROMPT.format(today="x", used="", items="", rules=a.VIRAL_RULES)
+    a.REF_PROMPT.format(today="x", used="", hint="", items="", rules=a.VIRAL_RULES)
 
 
 def test_bad_short_is_rejected():

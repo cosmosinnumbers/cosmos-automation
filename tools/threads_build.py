@@ -69,11 +69,18 @@ def sentences(text: str) -> list[str]:
     return [s.strip() for s in re.split(r"(?<=[.!?])\s+(?=[A-Z0-9\"“])", text) if s.strip()]
 
 
+# A sentence that only sets up the next one ("Here is your first guess." before the quiz question): if the cut
+# falls right after it the post ends on a promise (Threads 10/11/2026 21:00).
+LEAD_IN = re.compile(r"^(here(?:'s| is| are)|now|next|watch|look|let's|ready|first,? guess)\b|guess\.?$|:$", re.I)
+
+
 def fit(parts: list[str], limit: int) -> str:
     """Join paragraphs; drop trailing sentences of the second paragraph until the text fits."""
     head, body, tail = parts[0], parts[1], parts[2:]
     ss = sentences(body)
     while ss:
+        while ss and len(ss) > 1 and LEAD_IN.search(ss[-1]):  # never end on a line that announces what was cut
+            ss.pop()
         t = "\n\n".join([head, " ".join(ss), *tail])
         if len(t) <= limit:
             return t
@@ -477,16 +484,40 @@ def host_video(tag: str):
     print(f"  video on github.io: HTTP {r.status_code}")
 
 
+def is_video(src: dict) -> bool:
+    return bool(re.search(r"(youtu\.be|youtube\.com)/", src.get("url", "")))
+
+
+AGENCY_WORDS = [(r"\bESA\s*/\s*Webb\b", "ESA/Webb"), (r"\bESA\s*/\s*Hubble\b", "ESA/Hubble"), (r"\bESA\b", "ESA"),
+                (r"\bESO\b", "ESO"), (r"\bNOIRLab\b", "NOIRLab"), (r"\bJPL\b", "NASA/JPL"), (r"\bNASA\b", "NASA")]
+
+
+def source_line(short: dict) -> str:
+    """The agency of the Short. Clips of a long video list only the full video on YouTube: then the agency is the one
+    the narration names (10/11/2026: narration on ESA's Gaia, post said 'Source: NASA'), never a guessed default."""
+    for src in short["source_list"]:
+        if not is_video(src):
+            a = next((n for dom, n in AGENCY if dom in src.get("url", "")), None)
+            if a:
+                return f"Source: {a}."
+    named = []
+    for pat, n in AGENCY_WORDS:
+        if re.search(pat, short["narration"]) and not any(n in x or x in n for x in named):
+            named.append(n)
+    if named:
+        return f"Source: {' and '.join(named[:2])}."
+    return "Sources: in the full video's description on YouTube."
+
+
 def video(day: datetime, short: dict) -> dict:
     try:  # hosting is a bonus: without it the 21:00 post still goes out, as text
         host_video(short["tag"])
     except Exception as e:  # noqa: BLE001
         print(f"  video hosting failed ({type(e).__name__}): the 21:00 post goes out as text")
     title = short["title"].replace("#shorts", "").strip()
-    src = short["source_list"][0] if short["source_list"] else {}
-    agency = next((n for dom, n in AGENCY if dom in src.get("url", "")), "NASA")
-    text = fit([title, short["narration"], f"Source: {agency}.\n{DISCLOSURE}"], 500)
-    replies = [f"Source: {s['title']}: {s['url']}" for s in short["source_list"][:1]]
+    text = fit([title, short["narration"], f"{source_line(short)}\n{DISCLOSURE}"], 500)
+    replies = [f"{s['title']}: {s['url']}" if is_video(s) else f"Source: {s['title']}: {s['url']}"
+               for s in short["source_list"][:1]]
     return {"ref": f"th-{short['tag']}", "at": f"{day:%Y-%m-%d} {slot_at(day, 'video')}", "tag": tag_for(title + " " + short["narration"]),
             "text": text, "replies": replies, "short": short["tag"]}
 

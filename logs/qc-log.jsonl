@@ -16,3 +16,6 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1107-hubble-learns-galactic", "ok": true, "score": 79, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1107-orbital-velocity-min", "ok": true, "score": 85, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-c1110-ess-clip-a", "ok": true, "score": 80, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1110-apod-saturn-behind-moon", "ok": true, "score": 68, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1110-nasa-chandra-finds", "ok": true, "score": 62, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-quiz-1110-gravity-max", "ok": true, "score": 75, "errors": []}

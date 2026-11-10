@@ -476,6 +476,32 @@
   "short": "c1107-p4-clip-h"
  },
  {
+  "ref": "th-news-1110-apod-saturn-behind-moon",
+  "at": "2026-11-10 12:00",
+  "tag": "Moon",
+  "text": "Saturn Behind the Moon (NASA Astronomy Picture of the Day)\n\nSometimes Saturn disappears. It doesn't really go away, of course – it just disappears from our view when Earth's Moon moves in front.\n\nSource: NASA APOD (10 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-10-saturn-behind-the-moon/",
+  "replies": [
+   "Such a Saturnian eclipse, more formally called an occultation, was visible in early 2025 along a small swath of Earth – from Greenland through central Europe and into northern Africa. The featured image is a digital fusion of three images, the first of just Saturn before it disappeared, and then two more of the Moon with different exposure lengths."
+  ],
+  "news_title": "APOD: 2026 November 10 – Saturn Behind the Moon"
+ },
+ {
+  "ref": "th-quiz-1110-gravity-max",
+  "at": "2026-11-10 16:00",
+  "tag": "Science",
+  "poll": [
+   "Saturn",
+   "Mars",
+   "Mercury"
+  ],
+  "text": "Yesterday's answer: Uranus, 6.8 km/s around the Sun (NASA Planetary Fact Sheet).\n\nToday's quiz 🏋️ Which of these planets has the strongest surface gravity?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Gravity-0",
+  "answer": "Saturn, 9.0 m/s² at the surface (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1110-ess-clip-a",
   "at": "2026-11-10 21:00",
   "tag": "Sun",

@@ -15,3 +15,4 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1107-apod-farewell-swift", "ok": true, "score": 82, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-news-1107-hubble-learns-galactic", "ok": true, "score": 79, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1107-orbital-velocity-min", "ok": true, "score": 85, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-c1110-ess-clip-a", "ok": true, "score": 80, "errors": []}

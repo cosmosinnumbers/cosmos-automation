@@ -114,8 +114,16 @@ def fb_reel(mp4, caption, when=None, item=""):
     data = {"access_token": c["page_token"], "description": caption}
     if when:
         data.update(published="false", scheduled_publish_time=str(int(when)))
-    with open(mp4, "rb") as f:
-        r = call("POST", f"https://graph-video.facebook.com/v21.0/{c['page_id']}/videos", data=data, files={"source": f})
+    import reel_cover  # cover with title and key number, not the first frame (owner 10/11/2026)
+    thumb = reel_cover.local_cover(mp4, caption)
+    files = {"source": open(mp4, "rb")}
+    if thumb:
+        files["thumb"] = open(thumb, "rb")
+    try:
+        r = call("POST", f"https://graph-video.facebook.com/v21.0/{c['page_id']}/videos", data=data, files=files)
+    finally:
+        for f in files.values():
+            f.close()
     record("fb", "reel", at, r.get("id", ""), item)
     print("facebook video:", r.get("id"), "scheduled" if when else "published")
 
@@ -125,8 +133,10 @@ def ig_reel(mp4, caption, item=""):
     mp4 = ig_ready(creds.local_media(mp4))
     c = cfg()
     tok, ig = c["page_token"], c["ig_user_id"]
+    import reel_cover  # owner 10/11/2026: the grid showed the first frame (grey or near black), now a real cover
+    cover = reel_cover.for_reel(mp4, caption)  # {"cover_url": ...} or {"thumb_offset": ms}
     cont = call("POST", f"{ig}/media", params={"access_token": tok, "media_type": "REELS", "upload_type": "resumable",
-                                               "caption": caption, "share_to_feed": "true"})
+                                               "caption": caption, "share_to_feed": "true", **cover})
     size = Path(mp4).stat().st_size
     with open(mp4, "rb") as f:
         call("POST", cont["uri"], headers={"Authorization": f"OAuth {tok}", "offset": "0", "file_size": str(size)}, data=f.read())

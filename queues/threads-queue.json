@@ -512,6 +512,32 @@
   "short": "c1110-ess-clip-a"
  },
  {
+  "ref": "th-news-1111-apod-ngc-4449-small",
+  "at": "2026-11-11 12:00",
+  "tag": "Astronomy",
+  "text": "NGC 4449: Small Galaxy, Big Impact (NASA Astronomy Picture of the Day)\n\nDon’t judge a galaxy by its size. Our home galaxy, the Milky Way, is about 100,000 light years across.\n\nSource: NASA APOD (11 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-11-ngc-4449-small-galaxy-big-impact/",
+  "replies": [
+   "This huge expanse of space contains hundreds of billions of stars! The smallest galaxies, called dwarf galaxies, are about 1/10th the size of the Milky Way and only contain a few billion stars.\n\nImage: NASA, ESA, A. Aloisi (STScI/ESA), and the Hubble Heritage (STScI/AURA)-ESA/Hubble Collaboration."
+  ],
+  "news_title": "APOD: 2026 November 11 – NGC 4449: Small Galaxy, Big Impact"
+ },
+ {
+  "ref": "th-quiz-1111-obliquity-min",
+  "at": "2026-11-11 17:55",
+  "tag": "Science",
+  "poll": [
+   "Venus",
+   "Earth",
+   "Neptune"
+  ],
+  "text": "Yesterday's answer: Saturn, 9.0 m/s² at the surface (NASA Planetary Fact Sheet).\n\nToday's quiz 🌀 Which of these planets is the least tilted?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Obliquity-1",
+  "answer": "Earth, 23.4 degrees of tilt (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1111-ess-clip-b",
   "at": "2026-11-11 21:00",
   "tag": "Hubble",

@@ -51,15 +51,21 @@ jobs:
       - name: Upload today's Short
         env:
           YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
-          SHORT_PREFIX: ${{ github.event.schedule == '45 13 * * *' && 'b' || 'a' }}
-          UPLOAD_AT: ${{ github.event.schedule == '45 13 * * *' && '15:00' || '21:00' }}
           IN_TAG: ${{ inputs.tag }}
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
         run: |
           args=()
-          [ -n "$IN_TAG" ] && args+=(--tag "$IN_TAG")
           [ "$IN_DRY" = "true" ] && args+=(--dry-run)
-          python tools/yt_short_upload.py "${args[@]}"
+          if [ -n "$IN_TAG" ]; then python tools/yt_short_upload.py --tag "$IN_TAG" "${args[@]}"; exit; fi
+          # Every run checks both Shorts (07/11/2026: the second Short was built late and nothing uploaded it):
+          # b<MMDD>-* public at 15:00 (a late one goes out as soon as it is ready, until 20:00), then a<MMDD>-* at 21:00.
+          # The log and the channel titles keep each one from going out twice.
+          rc=0
+          if [ "$(date +%H)" -lt 20 ]; then
+            SHORT_PREFIX=b UPLOAD_AT=15:00 python tools/yt_short_upload.py "${args[@]}" || rc=$?
+          fi
+          SHORT_PREFIX=a UPLOAD_AT=21:00 python tools/yt_short_upload.py "${args[@]}" || rc=$?
+          exit $rc
       - name: Save the log
         if: always()
         run: |

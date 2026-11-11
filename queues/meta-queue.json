@@ -227,5 +227,31 @@
   "at": "2026-11-10 20:48",
   "action": "fb-story",
   "video_url": "media/shorts/c1110-ess-clip-a_story.mp4"
+ },
+ {
+  "ref": "sr-c1111-ess-clip-b",
+  "at": "2026-11-11 20:50",
+  "action": "ig-reel",
+  "video_url": "media/shorts/c1111-ess-clip-b.mp4",
+  "caption": "Earth runs out of time before the Sun does\n\nFull video on YouTube: @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "fr-c1111-ess-clip-b",
+  "at": "2026-11-11 20:52",
+  "action": "fb-reel",
+  "video_url": "media/shorts/c1111-ess-clip-b.mp4",
+  "caption": "Earth runs out of time before the Sun does\n\nFull video on YouTube: @CosmosinNumbers\n📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "si-c1111-ess-clip-b",
+  "at": "2026-11-11 20:52",
+  "action": "ig-story",
+  "video_url": "media/shorts/c1111-ess-clip-b_story.mp4"
+ },
+ {
+  "ref": "sf-c1111-ess-clip-b",
+  "at": "2026-11-11 20:52",
+  "action": "fb-story",
+  "video_url": "media/shorts/c1111-ess-clip-b_story.mp4"
  }
 ]

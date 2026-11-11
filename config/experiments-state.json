@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10",
+ "updated": "2026-11-11",
  "n_shorts": 26,
  "formats": {
   "scale_zoom": {
@@ -11,7 +11,7 @@
   },
   "other": {
    "n": 13,
-   "wins": 6.48,
+   "wins": 6.12,
    "losses": 3.52,
    "mean": 1.17,
    "decision": "esplora"
@@ -40,7 +40,7 @@
   "sky_tonight": {
    "n": 1,
    "wins": 0.0,
-   "losses": 0.8,
+   "losses": 0.64,
    "mean": 0.44,
    "decision": "esplora"
   }
@@ -48,7 +48,7 @@
  "hooks": {
   "extreme_number": {
    "n": 13,
-   "wins": 7.28,
+   "wins": 6.92,
    "losses": 2.88,
    "mean": 1.2,
    "decision": "esplora"
@@ -56,7 +56,7 @@
   "other": {
    "n": 5,
    "wins": 1.92,
-   "losses": 1.44,
+   "losses": 1.28,
    "mean": 1.2,
    "decision": "esplora"
   },
@@ -101,12 +101,12 @@
    "n": 3,
    "wins": 1.28,
    "losses": 0.64,
-   "mean": 1.42,
+   "mean": 1.43,
    "decision": "esplora"
   },
   "moon": {
    "n": 3,
-   "wins": 2.44,
+   "wins": 2.08,
    "losses": 0.0,
    "mean": 1.42,
    "decision": "esplora"
@@ -115,7 +115,7 @@
    "n": 1,
    "wins": 0.8,
    "losses": 0.0,
-   "mean": 1.37,
+   "mean": 1.36,
    "decision": "esplora"
   },
   "other": {
@@ -149,7 +149,7 @@
   "sun": {
    "n": 2,
    "wins": 1.0,
-   "losses": 0.8,
+   "losses": 0.64,
    "mean": 0.78,
    "decision": "esplora"
   },
@@ -186,8 +186,8 @@
   {
    "title": "NASA's Roman Telescope Got Sharper by Moving a Mirror",
    "id": "fD8pNtTwvXs",
-   "score": 2.48,
-   "views": 930,
+   "score": 2.49,
+   "views": 932,
    "pct": 52.9
   },
   {
@@ -200,15 +200,15 @@
   {
    "title": "A 3,200-Pound Space Telescope Is Falling to Earth",
    "id": "rXEds3znnhI",
-   "score": 1.37,
+   "score": 1.36,
    "views": 241,
-   "pct": 104.8
+   "pct": 103.8
   },
   {
    "title": "The Most Common Planet Size Doesn't Exist in Our Solar System",
    "id": "8Tb7dHT1vek",
    "score": 1.22,
-   "views": 338,
+   "views": 340,
    "pct": 58.6
   }
  ]

@@ -19,3 +19,4 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1110-apod-saturn-behind-moon", "ok": true, "score": 68, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-news-1110-nasa-chandra-finds", "ok": true, "score": 62, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1110-gravity-max", "ok": true, "score": 75, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-c1111-ess-clip-b", "ok": true, "score": 79, "errors": []}

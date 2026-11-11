@@ -5,7 +5,7 @@ upload C-BKdHUodpE stayed public).
 
 Takes today's release of shorts-build (a<MMDD>-*, reserve Shorts included), title and description from its
 upload.md (LOOK UP line, sources, credits, synthetic voice and AI disclosure), uploads the mp4 as public.
-Timing: the 20:45 slot of youtube-upload.yml waits for UPLOAD_AT (21:00); earlier runs (after shorts-build) only
+Timing: the 20:05 slot of youtube-upload.yml waits for UPLOAD_AT (21:00); earlier runs (after shorts-build) only
 check and exit, unless --now or --tag is given. Never twice: logs/youtube-publish-log.jsonl (ref = tag) and the
 titles already on the channel. 2 attempts, then exit 1 (the workflow opens an issue). Credentials: secret
 YOUTUBE_TOKEN_JSON (authorized-user JSON), never printed.
@@ -31,6 +31,7 @@ TZ = ZoneInfo("Europe/Rome")
 LOG = "youtube-publish-log.jsonl"
 REPO = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
 UPLOAD_AT = os.environ.get("UPLOAD_AT", "21:00")
+EARLY_MIN = 70  # the crons run 55 min early (GitHub starts them up to 50 min late): wait in the job
 PREFIX = os.environ.get("SHORT_PREFIX", "a")   # "b" = second Short of the day (hot news), public at 15:00
 DRY = "--dry-run" in sys.argv
 
@@ -69,7 +70,7 @@ def main():
         return
     h, m = map(int, UPLOAD_AT.split(":"))
     target = now.replace(hour=h, minute=m, second=0, microsecond=0)
-    if not (tag or "--now" in a) and now < target - timedelta(minutes=25):
+    if not (tag or "--now" in a) and now < target - timedelta(minutes=EARLY_MIN):
         print(f"{ref}: ready, upload at {UPLOAD_AT}.")
         return
     with tempfile.TemporaryDirectory() as d:
@@ -101,7 +102,7 @@ def main():
             print("DRY-RUN: nothing uploaded.")
             return
         wait = (target - datetime.now(TZ)).total_seconds()
-        if 0 < wait < 3600 and not (tag or "--now" in a):
+        if 0 < wait < (EARLY_MIN + 5) * 60 and not (tag or "--now" in a):
             time.sleep(wait)
         body = {"snippet": {"title": title, "description": desc, "tags": re.findall(r"#(\w+)", desc),
                             "categoryId": "28", "defaultLanguage": "en", "defaultAudioLanguage": "en"},

@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11",
+ "updated": "2026-11-12",
  "n_shorts": 26,
  "formats": {
   "scale_zoom": {
@@ -11,7 +11,7 @@
   },
   "other": {
    "n": 13,
-   "wins": 6.12,
+   "wins": 5.99,
    "losses": 3.52,
    "mean": 1.17,
    "decision": "esplora"
@@ -33,7 +33,7 @@
   "audience_question": {
    "n": 2,
    "wins": 0.0,
-   "losses": 1.51,
+   "losses": 1.31,
    "mean": 0.76,
    "decision": "esplora"
   },
@@ -55,7 +55,7 @@
   },
   "other": {
    "n": 5,
-   "wins": 1.92,
+   "wins": 1.79,
    "losses": 1.28,
    "mean": 1.2,
    "decision": "esplora"
@@ -77,7 +77,7 @@
   "question": {
    "n": 2,
    "wins": 0.0,
-   "losses": 2.0,
+   "losses": 1.8,
    "mean": 0.82,
    "decision": "esplora"
   },
@@ -99,7 +99,7 @@
   },
   "telescope": {
    "n": 3,
-   "wins": 1.28,
+   "wins": 1.15,
    "losses": 0.64,
    "mean": 1.43,
    "decision": "esplora"
@@ -142,7 +142,7 @@
   "mars": {
    "n": 2,
    "wins": 0.8,
-   "losses": 1.0,
+   "losses": 0.8,
    "mean": 0.96,
    "decision": "esplora"
   },

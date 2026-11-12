@@ -135,21 +135,41 @@ def ig_reel(mp4, caption, item=""):
     tok, ig = c["page_token"], c["ig_user_id"]
     import reel_cover  # owner 10/11/2026: the grid showed the first frame (grey or near black), now a real cover
     cover = reel_cover.for_reel(mp4, caption)  # {"cover_url": ...} or {"thumb_offset": ms}
+    try:
+        cid = _ig_reel_container(mp4, caption, tok, ig, cover)
+    except SystemExit as e:
+        # 12/11/2026: Meta answered ProcessingFailedError on every try with the custom cover; nothing was published
+        # (no media_publish yet), so one more container without cover_url is safe
+        if "cover_url" not in cover:
+            raise
+        print(f"instagram reel failed with the custom cover ({str(e.code)[:160]}); retrying with thumb_offset")
+        try:
+            off = {"thumb_offset": str(reel_cover.best_offset(mp4))}
+        except Exception:  # noqa: BLE001
+            off = {"thumb_offset": "2000"}
+        cid = _ig_reel_container(mp4, caption, tok, ig, off)
+    r = call("POST", f"{ig}/media_publish", params={"access_token": tok, "creation_id": cid})
+    record("ig", "reel", at, r["id"], item)
+    print("instagram reel:", r["id"])
+
+
+def _ig_reel_container(mp4, caption, tok, ig, extra):
+    """REELS container via resumable upload, waited until FINISHED. Returns its id; exits on any error."""
+    print("instagram reel: container", ",".join(extra))
     cont = call("POST", f"{ig}/media", params={"access_token": tok, "media_type": "REELS", "upload_type": "resumable",
-                                               "caption": caption, "share_to_feed": "true", **cover})
+                                               "caption": caption, "share_to_feed": "true", **extra})
     size = Path(mp4).stat().st_size
+    print("instagram reel: upload", size, "bytes")
     with open(mp4, "rb") as f:
         call("POST", cont["uri"], headers={"Authorization": f"OAuth {tok}", "offset": "0", "file_size": str(size)}, data=f.read())
     for _ in range(60):
         st = call("GET", cont["id"], params={"access_token": tok, "fields": "status_code"})["status_code"]
         if st == "FINISHED":
-            break
+            return cont["id"]
         if st == "ERROR":
             sys.exit("instagram processing error")
         time.sleep(10)
-    r = call("POST", f"{ig}/media_publish", params={"access_token": tok, "creation_id": cont["id"]})
-    record("ig", "reel", at, r["id"], item)
-    print("instagram reel:", r["id"])
+    sys.exit("instagram reel not ready after 10 minutes, nothing published")
 
 
 def ig_ready(mp4):

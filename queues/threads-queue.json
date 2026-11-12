@@ -548,6 +548,32 @@
   "short": "c1111-ess-clip-b"
  },
  {
+  "ref": "th-news-1112-astronomers-discover-n",
+  "at": "2026-11-12 12:00",
+  "tag": "Astronomy",
+  "text": "Astronomers Discover Nāpōwawāʻenakaulua, the Oldest Compact Quasar Pair in the Universe\n\nThe oldest pair of compact quasars ever observed has been found only 900 million years after the Big Bang. Scientists say there is no theoretical explanation for how the pair of actively feeding black holes grew so massive at such an early time in the history of the Universe. The pair of quasars has been given the Hawaiian nickname Nāpōwawāʻenakaulua.\n\nSource: NOIRLab (10 Nov 2026).",
+  "replies": [
+   "An international team of astronomers has discovered J1602+4228AB, nicknamed Nāpōwawāʻenakaulua, the most distant, and thus oldest, compact pair of quasars ever found in the Universe.\n\nhttp://noirlab.edu/public/news/noirlab2627/"
+  ],
+  "news_title": "Astronomers Discover Nāpōwawāʻenakaulua, the Oldest Compact Quasar Pair in the Universe"
+ },
+ {
+  "ref": "th-quiz-1112-density-max",
+  "at": "2026-11-12 17:55",
+  "tag": "Science",
+  "poll": [
+   "Saturn",
+   "Jupiter",
+   "Mercury"
+  ],
+  "text": "Yesterday's answer: Earth, 23.4 degrees of tilt (NASA Planetary Fact Sheet).\n\nToday's quiz 🪨 Which of these planets is the densest?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Density-0",
+  "answer": "Mercury, 5429 kg per cubic meter (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1112-ess-clip-c",
   "at": "2026-11-12 21:00",
   "tag": "Sun",

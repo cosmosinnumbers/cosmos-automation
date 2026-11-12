@@ -23,3 +23,4 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1111-apod-ngc-4449-small", "ok": true, "score": 87, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-news-1111-astronomers-discover-n", "ok": true, "score": 70, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1111-obliquity-min", "ok": true, "score": 80, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-c1112-ess-clip-c", "ok": true, "score": 88, "errors": []}

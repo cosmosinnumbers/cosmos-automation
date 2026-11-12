@@ -253,5 +253,31 @@
   "at": "2026-11-11 20:52",
   "action": "fb-story",
   "video_url": "media/shorts/c1111-ess-clip-b_story.mp4"
+ },
+ {
+  "ref": "sr-c1112-ess-clip-c",
+  "at": "2026-11-12 20:52",
+  "action": "ig-reel",
+  "video_url": "media/shorts/c1112-ess-clip-c.mp4",
+  "caption": "The Sun will swell 200 times wider\n\nFull video on YouTube: @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "fr-c1112-ess-clip-c",
+  "at": "2026-11-12 20:55",
+  "action": "fb-reel",
+  "video_url": "media/shorts/c1112-ess-clip-c.mp4",
+  "caption": "The Sun will swell 200 times wider\n\nFull video on YouTube: @CosmosinNumbers\n📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "si-c1112-ess-clip-c",
+  "at": "2026-11-12 20:55",
+  "action": "ig-story",
+  "video_url": "media/shorts/c1112-ess-clip-c_story.mp4"
+ },
+ {
+  "ref": "sf-c1112-ess-clip-c",
+  "at": "2026-11-12 20:56",
+  "action": "fb-story",
+  "video_url": "media/shorts/c1112-ess-clip-c_story.mp4"
  }
 ]

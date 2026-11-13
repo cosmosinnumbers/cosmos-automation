@@ -100,6 +100,13 @@ jobs:
           [ -s voices-v1.0.bin ] || curl -sSLf -o voices-v1.0.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
       # Viral engine, step 4 (docs/PROMPT-motore-virale.md): format + hook of today's Short from tools/experiments.py
       # (sky event, follow-up of a hit, or Thompson sampling 80/20 on the metrics). A failure here = a plain Short.
+      # Fresh news radar right before writing (the 12:30 Short needs the stories of the last hours); a failure
+      # leaves the morning radar of research.yml in place.
+      - name: News radar
+        if: steps.today.outputs.done != 'true'
+        continue-on-error: true
+        timeout-minutes: 6
+        run: python tools/news_radar.py cosmos
       - name: Choose today's variant
         id: plan
         if: steps.today.outputs.done != 'true'

@@ -63,6 +63,14 @@ jobs:
           niches="$IN_NICHE"
           [ -z "$niches" ] && niches=$(ls research/niches | sed 's/\.json$//')
           for n in $niches; do python tools/trend_scout.py "$n" || echo "trend scout $n failed"; done
+      # News radar (13/11/2026): which space stories people read today (Google News, Reddit, Hacker News, Wikipedia
+      # pageviews, Google Trends, agencies: free public feeds, no key). Read by the Short writer and the planner.
+      - name: News radar
+        continue-on-error: true
+        timeout-minutes: 8
+        env:
+          IN_NICHE: ${{ inputs.niche }}
+        run: python tools/news_radar.py "${IN_NICHE:-cosmos}"
       - name: Save reports
         if: always()
         run: |

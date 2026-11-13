@@ -27,3 +27,4 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1112-apod-moon-venus-spica", "ok": true, "score": 69, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-news-1112-astronomers-discover-n", "ok": true, "score": 72, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1112-density-max", "ok": true, "score": 83, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-c1113-ess-clip-d", "ok": true, "score": 83, "errors": []}

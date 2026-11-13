@@ -1,6 +1,6 @@
 {
- "start": "2026-11-14",
- "end": "2026-12-13",
+ "start": "2026-11-13",
+ "end": "2026-12-12",
  "days": 30,
  "latitude": "40° N",
  "method": "Computed with PyEphem for 40° N. Meteor shower peaks and rates: IMO Meteor Shower Calendar. Dates are UTC and can shift by one day where you live.",
@@ -8,7 +8,7 @@
   {
    "name": "Mercury",
    "text": "before dawn, low in the south-east before sunrise; by the end of the period: hidden in the Sun's glare",
-   "mag": -0.1,
+   "mag": 0.1,
    "constellation": "Virgo",
    "when": "before dawn",
    "visible": true

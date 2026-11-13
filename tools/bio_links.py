@@ -4,7 +4,7 @@
   python tools/bio_links.py audit        # read-only: every profile text, every link in it opened -> reports/bio-links.md
 
 - facebook : Page "website" + "about" (Graph API, token META_JSON; needs pages_manage_metadata).
-- youtube  : channel description gets the free-PDF and LOOK UP lines on top (channels.update, token YOUTUBE_TOKEN_JSON).
+- youtube  : channel description gets the free sky calendar, LOOK UP and free-PDF lines on top (channels.update, token YOUTUBE_TOKEN_JSON).
 Instagram, TikTok, Threads and X bios have no write API: the same links are given to the owner to paste.
 The current values are printed first (public text) so a change can be undone by hand. Idempotent.
 """
@@ -34,9 +34,9 @@ def facebook():
     G, pid, tok = "https://graph.facebook.com/v21.0", c["page_id"], c["page_token"]
     cur = requests.get(f"{G}/{pid}", params={"access_token": tok, "fields": "website,about,description"}, timeout=60).json()
     print("current:", json.dumps(cur, ensure_ascii=False))
-    free, look = utm("solar-system-20", "facebook", "post"), utm("look-up", "facebook", "post")
+    free, look = utm("sky-30-nights", "facebook", "post"), utm("look-up", "facebook", "post")
     old = [u.strip() for u in (cur.get("website") or "").split(",") if u.strip()]
-    old = [u for u in old if "gumroad.com/l/look-up" not in u and not u.startswith("https://gum.co/u/")]
+    old = [u for u in old if "gumroad.com" not in u and not u.startswith("https://gum.co/u/")]
     base = ["https://cosmosinnumbers.github.io/links.html?src=fb", "https://cosmosinnumbers.github.io/",
             "https://www.tiktok.com/@cosmosinnumbers", "https://www.instagram.com/cosmos.innumbers/"]
     sites = [free, look, *dict.fromkeys([*old, *base])]  # keep the links already there (site, TikTok, Instagram)
@@ -44,7 +44,7 @@ def facebook():
     about = cur.get("about") or ""
     if free not in about:
         about = ("Real space. Real data. Space explainers from real NASA/ESA images and public data. "
-                 f"Free PDF, The Solar System in 20 Numbers: {free} | Full videos: youtube.com/@CosmosinNumbers")
+                 f"Free sky calendar, The Next 30 Nights: {free} | Full videos: youtube.com/@CosmosinNumbers")
     print("new website:", website, "| about:", len(about), "chars")
     if DRY:
         return
@@ -59,12 +59,22 @@ def youtube():
     b = ch["brandingSettings"]
     cur = b.get("channel", {}).get("description", "")
     print("current description:\n" + cur + "\n---")
-    free, look = utm("solar-system-20", "youtube", "description"), utm("look-up", "youtube", "description")
-    if free in cur:
+    sky, look = utm("sky-30-nights", "youtube", "description"), utm("look-up", "youtube", "description")
+    free = utm("solar-system-20", "youtube", "description")
+    head = (f"🔭 Free sky calendar, The Next 30 Nights (what to see this month): {sky}\n"
+            f"📘 LOOK UP, our beginner's stargazing guide: {look}\n"
+            f"🆓 Free PDF, The Solar System in 20 Numbers: {free}")
+    if cur.startswith(head):
         print("already done")
         return
-    new = (f"🆓 Free PDF, The Solar System in 20 Numbers: {free}\n"
-           f"📘 LOOK UP, our beginner's stargazing guide: {look}\n\n{cur}")
+    rest = cur.split("\n")
+    while rest and (not rest[0].strip() or "gum.co/" in rest[0] or "gumroad.com/l/" in rest[0]):  # our old link lines
+        rest.pop(0)
+    new = head + "\n\n" + "\n".join(rest)
+    if len(new) > 1000:  # YouTube refuses a channel description over 1000 characters: the third line goes
+        new = head.rsplit("\n", 1)[0] + "\n\n" + "\n".join(rest)
+    if len(new) > 1000:
+        sys.exit(f"description would be {len(new)} characters (max 1000): shorten it by hand in YouTube Studio")
     print("new description:\n" + new)
     if DRY:
         return
@@ -86,7 +96,7 @@ def open_link(u: str, tracked: dict) -> dict:
         out.update(status=r.status_code, final=r.url.split("&utm_")[0][:140], utm="utm_source=" in r.url or bool(out["tracked"]))
         if "gumroad.com/l/" in r.url:
             out["product"] = r.url.split("/l/")[1].split("?")[0].split("/")[0]
-            out["buyable"] = any(k in r.text for k in ("I want this", "Add to cart", "Name a fair price"))
+            out["buyable"] = 'property="og:title"' in r.text and "Page not found" not in r.text[:3000]
     except requests.RequestException as e:
         out.update(status=0, final=type(e).__name__)
     return out
@@ -128,8 +138,8 @@ def profiles() -> dict:
     def page(u):
         r = requests.get(u, headers=UA, timeout=40)
         import re
-        links = re.findall(r'href="(https?://[^"]+)"', r.text)
-        return {"text": " ".join(dict.fromkeys(l for l in links if "gum" in l)), "status": r.status_code}
+        links = re.findall(r"https://(?:gum\.co/u/\w+|cosmosinnumbers\.gumroad\.com/l/[\w-]+[^\"'\s<]*)", r.text)
+        return {"text": " ".join(dict.fromkeys(links)), "status": r.status_code}
 
     def tiktok():
         import re
@@ -170,7 +180,7 @@ def audit():
                 continue
             o = open_link(u, tracked)
             t = "tracciato (" + "/".join(o["tracked"]) + ")" if o["tracked"] else ("tracciato (utm)" if o.get("utm") else "NON tracciato")
-            buy = "" if "buyable" not in o else (", pagina acquistabile" if o["buyable"] else ", ATTENZIONE: pulsante d'acquisto non trovato")
+            buy = "" if "buyable" not in o else (", pagina prodotto aperta" if o["buyable"] else ", ATTENZIONE: la pagina prodotto non si apre")
             lines.append(f"- `{u}` → HTTP {o['status']}, arriva a `{o.get('product') or o['final']}`, {t}{buy}")
         if p.get("note"):
             lines.append(f"- Nota: {p['note']}")

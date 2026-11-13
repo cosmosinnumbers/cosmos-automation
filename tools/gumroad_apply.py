@@ -32,7 +32,7 @@ FREE = ROOT / "products" / "solar-system-20"
 
 LOOKUP = {
     "name": "LOOK UP: Find Planets, Galaxies and the 2027 Eclipse, No Telescope Needed",
-    "custom_summary": "173 pages · 30+ outdoor exercises · month-by-month 2027 sky calendar · 14 bonus posters · PDF + EPUB",
+    "custom_summary": "173 pages · 45 outdoor exercises · month-by-month 2027 sky calendar · 14 bonus posters · PDF + EPUB",
     "tags": ["stargazing", "astronomy", "space", "beginner guide", "2027 calendar"],
     "custom_receipt": ("Thanks for picking up LOOK UP! Start with Chapter 1 tonight: it takes 20 minutes and you only "
                        "need your eyes. New space-by-the-numbers videos every week: youtube.com/@CosmosinNumbers. "
@@ -139,6 +139,17 @@ def do_lookup(tax):
         body["taxonomy_id"] = tax
     j = call("PUT", f"products/{p['id']}", json=body)
     print("LOOK UP updated" if j.get("success") else "LOOK UP NOT updated")
+    # "look inside" images after the book cover: added once (the product then has more covers than the one cover)
+    shots = sorted((ROOT / "products/look-up/previews").glob("*.png"))
+    have = len(call("GET", f"products/{p['id']}").get("product", {}).get("covers") or [])
+    if DRY or have > 1:
+        print(f"look-inside images: {have} covers already there, nothing uploaded")
+        return
+    for shot in shots:
+        sid = direct_upload(shot, "image/png")
+        if sid:
+            r = call("POST", f"products/{p['id']}/covers", json={"signed_blob_id": sid})
+            print("look-inside image", shot.name, "added" if r.get("success") else "NOT added")
 
 
 def do_free(tax):
@@ -149,8 +160,20 @@ def do_free(tax):
     if tax:
         body["taxonomy_id"] = tax
     if p:
-        print("free product exists: updating texts")
-        call("PUT", f"products/{p['id']}", json=body)
+        print("free product exists: updating texts and replacing the PDF with the current build")
+        url = upload_file(out / "the-solar-system-in-20-numbers.pdf")
+        if not url:
+            sys.exit("PDF upload failed")
+        j = call("PUT", f"products/{p['id']}", json={**body, "files": [{"url": url, "display_name": "The Solar System in 20 Numbers"}]})
+        if DRY or not j.get("success"):
+            return
+        got = call("GET", f"products/{p['id']}").get("product", {}).get("files") or []
+        fid = got[-1].get("id") if got else None
+        print("files on the product:", len(got), "| embedded file id:", fid)
+        if fid:
+            call("PUT", f"products/{p['id']}", json={"rich_content": [{"title": "Your guide", "description": {"type": "doc", "content": [
+                {"type": "paragraph", "content": [{"type": "text", "text": "Thanks! Here is your guide. Read one number a night, then go outside and look up."}]},
+                {"type": "fileEmbed", "attrs": {"id": fid}}]}}]})
         return
     url = upload_file(out / "the-solar-system-in-20-numbers.pdf")
     if not url:

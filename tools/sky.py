@@ -71,7 +71,8 @@ def planet_state(cls, day: date) -> dict:
     for key, t in (("evening", ephem.Date(sunset + 45 * ephem.minute)), ("morning", ephem.Date(sunrise - 45 * ephem.minute))):
         o.date = t
         p = cls(o)
-        out[key] = {"alt": round(math.degrees(p.alt)), "dir": COMPASS[int((math.degrees(p.az) + 22.5) // 45) % 8]}
+        out[key] = {"alt": round(math.degrees(p.alt)), "az": round(math.degrees(p.az)),
+                    "dir": COMPASS[int((math.degrees(p.az) + 22.5) // 45) % 8]}
     o.date = datetime(day.year, day.month, day.day, 12)
     p = cls(o)
     elong = math.degrees(p.elong)
@@ -88,7 +89,7 @@ def planet_state(cls, day: date) -> dict:
         when = "too low to see well"
     at = out["evening"] if when in ("evening", "all night") else out["morning"]
     return {"when": when, "dir": at["dir"], "alt": at["alt"], "mag": round(p.mag, 1), "elong": round(elong),
-            "constellation": ephem.constellation(p)[1]}
+            "constellation": ephem.constellation(p)[1], "sky": out}
 
 
 def planet_line(name: str, a: dict, b: dict) -> dict:
@@ -164,6 +165,28 @@ def seasons(start: datetime, days: int) -> list[dict]:
     return out
 
 
+def moon_nights(start: date, days: int) -> list[dict]:
+    """The Moon on each evening (20:00 UTC): how much is lit and whether it is growing. Drawn as a strip in the PDF."""
+    out = []
+    for i in range(days):
+        d = start + timedelta(days=i)
+        t = datetime(d.year, d.month, d.day, 20)
+        a, b = ephem.Moon(t).phase, ephem.Moon(t + timedelta(hours=6)).phase
+        out.append({"date": d.isoformat(), "lit": round(a), "waxing": b > a})
+    return out
+
+
+def sky_charts(day: date) -> dict:
+    """Planets above the horizon 45 min after sunset and 45 min before sunrise on one date: azimuth, altitude, magnitude."""
+    out = {"date": day.isoformat(), "evening": [], "morning": []}
+    for n, c in PLANETS:
+        st = planet_state(c, day)
+        for key in ("evening", "morning"):
+            if st["sky"][key]["alt"] >= 5 and abs(st["elong"]) >= 12:
+                out[key].append({"name": n, "az": st["sky"][key]["az"], "alt": st["sky"][key]["alt"], "mag": st["mag"]})
+    return out
+
+
 def window(start: date, days: int = 30) -> dict:
     s = datetime(start.year, start.month, start.day, tzinfo=timezone.utc)
     last = start + timedelta(days=days - 1)
@@ -173,7 +196,8 @@ def window(start: date, days: int = 30) -> dict:
     return {"start": start.isoformat(), "end": last.isoformat(), "days": days, "latitude": "40° N",
             "method": "Computed with PyEphem for 40° N. Meteor shower peaks and rates: IMO Meteor Shower Calendar. "
                       "Dates are UTC and can shift by one day where you live.",
-            "planets": planets, "events": events}
+            "planets": planets, "events": events, "moon": moon_nights(start, days),
+            "charts": sky_charts(start + timedelta(days=7))}
 
 
 def fmt_day(iso: str) -> str:

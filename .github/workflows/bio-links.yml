@@ -32,6 +32,7 @@ jobs:
         run: python video/ci_secrets.py
       - env:
           META_JSON: ${{ secrets.META_JSON }}
+          THREADS_JSON: ${{ secrets.THREADS_JSON }}
           TARGET: ${{ inputs.target }}
           DRY: ${{ inputs.dry_run }}
         run: python tools/bio_links.py "$TARGET" $([ "$DRY" = "true" ] && echo --dry-run)

@@ -1,6 +1,6 @@
 {
- "start": "2026-11-13",
- "end": "2026-12-12",
+ "start": "2026-11-14",
+ "end": "2026-12-13",
  "days": 30,
  "latitude": "40° N",
  "method": "Computed with PyEphem for 40° N. Meteor shower peaks and rates: IMO Meteor Shower Calendar. Dates are UTC and can shift by one day where you live.",
@@ -8,7 +8,7 @@
   {
    "name": "Mercury",
    "text": "before dawn, low in the south-east before sunrise; by the end of the period: hidden in the Sun's glare",
-   "mag": 0.1,
+   "mag": -0.1,
    "constellation": "Virgo",
    "when": "before dawn",
    "visible": true
@@ -107,5 +107,194 @@
    "name": "New Moon",
    "text": "New Moon: the darkest nights of the month, best for faint stars and the Milky Way."
   }
- ]
+ ],
+ "moon": [
+  {
+   "date": "2026-11-14",
+   "lit": 26,
+   "waxing": true
+  },
+  {
+   "date": "2026-11-15",
+   "lit": 34,
+   "waxing": true
+  },
+  {
+   "date": "2026-11-16",
+   "lit": 44,
+   "waxing": true
+  },
+  {
+   "date": "2026-11-17",
+   "lit": 53,
+   "waxing": true
+  },
+  {
+   "date": "2026-11-18",
+   "lit": 63,
+   "waxing": true
+  },
+  {
+   "date": "2026-11-19",
+   "lit": 73,
+   "waxing": true
+  },
+  {
+   "date": "2026-11-20",
+   "lit": 82,
+   "waxing": true
+  },
+  {
+   "date": "2026-11-21",
+   "lit": 89,
+   "waxing": true
+  },
+  {
+   "date": "2026-11-22",
+   "lit": 95,
+   "waxing": true
+  },
+  {
+   "date": "2026-11-23",
+   "lit": 99,
+   "waxing": true
+  },
+  {
+   "date": "2026-11-24",
+   "lit": 100,
+   "waxing": false
+  },
+  {
+   "date": "2026-11-25",
+   "lit": 98,
+   "waxing": false
+  },
+  {
+   "date": "2026-11-26",
+   "lit": 93,
+   "waxing": false
+  },
+  {
+   "date": "2026-11-27",
+   "lit": 85,
+   "waxing": false
+  },
+  {
+   "date": "2026-11-28",
+   "lit": 76,
+   "waxing": false
+  },
+  {
+   "date": "2026-11-29",
+   "lit": 66,
+   "waxing": false
+  },
+  {
+   "date": "2026-11-30",
+   "lit": 55,
+   "waxing": false
+  },
+  {
+   "date": "2026-12-01",
+   "lit": 44,
+   "waxing": false
+  },
+  {
+   "date": "2026-12-02",
+   "lit": 34,
+   "waxing": false
+  },
+  {
+   "date": "2026-12-03",
+   "lit": 24,
+   "waxing": false
+  },
+  {
+   "date": "2026-12-04",
+   "lit": 16,
+   "waxing": false
+  },
+  {
+   "date": "2026-12-05",
+   "lit": 10,
+   "waxing": false
+  },
+  {
+   "date": "2026-12-06",
+   "lit": 5,
+   "waxing": false
+  },
+  {
+   "date": "2026-12-07",
+   "lit": 2,
+   "waxing": false
+  },
+  {
+   "date": "2026-12-08",
+   "lit": 0,
+   "waxing": false
+  },
+  {
+   "date": "2026-12-09",
+   "lit": 1,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-10",
+   "lit": 3,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-11",
+   "lit": 7,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-12",
+   "lit": 12,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-13",
+   "lit": 19,
+   "waxing": true
+  }
+ ],
+ "charts": {
+  "date": "2026-11-21",
+  "evening": [
+   {
+    "name": "Saturn",
+    "az": 120,
+    "alt": 32,
+    "mag": 0.7
+   }
+  ],
+  "morning": [
+   {
+    "name": "Mercury",
+    "az": 116,
+    "alt": 10,
+    "mag": -0.4
+   },
+   {
+    "name": "Venus",
+    "az": 127,
+    "alt": 23,
+    "mag": -4.4
+   },
+   {
+    "name": "Mars",
+    "az": 186,
+    "alt": 64,
+    "mag": 0.6
+   },
+   {
+    "name": "Jupiter",
+    "az": 191,
+    "alt": 63,
+    "mag": -2.0
+   }
+  ]
+ }
 }

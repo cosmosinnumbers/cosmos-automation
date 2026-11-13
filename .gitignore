@@ -4,3 +4,4 @@ __pycache__/
 .env
 build/
 .autofix/
+products/*/out/_preview.png

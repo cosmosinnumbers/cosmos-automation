@@ -9,140 +9,468 @@
    "label": "of all the mass in the Solar System is the Sun",
    "body": "Everything else (eight planets, their moons, the asteroids, the comets) shares the remaining 0.2%. Jupiter takes most of that.",
    "src": "NASA, Sun: Facts",
-   "url": "https://science.nasa.gov/sun/facts/"
+   "url": "https://science.nasa.gov/sun/facts/",
+   "viz": {
+    "type": "share",
+    "pct": 99.8,
+    "a": "The Sun",
+    "b": "everything else: 0.2%"
+   }
   },
   {
    "n": "8 min 20 s",
    "label": "for sunlight to reach Earth",
    "body": "Light covers the 149.6 million km in about 499 seconds. The Sun you see is always the Sun of eight minutes ago.",
    "src": "IAU 2012 Resolution B2 (astronomical unit), speed of light",
-   "url": "https://www.iau.org/static/resolutions/IAU2012_English.pdf"
+   "url": "https://www.iau.org/static/resolutions/IAU2012_English.pdf",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Moon to Earth",
+      "value": 1.3,
+      "text": "1.3 s"
+     },
+     {
+      "label": "Sun to Earth",
+      "value": 499,
+      "text": "499 s",
+      "hi": true
+     }
+    ]
+   }
   },
   {
    "n": "149,597,870,700 m",
    "label": "is one astronomical unit, exactly",
    "body": "The average Earth-Sun distance became a fixed number in 2012. Astronomers measure the Solar System in these units (AU).",
    "src": "IAU 2012 Resolution B2",
-   "url": "https://www.iau.org/static/resolutions/IAU2012_English.pdf"
+   "url": "https://www.iau.org/static/resolutions/IAU2012_English.pdf",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Mercury",
+      "value": 0.39,
+      "text": "0.39 AU"
+     },
+     {
+      "label": "Earth",
+      "value": 1,
+      "text": "1 AU",
+      "hi": true
+     },
+     {
+      "label": "Jupiter",
+      "value": 5.2,
+      "text": "5.2 AU"
+     },
+     {
+      "label": "Neptune",
+      "value": 30.1,
+      "text": "30.1 AU"
+     }
+    ]
+   }
   },
   {
    "n": "4.6 billion",
    "label": "years: the age of the Solar System",
    "body": "The oldest solid grains found in meteorites formed about 4.57 billion years ago, the closest thing we have to the Solar System's birthday.",
    "src": "NASA, Our Solar System",
-   "url": "https://science.nasa.gov/solar-system/"
+   "url": "https://science.nasa.gov/solar-system/",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Solar System",
+      "value": 4.6,
+      "text": "4.6 billion years",
+      "hi": true
+     },
+     {
+      "label": "Universe",
+      "value": 13.8,
+      "text": "13.8 billion years"
+     }
+    ]
+   }
   },
   {
    "n": "430 °C to -180 °C",
    "label": "the daily swing on Mercury",
    "body": "With almost no atmosphere to hold heat, Mercury bakes in the day and freezes at night: a swing of about 610 degrees.",
    "src": "NASA, Mercury: Facts",
-   "url": "https://science.nasa.gov/mercury/facts/"
+   "url": "https://science.nasa.gov/mercury/facts/",
+   "viz": {
+    "type": "range",
+    "min": -180,
+    "max": 430,
+    "unit": "°C",
+    "marks": [
+     {
+      "at": 0,
+      "label": "water freezes"
+     },
+     {
+      "at": 100,
+      "label": "water boils"
+     }
+    ]
+   }
   },
   {
    "n": "464 °C",
    "label": "average surface temperature of Venus",
    "body": "Venus is farther from the Sun than Mercury but hotter, because its thick carbon dioxide atmosphere traps the heat. Hot enough to melt lead.",
    "src": "NASA Planetary Fact Sheet",
-   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Kitchen oven, max",
+      "value": 250,
+      "text": "250 °C"
+     },
+     {
+      "label": "Lead melts",
+      "value": 327.5,
+      "text": "327.5 °C"
+     },
+     {
+      "label": "Venus, average",
+      "value": 464,
+      "text": "464 °C",
+      "hi": true
+     }
+    ]
+   }
   },
   {
    "n": "243 days",
    "label": "for Venus to spin once",
    "body": "Its year lasts 224.7 Earth days, so one rotation of Venus takes longer than one trip around the Sun. And it spins backwards.",
    "src": "NASA Planetary Fact Sheet",
-   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "One Venus year",
+      "value": 224.7,
+      "text": "224.7 Earth days"
+     },
+     {
+      "label": "One Venus spin",
+      "value": 243,
+      "text": "243 Earth days",
+      "hi": true
+     }
+    ]
+   }
   },
   {
    "n": "107,000 km/h",
    "label": "Earth's speed around the Sun",
    "body": "That is 29.8 km every second. In the time you read this sentence, you have travelled about 100 km through space.",
    "src": "NASA Planetary Fact Sheet (29.78 km/s)",
-   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Airliner",
+      "value": 900,
+      "text": "900 km/h"
+     },
+     {
+      "label": "Space Station",
+      "value": 27600,
+      "text": "27,600 km/h"
+     },
+     {
+      "label": "Earth",
+      "value": 107000,
+      "text": "107,000 km/h",
+      "hi": true
+     }
+    ]
+   }
   },
   {
    "n": "384,400 km",
    "label": "average distance to the Moon",
    "body": "When the Moon is near its farthest point (about 405,000 km), all seven other planets would fit side by side in the gap between Earth and the Moon.",
    "src": "NASA Moon Fact Sheet",
-   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html",
+   "viz": {
+    "type": "dots",
+    "n": 30,
+    "a": "Earth",
+    "b": "Moon",
+    "caption": "About 30 Earths in a row would span the average distance."
+   }
   },
   {
    "n": "3.8 cm",
    "label": "a year: how fast the Moon drifts away",
    "body": "Laser beams fired at reflectors left by Apollo astronauts measure it. About the speed your fingernails grow.",
    "src": "NASA, Lunar Laser Ranging",
-   "url": "https://science.nasa.gov/moon/"
+   "url": "https://science.nasa.gov/moon/",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "In 1 year",
+      "value": 3.8,
+      "text": "3.8 cm",
+      "hi": true
+     },
+     {
+      "label": "In a lifetime of 80 years",
+      "value": 304,
+      "text": "about 3 m"
+     }
+    ]
+   }
   },
   {
    "n": "~22 km",
    "label": "the height of Olympus Mons on Mars",
    "body": "The tallest volcano known in the Solar System rises about 2.5 times higher than Everest stands above sea level (8.85 km).",
    "src": "NASA, Mars: Facts; USGS MOLA data",
-   "url": "https://science.nasa.gov/mars/facts/"
+   "url": "https://science.nasa.gov/mars/facts/",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Everest, above sea level",
+      "value": 8.85,
+      "text": "8.85 km"
+     },
+     {
+      "label": "Olympus Mons",
+      "value": 22,
+      "text": "about 22 km",
+      "hi": true
+     }
+    ]
+   }
   },
   {
    "n": "1.8 m",
    "label": "per century: Phobos falling toward Mars",
    "body": "Mars' larger moon spirals inward. In about 50 million years it will crash into Mars or break up into a ring.",
    "src": "NASA, Phobos",
-   "url": "https://science.nasa.gov/mars/moons/phobos/"
+   "url": "https://science.nasa.gov/mars/moons/phobos/",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Phobos above Mars",
+      "value": 6000,
+      "text": "about 6,000 km",
+      "hi": true
+     },
+     {
+      "label": "The Moon above Earth",
+      "value": 384400,
+      "text": "384,400 km"
+     }
+    ]
+   }
   },
   {
    "n": "1,321",
    "label": "Earths would fit inside Jupiter",
    "body": "By volume. Jupiter is more than twice as massive as all the other planets combined.",
    "src": "NASA Planetary Fact Sheet (volume ratio)",
-   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/planet_table_ratio.html"
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/planet_table_ratio.html",
+   "viz": {
+    "type": "circles",
+    "items": [
+     {
+      "label": "Earth",
+      "d": 1
+     },
+     {
+      "label": "Jupiter: 11.2 Earths wide",
+      "d": 11.2,
+      "hi": true
+     }
+    ]
+   }
   },
   {
    "n": "1.3 Earths",
    "label": "the width of Jupiter's Great Red Spot",
    "body": "In 2017 the storm measured about 16,350 km across. It has been shrinking for over a century, and nobody knows if it will last.",
    "src": "NASA, Jupiter's Great Red Spot",
-   "url": "https://science.nasa.gov/jupiter/"
+   "url": "https://science.nasa.gov/jupiter/",
+   "viz": {
+    "type": "circles",
+    "items": [
+     {
+      "label": "Earth: 12,742 km",
+      "d": 12742
+     },
+     {
+      "label": "Great Red Spot: 16,350 km",
+      "d": 16350,
+      "hi": true
+     }
+    ]
+   }
   },
   {
    "n": "0.687 g/cm³",
    "label": "Saturn's average density",
    "body": "Less than water (1 g/cm³). Saturn is the only planet that is, on average, lighter than the same volume of water.",
    "src": "NASA Planetary Fact Sheet",
-   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Saturn",
+      "value": 0.687,
+      "text": "0.687 g/cm³",
+      "hi": true
+     },
+     {
+      "label": "Water",
+      "value": 1.0,
+      "text": "1 g/cm³"
+     },
+     {
+      "label": "Earth",
+      "value": 5.51,
+      "text": "5.51 g/cm³"
+     }
+    ]
+   }
   },
   {
    "n": "10 m",
    "label": "typical thickness of Saturn's main rings",
    "body": "The rings reach up to 282,000 km from the planet, yet the main rings are usually only about 10 m thick. Thinner, for their size, than a sheet of paper.",
    "src": "NASA, Saturn: Facts",
-   "url": "https://science.nasa.gov/saturn/facts/"
+   "url": "https://science.nasa.gov/saturn/facts/",
+   "viz": {
+    "type": "note",
+    "text": "A sheet of paper that thin for its width would be almost 3 km wide."
+   }
   },
   {
    "n": "98°",
    "label": "the tilt of Uranus",
    "body": "Uranus rolls around the Sun on its side. Each pole gets about 42 years of sunlight, then 42 years of darkness.",
    "src": "NASA Planetary Fact Sheet (obliquity 97.8°)",
-   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+   "viz": {
+    "type": "tilt",
+    "items": [
+     {
+      "label": "Earth: 23.4°",
+      "deg": 23.4
+     },
+     {
+      "label": "Uranus: 98°",
+      "deg": 98,
+      "hi": true
+     }
+    ]
+   }
   },
   {
    "n": "2,000+ km/h",
    "label": "winds on Neptune",
    "body": "The fastest winds measured on any planet blow on the farthest one, where sunlight is about 900 times weaker than on Earth.",
    "src": "NASA, Neptune: Facts",
-   "url": "https://science.nasa.gov/neptune/facts/"
+   "url": "https://science.nasa.gov/neptune/facts/",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Strongest hurricanes",
+      "value": 252,
+      "text": "252+ km/h"
+     },
+     {
+      "label": "Speed of sound",
+      "value": 1235,
+      "text": "1,235 km/h"
+     },
+     {
+      "label": "Neptune",
+      "value": 2000,
+      "text": "2,000+ km/h",
+      "hi": true
+     }
+    ]
+   }
   },
   {
    "n": "248 years",
    "label": "for Pluto to go once around the Sun",
    "body": "Discovered in 1930, Pluto will complete its first full orbit since its discovery around the year 2178.",
    "src": "NASA Planetary Fact Sheet (Pluto)",
-   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/plutofact.html"
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/plutofact.html",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Earth",
+      "value": 1,
+      "text": "1 year"
+     },
+     {
+      "label": "Jupiter",
+      "value": 11.9,
+      "text": "11.9 years"
+     },
+     {
+      "label": "Neptune",
+      "value": 165,
+      "text": "165 years"
+     },
+     {
+      "label": "Pluto",
+      "value": 248,
+      "text": "248 years",
+      "hi": true
+     }
+    ]
+   }
   },
   {
    "n": "~1 light-day",
    "label": "Voyager 1's distance from Earth, late 2026",
    "body": "Launched in 1977, it is more than 25 billion km away. Its radio signal, travelling at the speed of light, now takes about a full day to reach us.",
    "src": "NASA JPL, Voyager mission status",
-   "url": "https://science.nasa.gov/mission/voyager/where-are-voyager-1-and-voyager-2-now/"
+   "url": "https://science.nasa.gov/mission/voyager/where-are-voyager-1-and-voyager-2-now/",
+   "viz": {
+    "type": "bars",
+    "rows": [
+     {
+      "label": "Sunlight to Earth",
+      "value": 8.3,
+      "text": "8.3 minutes"
+     },
+     {
+      "label": "Sunlight to Neptune",
+      "value": 250,
+      "text": "4.2 hours"
+     },
+     {
+      "label": "Radio signal to Voyager 1",
+      "value": 1440,
+      "text": "about 1 day",
+      "hi": true
+     }
+    ]
+   }
   }
  ],
  "cta": {

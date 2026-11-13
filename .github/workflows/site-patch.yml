@@ -1,0 +1,27 @@
+# Keeps the public site in line with the store: discount code, prices, free sky calendar link, tick boxes in the free
+# chapter (tools/site_patch.py). Manual.
+name: site-patch
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        type: boolean
+        default: false
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: pip install -q requests pymupdf
+      - env:
+          PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
+          DRY: ${{ inputs.dry_run }}
+        run: python tools/site_patch.py $([ "$DRY" = "true" ] && echo --dry-run)

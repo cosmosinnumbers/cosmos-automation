@@ -65,6 +65,11 @@ h2 small{font:400 8.5pt In;color:var(--mute);margin-left:8px}
 .btn{display:inline-block;background:var(--acc);color:var(--bg);font:700 11.5pt SG;padding:9px 18px;border-radius:9px;text-decoration:none}
 .url{font:400 8.5pt In;color:var(--acc2);margin-left:10px}
 .disc{font:400 7.2pt/1.5 In;color:var(--mute);margin-top:.18in}
+.charts{display:flex;gap:.16in;margin-top:.16in}.chart{flex:1}.chart svg{width:100%;display:block}
+.ct{font:500 7.6pt SG;letter-spacing:.14em;text-transform:uppercase;color:var(--acc2);margin-bottom:4px}
+.note{font:400 7.8pt/1.45 In;color:var(--mute);margin-top:.08in}
+.moons{display:grid;grid-template-columns:repeat(10,1fr);gap:.09in .04in;margin-top:.1in}
+.mn{text-align:center}.mn svg{width:.34in;height:.34in;display:block;margin:0 auto 2px}.mn span{font:400 6.6pt In;color:var(--mute);white-space:nowrap}
 `;
 
 const foot = (i) => `<div class="foot"><span>Cosmos in Numbers · The Next 30 Nights · ${esc(range)}</span><span>${i}</span></div>`;
@@ -74,17 +79,51 @@ const planet = (p) => `<div class="row${p.visible ? "" : " off"}"><div class="p"
 const event = (e) => `<div class="row"><div class="d">${day(e.date)}</div><div class="t">${esc(e.text)}</div></div>`;
 const seen = sky.planets.filter((p) => p.visible).length;
 
+// Horizon chart: planets by compass direction (east..south..west) and height, as computed for one date at 40° N.
+function chart(title, list) {
+  const W = 300, H = 215, x = (az) => 14 + ((Math.min(300, Math.max(60, az)) - 60) / 240) * (W - 28), y = (alt) => H - 26 - (Math.min(75, alt) / 75) * (H - 48);
+  const sorted = [...list].sort((a, b) => a.az - b.az);
+  const dots = sorted.map((p, i) => {
+    const r = Math.max(2.2, 6.2 - (p.mag + 4.5) * 0.75), near = (q) => q && Math.abs(q.az - p.az) < 30 && Math.abs(q.alt - p.alt) < 22;
+    const side = near(sorted[i + 1]) ? -1 : near(sorted[i - 1]) ? 1 : 0;  // two close planets: names go left and right
+    const tx = x(p.az) + side * (r + 5), ty = side ? y(p.alt) + 3.5 : y(p.alt) - r - 6;
+    return `<circle cx="${x(p.az).toFixed(1)}" cy="${y(p.alt).toFixed(1)}" r="${(r * 2.4).toFixed(1)}" fill="#ffc94d" opacity=".16"/>
+      <circle cx="${x(p.az).toFixed(1)}" cy="${y(p.alt).toFixed(1)}" r="${r.toFixed(1)}" fill="#ffc94d"/>
+      <text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${side < 0 ? "end" : side > 0 ? "start" : "middle"}" font-family="SG" font-weight="700" font-size="10.5" fill="#e8ecf7">${esc(p.name)}</text>`;
+  }).join("");
+  const grid = [15, 30, 45, 60].map((a) => `<line x1="14" x2="${W - 14}" y1="${y(a)}" y2="${y(a)}" stroke="#2a3566" stroke-width=".6" stroke-dasharray="2 4"/><text x="${W - 12}" y="${y(a) - 2}" text-anchor="end" font-family="In" font-size="6.5" fill="#6f7ba3">${a}°</text>`).join("");
+  const comp = [["E", 90], ["SE", 135], ["S", 180], ["SW", 225], ["W", 270]].map(([c, a]) => `<text x="${x(a)}" y="${H - 8}" text-anchor="middle" font-family="SG" font-weight="500" font-size="9" fill="#6fd3ff">${c}</text>`).join("");
+  const empty = list.length ? "" : `<text x="${W / 2}" y="${H / 2}" text-anchor="middle" font-family="In" font-size="9" fill="#9aa5c4">No bright planet at this hour</text>`;
+  return `<div class="chart"><div class="ct">${esc(title)}</div><svg viewBox="0 0 ${W} ${H}">
+    <rect x="0" y="0" width="${W}" height="${H}" rx="9" fill="#0b1130" stroke="#2a3566"/>${grid}
+    <path d="M0 ${H - 24} L${W} ${H - 24} L${W} ${H - 9} Q${W} ${H} ${W - 9} ${H} L9 ${H} Q0 ${H} 0 ${H - 9}Z" fill="#141c45"/>${comp}${dots}${empty}</svg></div>`;
+}
+// The Moon as it looks from the northern hemisphere on each evening.
+function moon(m) {
+  const r = 11, f = m.lit / 100, rx = (r * Math.abs(1 - 2 * f)).toFixed(2);
+  const lit = f < 0.02 ? "" : f > 0.98 ? `<circle r="${r}" fill="#f1eedc"/>` :
+    `<path d="M0 ${-r} A${r} ${r} 0 0 1 0 ${r} A${rx} ${r} 0 0 ${f < 0.5 ? 0 : 1} 0 ${-r}Z" fill="#f1eedc" ${m.waxing ? "" : 'transform="scale(-1,1)"'}/>`;
+  const [, mo, d] = m.date.split("-").map(Number);
+  return `<div class="mn"><svg viewBox="-13 -13 26 26"><circle r="${r}" fill="#1a2350" stroke="#3a4680" stroke-width=".6"/>${lit}</svg><span>${d === 1 || m === sky.moon[0] ? MONTHS[mo - 1] + " " : ""}${d}</span></div>`;
+}
+
+
 const pages = [
   `<section class="page">${stars(200, 600, 900)}<div class="brand">Cosmos in Numbers · free sky calendar</div>
   <h1>The Next <span>30 Nights</span></h1><div class="range">${esc(range)}</div>
   <p class="sub">What you can see with your own eyes, and when. No telescope, no app.</p>
   <h2>The planets <small>${seen} of 5 visible this period · for mid-northern latitudes (40° N)</small></h2>
   ${sky.planets.map(planet).join("")}
-  <p class="sub" style="font-size:8.6pt">A planet shines with a steady light; stars twinkle. Magnitude: the lower the number, the brighter the object.</p>
+  <div class="charts">${chart("Evening sky · 45 min after sunset", sky.charts.evening)}${chart("Dawn sky · 45 min before sunrise", sky.charts.morning)}</div>
+  <p class="note">Face south: east is on your left, west on your right. Height in degrees: your fist at arm's length covers about 10°. Drawn for ${day(sky.charts.date)}; planets drift only a little from night to night. A planet shines with a steady light, stars twinkle. Magnitude: the lower the number, the brighter.</p>
   ${foot(1)}</section>`,
   `<section class="page">${stars(140, 600, 900, 23)}<div class="brand">Nights worth going out</div>
   <h2 style="margin-top:.15in">Dates to circle <small>UTC: where you live it can be the night before or after</small></h2>
-  ${sky.events.map(event).join("")}${foot(2)}</section>`,
+  ${sky.events.map(event).join("")}
+  <h2>The Moon, night by night <small>evenings, northern hemisphere</small></h2>
+  <div class="moons">${sky.moon.map(moon).join("")}</div>
+  <p class="note">Thin Moon or no Moon: the best nights for faint stars and meteors. Half Moon: the best nights for craters, along the line between light and shadow.</p>
+  ${foot(2)}</section>`,
   `<section class="page">${stars(160, 600, 900, 61)}<div class="brand">How to use this page</div>
   <div class="tip" style="margin-top:.18in;border-top:0"><b>1. Start with the Moon.</b><span>On the dates when the Moon passes a planet, the bright "star" next to it is that planet. Once you have found it that night, you will find it again on any other.</span></div>
   <div class="tip"><b>2. Evening or before dawn.</b><span>"Evening" means from about 45 minutes after sunset. "Before dawn" means the last hour of the night, before the sky brightens.</span></div>

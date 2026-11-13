@@ -5,11 +5,14 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: "facebook or youtube"
+        description: "facebook, youtube or audit (read-only report)"
         default: "facebook"
       dry_run:
         type: boolean
         default: false
+
+permissions:
+  contents: write
 
 jobs:
   bio:
@@ -25,9 +28,19 @@ jobs:
           GUMROAD_JSON: ${{ secrets.GUMROAD_JSON }}
           META_JSON: ${{ secrets.META_JSON }}
           YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+          THREADS_JSON: ${{ secrets.THREADS_JSON }}
         run: python video/ci_secrets.py
       - env:
           META_JSON: ${{ secrets.META_JSON }}
+          THREADS_JSON: ${{ secrets.THREADS_JSON }}
           TARGET: ${{ inputs.target }}
           DRY: ${{ inputs.dry_run }}
         run: python tools/bio_links.py "$TARGET" $([ "$DRY" = "true" ] && echo --dry-run)
+      - if: inputs.target == 'audit'
+        run: |
+          git config user.name "cosmos-bot"
+          git config user.email "cosmos-bot@users.noreply.github.com"
+          git add reports/bio-links.md
+          git diff --cached --quiet && exit 0
+          git commit -q -m "report: bio links"
+          bash tools/git_sync.sh

@@ -132,6 +132,29 @@ def upload_file(path: Path) -> str | None:
     return c.get("file_url")
 
 
+def replace_file(pid: str, body: dict, url: str, name: str, title: str, text: str) -> bool:
+    """Swap the product's one file for a new upload. Gumroad refuses to drop a file that the content page still embeds
+    ("Cannot remove files still referenced in rich content", 13/11/2026), so: content page without the embed, new file
+    in, content page with the new embed. For a few seconds the content page shows the text only."""
+    para = {"type": "paragraph", "content": [{"type": "text", "text": text}]}
+    page = lambda extra: [{"title": title, "description": {"type": "doc", "content": [para, *extra]}}]
+    old = [] if DRY else (call("GET", f"products/{pid}").get("product", {}).get("files") or [])
+    if not call("PUT", f"products/{pid}", json={"rich_content": page([])}).get("success"):
+        return False
+    j = call("PUT", f"products/{pid}", json={**body, "files": [{"url": url, "display_name": name}]})
+    if DRY:
+        return True
+    if not j.get("success") and old:  # the swap was refused: the buyer's page gets its old file back
+        call("PUT", f"products/{pid}", json={"rich_content": page([{"type": "fileEmbed", "attrs": {"id": old[-1].get("id")}}])})
+        return False
+    got = call("GET", f"products/{pid}").get("product", {}).get("files") or []
+    fid = got[-1].get("id") if got else None   # the file just uploaded is the last one
+    print("files on the product:", len(got), "| embedded file id:", fid, "| file swap ok:", bool(j.get("success")))
+    if fid:
+        call("PUT", f"products/{pid}", json={"rich_content": page([{"type": "fileEmbed", "attrs": {"id": fid}}])})
+    return bool(j.get("success")) and bool(fid)
+
+
 def do_lookup(tax):
     p = product_by_permalink("look-up") or sys.exit("LOOK UP not found")
     body = {**LOOKUP, "description": (ROOT / "products/look-up/description.html").read_text("utf-8")}
@@ -164,16 +187,10 @@ def do_free(tax):
         url = upload_file(out / "the-solar-system-in-20-numbers.pdf")
         if not url:
             sys.exit("PDF upload failed")
-        j = call("PUT", f"products/{p['id']}", json={**body, "files": [{"url": url, "display_name": "The Solar System in 20 Numbers"}]})
-        if DRY or not j.get("success"):
-            return
-        got = call("GET", f"products/{p['id']}").get("product", {}).get("files") or []
-        fid = got[-1].get("id") if got else None
-        print("files on the product:", len(got), "| embedded file id:", fid)
-        if fid:
-            call("PUT", f"products/{p['id']}", json={"rich_content": [{"title": "Your guide", "description": {"type": "doc", "content": [
-                {"type": "paragraph", "content": [{"type": "text", "text": "Thanks! Here is your guide. Read one number a night, then go outside and look up."}]},
-                {"type": "fileEmbed", "attrs": {"id": fid}}]}}]})
+        ok = replace_file(p["id"], body, url, "The Solar System in 20 Numbers", "Your guide",
+                          "Thanks! Here is your guide. Read one number a night, then go outside and look up.")
+        if not ok:
+            sys.exit("free product: the PDF was not replaced")
         return
     url = upload_file(out / "the-solar-system-in-20-numbers.pdf")
     if not url:
@@ -204,6 +221,9 @@ def do_free(tax):
     print("live at:", final.get("short_url"), "published:", final.get("published"))
 
 
+SKY_TEXT = ("Here are your next 30 nights. Circle one date, then go outside and look up. This page is rebuilt every week: download it again any time.")
+
+
 def do_sky(tax):
     """Create the free sky calendar, or replace its PDF with this week's build (the link never changes)."""
     out = SKY / "out"
@@ -221,27 +241,22 @@ def do_sky(tax):
     files = [{"url": url, "display_name": "The Next 30 Nights"}]
     if p:
         print("sky calendar exists: replacing the PDF and the texts")
-        j = call("PUT", f"products/{p['id']}", json={**body, "files": files})
         pid = p["id"]
-        if not j.get("success"):
-            sys.exit(f"update failed: {str(j)[:300]}")
+        if not replace_file(pid, body, url, "The Next 30 Nights", "Your sky calendar", SKY_TEXT):
+            sys.exit("sky calendar: the PDF was not replaced")
     else:
         j = call("POST", "products", json={**body, "native_type": "ebook", "draft": True, "files": files})
         if j.get("dry"):
             return
         pid = (j.get("product") or sys.exit(f"create failed: {str(j)[:300]}"))["id"]
         print("created draft", pid)
+        got = call("GET", f"products/{pid}").get("product", {}).get("files") or []
+        if got:
+            call("PUT", f"products/{pid}", json={"rich_content": [{"title": "Your sky calendar", "description": {"type": "doc", "content": [
+                {"type": "paragraph", "content": [{"type": "text", "text": SKY_TEXT}]},
+                {"type": "fileEmbed", "attrs": {"id": got[-1].get("id")}}]}}]})
     if DRY:
         return
-    got = call("GET", f"products/{pid}").get("product", {}).get("files") or []
-    fid = got[-1].get("id") if got else None   # the file just uploaded is the last one
-    print("files on the product:", len(got), "| embedded file id:", fid)
-    if fid:
-        page = {"title": "Your sky calendar", "description": {"type": "doc", "content": [
-            {"type": "paragraph", "content": [{"type": "text", "text": "Here are your next 30 nights. Circle one date, "
-             "then go outside and look up. This page is rebuilt every week: download it again any time."}]},
-            {"type": "fileEmbed", "attrs": {"id": fid}}]}}
-        call("PUT", f"products/{pid}", json={"rich_content": [page]})
     if not p:
         for name, kind in (("cover-1280x720.png", "covers"), ("thumbnail-600x600.png", "thumbnail")):
             sid = direct_upload(out / name, "image/png")

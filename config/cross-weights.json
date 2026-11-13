@@ -1,11 +1,11 @@
 {
- "updated": "2026-11-12",
+ "updated": "2026-11-13",
  "items": 39,
- "posts": 81,
+ "posts": 85,
  "channels": {
   "youtube:short": {
-   "posts": 29,
-   "median_views": 212
+   "posts": 31,
+   "median_views": 204
   },
   "youtube:long": {
    "posts": 7,
@@ -16,12 +16,12 @@
    "median_views": 130
   },
   "facebook:reel": {
-   "posts": 18,
-   "median_views": 4.0
+   "posts": 19,
+   "median_views": 4
   },
   "threads:video": {
-   "posts": 10,
-   "median_views": 73.5
+   "posts": 11,
+   "median_views": 83
   }
  },
  "top": [
@@ -46,10 +46,10 @@
   },
   {
    "title": "NASA's Roman Telescope Got Sharper by Moving a Mirror",
-   "score": 2.622,
-   "views": 932,
+   "score": 2.711,
+   "views": 933,
    "channels": {
-    "youtube": 2.62
+    "youtube": 2.71
    },
    "themes": [
     "Telescopi"
@@ -62,10 +62,10 @@
   },
   {
    "title": "The Moon Swings 295 °C in One Day. Here's Why",
-   "score": 2.158,
+   "score": 2.227,
    "views": 746,
    "channels": {
-    "youtube": 2.16
+    "youtube": 2.23
    },
    "themes": [
     "Estremi (temperatura, velocità)",
@@ -95,27 +95,11 @@
    "hour": 20
   },
   {
-   "title": "The 5 Spacecraft Leaving Our Solar System — Where Are They Right Now?",
-   "score": 1.813,
-   "views": 45,
-   "channels": {
-    "youtube": 1.81
-   },
-   "themes": [
-    "Record e missioni"
-   ],
-   "themes_en": [
-    "records and missions"
-   ],
-   "published": "2026-10-21",
-   "hour": 20
-  },
-  {
    "title": "11 Earths Fit Across Jupiter",
-   "score": 1.78,
+   "score": 1.817,
    "views": 1088,
    "channels": {
-    "youtube": 2.73,
+    "youtube": 2.82,
     "facebook": 1.75,
     "instagram": 0.84
    },
@@ -131,47 +115,31 @@
    ],
    "published": "2026-10-23",
    "hour": 20
+  },
+  {
+   "title": "The 5 Spacecraft Leaving Our Solar System — Where Are They Right Now?",
+   "score": 1.813,
+   "views": 45,
+   "channels": {
+    "youtube": 1.81
+   },
+   "themes": [
+    "Record e missioni"
+   ],
+   "themes_en": [
+    "records and missions"
+   ],
+   "published": "2026-10-21",
+   "hour": 20
   }
  ],
  "bottom": [
   {
-   "title": "The Sun Will Swell 200 Times Wider: How It All Ends",
-   "score": 0.153,
-   "views": 7,
-   "channels": {
-    "youtube": 0.15
-   },
-   "themes": [
-    "Scala e dimensioni"
-   ],
-   "themes_en": [
-    "scale and size comparisons"
-   ],
-   "published": "2026-11-07",
-   "hour": 16
-  },
-  {
-   "title": "NGC 4449 Is 1/10th the Milky Way's Size",
-   "score": 0.33,
-   "views": 70,
-   "channels": {
-    "youtube": 0.33
-   },
-   "themes": [
-    "Scala e dimensioni"
-   ],
-   "themes_en": [
-    "scale and size comparisons"
-   ],
-   "published": "2026-11-11",
-   "hour": 15
-  },
-  {
    "title": "Why NASA Will Fly Past Europa 49 Times",
-   "score": 0.375,
-   "views": 4,
+   "score": 0.39,
+   "views": 5,
    "channels": {
-    "youtube": 0.38
+    "youtube": 0.39
    },
    "themes": [
     "Record e missioni",
@@ -187,8 +155,24 @@
    "hour": 16
   },
   {
+   "title": "NGC 4449 Is 1/10th the Milky Way's Size",
+   "score": 0.397,
+   "views": 81,
+   "channels": {
+    "youtube": 0.4
+   },
+   "themes": [
+    "Scala e dimensioni"
+   ],
+   "themes_en": [
+    "scale and size comparisons"
+   ],
+   "published": "2026-11-11",
+   "hour": 15
+  },
+  {
    "title": "The Nearest Star to the Sun Is Invisible to the Naked Eye",
-   "score": 0.446,
+   "score": 0.448,
    "views": 25,
    "channels": {
     "youtube": 0.45
@@ -203,182 +187,200 @@
    ],
    "published": "2026-10-28",
    "hour": 21
+  },
+  {
+   "title": "754 Giant Planets Circle Their Star in Under 10 Days",
+   "score": 0.673,
+   "views": 34,
+   "channels": {
+    "youtube": 0.67
+   },
+   "themes": [
+    "Galassie, nebulose, stelle",
+    "Pianeti e lune"
+   ],
+   "themes_en": [
+    "galaxies, nebulae, stars",
+    "planets and moons"
+   ],
+   "published": "2026-10-27",
+   "hour": 13
   }
  ],
  "features": {
   "theme": {
    "explainer": {
-    "mean": 1.321,
+    "mean": 1.323,
     "n": 5,
-    "lift": 0.194
+    "lift": 0.157
    },
    "extremes": {
-    "mean": 1.301,
+    "mean": 1.313,
     "n": 4,
-    "lift": 0.166
+    "lift": 0.142
    },
    "telescopes": {
-    "mean": 1.256,
+    "mean": 1.268,
     "n": 6,
-    "lift": 0.127
-   },
-   "light_distance": {
-    "mean": 1.217,
-    "n": 11,
-    "lift": 0.098
+    "lift": 0.101
    },
    "news": {
-    "mean": 1.209,
+    "mean": 1.219,
     "n": 6,
-    "lift": 0.074
+    "lift": 0.048
+   },
+   "light_distance": {
+    "mean": 1.212,
+    "n": 11,
+    "lift": 0.049
    },
    "planets": {
-    "mean": 1.079,
+    "mean": 1.102,
     "n": 19,
-    "lift": -0.101
-   },
-   "records_missions": {
-    "mean": 0.994,
-    "n": 7,
-    "lift": -0.158
-   },
-   "deep_sky": {
-    "mean": 0.948,
-    "n": 7,
-    "lift": -0.205
+    "lift": -0.112
    },
    "scale_size": {
-    "mean": 0.87,
+    "mean": 1.004,
     "n": 6,
-    "lift": -0.277
+    "lift": -0.171
+   },
+   "records_missions": {
+    "mean": 0.998,
+    "n": 7,
+    "lift": -0.181
+   },
+   "deep_sky": {
+    "mean": 0.95,
+    "n": 7,
+    "lift": -0.229
    }
   },
   "format": {
    "scale_zoom": {
-    "mean": 1.296,
+    "mean": 1.301,
     "n": 9,
-    "lift": 0.191
+    "lift": 0.152
    },
    "myth_number": {
     "mean": 1.281,
     "n": 1,
-    "lift": 0.133
+    "lift": 0.1
    },
    "quiz_guess": {
     "mean": 1.196,
     "n": 3,
-    "lift": 0.055
+    "lift": 0.022
    },
    "mission_glitch": {
-    "mean": 1.102,
+    "mean": 1.106,
     "n": 4,
-    "lift": -0.04
-   },
-   "audience_question": {
-    "mean": 0.991,
-    "n": 1,
-    "lift": -0.14
+    "lift": -0.065
    },
    "countdown_top": {
-    "mean": 0.988,
+    "mean": 1.06,
     "n": 2,
-    "lift": -0.146
+    "lift": -0.105
+   },
+   "audience_question": {
+    "mean": 1.002,
+    "n": 1,
+    "lift": -0.155
    },
    "news_angle": {
-    "mean": 0.932,
+    "mean": 0.937,
     "n": 4,
-    "lift": -0.207
+    "lift": -0.226
    },
    "sky_tonight": {
-    "mean": 0.815,
+    "mean": 0.816,
     "n": 1,
-    "lift": -0.301
+    "lift": -0.32
    }
   },
   "hook": {
    "question": {
-    "mean": 1.42,
+    "mean": 1.425,
     "n": 4,
-    "lift": 0.295
+    "lift": 0.259
    },
    "you": {
-    "mean": 1.109,
+    "mean": 1.112,
     "n": 1,
-    "lift": -0.031
-   },
-   "comparison": {
-    "mean": 1.046,
-    "n": 1,
-    "lift": -0.089
+    "lift": -0.056
    },
    "extreme_number": {
-    "mean": 1.046,
+    "mean": 1.089,
     "n": 25,
-    "lift": -0.198
+    "lift": -0.172
+   },
+   "comparison": {
+    "mean": 1.045,
+    "n": 1,
+    "lift": -0.116
    },
    "paradox": {
-    "mean": 0.979,
+    "mean": 0.983,
     "n": 3,
-    "lift": -0.158
+    "lift": -0.18
    }
   },
   "hour": {
    "20": {
-    "mean": 1.327,
+    "mean": 1.344,
     "n": 10,
-    "lift": 0.241
+    "lift": 0.215
    },
    "21": {
     "mean": 1.243,
     "n": 11,
-    "lift": 0.133
+    "lift": 0.088
    },
    "13": {
-    "mean": 1.162,
+    "mean": 1.174,
     "n": 5,
-    "lift": 0.022
-   },
-   "22": {
-    "mean": 1.055,
-    "n": 1,
-    "lift": -0.081
+    "lift": 0.001
    },
    "17": {
-    "mean": 1.053,
-    "n": 3,
-    "lift": -0.087
+    "mean": 1.067,
+    "n": 2,
+    "lift": -0.099
+   },
+   "22": {
+    "mean": 1.065,
+    "n": 1,
+    "lift": -0.098
    },
    "12": {
-    "mean": 1.048,
+    "mean": 1.044,
     "n": 1,
-    "lift": -0.087
+    "lift": -0.117
    },
    "18": {
-    "mean": 0.88,
+    "mean": 0.977,
     "n": 1,
-    "lift": -0.242
+    "lift": -0.177
    },
    "15": {
-    "mean": 0.836,
-    "n": 2,
-    "lift": -0.288
+    "mean": 0.884,
+    "n": 3,
+    "lift": -0.27
    },
    "16": {
-    "mean": 0.661,
+    "mean": 0.797,
     "n": 3,
-    "lift": -0.452
+    "lift": -0.348
    }
   },
   "short_headline": {
    "yes": {
-    "mean": 1.214,
-    "n": 11,
-    "lift": 0.094
+    "mean": 1.191,
+    "n": 12,
+    "lift": 0.023
    },
    "no": {
-    "mean": 1.11,
-    "n": 28,
-    "lift": -0.086
+    "mean": 1.164,
+    "n": 27,
+    "lift": -0.023
    }
   }
  },
@@ -387,7 +389,15 @@
    "dim": "hour",
    "value": "16",
    "label": "ore 16",
-   "lift": -0.452,
+   "lift": -0.348,
+   "n": 3,
+   "do": false
+  },
+  {
+   "dim": "hour",
+   "value": "15",
+   "label": "ore 15",
+   "lift": -0.27,
    "n": 3,
    "do": false
   },
@@ -395,57 +405,51 @@
    "dim": "hook",
    "value": "question",
    "label": "Domanda",
-   "lift": 0.295,
+   "lift": 0.259,
    "n": 4,
    "do": true
   },
   {
    "dim": "theme",
-   "value": "scale_size",
-   "label": "Scala e dimensioni",
-   "lift": -0.277,
-   "n": 6,
+   "value": "deep_sky",
+   "label": "Galassie, nebulose, stelle",
+   "lift": -0.229,
+   "n": 7,
+   "do": false
+  },
+  {
+   "dim": "format",
+   "value": "news_angle",
+   "label": "Notizia con un numero forte",
+   "lift": -0.226,
+   "n": 4,
    "do": false
   },
   {
    "dim": "hour",
    "value": "20",
    "label": "ore 20",
-   "lift": 0.241,
+   "lift": 0.215,
    "n": 10,
    "do": true
-  },
-  {
-   "dim": "format",
-   "value": "news_angle",
-   "label": "Notizia con un numero forte",
-   "lift": -0.207,
-   "n": 4,
-   "do": false
-  },
-  {
-   "dim": "theme",
-   "value": "deep_sky",
-   "label": "Galassie, nebulose, stelle",
-   "lift": -0.205,
-   "n": 7,
-   "do": false
   }
  ],
  "prefer": [
   "Spiegone di un concetto",
   "Estremi (temperatura, velocità)",
   "Telescopi",
+  "Notizia del giorno",
   "Luce, distanze e anni luce",
-  "Notizia del giorno"
+  "Pianeti e lune"
  ],
  "avoid": [],
  "prefer_en": [
   "explaining a familiar concept for real",
   "extremes (temperature, speed)",
   "telescopes",
+  "news of the day",
   "light, distances and light-years",
-  "news of the day"
+  "planets and moons"
  ],
  "avoid_en": [],
  "next_long": {

@@ -1,6 +1,7 @@
 """Upload package: title, description (chapters, sources, credits, disclosures), tags."""
 from __future__ import annotations
 
+from datetime import date
 from pathlib import Path
 
 from captions import chapters
@@ -24,11 +25,21 @@ def hms(t: float) -> str:
     return f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
 
 
-# free PDF first (review 9/11/2026: 0 free downloads and 4 clicks in a month, a free offer is the easier first click
-# and leaves an email), the paid guide right under it
-PRODUCT = ("🆓 Free PDF, The Solar System in 20 Numbers: https://cosmosinnumbers.gumroad.com/l/solar-system-20\n"
-           "📘 LOOK UP, our beginner's stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up "
-           "(code COSMOS9 → $7.41 until Nov 30)")   # product line first in every YouTube description (owner, 19/10/2026)
+# Product lines, first in every YouTube description (owner, 19/10/2026). Sales review 13/11/2026: the free offer is
+# the sky calendar once it is live (tools/links.free), the links are the tracked ones so clicks are counted per
+# channel. Links are clickable only under long videos: on Shorts the line also points to the channel page.
+def _product() -> str:
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools"))
+    import links
+    name, free = links.free("youtube", "description")
+    return (f"🆓 {name[0].upper() + name[1:]}: {free}\n"
+            f"📘 LOOK UP, our beginner's guide to the night sky, no telescope needed: {links.link(links.LOOK_UP, 'youtube', 'description')} "
+            + ("(code COSMOS9 → $7.41 until Nov 30)" if date.today() <= date(2026, 11, 30) else "")).strip()
+
+
+PRODUCT = _product()
+SHORTS_NOTE = "On a Short the links are not clickable: you find them on our channel page, @CosmosinNumbers."
 
 
 def description(script: dict, timings: dict, assets: dict) -> str:

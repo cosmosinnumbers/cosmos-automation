@@ -77,6 +77,12 @@ def test_launch9_and_code_rules():
     assert any("COSMOS9" in x for x in errs(GOOD, replies=["LOOK UP: https://cosmosinnumbers.gumroad.com/l/look-up"]))
     for text in cta.TEXTS:  # every rotating CTA reply is valid
         assert errs(GOOD, replies=[text]) == [], text
+        assert len(text) <= 500, text   # Threads limit
+    # a sky post gets a "go out and find it" line; the reply is the same on a retry; an own product reply stays first
+    sky = cta.first_reply("th-x", [], post="The Geminid meteor shower peaks tonight")
+    assert sky == cta.first_reply("th-x", [], post="The Geminid meteor shower peaks tonight") and "LOOK UP" in sky[0]
+    assert cta.first_reply("th-x", ["more", "see https://cosmosinnumbers.gumroad.com/l/look-up"])[0].startswith("see ")
+    assert "COSMOS9" not in cta.first_reply("th-x", [], expired=True)[0]
     assert errs(GOOD, replies=["LOOK UP: https://cosmosinnumbers.gumroad.com/l/look-up"], today=date(2026, 12, 2)) == []
 
 

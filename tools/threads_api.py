@@ -223,7 +223,8 @@ def run_item(item, go):
         print(f"  video: {video or 'no public URL, text only'}")
     replies = item.get("replies", [])
     if "gumroad.com" not in item["text"]:  # product link always in the FIRST reply (link in the post cuts reach)
-        replies = cta.first_reply(item["ref"], replies, expired=creds.now_local().date() > date(2026, 11, 30))
+        replies = cta.first_reply(item["ref"], replies, expired=creds.now_local().date() > date(2026, 11, 30),
+                                  source="threads", post=item["text"])
     body = build(item["text"], video=video, link=item.get("link"), tag=item.get("tag"), poll=item.get("poll"))
     bodies = [build(r) for r in replies]
     verdict = guard()

@@ -19,7 +19,8 @@ API = "https://api.gumroad.com/v2"
 CFG = ROOT / "config" / "gumroad-utm.json"
 OUT = ROOT / "07-analytics" / "metrics" / "gumroad-utm.jsonl"
 H = {"Authorization": "Bearer " + json.loads((ROOT / "secrets" / "gumroad.json").read_text("utf-8"))["access_token"]}
-PRODUCTS = {"look-up": "LOOK UP", "solar-system-20": "Solar System in 20 Numbers (free)"}
+PRODUCTS = {"look-up": "LOOK UP", "solar-system-20": "Solar System in 20 Numbers (free)",
+            "sky-30-nights": "The Next 30 Nights (free sky calendar)"}
 CHANNELS = [("youtube", "description"), ("youtube", "comment"), ("threads", "reply"), ("x", "reply"),
             ("instagram", "bio"), ("tiktok", "bio"), ("facebook", "post"), ("github-pages", "site")]
 

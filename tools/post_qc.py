@@ -184,10 +184,10 @@ def errors_of(platform: str, kind: str, text: str, replies: list[str] | None = N
         errs.append(f"image credit or heading glued to the text ({m.group().strip()!r})")
     if re.search(r"\bLAUNCH9\b", allt, re.I):
         errs.append("LAUNCH9 does not exist on Gumroad: the code is COSMOS9")
-    gum = [p for p in [text, *replies] if "gumroad.com" in p]
+    gum = [p for p in [text, *replies] if "gumroad.com" in p or "gum.co/" in p]   # gum.co/u/ = tracked short links
     if today <= COSMOS9_UNTIL and platform in ("threads", "x", "fb") and gum and not any("COSMOS9" in p for p in gum):
         errs.append("Gumroad link without the COSMOS9 code (valid until 30/11/2026)")
-    if re.search(r"gumroad\.com(?!/l/(?:look-up|solar-system-20))", allt):
+    if re.search(r"gumroad\.com(?!/l/(?:look-up|solar-system-20|sky-30-nights))", allt):
         errs.append("Gumroad link that is not the LOOK UP page")
     if re.search(r"https?://\S*…|https?://\S*\.\.\.", allt):
         errs.append("truncated link")
@@ -233,7 +233,7 @@ def errors_of(platform: str, kind: str, text: str, replies: list[str] | None = N
         if kind in ("reel",) and not re.search(r"full video on youtube", text, re.I):
             errs.append("Reel caption without 'Full video on YouTube'")
     if source_text is not None:
-        miss = missing_numbers(" ".join([text, *[r for r in replies if "gumroad" not in r]]), source_text)
+        miss = missing_numbers(" ".join([text, *[r for r in replies if "gumroad" not in r and "gum.co/" not in r]]), source_text)
         if miss:
             errs.append(f"numbers not found in the source {miss}")
     for old in recent or []:
@@ -295,7 +295,7 @@ def score(platform: str, kind: str, text: str, replies: list[str] | None = None,
     allt = " ".join([text, *replies])
     parts["source"] = 10 if re.search(r"\b(source|sources|data)\b\s*:|\((NASA|ESA|JPL|ESO)\b", allt, re.I) else 0
     if platform in ("threads", "x"):
-        cta = "gumroad.com/l/look-up" in allt or kind in ("news", "quiz", "video", "data")  # cta.py adds it at publish
+        cta = "gumroad.com/l/look-up" in allt or "gum.co/u/" in allt or kind in ("news", "quiz", "video", "data")  # cta.py adds it at publish
     else:
         cta = bool(re.search(r"full video on youtube|look up", allt, re.I))
     parts["cta"] = 10 if cta else 0

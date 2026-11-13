@@ -1,0 +1,78 @@
+# Cosmos in Numbers: the free sky calendar "The Next 30 Nights" (sales review 13/11/2026). Every Monday tools/sky.py
+# computes the next 30 nights (planets, Moon, meteor showers: PyEphem, no LLM), products/sky-30-nights/build.mjs makes
+# the PDF, tools/gumroad_apply.py sky creates the free Gumroad product the first time and replaces its PDF afterwards
+# (the link never changes: cosmosinnumbers.gumroad.com/l/sky-30-nights), tools/gumroad_utm.py create makes the tracked
+# links. From then on tools/links.py offers the calendar as the free product in posts and descriptions.
+# Monday 06:10 Italian time (winter). Manual run: dry_run = build and show, change nothing on Gumroad.
+name: sky-calendar
+
+on:
+  schedule:
+    - cron: "10 5 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build only, nothing changes on Gumroad"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-commits
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TZ: Europe/Rome
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v7
+        with: {ref: "${{ github.ref }}"}
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.13"}
+      - uses: actions/setup-node@v6
+        with: {node-version: "22"}
+      - run: pip install -q requests ephem
+      - name: Tests
+        run: python tests/test_sky.py
+      - name: Refresh the sky events for the Shorts (config/sky-calendar.json)
+        run: python tools/sky.py calendar
+      - name: Compute the next 30 nights
+        run: |
+          mkdir -p products/sky-30-nights/out
+          python tools/sky.py window --days 30 --out products/sky-30-nights/out/sky.json
+      - name: Build the PDF and the covers
+        run: |
+          npm install --no-save --silent playwright@1.63.0
+          npx playwright install --with-deps chromium >/dev/null
+          node products/sky-30-nights/build.mjs
+          rm -f products/sky-30-nights/out/_preview.png
+      - uses: actions/upload-artifact@v6
+        with:
+          name: the-next-30-nights
+          path: products/sky-30-nights/out/the-next-30-nights.pdf
+      - name: Secrets to files (never printed)
+        env:
+          GUMROAD_JSON: ${{ secrets.GUMROAD_JSON }}
+        run: python video/ci_secrets.py
+      - name: Publish on Gumroad (create once, then replace the PDF)
+        env:
+          DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: python tools/gumroad_apply.py sky $([ "$DRY" = "true" ] && echo --dry-run)
+      - name: Tracked links for the new product
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+        run: python tools/gumroad_utm.py create
+      - name: Save
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+        run: |
+          git config user.name "cosmos-bot"
+          git config user.email "cosmos-bot@users.noreply.github.com"
+          git add products/sky-30-nights/out config/gumroad-utm.json config/sky-calendar.json
+          git diff --cached --quiet && exit 0
+          git commit -q -m "sky calendar: next 30 nights from $(date +%F)"
+          bash tools/git_sync.sh

@@ -1,0 +1,111 @@
+{
+ "start": "2026-11-14",
+ "end": "2026-12-13",
+ "days": 30,
+ "latitude": "40° N",
+ "method": "Computed with PyEphem for 40° N. Meteor shower peaks and rates: IMO Meteor Shower Calendar. Dates are UTC and can shift by one day where you live.",
+ "planets": [
+  {
+   "name": "Mercury",
+   "text": "before dawn, low in the south-east before sunrise; by the end of the period: hidden in the Sun's glare",
+   "mag": -0.1,
+   "constellation": "Virgo",
+   "when": "before dawn",
+   "visible": true
+  },
+  {
+   "name": "Venus",
+   "text": "before dawn, midway up in the south-east before sunrise",
+   "mag": -4.4,
+   "constellation": "Virgo",
+   "when": "before dawn",
+   "visible": true
+  },
+  {
+   "name": "Mars",
+   "text": "before dawn, high in the south before sunrise; by the end of the period: before dawn, high in the south-west before sunrise",
+   "mag": 0.7,
+   "constellation": "Leo",
+   "when": "before dawn",
+   "visible": true
+  },
+  {
+   "name": "Jupiter",
+   "text": "before dawn, high in the south before sunrise; by the end of the period: before dawn, high in the south-west before sunrise",
+   "mag": -2.0,
+   "constellation": "Leo",
+   "when": "before dawn",
+   "visible": true
+  },
+  {
+   "name": "Saturn",
+   "text": "evening, midway up in the south-east after sunset",
+   "mag": 0.6,
+   "constellation": "Cetus",
+   "when": "evening",
+   "visible": true
+  }
+ ],
+ "events": [
+  {
+   "at": "2026-11-17T11:47+00:00",
+   "date": "2026-11-17",
+   "kind": "moon",
+   "name": "First quarter",
+   "text": "First quarter Moon: half lit in the evening, the best phase to see craters with binoculars."
+  },
+  {
+   "at": "2026-11-17T23:43+00:00",
+   "date": "2026-11-17",
+   "kind": "meteors",
+   "name": "Leonids meteor shower peak",
+   "shower": "Leonids",
+   "zhr": 15,
+   "parent": "Comet Tempel-Tuttle",
+   "moon_lit_pct": 55,
+   "text": "Leonids peak: up to 15 meteors an hour under a perfect dark sky, debris of Comet Tempel-Tuttle. Moon 55% lit: some moonlight. Best after midnight."
+  },
+  {
+   "at": "2026-11-24T14:53+00:00",
+   "date": "2026-11-24",
+   "kind": "moon",
+   "name": "Full Moon (supermoon)",
+   "distance_km": 360800,
+   "text": "Full Moon, 360,800 km away. A supermoon: closer than usual, so slightly bigger and brighter."
+  },
+  {
+   "at": "2026-11-30T08:00+00:00",
+   "date": "2026-11-30",
+   "kind": "pairing",
+   "name": "Moon near Jupiter",
+   "planet": "Jupiter",
+   "separation_deg": 1,
+   "moon_lit_pct": 60,
+   "text": "The Moon (60% lit) passes about 1° from Jupiter: the easiest way to find the planet."
+  },
+  {
+   "at": "2026-11-30T17:00+00:00",
+   "date": "2026-11-30",
+   "kind": "pairing",
+   "name": "Moon near Mars",
+   "planet": "Mars",
+   "separation_deg": 3,
+   "moon_lit_pct": 56,
+   "text": "The Moon (56% lit) passes about 3° from Mars: the easiest way to find the planet."
+  },
+  {
+   "at": "2026-12-01T06:08+00:00",
+   "date": "2026-12-01",
+   "kind": "moon",
+   "name": "Last quarter",
+   "text": "Last quarter Moon: rises around midnight, evenings stay dark."
+  },
+  {
+   "at": "2026-12-09T00:51+00:00",
+   "date": "2026-12-09",
+   "kind": "moon",
+   "name": "New Moon",
+   "text": "New Moon: the darkest nights of the month, best for faint stars and the Milky Way."
+  }
+ ]
+}

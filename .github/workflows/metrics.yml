@@ -50,12 +50,17 @@ jobs:
       - name: Learn from every channel
         continue-on-error: true
         run: python tools/cross_learn.py learn
+      # Sales funnel of the last 7 days in one page (sales review 13/11/2026): reports/funnel.md
+      - name: Sales funnel
+        continue-on-error: true
+        run: python tools/funnel_report.py
       - name: Save
         run: |
           git config user.name "cosmos-metrics[bot]"
           git config user.email "cosmos-metrics@users.noreply.github.com"
           git add 07-analytics/metrics config/experiments-state.json config/cross-weights.json
           git add reports/apprendimento-canali-*.md 2>/dev/null || true
+          git add reports/funnel.md 2>/dev/null || true
           [ -f queues/ideas.json ] && git add queues/ideas.json
           git diff --cached --quiet && exit 0
           git commit -q -m "metrics: daily snapshot $(date +%F)"

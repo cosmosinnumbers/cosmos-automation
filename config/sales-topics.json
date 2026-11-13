@@ -1,0 +1,19 @@
+{
+ "_doc": "Video lunghi 'da acquirente' (revisione vendite 13/11/2026). longform-auto senza topic prende il primo argomento di questa lista che è nella sua finestra di date e non è già stato fatto (regex 'match' sui nomi dei lunghi e dei titoli usati); a lista finita torna al ciclo di apprendimento (config/cross-weights.json next_long). Perché: i lunghi sono l'unico posto su YouTube dove i link ai prodotti si cliccano, e chi cerca cosa guardare stasera o cosa farsene di un binocolo nuovo è chi compra una guida al cielo. Ordine deciso con Jev (TypeSafe): punteggio di intenzione d'acquisto 0-4 sul titolo, in 'jev'. Lo scrittore trova da solo le fonti primarie e il fact check del codice controlla ogni numero. 'from'/'until' = date ISO facoltative (la finestra in cui il video ha senso).",
+ "topics": [
+  {"topic": "Your first night with binoculars or a small telescope: the things a beginner can actually see and what each one really looks like, with the real numbers (the Moon's craters, Jupiter's four big moons, Saturn's rings, the Pleiades, the Orion Nebula, the Andromeda Galaxy)",
+   "match": "telescope|binocular|first night", "jev": 3.0, "until": "2027-01-20"},
+  {"topic": "The Geminid meteor shower of 13-14 December 2026: when to look, where to look, how many meteors to really expect from a city and from a dark place, and why its parent is an asteroid (3200 Phaethon), not a comet",
+   "match": "geminid", "jev": 2.66, "from": "2026-11-25", "until": "2026-12-11"},
+  {"topic": "What is that bright star? How to tell a planet from a star with your own eyes, and how bright Venus, Jupiter, Mars and Saturn really get compared with Sirius",
+   "match": "bright star|planet from a star|planets from stars", "jev": 2.76},
+  {"topic": "Five things in the night sky anyone can find in ten minutes without a telescope, and how far away each one is (the Moon, a planet, the Pleiades, Orion's belt and nebula, the Andromeda Galaxy)",
+   "match": "ten minutes|10 minutes|five things|5 things", "jev": 3.02},
+  {"topic": "How to find the Andromeda Galaxy with your own eyes: the farthest thing a human can see, 2.5 million light-years away, and what you are really looking at",
+   "match": "find the andromeda|andromeda galaxy with", "jev": 2.52},
+  {"topic": "Why you cannot see the stars from a city: light pollution in numbers (the Bortle scale, how many stars are visible from a city versus a dark site) and what you can still see",
+   "match": "light pollution|from a city|bortle", "jev": 2.28},
+  {"topic": "The total solar eclipse of 2 August 2027: up to 6 minutes 23 seconds of totality, the longest on land this century, where the path goes and how to watch it safely",
+   "match": "eclipse", "jev": 2.0, "from": "2027-01-10"}
+ ]
+}

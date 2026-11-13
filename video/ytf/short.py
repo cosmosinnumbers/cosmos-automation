@@ -190,7 +190,7 @@ def write_upload(sd, spec, src_dir, assets, dur):
     imgs = [assets[v["src"]] for v in spec["visuals"] if assets[v["src"]]["type"] in ("image", "video")]
     credits = sorted({a["credit"] for a in imgs if a.get("credit")})
     product = meta.PRODUCT   # free PDF first, then the paid guide (same lines as the long videos)
-    lines = [product, "", spec["description_intro"].strip(), "", "Sources:", *[f"- {s['title']} — {s['url']}" for s in used], ""]
+    lines = [product, meta.SHORTS_NOTE, "", spec["description_intro"].strip(), "", "Sources:", *[f"- {s['title']} — {s['url']}" for s in used], ""]
     if credits:
         lines += ["Images and footage: " + "; ".join(credits) + ".", meta.NO_ENDORSEMENT, ""]
     lines += [*meta.DISCLOSURES, "", "Full video on the channel. #shorts #space"]

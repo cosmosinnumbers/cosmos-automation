@@ -1,15 +1,81 @@
 {
  "_doc": "Eventi del cielo per il formato sky_tonight (docs/PROMPT-motore-virale.md, step 6). Da aggiornare una volta al mese da fonti ufficiali. Le date sono indicative (picco); lo scrittore deve comunque trovare la fonte primaria (NASA What's Up, IMO) e il fact check del codice controlla ogni numero. hint = argomento passato allo scrittore.",
- "sources": ["https://science.nasa.gov/skywatching/whats-up/", "https://www.imo.net/resources/calendar/"],
+ "sources": [
+  "https://science.nasa.gov/skywatching/whats-up/",
+  "https://www.imo.net/resources/calendar/"
+ ],
  "events": [
-  {"date": "2026-11-05", "name": "Southern Taurids peak", "hint": "the Southern Taurid meteor shower peak and the fireballs it is known for"},
-  {"date": "2026-11-12", "name": "Northern Taurids peak", "hint": "the Northern Taurid meteor shower peak, debris of Comet Encke"},
-  {"date": "2026-11-17", "name": "Leonids peak", "hint": "the Leonid meteor shower peak, debris of Comet Tempel-Tuttle, the fastest meteors of the year"},
-  {"date": "2026-11-24", "name": "Full Moon (supermoon)", "hint": "the November full Moon, the first of three supermoons in a row"},
-  {"date": "2026-12-14", "name": "Geminids peak", "hint": "the Geminid meteor shower peak, the strongest of the year, from asteroid 3200 Phaethon"},
-  {"date": "2026-12-21", "name": "December solstice", "hint": "the December solstice: the shortest day in the northern hemisphere and why it happens"},
-  {"date": "2026-12-22", "name": "Ursids peak", "hint": "the Ursid meteor shower, debris of Comet Tuttle"},
-  {"date": "2026-12-24", "name": "Full Moon (supermoon)", "hint": "the December full Moon, the Cold Moon, a supermoon"},
-  {"date": "2027-01-03", "name": "Quadrantids peak", "hint": "the Quadrantid meteor shower, a short sharp peak from asteroid 2003 EH1"}
+  {
+   "date": "2026-11-17",
+   "name": "Leonids peak",
+   "hint": "the Leonids meteor shower peak around 17 November 2026, debris of Comet Tempel-Tuttle: when and where to look and how many to expect",
+   "computed": true
+  },
+  {
+   "date": "2026-11-24",
+   "name": "Full Moon (supermoon)",
+   "hint": "the full Moon of 24 November 2026, a supermoon: how much closer and bigger it really is",
+   "computed": true
+  },
+  {
+   "date": "2026-11-30",
+   "name": "Moon near Jupiter",
+   "hint": "the Moon passing close to Jupiter around 30 November 2026: how to use the Moon to find the planet with your own eyes, and Jupiter's real numbers",
+   "computed": true
+  },
+  {
+   "date": "2026-11-30",
+   "name": "Moon near Mars",
+   "hint": "the Moon passing close to Mars around 30 November 2026: how to use the Moon to find the planet with your own eyes, and Mars's real numbers",
+   "computed": true
+  },
+  {
+   "date": "2026-12-14",
+   "name": "Geminids peak",
+   "hint": "the Geminids meteor shower peak around 14 December 2026, debris of asteroid 3200 Phaethon: when and where to look and how many to expect",
+   "computed": true
+  },
+  {
+   "date": "2026-12-21",
+   "name": "December solstice",
+   "hint": "the December solstice of 21 December 2026: why it happens and what changes in the sky",
+   "computed": true
+  },
+  {
+   "date": "2026-12-22",
+   "name": "Ursids peak",
+   "hint": "the Ursids meteor shower peak around 22 December 2026, debris of Comet Tuttle: when and where to look and how many to expect",
+   "computed": true
+  },
+  {
+   "date": "2026-12-24",
+   "name": "Full Moon (supermoon)",
+   "hint": "the full Moon of 24 December 2026, a supermoon: how much closer and bigger it really is",
+   "computed": true
+  },
+  {
+   "date": "2026-12-27",
+   "name": "Moon near Jupiter",
+   "hint": "the Moon passing close to Jupiter around 27 December 2026: how to use the Moon to find the planet with your own eyes, and Jupiter's real numbers",
+   "computed": true
+  },
+  {
+   "date": "2027-01-04",
+   "name": "Quadrantids peak",
+   "hint": "the Quadrantids meteor shower peak around 4 January 2027, debris of asteroid 2003 EH1: when and where to look and how many to expect",
+   "computed": true
+  },
+  {
+   "date": "2027-01-22",
+   "name": "Full Moon (supermoon)",
+   "hint": "the full Moon of 22 January 2027, a supermoon: how much closer and bigger it really is",
+   "computed": true
+  },
+  {
+   "date": "2027-01-23",
+   "name": "Moon near Jupiter",
+   "hint": "the Moon passing close to Jupiter around 23 January 2027: how to use the Moon to find the planet with your own eyes, and Jupiter's real numbers",
+   "computed": true
+  }
  ]
 }

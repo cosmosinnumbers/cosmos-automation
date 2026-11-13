@@ -1,12 +1,14 @@
 """Apply the store changes of the 3/11/2026 audit through the Gumroad API v2 (run by gumroad-apply.yml).
 
-  python tools/gumroad_apply.py [lookup] [free] [profile] [--dry-run]
+  python tools/gumroad_apply.py [lookup] [free] [sky] [profile] [--dry-run]
 
 - lookup : LOOK UP gets the new name, description (products/look-up/description.html), summary, tags, category,
            custom receipt. Price and offer codes are NOT touched (gumroad_offer.py does that).
 - free   : creates (or updates, if the permalink exists) the free product "The Solar System in 20 Numbers" ($0+,
            suggested $3) from products/solar-system-20/: PDF uploaded with the presign flow, cover + thumbnail
            uploaded as direct uploads, PDF embedded in the content page, then published.
+- sky    : the free rolling sky calendar "The Next 30 Nights" (products/sky-30-nights/, built by sky-calendar.yml):
+           created the first time, afterwards the PDF is replaced with the fresh one (same link, new 30 nights).
 - profile: store name "Cosmos in Numbers" and the new bio.
 Needs a token with the edit_products scope (edit_profile for profile). Endpoints from the open-source Gumroad code
 (antiwork/gumroad, app/controllers/api/v2). Tokens and buyer data are never printed.
@@ -45,8 +47,18 @@ FREE_META = {
                        "sky, LOOK UP is our 173-page beginner's guide: cosmosinnumbers.gumroad.com/l/look-up "
                        "(new videos weekly: youtube.com/@CosmosinNumbers)"),
 }
+SKY = ROOT / "products" / "sky-30-nights"
+SKY_META = {
+    "name": "The Next 30 Nights: Free Sky Calendar (No Telescope Needed)",
+    "custom_permalink": "sky-30-nights",
+    "custom_summary": "3 pages · planets, Moon and meteor showers for the next 30 nights · rebuilt every week · free",
+    "tags": ["stargazing", "night sky", "astronomy", "sky calendar", "free pdf"],
+    "custom_receipt": ("Here's your sky calendar! Circle one date and go outside that night. It is rebuilt every week: "
+                       "come back to the same page for the next 30 nights. Want to know what everything else up there "
+                       "is? LOOK UP is our 173-page beginner's guide: cosmosinnumbers.gumroad.com/l/look-up"),
+}
 BIO = ("**Space, by the numbers.** Every fact checked against NASA, ESA and JPL data, no cosmic fiction.\n\n"
-       "New here? Start with the free *Solar System in 20 Numbers*, then take *LOOK UP* outside on the next clear night.\n\n"
+       "New here? Start with the free sky calendar *The Next 30 Nights*, then take *LOOK UP* outside on the next clear night.\n\n"
        "Weekly videos: youtube.com/@CosmosinNumbers")
 
 
@@ -169,6 +181,55 @@ def do_free(tax):
     print("live at:", final.get("short_url"), "published:", final.get("published"))
 
 
+def do_sky(tax):
+    """Create the free sky calendar, or replace its PDF with this week's build (the link never changes)."""
+    out = SKY / "out"
+    pdf = out / "the-next-30-nights.pdf"
+    if not pdf.exists():
+        sys.exit("sky calendar not built: run tools/sky.py window and products/sky-30-nights/build.mjs first")
+    p = product_by_permalink(SKY_META["custom_permalink"])
+    body = {**SKY_META, "description": (SKY / "description.html").read_text("utf-8"), "price": 0,
+            "customizable_price": True, "suggested_price_cents": 200}
+    if tax:
+        body["taxonomy_id"] = tax
+    url = upload_file(pdf)
+    if not url:
+        sys.exit("PDF upload failed")
+    files = [{"url": url, "display_name": "The Next 30 Nights"}]
+    if p:
+        print("sky calendar exists: replacing the PDF and the texts")
+        j = call("PUT", f"products/{p['id']}", json={**body, "files": files})
+        pid = p["id"]
+        if not j.get("success"):
+            sys.exit(f"update failed: {str(j)[:300]}")
+    else:
+        j = call("POST", "products", json={**body, "native_type": "ebook", "draft": True, "files": files})
+        if j.get("dry"):
+            return
+        pid = (j.get("product") or sys.exit(f"create failed: {str(j)[:300]}"))["id"]
+        print("created draft", pid)
+    if DRY:
+        return
+    got = call("GET", f"products/{pid}").get("product", {}).get("files") or []
+    fid = got[-1].get("id") if got else None   # the file just uploaded is the last one
+    print("files on the product:", len(got), "| embedded file id:", fid)
+    if fid:
+        page = {"title": "Your sky calendar", "description": {"type": "doc", "content": [
+            {"type": "paragraph", "content": [{"type": "text", "text": "Here are your next 30 nights. Circle one date, "
+             "then go outside and look up. This page is rebuilt every week: download it again any time."}]},
+            {"type": "fileEmbed", "attrs": {"id": fid}}]}}
+        call("PUT", f"products/{pid}", json={"rich_content": [page]})
+    if not p:
+        for name, kind in (("cover-1280x720.png", "covers"), ("thumbnail-600x600.png", "thumbnail")):
+            sid = direct_upload(out / name, "image/png")
+            if sid:
+                call("POST", f"products/{pid}/{kind}", json={"signed_blob_id": sid})
+        e = call("PUT", f"products/{pid}/enable")
+        print("published:", e.get("success"), e.get("message", ""))
+    final = call("GET", f"products/{pid}").get("product", {})
+    print("live at:", final.get("short_url"), "published:", final.get("published"), "files:", len(final.get("files") or []))
+
+
 def do_profile():
     j = call("PUT", "user", json={"name": "Cosmos in Numbers", "bio": BIO})
     print("profile updated" if j.get("success") else "profile NOT updated")
@@ -176,9 +237,11 @@ def do_profile():
 
 def main():
     what = [a for a in sys.argv[1:] if not a.startswith("--")] or ["lookup", "free", "profile"]
-    tax = taxonomy_id() if {"lookup", "free"} & set(what) else None
+    tax = taxonomy_id() if {"lookup", "free", "sky"} & set(what) else None
     if "free" in what:
         do_free(tax)
+    if "sky" in what:
+        do_sky(tax)
     if "lookup" in what:
         do_lookup(tax)
     if "profile" in what:

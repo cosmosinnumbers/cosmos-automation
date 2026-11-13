@@ -29,6 +29,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import creds  # noqa: E402
 import cross_learn  # noqa: E402
 import day_short  # noqa: E402
+import links  # noqa: E402
 import queue_short_reel as qsr  # noqa: E402
 
 DRY = "--dry-run" in sys.argv
@@ -172,7 +173,9 @@ def main():
         url = f"https://youtu.be/{lv['id']}"
         code = " · code COSMOS9" if day < COSMOS9_UNTIL else ""
         title = f"{'Rewind: ' if reuse else ''}{headline[:90]} #shorts"  # a new title: the upload skips a title already on the channel
-        desc = (f"📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up{code}\n\n"
+        look = links.link(links.LOOK_UP, "youtube", "description")   # tracked: the funnel report counts the clicks
+        desc = (f"📘 LOOK UP, our beginner's guide to the night sky: {look}{code}\n"
+                "On a Short the links are not clickable: you find them on our channel page, @CosmosinNumbers.\n\n"
                 f"Full video: {long_title} {url}\n\n{narration}\n\n"
                 "Clip of the full video: sources and credits are in its description. Synthetic voice; script drafted "
                 "with AI assistance and fact-checked.\n#space #astronomy #science #shorts")

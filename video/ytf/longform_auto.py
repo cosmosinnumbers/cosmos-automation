@@ -226,8 +226,28 @@ def cross_block() -> str:
         return ""
 
 
+def sales_topic(today: str | None = None, done: str | None = None) -> str:
+    """Next buyer-intent topic of config/sales-topics.json: inside its dates and not made yet ('' when none is left)."""
+    today = today or datetime.now().strftime("%Y-%m-%d")
+    try:
+        topics = json.loads((ROOT / "config" / "sales-topics.json").read_text("utf-8")).get("topics", [])
+    except (OSError, ValueError):
+        return ""
+    done = (used() if done is None else done).lower().replace("-", " ")
+    for t in topics:
+        if t.get("from", "") <= today <= t.get("until", "9999") and not re.search(t["match"], done):
+            return t["topic"]
+    return ""
+
+
 def learned_hint() -> str:
-    """No topic from the workflow: replicate the latest cross-channel hit (config/cross-weights.json next_long)."""
+    """No topic from the workflow: first a buyer-intent topic (sales review 13/11/2026: long videos are the only place
+    on YouTube where the product links are clickable), then the latest cross-channel hit (cross-weights next_long)."""
+    st = sales_topic()
+    if st:
+        print("Topic from config/sales-topics.json (buyer intent):", st[:90])
+        return (f"Prefer this topic: {st}. Make it practical: the viewer should be able to go outside tonight and "
+                "find these things. Every number still has to come from the primary sources.")
     try:
         nl = json.loads((ROOT / "config" / "cross-weights.json").read_text("utf-8")).get("next_long") or {}
     except (OSError, ValueError):

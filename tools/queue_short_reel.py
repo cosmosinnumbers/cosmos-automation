@@ -111,7 +111,8 @@ def slot(now: datetime, last: datetime | None) -> datetime:
 
 def caption(title: str, now: datetime, fb: bool = False) -> str:
     code = " · code COSMOS9" if now < COSMOS9_UNTIL else ""
-    product = (f"📘 LOOK UP stargazing guide: https://cosmosinnumbers.gumroad.com/l/look-up{code}" if fb
+    import links   # tracked link on Facebook (clickable there); Instagram captions are not clickable: bio
+    product = (f"📘 LOOK UP stargazing guide: {links.link(links.LOOK_UP, 'facebook', 'post')}{code}" if fb
                else f"📘 LOOK UP stargazing guide: link in bio{code}")
     return (f"{title.replace(' #shorts', '').strip()}\n\nFull video on YouTube: @CosmosinNumbers"
             f"{'' if fb else ' (link in bio)'}\n{product}\n\nSources in the YouTube description. "

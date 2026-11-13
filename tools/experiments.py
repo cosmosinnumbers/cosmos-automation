@@ -129,9 +129,11 @@ def plan(today: date, evergreen: bool = False, seed: str | None = None, hot: boo
         allowed = [k for k in allowed if k != "audience_question"]
     out = {"date": today.isoformat(), "topic": "", "source": "bandit"}
 
-    # 1. a sky event the viewer can see in the next 2 days, not covered in the last 3 days
-    sky = [e for e in ts.sky_events(today, 2)]
-    if sky and not evergreen and not hot and "sky_tonight" in allowed and recent_formats(log, today, 3).get("sky_tonight", 0) == 0:
+    # 1. a sky event the viewer can see in the next 4 days, not covered in the last 2 days (sales review 13/11/2026:
+    #    it was 2 and 3. People search an event in the days before it, and "what to see tonight" is the content that
+    #    matches the product, a stargazing guide: each event now gets up to two Shorts instead of one)
+    sky = [e for e in ts.sky_events(today, 4)]
+    if sky and not evergreen and not hot and "sky_tonight" in allowed and recent_formats(log, today, 2).get("sky_tonight", 0) == 0:
         e = sky[0]
         out.update(format="sky_tonight", topic=e["hint"], source="sky-calendar", why=f"{e['name']} il {e['date']}")
     # 2. a follow-up of a hit (queues/ideas.json), oldest first

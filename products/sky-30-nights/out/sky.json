@@ -1,6 +1,6 @@
 {
- "start": "2026-11-13",
- "end": "2026-12-12",
+ "start": "2026-11-14",
+ "end": "2026-12-13",
  "days": 30,
  "latitude": "40° N",
  "method": "Computed with PyEphem for 40° N. Meteor shower peaks and rates: IMO Meteor Shower Calendar. Dates are UTC and can shift by one day where you live.",
@@ -8,7 +8,7 @@
   {
    "name": "Mercury",
    "text": "before dawn, low in the south-east before sunrise; by the end of the period: hidden in the Sun's glare",
-   "mag": 0.1,
+   "mag": -0.1,
    "constellation": "Virgo",
    "when": "before dawn",
    "visible": true
@@ -109,11 +109,6 @@
   }
  ],
  "moon": [
-  {
-   "date": "2026-11-13",
-   "lit": 18,
-   "waxing": true
-  },
   {
    "date": "2026-11-14",
    "lit": 26,
@@ -258,16 +253,21 @@
    "date": "2026-12-12",
    "lit": 12,
    "waxing": true
+  },
+  {
+   "date": "2026-12-13",
+   "lit": 19,
+   "waxing": true
   }
  ],
  "charts": {
-  "date": "2026-11-20",
+  "date": "2026-11-21",
   "evening": [
    {
     "name": "Saturn",
-    "az": 119,
-    "alt": 31,
-    "mag": 0.6
+    "az": 120,
+    "alt": 32,
+    "mag": 0.7
    }
   ],
   "morning": [
@@ -279,19 +279,19 @@
    },
    {
     "name": "Venus",
-    "az": 126,
+    "az": 127,
     "alt": 23,
     "mag": -4.4
    },
    {
     "name": "Mars",
-    "az": 184,
+    "az": 186,
     "alt": 64,
-    "mag": 0.7
+    "mag": 0.6
    },
    {
     "name": "Jupiter",
-    "az": 189,
+    "az": 191,
     "alt": 63,
     "mag": -2.0
    }

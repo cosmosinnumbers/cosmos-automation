@@ -584,6 +584,32 @@
   "short": "c1112-ess-clip-c"
  },
  {
+  "ref": "th-news-1113-apod-ngc-206-star",
+  "at": "2026-11-13 12:00",
+  "tag": "Astronomy",
+  "text": "NGC 206 and the Star Clouds of Andromeda (NASA Astronomy Picture of the Day)\n\nThe large stellar association cataloged as NGC 206 is nestled within the dusty arms of the neighboring Andromeda galaxy along with the galaxy's pinkish star-forming regions. Also known as M31, the spiral galaxy is a mere 2.5 million light-years away.\n\nSource: NASA APOD (13 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-13-ngc-206-and-the-star-clouds-of-andromeda/",
+  "replies": [
+   "NGC 206 is found at the center of this sharp and detailed close-up of the southwestern extent of Andromeda's disk. The bright, blue stars of NGC 206 indicate its youth.\n\nImage: David Cruz."
+  ],
+  "news_title": "APOD: 2026 November 13 – NGC 206 and the Star Clouds of Andromeda"
+ },
+ {
+  "ref": "th-quiz-1113-gravity-min",
+  "at": "2026-11-13 17:55",
+  "tag": "Science",
+  "poll": [
+   "Earth",
+   "Neptune",
+   "Mercury"
+  ],
+  "text": "Yesterday's answer: Mercury, 5429 kg per cubic meter (NASA Planetary Fact Sheet).\n\nToday's quiz 🏋️ Which of these planets has the weakest surface gravity?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Gravity-1",
+  "answer": "Mercury, 3.7 m/s² at the surface (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1113-ess-clip-d",
   "at": "2026-11-13 21:00",
   "tag": "Sun",

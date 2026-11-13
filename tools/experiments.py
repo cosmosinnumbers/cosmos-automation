@@ -136,6 +136,17 @@ def plan(today: date, evergreen: bool = False, seed: str | None = None, hot: boo
     if sky and not evergreen and not hot and "sky_tonight" in allowed and recent_formats(log, today, 2).get("sky_tonight", 0) == 0:
         e = sky[0]
         out.update(format="sky_tonight", topic=e["hint"], source="sky-calendar", why=f"{e['name']} il {e['date']}")
+    # 1b. no calendar event, but a sky story is hot in the news today (aurora alert, a new comet, an eclipse): the
+    #     news radar (tools/news_radar.py) flags the stories a viewer can go out and see
+    if "format" not in out and not evergreen and "sky_tonight" in allowed and recent_formats(log, today, 2).get("sky_tonight", 0) == 0:
+        try:
+            import news_radar
+            hot_sky = news_radar.sky_story("cosmos")
+        except Exception:  # noqa: BLE001
+            hot_sky = None
+        if hot_sky:
+            out.update(format="sky_tonight", topic=f"this sky story in the news today: {hot_sky['title']}",
+                       source="news-radar", why=f"calore {hot_sky['heat']}, {hot_sky['outlets']} testate")
     # 2. a follow-up of a hit (queues/ideas.json), oldest first
     if "format" not in out and not hot:
         ideas = jload(IDEAS, [])

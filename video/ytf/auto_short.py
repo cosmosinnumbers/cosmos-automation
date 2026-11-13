@@ -402,6 +402,17 @@ def get_feed(url):
     return r
 
 
+def radar(fn: str, default, *args):
+    """tools/news_radar.py read side; a missing or broken radar never stops a Short."""
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools"))
+        import news_radar
+        return getattr(news_radar, fn)(*args)
+    except Exception as e:  # noqa: BLE001
+        print("  news radar unavailable:", type(e).__name__, str(e)[:80])
+        return default
+
+
 def rss_items(days=7, n=10):
     """Recent space items of the primary-source feeds, newest first, with an excerpt of each page."""
     items = []
@@ -430,6 +441,13 @@ def rss_items(days=7, n=10):
         print(f"  feed ok {url}: {len(found)} items, {fresh} recent, {kept} on topic")
         time.sleep(2)
     items.sort(key=lambda x: x["date"], reverse=True)
+    # news radar (13/11/2026): the items people are reading about today come first, then the newest. Before, the
+    # newest item of the agencies won whatever it was, also when nobody was talking about it.
+    for it in items:
+        it["heat"] = radar("item_heat", 0.0, it["title"])
+    if any(it["heat"] for it in items):
+        items.sort(key=lambda x: -x["heat"])   # stable: equal heat keeps newest first
+        print("  hottest feed items:", [(round(i["heat"], 1), i["title"][:50]) for i in items[:3] if i["heat"]])
     seen, out = set(), []
     for it in items:
         if it["url"] in seen:
@@ -859,6 +877,9 @@ def main():
         if HOT:
             hint += (" HOT NEWS slot: pick ONLY a story published in the last 48 hours, the one people will talk about today,"
                      " and NOT the topic of today's first Short (in the list of used topics).")
+        if "--topic" not in a and "--reserve" not in a:   # news radar (13/11/2026): what people are reading today;
+            # never next to a topic of the day (sky event, follow-up of a hit): two instructions would compete
+            hint = (hint + "\n" + radar("hot_block", "")).strip()
         spec, missing, problems, report = write_checked(a, today, hint)
         if (missing or problems or spec.get("skip")) and FORMAT_RULES:
             # the variant under test did not fit today's material: one plain attempt, never a lost day for a test

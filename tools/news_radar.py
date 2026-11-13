@@ -53,7 +53,8 @@ SPACE = re.compile(r"\b(nasa|esa|spacex|space|astronom|telescope|webb|jwst|hubbl
                    r"interstellar|geminid|perseid|leonid|orionid|quadrantid)", re.I)
 OFF = re.compile(r"\b(horoscope|astrolog|zodiac sign|stock|shares|nasdaq|earnings|movie|trailer|netflix|game|nba|nfl|"
                  r"star wars|pop star|rock star|all-star|celebrity|budget cuts?|layoffs?|lawsuit|senate|congress|election|"
-                 r"president|military|pentagon|missile|war\b)", re.I)
+                 r"president|military|pentagon|missile|war\b|quiz|fill in the blank|crossword|film|actor|actress|writer|"
+                 r"award winner|alumnus|who is\b)", re.I)   # last line: seen in the first real run, 13/11/2026
 SKY = re.compile(r"tonight|this week|meteor|shooting stars?|aurora|northern lights|comet|eclipse|supermoon|full moon|"
                  r"blood moon|conjunction|planet parade|planets? align|visible|naked eye|night sky|how to (see|watch)|"
                  r"where to (see|look)|geminid|perseid|leonid|orionid|quadrantid|lyrid", re.I)

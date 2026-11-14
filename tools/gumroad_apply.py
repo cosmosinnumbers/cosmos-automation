@@ -330,7 +330,7 @@ def do_lookup_fix():
     if not call("PUT", f"products/{pid}", json={"rich_content": page(lambda n: None if is_old(n) else n)}).get("success"):
         sys.exit("content page not updated, nothing changed")
     # a kept file goes by id alone: its "url" here is a download link, and Gumroad wants its own upload address
-    keep = [{"id": f["id"], "display_name": f["name"]} for f in files if f["id"] != old["id"]]
+    keep = [{"id": f["id"]} for f in files if f["id"] != old["id"]]
     j = call("PUT", f"products/{pid}", json={"files": [*keep, {"url": url, "display_name": old["name"]}]})
     if DRY:
         return

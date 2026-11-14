@@ -1,0 +1,642 @@
+{
+ "videos": [
+  {
+   "id": "sfky54VSchE",
+   "title": "Starship Flight 15: SpaceX Double Catch Attempt!",
+   "channel": "What about it!?",
+   "published": "2026-11-12",
+   "seconds": null,
+   "views": 716240,
+   "views_per_day": 716240,
+   "engagement": 0.0197,
+   "acceleration": null,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "spaceflight",
+   "emoji": false
+  },
+  {
+   "id": "INmLPyGjsMI",
+   "title": "The Black Hole That Makes Stars",
+   "channel": "Past the Blue",
+   "published": "2026-10-28",
+   "seconds": 63,
+   "views": 8994494,
+   "views_per_day": 562155,
+   "engagement": 0.0477,
+   "acceleration": 0.003,
+   "format": "other",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "p0EqvHzr_X4",
+   "title": "Why NASA Is Paying to Destroy the ISS",
+   "channel": "Past the Blue",
+   "published": "2026-10-23",
+   "seconds": 91,
+   "views": 7799661,
+   "views_per_day": 371412,
+   "engagement": 0.0238,
+   "acceleration": 0.002,
+   "format": "mission_glitch",
+   "hook": "question",
+   "theme": "iss",
+   "emoji": false
+  },
+  {
+   "id": "_fw3vnQconI",
+   "title": "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn",
+   "channel": "Helpyn Facts'",
+   "published": "2026-10-31",
+   "seconds": 60,
+   "views": 4796973,
+   "views_per_day": 342640,
+   "engagement": 0.0001,
+   "acceleration": -0.071,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "TGDF1889rGE",
+   "title": "The Lid NASA Couldn’t Open",
+   "channel": "BrainRush",
+   "published": "2026-10-16",
+   "seconds": 66,
+   "views": 8326961,
+   "views_per_day": 297391,
+   "engagement": 0.024,
+   "acceleration": 0.005,
+   "format": "mission_glitch",
+   "hook": "paradox",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "dv-Czhabars",
+   "title": "SIZE OF SOLAR SYSTEM! 💀",
+   "channel": "Jase Cosmology",
+   "published": "2026-10-26",
+   "seconds": 29,
+   "views": 5142021,
+   "views_per_day": 285667,
+   "engagement": 0.0111,
+   "acceleration": 0.001,
+   "format": "scale_zoom",
+   "hook": "comparison",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "JR4kcGfZps0",
+   "title": "Anh trai dùng điện thoại chụp được ảnh mà Nasa phải tốn tiền triệu ms chụp được #docvithegioi #news",
+   "channel": "Đọc Vị Thế Giới",
+   "published": "2026-11-11",
+   "seconds": 43,
+   "views": 719989,
+   "views_per_day": 239996,
+   "engagement": 0.0184,
+   "acceleration": -0.286,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "OVMRncCa-tI",
+   "title": "La Voyager 1, se calló 48h, después volvió sola, la NASA no sabe por qué.",
+   "channel": "La Mirada Tecno",
+   "published": "2026-11-08",
+   "seconds": 180,
+   "views": 1161229,
+   "views_per_day": 232245,
+   "engagement": 0.0535,
+   "acceleration": 0.02,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "NxnN30MUoaA",
+   "title": "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+   "channel": "susballs",
+   "published": "2026-11-03",
+   "seconds": 7,
+   "views": 2202875,
+   "views_per_day": 220287,
+   "engagement": 0.0052,
+   "acceleration": 0.011,
+   "format": "quiz_guess",
+   "hook": "extreme_number",
+   "theme": "venus",
+   "emoji": true
+  },
+  {
+   "id": "zMt9YzQ_hf4",
+   "title": "HOW BIG IS THE SOLAR SYSTEM!💀☝️",
+   "channel": "Limitless fax ",
+   "published": "2026-10-30",
+   "seconds": 29,
+   "views": 2648259,
+   "views_per_day": 189161,
+   "engagement": 0.0093,
+   "acceleration": 0.0,
+   "format": "scale_zoom",
+   "hook": "question",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "x9fM_-eVCXI",
+   "title": "Kalpana Chawla Ki Kahani: Karnal Se NASA Aur Columbia Tak",
+   "channel": "StrategyLabIndia",
+   "published": "2026-10-15",
+   "seconds": 140,
+   "views": 5188622,
+   "views_per_day": 178918,
+   "engagement": 0.0263,
+   "acceleration": 0.007,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "INjqjSjtPKc",
+   "title": "Special Story: NASA Telescope Heads Towards Earth! Is Cuttack in the Possible Debris Zone ?",
+   "channel": "OTV",
+   "published": "2026-11-04",
+   "seconds": 273,
+   "views": 1324677,
+   "views_per_day": 147186,
+   "engagement": 0.0034,
+   "acceleration": 0.001,
+   "format": "quiz_guess",
+   "hook": "question",
+   "theme": "earth",
+   "emoji": false
+  },
+  {
+   "id": "cZs0UphKT1k",
+   "title": "The Skeleton Left Outside In Space",
+   "channel": "Past the Blue",
+   "published": "2026-10-30",
+   "seconds": 77,
+   "views": 2005060,
+   "views_per_day": 143218,
+   "engagement": 0.0194,
+   "acceleration": 0.004,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "tKikZXrcZCQ",
+   "title": "Why Nothing Can Survive Venus",
+   "channel": "Facts' Mine",
+   "published": "2026-10-24",
+   "seconds": 57,
+   "views": 3003178,
+   "views_per_day": 143008,
+   "engagement": 0.0557,
+   "acceleration": -0.043,
+   "format": "survive_x",
+   "hook": "paradox",
+   "theme": "venus",
+   "emoji": false
+  },
+  {
+   "id": "CiMGXfEjF7c",
+   "title": "Solar System's Biggest Lie!💀☝",
+   "channel": "Astrryy",
+   "published": "2026-10-28",
+   "seconds": 32,
+   "views": 1876517,
+   "views_per_day": 117282,
+   "engagement": 0.0002,
+   "acceleration": 0.001,
+   "format": "scale_zoom",
+   "hook": "paradox",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "wka6dUErnQU",
+   "title": "NASA가 종이접기 작가를 부른이유ㄷㄷ",
+   "channel": "소란도란",
+   "published": "2026-10-25",
+   "seconds": 22,
+   "views": 2295244,
+   "views_per_day": 114762,
+   "engagement": 0.0067,
+   "acceleration": -0.042,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "XGespfNXeSk",
+   "title": "First evidence of a runaway black hole. #blackhole #jwst #hubble #galaxy #universe",
+   "channel": "Siddharth Choudhary",
+   "published": "2026-11-03",
+   "seconds": 106,
+   "views": 1218643,
+   "views_per_day": 110785,
+   "engagement": 0.0408,
+   "acceleration": -0.085,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "L93K2vvrfdo",
+   "title": "SPACE NEWS: Swift Observatory/Telescope fell back to Earth from space #astronomy #science #nasa",
+   "channel": "ASTRO ALEXANDRA",
+   "published": "2026-11-05",
+   "seconds": 65,
+   "views": 811005,
+   "views_per_day": 101375,
+   "engagement": 0.041,
+   "acceleration": -0.122,
+   "format": "other",
+   "hook": "other",
+   "theme": "earth",
+   "emoji": false
+  },
+  {
+   "id": "BdRisD_BV8o",
+   "title": "ALERTA Super Niño: la NASA descubre anomalía en el océano que agravará el fenómeno",
+   "channel": "Ciudadano news",
+   "published": "2026-10-19",
+   "seconds": 53,
+   "views": 2416803,
+   "views_per_day": 96672,
+   "engagement": 0.0119,
+   "acceleration": 0.003,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "IGmBjaG6qC0",
+   "title": "November 2026 Space Events 🤩 #space #earth #shorts",
+   "channel": "AstroPlanet",
+   "published": "2026-10-29",
+   "seconds": 27,
+   "views": 1537141,
+   "views_per_day": 96071,
+   "engagement": 0.0154,
+   "acceleration": -0.061,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "earth",
+   "emoji": true
+  },
+  {
+   "id": "DJv5hJ9qrOE",
+   "title": "What Happens Beyond The Speed Of Light",
+   "channel": "Facts' Mine",
+   "published": "2026-10-25",
+   "seconds": 45,
+   "views": 1701184,
+   "views_per_day": 85059,
+   "engagement": 0.0646,
+   "acceleration": -0.047,
+   "format": "survive_x",
+   "hook": "question",
+   "theme": "light_speed",
+   "emoji": false
+  },
+  {
+   "id": "QXP1XJC5Go4",
+   "title": "طائرات مدنية أسرع من الصوت؟ - شبكات",
+   "channel": "AlJazeera Arabic  قناة الجزيرة",
+   "published": "2026-11-03",
+   "seconds": 174,
+   "views": 839328,
+   "views_per_day": 83932,
+   "engagement": 0.0152,
+   "acceleration": 0.005,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "jt40aHEYpvI",
+   "title": "3 Must-See Sky Events in November 2026! 🌌😱 #astrology #space #astronomy",
+   "channel": "KnowverseX ",
+   "published": "2026-10-29",
+   "seconds": 37,
+   "views": 1227003,
+   "views_per_day": 81800,
+   "engagement": 0.0001,
+   "acceleration": null,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "3T3F-LNnfMI",
+   "title": "Tesla unveils new flying car model",
+   "channel": "NBC News",
+   "published": "2026-10-16",
+   "seconds": 109,
+   "views": 2219609,
+   "views_per_day": 79271,
+   "engagement": 0.0033,
+   "acceleration": -0.033,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "VizfA8znDW8",
+   "title": "The Cat’s Head Nebula: A Cosmic Nursery ✨🐈‍⬛😱",
+   "channel": "Deep Space | Exploring the Unknown",
+   "published": "2026-11-05",
+   "seconds": 24,
+   "views": 692520,
+   "views_per_day": 76946,
+   "engagement": 0.0101,
+   "acceleration": -0.081,
+   "format": "other",
+   "hook": "other",
+   "theme": "stars",
+   "emoji": true
+  }
+ ],
+ "formats": {
+  "other": {
+   "score": 14.99,
+   "videos": 14,
+   "accelerating": false,
+   "engagement": 0.0204,
+   "ours_7d": 2,
+   "examples": [
+    "Starship Flight 15: SpaceX Double Catch Attempt!",
+    "The Black Hole That Makes Stars"
+   ]
+  },
+  "mission_glitch": {
+   "score": 5.84,
+   "videos": 2,
+   "accelerating": true,
+   "engagement": 0.0239,
+   "ours_7d": 0,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS",
+    "The Lid NASA Couldn’t Open"
+   ]
+  },
+  "scale_zoom": {
+   "score": 5.17,
+   "videos": 3,
+   "accelerating": true,
+   "engagement": 0.0069,
+   "ours_7d": 1,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "HOW BIG IS THE SOLAR SYSTEM!💀☝️"
+   ]
+  },
+  "quiz_guess": {
+   "score": 3.21,
+   "videos": 2,
+   "accelerating": true,
+   "engagement": 0.0043,
+   "ours_7d": 0,
+   "examples": [
+    "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+    "Special Story: NASA Telescope Heads Towards Earth! Is Cuttack in the Possible Debris Zone ?"
+   ]
+  },
+  "survive_x": {
+   "score": 1.59,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0602,
+   "ours_7d": 0,
+   "examples": [
+    "Why Nothing Can Survive Venus",
+    "What Happens Beyond The Speed Of Light"
+   ]
+  },
+  "news_angle": {
+   "score": 1.33,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0221,
+   "ours_7d": 1,
+   "examples": [
+    "First evidence of a runaway black hole. #blackhole #jwst #hubble #galaxy #universe",
+    "Tesla unveils new flying car model"
+   ]
+  }
+ },
+ "hooks": {
+  "other": {
+   "score": 12.48,
+   "videos": 11,
+   "accelerating": false,
+   "engagement": 0.0219,
+   "ours_7d": null,
+   "examples": [
+    "The Black Hole That Makes Stars",
+    "Anh trai dùng điện thoại chụp được ảnh mà Nasa phải tốn tiền triệu ms chụp được #docvithegioi #news"
+   ]
+  },
+  "extreme_number": {
+   "score": 11.8,
+   "videos": 6,
+   "accelerating": false,
+   "engagement": 0.0157,
+   "ours_7d": null,
+   "examples": [
+    "Starship Flight 15: SpaceX Double Catch Attempt!",
+    "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn"
+   ]
+  },
+  "question": {
+   "score": 5.54,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.0253,
+   "ours_7d": null,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS",
+    "HOW BIG IS THE SOLAR SYSTEM!💀☝️"
+   ]
+  },
+  "paradox": {
+   "score": 3.89,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0266,
+   "ours_7d": null,
+   "examples": [
+    "The Lid NASA Couldn’t Open",
+    "Why Nothing Can Survive Venus"
+   ]
+  },
+  "comparison": {
+   "score": 2.49,
+   "videos": 1,
+   "accelerating": true,
+   "engagement": 0.0111,
+   "ours_7d": null,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀"
+   ]
+  }
+ },
+ "themes": {
+  "other": {
+   "score": 13.2,
+   "videos": 11,
+   "accelerating": false,
+   "engagement": 0.0163,
+   "ours_7d": null,
+   "examples": [
+    "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn",
+    "The Lid NASA Couldn’t Open"
+   ]
+  },
+  "solar_system": {
+   "score": 5.17,
+   "videos": 3,
+   "accelerating": true,
+   "engagement": 0.0069,
+   "ours_7d": null,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "HOW BIG IS THE SOLAR SYSTEM!💀☝️"
+   ]
+  },
+  "spaceflight": {
+   "score": 5.0,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0197,
+   "ours_7d": null,
+   "examples": [
+    "Starship Flight 15: SpaceX Double Catch Attempt!"
+   ]
+  },
+  "black_hole": {
+   "score": 4.7,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0442,
+   "ours_7d": null,
+   "examples": [
+    "The Black Hole That Makes Stars",
+    "First evidence of a runaway black hole. #blackhole #jwst #hubble #galaxy #universe"
+   ]
+  },
+  "iss": {
+   "score": 3.24,
+   "videos": 1,
+   "accelerating": true,
+   "engagement": 0.0238,
+   "ours_7d": null,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS"
+   ]
+  },
+  "venus": {
+   "score": 2.54,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0304,
+   "ours_7d": null,
+   "examples": [
+    "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+    "Why Nothing Can Survive Venus"
+   ]
+  },
+  "earth": {
+   "score": 2.41,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0199,
+   "ours_7d": null,
+   "examples": [
+    "Special Story: NASA Telescope Heads Towards Earth! Is Cuttack in the Possible Debris Zone ?",
+    "SPACE NEWS: Swift Observatory/Telescope fell back to Earth from space #astronomy #science #nasa"
+   ]
+  },
+  "light_speed": {
+   "score": 0.59,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0646,
+   "ours_7d": null,
+   "examples": [
+    "What Happens Beyond The Speed Of Light"
+   ]
+  },
+  "stars": {
+   "score": 0.54,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0101,
+   "ours_7d": null,
+   "examples": [
+    "The Cat’s Head Nebula: A Cosmic Nursery ✨🐈‍⬛😱"
+   ]
+  }
+ },
+ "short_share": 0.92,
+ "audience_questions": [
+  "So...a galaxy could just decide to hurl a blackhole our way?",
+  "Whats in here, rocks?",
+  "These aren't cheap, roughly milled screws. How did they get so stuck?",
+  "What was in it, you ask?",
+  "But did they put the capsule in a vacuum to reopen it?",
+  "That's nice. Now what did they find from the asteroid?",
+  "You know what is as old as the solar system?",
+  "What is the proof of saying that?",
+  "But my question is why does the moon look's close to earth in the sky?",
+  "Want to fly to the moon?",
+  "Do you believe there is complex life out there?",
+  "What is this little star that appears??",
+  "What is this one big dot slightly above the building?",
+  "It blinks, which made me suspect a satellite at first, but which satellite remains in the same angle over hours?",
+  "Does this source lie within the universe, or outside of it?"
+ ],
+ "instagram_median_likes": {
+  "IMAGE": 11038,
+  "CAROUSEL_ALBUM": 13872
+ },
+ "median_views_per_day": 143218,
+ "niche": "cosmos",
+ "date": "2026-11-14",
+ "source": "2026-W46.json",
+ "sky": [
+  {
+   "date": "2026-11-17",
+   "name": "Leonids peak",
+   "hint": "the Leonids meteor shower peak around 17 November 2026, debris of Comet Tempel-Tuttle: when and where to look and how many to expect",
+   "computed": true,
+   "in_days": 3
+  },
+  {
+   "date": "2026-11-24",
+   "name": "Full Moon (supermoon)",
+   "hint": "the full Moon of 24 November 2026, a supermoon: how much closer and bigger it really is",
+   "computed": true,
+   "in_days": 10
+  }
+ ]
+}

@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       what:
-        description: "Any of: lookup free profile"
+        description: "Any of: lookup free profile sky lookup-files lookup-fix"
         default: "free lookup profile"
       dry_run:
         type: boolean
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
-      - run: pip install -q requests
+      - run: pip install -q requests pymupdf
       - env:
           GUMROAD_JSON: ${{ secrets.GUMROAD_JSON }}
         run: python video/ci_secrets.py

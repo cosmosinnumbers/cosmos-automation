@@ -268,6 +268,86 @@ def do_sky(tax):
     print("live at:", final.get("short_url"), "published:", final.get("published"), "files:", len(final.get("files") or []))
 
 
+def do_lookup_files():
+    """LOOK UP's files, described without any link (the Actions log is public): which fields the API gives for each."""
+    p = product_by_permalink("look-up") or sys.exit("LOOK UP not found")
+    prod = call("GET", f"products/{p['id']}").get("product", {})
+    files = prod.get("files") or []
+    print("files:", len(files), "| rich_content pages:", len(prod.get("rich_content") or []))
+    for f in files:
+        safe = {k: (v if k in ("id", "name", "display_name", "size", "file_size", "extension", "filetype", "type", "position") else
+                    ("<" + type(v).__name__ + (" https" if str(v).startswith("http") else "") + ">")) for k, v in f.items()}
+        print(" ", json.dumps(safe, ensure_ascii=False))
+    for pg in prod.get("rich_content") or []:
+        kinds = [(n.get("type"), (n.get("attrs") or {}).get("id")) for n in (pg.get("description") or {}).get("content", [])]
+        print("  page:", pg.get("title"), kinds)
+    return prod
+
+
+def do_lookup_fix():
+    """LOOK UP's bundle with the tick boxes drawn (they printed as "±0", found 14/11/2026). The paid files never touch
+    this public repo: the runner takes the bundle from Gumroad, repairs every PDF inside, and puts it back. No link is
+    printed. The other files and the content page stay as they are; if the swap is refused the page goes back."""
+    import io
+    import tempfile
+    import zipfile
+    from site_patch import fix_boxes
+    prod = do_lookup_files()
+    pid, files, pages = prod["id"], prod.get("files") or [], prod.get("rich_content") or []
+    old = next((f for f in files if f.get("filetype") == "zip"), None) or sys.exit("no zip among LOOK UP's files")
+    try:
+        r = requests.get(old["url"], timeout=600)
+    except requests.RequestException as e:
+        sys.exit(f"download failed: {type(e).__name__}")
+    if not r.ok or r.content[:2] != b"PK":
+        sys.exit(f"the API's file link does not give the file: HTTP {r.status_code}, {len(r.content)} bytes, "
+                 f"type {r.headers.get('content-type')}")
+    src, out, fixed = zipfile.ZipFile(io.BytesIO(r.content)), io.BytesIO(), 0
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst:
+        for i in src.infolist():
+            data = src.read(i)
+            if i.filename.lower().endswith(".pdf"):
+                new = fix_boxes(data)
+                fixed += new is not data
+                print(" ", i.filename, len(data), "->", len(new))
+                data = new
+            else:
+                print(" ", i.filename, len(data))
+            dst.writestr(i, data)
+    if not fixed:
+        print("nothing to repair: the bundle on Gumroad already has its tick boxes")
+        return
+    path = Path(tempfile.mkdtemp()) / (old["name"] + ".zip")
+    path.write_bytes(out.getvalue())
+    print("bundle:", len(r.content), "->", path.stat().st_size, "bytes")
+    url = upload_file(path)
+    if not url:
+        sys.exit("upload refused")
+    page = lambda swap: [{**({"id": pg["id"]} if pg.get("id") else {}), "title": pg.get("title"), "description": {
+        **pg["description"], "content": [n for n in (swap(n) for n in pg["description"].get("content", [])) if n]}}
+        for pg in pages]
+    is_old = lambda n: n.get("type") == "fileEmbed" and (n.get("attrs") or {}).get("id") == old["id"]
+    if not call("PUT", f"products/{pid}", json={"rich_content": page(lambda n: None if is_old(n) else n)}).get("success"):
+        sys.exit("content page not updated, nothing changed")
+    # a kept file goes by id alone: its "url" here is a download link, and Gumroad wants its own upload address
+    keep = [{"id": f["id"]} for f in files if f["id"] != old["id"]]
+    j = call("PUT", f"products/{pid}", json={"files": [*keep, {"url": url, "display_name": old["name"]}]})
+    if DRY:
+        return
+    got = call("GET", f"products/{pid}").get("product", {}).get("files") or []
+    fresh = [f for f in got if f["id"] not in {x["id"] for x in files}]
+    print("swap ok:", bool(j.get("success")), "| files now:", [(f["name"], f["size"]) for f in got])
+    if not j.get("success") or len(fresh) != 1 or len(got) != len(files):
+        back = call("PUT", f"products/{pid}", json={"rich_content": page(lambda n: n)}) if any(
+            f["id"] == old["id"] for f in got) else {}
+        sys.exit(f"swap not clean, old page restored: {bool(back.get('success'))}")
+    nid = fresh[0]["id"]
+    ok = call("PUT", f"products/{pid}", json={"rich_content": page(
+        lambda n: {**n, "attrs": {**n["attrs"], "id": nid}} if is_old(n) else n)}).get("success")
+    print("content page embeds the new bundle:", bool(ok))
+    do_lookup_files()
+
+
 def do_profile():
     j = call("PUT", "user", json={"name": "Cosmos in Numbers", "bio": BIO})
     print("profile updated" if j.get("success") else "profile NOT updated")
@@ -282,6 +362,10 @@ def main():
         do_sky(tax)
     if "lookup" in what:
         do_lookup(tax)
+    if "lookup-fix" in what:
+        do_lookup_fix()
+    if "lookup-files" in what:
+        do_lookup_files()
     if "profile" in what:
         do_profile()
 

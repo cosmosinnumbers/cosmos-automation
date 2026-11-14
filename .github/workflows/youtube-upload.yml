@@ -1,5 +1,5 @@
 # Daily Short on YouTube via the API, public at 21:00 Rome time (owner decision 30/10/2026: the test upload
-# C-BKdHUodpE stayed public). After shorts-build it only checks; the 20:45 run waits and uploads at 21:00.
+# C-BKdHUodpE stayed public). After shorts-build it only checks; the 20:05 run waits and uploads at 21:00.
 # Never twice (logs/youtube-publish-log.jsonl + titles on the channel). The LOOK UP channel comment is posted by
 # engage.yml (cta) on its next run; pinning stays manual. Off switch: repository variable YOUTUBE_UPLOAD_ENABLED=false.
 name: youtube-upload
@@ -9,9 +9,11 @@ on:
     workflows: [shorts-build, long-clips]
     types: [completed]
   schedule:
-    - cron: "45 19 * * *"   # 20:45 Italian time in winter (CET)
-    - cron: "45 13 * * *"   # 14:45: SECOND Short of the day (b<MMDD>-*, hot news), public at 15:00 (owner 03/11/2026)
-    - cron: "45 18 * * *"   # 20:45 in summer (CEST, from 28/03/2027); off-season it only checks (19:45) or is a no-op (21:45)
+    # 55 min early (11/11/2026): GitHub starts these crons 40-50 min late (14:30 UTC for 13:45 on 10/11, nothing yet at
+    # 14:05 on 11/11), so the 15:00 Short went out late. yt_short_upload.py now waits up to 75 min for UPLOAD_AT.
+    - cron: "5 19 * * *"    # 20:05 Italian time in winter (CET), public at 21:00
+    - cron: "5 13 * * *"    # 14:05: SECOND Short of the day (b<MMDD>-*, hot news), public at 15:00 (owner 03/11/2026)
+    - cron: "5 18 * * *"    # 20:05 in summer (CEST, from 28/03/2027); off-season it only checks (19:05) or is a no-op (21:05)
   workflow_dispatch:
     inputs:
       tag:
@@ -35,7 +37,7 @@ jobs:
   upload:
     if: vars.YOUTUBE_UPLOAD_ENABLED != 'false' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 100
     env:
       TZ: Europe/Rome
       PYTHONIOENCODING: utf-8
@@ -51,8 +53,8 @@ jobs:
       - name: Upload today's Short
         env:
           YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
-          SHORT_PREFIX: ${{ github.event.schedule == '45 13 * * *' && 'b' || 'a' }}
-          UPLOAD_AT: ${{ github.event.schedule == '45 13 * * *' && '15:00' || '21:00' }}
+          SHORT_PREFIX: ${{ github.event.schedule == '5 13 * * *' && 'b' || 'a' }}
+          UPLOAD_AT: ${{ github.event.schedule == '5 13 * * *' && '15:00' || '21:00' }}
           IN_TAG: ${{ inputs.tag }}
           IN_DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
         run: |

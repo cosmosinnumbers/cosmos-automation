@@ -17,6 +17,7 @@ on:
     - cron: "0 10 * * *"
     - cron: "0 14 * * *"
     - cron: "30 11 * * *"   # 12:30 Italian time (winter): SECOND Short of the day, hot news of the last 48 h (owner 03/11/2026)
+    - cron: "15 12 * * *"   # 13:15: retry of the second Short if b<MMDD>-* is still missing (07/11/2026: the 12:30 run got no runner)
   workflow_dispatch:
     inputs:
       second:
@@ -50,7 +51,7 @@ jobs:
       PYTHONIOENCODING: utf-8
       GH_TOKEN: ${{ github.token }}
       # second Short of the day (12:30 cron or the "second" input): prefix b, hot news, no retries, no reserve, no alert
-      SECOND: ${{ github.event.schedule == '30 11 * * *' || inputs.second == true }}
+      SECOND: ${{ github.event.schedule == '30 11 * * *' || github.event.schedule == '15 12 * * *' || inputs.second == true }}
     steps:
       - uses: actions/checkout@v7
         with: {ref: "${{ github.ref }}"}  # tip of the branch: a re-run sees the logs of the attempt before (self-heal)

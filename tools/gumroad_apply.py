@@ -268,6 +268,22 @@ def do_sky(tax):
     print("live at:", final.get("short_url"), "published:", final.get("published"), "files:", len(final.get("files") or []))
 
 
+def do_lookup_files():
+    """LOOK UP's files, described without any link (the Actions log is public): which fields the API gives for each."""
+    p = product_by_permalink("look-up") or sys.exit("LOOK UP not found")
+    prod = call("GET", f"products/{p['id']}").get("product", {})
+    files = prod.get("files") or []
+    print("files:", len(files), "| rich_content pages:", len(prod.get("rich_content") or []))
+    for f in files:
+        safe = {k: (v if k in ("id", "name", "display_name", "size", "file_size", "extension", "filetype", "type", "position") else
+                    ("<" + type(v).__name__ + (" https" if str(v).startswith("http") else "") + ">")) for k, v in f.items()}
+        print(" ", json.dumps(safe, ensure_ascii=False))
+    for pg in prod.get("rich_content") or []:
+        kinds = [(n.get("type"), (n.get("attrs") or {}).get("id")) for n in (pg.get("description") or {}).get("content", [])]
+        print("  page:", pg.get("title"), kinds)
+    return prod
+
+
 def do_profile():
     j = call("PUT", "user", json={"name": "Cosmos in Numbers", "bio": BIO})
     print("profile updated" if j.get("success") else "profile NOT updated")
@@ -282,6 +298,8 @@ def main():
         do_sky(tax)
     if "lookup" in what:
         do_lookup(tax)
+    if "lookup-files" in what:
+        do_lookup_files()
     if "profile" in what:
         do_profile()
 

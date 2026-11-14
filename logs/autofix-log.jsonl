@@ -2,3 +2,4 @@
 {"wf": "longform-auto", "run": "42356219406", "at": 1794052057, "kind": "quota", "by": "", "day": "2026-11-07", "result": "no-fix"}
 {"wf": "publish", "run": "43292256897", "at": 1794515680, "kind": "external", "by": "", "day": "2026-11-12", "result": "no-fix"}
 {"wf": "publish", "run": "43300453427", "at": 1794517336, "kind": "external", "by": "", "day": "2026-11-12", "result": "no-fix"}
+{"wf": "longform-auto", "run": "43577388877", "at": 1794650880, "kind": "code", "by": "groq:openai/gpt-oss-120b", "day": "2026-11-14", "result": "no-fix"}

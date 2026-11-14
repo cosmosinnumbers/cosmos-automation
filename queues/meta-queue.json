@@ -305,5 +305,31 @@
   "at": "2026-11-13 21:00",
   "action": "fb-story",
   "video_url": "media/shorts/c1113-ess-clip-d_story.mp4"
+ },
+ {
+  "ref": "sr-c1114-ess-clip-e",
+  "at": "2026-11-14 21:00",
+  "action": "ig-reel",
+  "video_url": "media/shorts/c1114-ess-clip-e.mp4",
+  "caption": "How a dying Sun throws off its outer layers\n\nFull video on YouTube: @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "fr-c1114-ess-clip-e",
+  "at": "2026-11-14 21:02",
+  "action": "fb-reel",
+  "video_url": "media/shorts/c1114-ess-clip-e.mp4",
+  "caption": "How a dying Sun throws off its outer layers\n\nFull video on YouTube: @CosmosinNumbers\n📘 LOOK UP stargazing guide: https://gum.co/u/5lo91i50 · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "si-c1114-ess-clip-e",
+  "at": "2026-11-14 21:03",
+  "action": "ig-story",
+  "video_url": "media/shorts/c1114-ess-clip-e_story.mp4"
+ },
+ {
+  "ref": "sf-c1114-ess-clip-e",
+  "at": "2026-11-14 21:03",
+  "action": "fb-story",
+  "video_url": "media/shorts/c1114-ess-clip-e_story.mp4"
  }
 ]

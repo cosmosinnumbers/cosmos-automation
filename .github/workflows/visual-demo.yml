@@ -1,0 +1,37 @@
+# Before/after material for the "more visual" work (15/11/2026): fetches again the NASA material of Shorts that
+# are already out and keeps it as a prerelease "demo-visual-assets" (not a Short: no publisher reads this tag).
+name: visual-demo
+
+on:
+  push:
+    branches: ["claude/project-thread-j0zha0"]
+    paths: [".github/workflows/visual-demo.yml", "tools/demo_assets.py"]
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: "Release tags of the Shorts, space separated"
+        type: string
+        default: "a1114-star-33-times-heavier-than-sun a1115-apollo-surveyor-distance"
+
+permissions:
+  contents: write
+
+jobs:
+  assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAGS: ${{ inputs.tags || 'a1114-star-33-times-heavier-than-sun a1115-apollo-surveyor-distance b1114-ngc-206-star-cluster' }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.13"}
+      - run: pip install -q pillow imageio-ffmpeg PyYAML requests numpy
+      - run: |
+          for t in $TAGS; do python tools/demo_assets.py "$t" "demo/$t" || echo "::warning::$t failed"; done
+          tar czf demo-assets.tgz demo
+          ls -la demo-assets.tgz
+          gh release delete demo-visual-assets --yes --cleanup-tag 2>/dev/null || true
+          gh release create demo-visual-assets --prerelease --target "${{ github.sha }}" --title "Demo assets (not a video)" \
+            --notes "Material for the before/after example of the visual work. Safe to delete." demo-assets.tgz

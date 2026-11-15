@@ -656,6 +656,32 @@
   "short": "c1114-ess-clip-e"
  },
  {
+  "ref": "th-news-1115-apod-leonid-meteors-through",
+  "at": "2026-11-15 12:00",
+  "tag": "Asteroids",
+  "text": "Where will the next meteor appear?\n\nEven during a meteor shower, it is practically impossible to know. Therefore, a good way to enjoy a meteor shower is to find a place where you can sit comfortably and monitor a great expanse of dark sky.\n\nSource: NASA Astronomy Picture of the Day, \"Leonid Meteors Through Orion\" (15 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-15-leonid-meteors-through-orion/",
+  "replies": [
+   "And it may be satisfying to share this experience with a friend. The meteor shower depicted was the 2022 Leonids and the view is from Hainan, China looking out over the South China Sea.\n\nImage: Luo Hongyang."
+  ],
+  "news_title": "APOD: 2026 November 15 – Leonid Meteors Through Orion"
+ },
+ {
+  "ref": "th-quiz-1115-escape-velocity-min",
+  "at": "2026-11-15 16:00",
+  "tag": "Science",
+  "poll": [
+   "Saturn",
+   "Earth",
+   "Mercury"
+  ],
+  "text": "Yesterday's answer: Mercury, 4879 km across (NASA Planetary Fact Sheet).\n\nToday's quiz 🚀 Which of these planets has the lowest escape velocity?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Escape Velocity-1",
+  "answer": "Mercury, 4.3 km/s to escape (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1115-ess-clip-f",
   "at": "2026-11-15 21:00",
   "tag": "Sun",

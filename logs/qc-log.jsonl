@@ -38,3 +38,7 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1114-nsf-noirlab-operated", "ok": true, "score": 64, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1114-diameter-min", "ok": true, "score": 81, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-c1115-ess-clip-f", "ok": true, "score": 77, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1115-apod-leonid-meteors-through", "ok": true, "score": 75, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1115-nsf-noirlab-operated", "ok": true, "score": 66, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1115-apod-moon-venus-spica", "ok": true, "score": 70, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-quiz-1115-escape-velocity-min", "ok": true, "score": 78, "errors": []}

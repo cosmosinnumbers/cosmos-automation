@@ -1,37 +1,37 @@
 {
- "updated": "2026-11-14",
- "items": 41,
- "posts": 90,
+ "updated": "2026-11-15",
+ "items": 43,
+ "posts": 95,
  "channels": {
   "youtube:short": {
-   "posts": 33,
-   "median_views": 162
+   "posts": 35,
+   "median_views": 164
   },
   "youtube:long": {
    "posts": 7,
    "median_views": 35
   },
   "instagram:reel": {
-   "posts": 18,
-   "median_views": 132.5
+   "posts": 19,
+   "median_views": 135
   },
   "facebook:reel": {
-   "posts": 20,
-   "median_views": 3.5
+   "posts": 21,
+   "median_views": 3
   },
   "threads:video": {
-   "posts": 12,
-   "median_views": 73.5
+   "posts": 13,
+   "median_views": 64
   }
  },
  "top": [
   {
    "title": "What a light-year really is",
-   "score": 3.834,
+   "score": 3.881,
    "views": 1187,
    "channels": {
-    "instagram": 4.83,
-    "facebook": 0.86
+    "instagram": 4.84,
+    "facebook": 1.0
    },
    "themes": [
     "Luce, distanze e anni luce",
@@ -46,10 +46,10 @@
   },
   {
    "title": "NASA's Roman Telescope Got Sharper by Moving a Mirror",
-   "score": 3.307,
+   "score": 3.271,
    "views": 934,
    "channels": {
-    "youtube": 3.31
+    "youtube": 3.27
    },
    "themes": [
     "Telescopi"
@@ -62,10 +62,10 @@
   },
   {
    "title": "The Moon Swings 295 °C in One Day. Here's Why",
-   "score": 2.704,
+   "score": 2.676,
    "views": 747,
    "channels": {
-    "youtube": 2.7
+    "youtube": 2.68
    },
    "themes": [
     "Estremi (temperatura, velocità)",
@@ -80,12 +80,12 @@
   },
   {
    "title": "11 Earths Fit Across Jupiter",
-   "score": 2.108,
+   "score": 2.139,
    "views": 1088,
    "channels": {
-    "youtube": 3.43,
-    "facebook": 2.0,
-    "instagram": 0.83
+    "youtube": 3.39,
+    "facebook": 2.33,
+    "instagram": 0.82
    },
    "themes": [
     "Scala e dimensioni",
@@ -135,27 +135,11 @@
  ],
  "bottom": [
   {
-   "title": "A Planet 24.55 Times Heavier Than Jupiter",
-   "score": 0.315,
-   "views": 51,
-   "channels": {
-    "youtube": 0.32
-   },
-   "themes": [
-    "Pianeti e lune"
-   ],
-   "themes_en": [
-    "planets and moons"
-   ],
-   "published": "2026-11-13",
-   "hour": 15
-  },
-  {
    "title": "Why NASA Will Fly Past Europa 49 Times",
-   "score": 0.39,
-   "views": 5,
+   "score": 0.432,
+   "views": 8,
    "channels": {
-    "youtube": 0.39
+    "youtube": 0.43
    },
    "themes": [
     "Record e missioni",
@@ -172,7 +156,7 @@
   },
   {
    "title": "The Nearest Star to the Sun Is Invisible to the Naked Eye",
-   "score": 0.464,
+   "score": 0.463,
    "views": 25,
    "channels": {
     "youtube": 0.46
@@ -189,11 +173,27 @@
    "hour": 21
   },
   {
-   "title": "NGC 4449 Is 1/10th the Milky Way's Size",
-   "score": 0.687,
-   "views": 81,
+   "title": "A Planet 24.55 Times Heavier Than Jupiter",
+   "score": 0.524,
+   "views": 86,
    "channels": {
-    "youtube": 0.69
+    "youtube": 0.52
+   },
+   "themes": [
+    "Pianeti e lune"
+   ],
+   "themes_en": [
+    "planets and moons"
+   ],
+   "published": "2026-11-13",
+   "hour": 15
+  },
+  {
+   "title": "NGC 4449 Is 1/10th the Milky Way's Size",
+   "score": 0.672,
+   "views": 77,
+   "channels": {
+    "youtube": 0.67
    },
    "themes": [
     "Scala e dimensioni"
@@ -208,236 +208,220 @@
  "features": {
   "theme": {
    "extremes": {
-    "mean": 1.433,
+    "mean": 1.439,
     "n": 4,
-    "lift": 0.187
+    "lift": 0.166
    },
    "telescopes": {
-    "mean": 1.4,
+    "mean": 1.432,
     "n": 6,
-    "lift": 0.164
+    "lift": 0.169
    },
    "explainer": {
-    "mean": 1.371,
+    "mean": 1.394,
     "n": 5,
-    "lift": 0.13
+    "lift": 0.127
    },
    "news": {
-    "mean": 1.311,
+    "mean": 1.335,
     "n": 6,
     "lift": 0.073
    },
    "light_distance": {
-    "mean": 1.253,
-    "n": 11,
-    "lift": 0.018
+    "mean": 1.238,
+    "n": 12,
+    "lift": -0.025
    },
    "planets": {
-    "mean": 1.155,
+    "mean": 1.192,
     "n": 20,
-    "lift": -0.123
+    "lift": -0.098
    },
    "scale_size": {
-    "mean": 1.117,
-    "n": 6,
-    "lift": -0.116
+    "mean": 1.146,
+    "n": 7,
+    "lift": -0.11
    },
    "records_missions": {
-    "mean": 1.031,
+    "mean": 1.055,
     "n": 7,
-    "lift": -0.2
+    "lift": -0.194
    },
    "deep_sky": {
-    "mean": 0.977,
+    "mean": 1.003,
     "n": 8,
-    "lift": -0.256
+    "lift": -0.246
    }
   },
   "format": {
    "scale_zoom": {
-    "mean": 1.4,
-    "n": 9,
-    "lift": 0.181
+    "mean": 1.327,
+    "n": 11,
+    "lift": 0.074
    },
    "myth_number": {
     "mean": 1.281,
     "n": 1,
-    "lift": 0.038
+    "lift": 0.018
    },
    "quiz_guess": {
-    "mean": 1.243,
+    "mean": 1.256,
     "n": 3,
-    "lift": 0.005
+    "lift": -0.004
    },
    "mission_glitch": {
-    "mean": 1.146,
+    "mean": 1.145,
     "n": 4,
-    "lift": -0.084
+    "lift": -0.104
    },
    "countdown_top": {
-    "mean": 1.05,
+    "mean": 1.051,
     "n": 2,
-    "lift": -0.164
+    "lift": -0.179
    },
    "audience_question": {
-    "mean": 1.03,
+    "mean": 1.046,
     "n": 1,
-    "lift": -0.178
+    "lift": -0.179
    },
    "news_angle": {
-    "mean": 1.002,
+    "mean": 1.032,
     "n": 4,
-    "lift": -0.214
+    "lift": -0.202
    },
    "sky_tonight": {
     "mean": 0.821,
     "n": 1,
-    "lift": -0.352
+    "lift": -0.364
    }
   },
   "hook": {
    "question": {
-    "mean": 1.446,
+    "mean": 1.463,
     "n": 4,
-    "lift": 0.2
+    "lift": 0.189
    },
    "extreme_number": {
-    "mean": 1.168,
-    "n": 26,
-    "lift": -0.136
+    "mean": 1.21,
+    "n": 27,
+    "lift": -0.097
    },
    "you": {
-    "mean": 1.139,
+    "mean": 1.145,
     "n": 1,
-    "lift": -0.085
+    "lift": -0.097
    },
    "comparison": {
-    "mean": 1.089,
-    "n": 1,
-    "lift": -0.127
+    "mean": 1.035,
+    "n": 2,
+    "lift": -0.192
    },
    "paradox": {
-    "mean": 1.01,
+    "mean": 1.015,
     "n": 3,
-    "lift": -0.203
+    "lift": -0.213
    }
   },
   "hour": {
    "20": {
-    "mean": 1.395,
+    "mean": 1.418,
     "n": 11,
-    "lift": 0.189
+    "lift": 0.182
    },
    "21": {
-    "mean": 1.306,
+    "mean": 1.324,
     "n": 11,
-    "lift": 0.079
+    "lift": 0.071
    },
    "13": {
-    "mean": 1.298,
+    "mean": 1.308,
     "n": 5,
-    "lift": 0.059
-   },
-   "22": {
-    "mean": 1.135,
-    "n": 1,
-    "lift": -0.088
+    "lift": 0.045
    },
    "17": {
-    "mean": 1.101,
+    "mean": 1.15,
     "n": 2,
-    "lift": -0.12
+    "lift": -0.095
    },
    "12": {
-    "mean": 1.083,
+    "mean": 1.107,
     "n": 1,
-    "lift": -0.132
+    "lift": -0.129
+   },
+   "22": {
+    "mean": 1.048,
+    "n": 2,
+    "lift": -0.181
    },
    "18": {
-    "mean": 0.979,
+    "mean": 0.98,
     "n": 1,
-    "lift": -0.221
-   },
-   "15": {
-    "mean": 0.853,
-    "n": 4,
-    "lift": -0.343
+    "lift": -0.234
    },
    "16": {
-    "mean": 0.819,
+    "mean": 0.924,
     "n": 3,
-    "lift": -0.365
+    "lift": -0.289
+   },
+   "15": {
+    "mean": 0.87,
+    "n": 5,
+    "lift": -0.345
    }
   },
   "short_headline": {
    "yes": {
-    "mean": 1.241,
-    "n": 13,
-    "lift": 0.005
+    "mean": 1.275,
+    "n": 14,
+    "lift": 0.018
    },
    "no": {
-    "mean": 1.236,
-    "n": 28,
-    "lift": -0.005
+    "mean": 1.253,
+    "n": 29,
+    "lift": -0.018
    }
   }
  },
  "rules": [
   {
    "dim": "hour",
-   "value": "16",
-   "label": "ore 16",
-   "lift": -0.365,
-   "n": 3,
+   "value": "15",
+   "label": "ore 15",
+   "lift": -0.345,
+   "n": 5,
    "do": false
   },
   {
    "dim": "hour",
-   "value": "15",
-   "label": "ore 15",
-   "lift": -0.343,
-   "n": 4,
+   "value": "16",
+   "label": "ore 16",
+   "lift": -0.289,
+   "n": 3,
    "do": false
   },
   {
    "dim": "theme",
    "value": "deep_sky",
    "label": "Galassie, nebulose, stelle",
-   "lift": -0.256,
+   "lift": -0.246,
    "n": 8,
-   "do": false
-  },
-  {
-   "dim": "format",
-   "value": "news_angle",
-   "label": "Notizia con un numero forte",
-   "lift": -0.214,
-   "n": 4,
    "do": false
   },
   {
    "dim": "hook",
    "value": "paradox",
    "label": "Paradosso",
-   "lift": -0.203,
+   "lift": -0.213,
    "n": 3,
    "do": false
   },
   {
-   "dim": "theme",
-   "value": "records_missions",
-   "label": "Record e missioni",
-   "lift": -0.2,
-   "n": 7,
-   "do": false
-  },
-  {
-   "dim": "hook",
-   "value": "question",
-   "label": "Domanda",
-   "lift": 0.2,
+   "dim": "format",
+   "value": "news_angle",
+   "label": "Notizia con un numero forte",
+   "lift": -0.202,
    "n": 4,
-   "do": true
+   "do": false
   }
  ],
  "prefer": [
@@ -461,16 +445,16 @@
  ],
  "avoid_en": [],
  "next_long": {
-  "from": "What a light-year really is",
-  "score": 3.834,
+  "from": "The Sun will swell 200 times wider",
+  "score": 1.416,
   "channels": {
-   "instagram": 4.83,
-   "facebook": 0.86
+   "youtube": 0.78,
+   "facebook": 0.33,
+   "threads": 3.41
   },
   "themes": [
-   "light_distance",
-   "explainer"
+   "scale_size"
   ],
-  "hint": "Our clip 'What a light-year really is' was a hit (3.834x our median across channels: instagram 4.83x, facebook 0.86x). Make the next long video in the same vein (light, distances and light-years, explaining a familiar concept for real): a question with a surprising, measurable answer, explained step by step with animated numbers, built so every chapter works as a 30-50 s clip on its own. New topic and NEW measured numbers, never the same facts."
+  "hint": "Our clip 'The Sun will swell 200 times wider' was a hit (1.416x our median across channels: youtube 0.78x, facebook 0.33x, threads 3.41x). Make the next long video in the same vein (scale and size comparisons): a question with a surprising, measurable answer, explained step by step with animated numbers, built so every chapter works as a 30-50 s clip on its own. New topic and NEW measured numbers, never the same facts."
  }
 }

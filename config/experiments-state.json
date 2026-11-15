@@ -1,18 +1,18 @@
 {
- "updated": "2026-11-14",
- "n_shorts": 29,
+ "updated": "2026-11-15",
+ "n_shorts": 31,
  "formats": {
   "scale_zoom": {
-   "n": 6,
-   "wins": 2.2,
-   "losses": 1.44,
-   "mean": 1.27,
+   "n": 7,
+   "wins": 2.07,
+   "losses": 2.44,
+   "mean": 1.2,
    "decision": "esplora"
   },
   "other": {
-   "n": 14,
-   "wins": 6.3,
-   "losses": 3.56,
+   "n": 15,
+   "wins": 6.14,
+   "losses": 4.56,
    "mean": 1.16,
    "decision": "esplora"
   },
@@ -20,21 +20,21 @@
    "n": 3,
    "wins": 1.31,
    "losses": 1.0,
-   "mean": 0.99,
+   "mean": 1.01,
    "decision": "esplora"
   },
   "mission_glitch": {
    "n": 2,
-   "wins": 0.64,
+   "wins": 0.51,
    "losses": 0.64,
-   "mean": 0.95,
+   "mean": 0.97,
    "decision": "esplora"
   },
   "audience_question": {
    "n": 3,
    "wins": 1.0,
    "losses": 1.31,
-   "mean": 0.88,
+   "mean": 0.89,
    "decision": "esplora"
   },
   "sky_tonight": {
@@ -47,45 +47,45 @@
  },
  "hooks": {
   "extreme_number": {
-   "n": 13,
-   "wins": 7.23,
-   "losses": 1.92,
-   "mean": 1.25,
+   "n": 15,
+   "wins": 6.94,
+   "losses": 3.92,
+   "mean": 1.19,
    "decision": "esplora"
   },
   "other": {
    "n": 6,
    "wins": 1.54,
    "losses": 2.28,
-   "mean": 1.13,
+   "mean": 1.16,
    "decision": "esplora"
   },
   "comparison": {
    "n": 3,
-   "wins": 1.05,
+   "wins": 0.92,
    "losses": 0.51,
-   "mean": 1.02,
+   "mean": 1.04,
    "decision": "esplora"
   },
   "question": {
    "n": 3,
    "wins": 1.0,
    "losses": 1.6,
-   "mean": 0.92,
+   "mean": 0.94,
    "decision": "esplora"
   },
   "you": {
    "n": 2,
    "wins": 0.64,
    "losses": 1.0,
-   "mean": 0.91,
+   "mean": 0.92,
    "decision": "esplora"
   },
   "paradox": {
    "n": 2,
    "wins": 0.0,
    "losses": 1.28,
-   "mean": 0.61,
+   "mean": 0.62,
    "decision": "esplora"
   }
  },
@@ -94,83 +94,83 @@
    "n": 1,
    "wins": 0.51,
    "losses": 0.0,
-   "mean": 2.73,
+   "mean": 2.82,
    "decision": "esplora"
   },
   "telescope": {
    "n": 3,
    "wins": 1.02,
    "losses": 0.64,
-   "mean": 1.49,
+   "mean": 1.53,
    "decision": "esplora"
   },
   "moon": {
    "n": 3,
-   "wins": 2.08,
+   "wins": 1.95,
    "losses": 0.0,
-   "mean": 1.47,
+   "mean": 1.5,
    "decision": "esplora"
   },
   "earth": {
    "n": 1,
    "wins": 0.8,
    "losses": 0.0,
-   "mean": 1.4,
+   "mean": 1.42,
    "decision": "esplora"
   },
   "other": {
    "n": 5,
    "wins": 1.95,
    "losses": 1.28,
-   "mean": 1.04,
+   "mean": 1.06,
    "decision": "esplora"
   },
   "solar_system": {
    "n": 3,
-   "wins": 1.05,
+   "wins": 0.92,
    "losses": 0.64,
-   "mean": 1.01,
+   "mean": 1.02,
    "decision": "esplora"
   },
   "saturn": {
    "n": 1,
-   "wins": 0.8,
+   "wins": 0.64,
    "losses": 0.0,
-   "mean": 1.0,
+   "mean": 1.02,
    "decision": "esplora"
   },
   "mars": {
    "n": 2,
    "wins": 0.8,
    "losses": 0.8,
-   "mean": 0.99,
+   "mean": 1.02,
    "decision": "esplora"
   },
   "sun": {
-   "n": 4,
+   "n": 5,
    "wins": 1.8,
-   "losses": 1.64,
+   "losses": 2.64,
    "mean": 0.81,
-   "decision": "esplora"
-  },
-  "light_speed": {
-   "n": 3,
-   "wins": 0.64,
-   "losses": 1.44,
-   "mean": 0.78,
    "decision": "esplora"
   },
   "venus": {
    "n": 1,
    "wins": 0.0,
    "losses": 0.51,
-   "mean": 0.75,
+   "mean": 0.76,
    "decision": "esplora"
   },
   "iss": {
    "n": 1,
    "wins": 0.0,
    "losses": 0.64,
+   "mean": 0.75,
+   "decision": "esplora"
+  },
+  "light_speed": {
+   "n": 4,
+   "wins": 0.64,
+   "losses": 2.44,
    "mean": 0.74,
    "decision": "esplora"
   },
@@ -186,35 +186,35 @@
   {
    "title": "11 Earths Fit Across Jupiter (NASA data)",
    "id": "Z0e8oVP51bo",
-   "score": 2.73,
+   "score": 2.82,
    "views": 956,
    "pct": 59.3
   },
   {
    "title": "NASA's Roman Telescope Got Sharper by Moving a Mirror",
    "id": "fD8pNtTwvXs",
-   "score": 2.63,
+   "score": 2.71,
    "views": 934,
    "pct": 52.9
   },
   {
    "title": "The Moon Swings 295 °C in One Day. Here's Why (NASA data)",
    "id": "6qv4TZ6AqdU",
-   "score": 2.16,
+   "score": 2.23,
    "views": 747,
    "pct": 49.7
   },
   {
    "title": "A 3,200-Pound Space Telescope Is Falling to Earth",
    "id": "rXEds3znnhI",
-   "score": 1.4,
+   "score": 1.42,
    "views": 241,
    "pct": 103.8
   },
   {
    "title": "The Most Common Planet Size Doesn't Exist in Our Solar System",
    "id": "8Tb7dHT1vek",
-   "score": 1.28,
+   "score": 1.31,
    "views": 340,
    "pct": 60.1
   }

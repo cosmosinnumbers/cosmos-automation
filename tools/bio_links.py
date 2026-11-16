@@ -69,7 +69,7 @@ def youtube():
             f"🆓 Free PDF, The Solar System in 20 Numbers: {free}")
     import links
     if links.amazon():   # LOOK UP on Amazon takes the third line; short lines, the description allows 1000 characters
-        head = (f"🔭 Free sky calendar, The Next 30 Nights: {sky}\n"
+        head = (f"🔭 Free sky calendar, next 30 nights: {sky}\n"
                 f"📘 LOOK UP stargazing guide: {look}\n"
                 f"📦 On Amazon ({links.amazon_formats()}): {links.amazon()}")
     if cur.startswith(head):

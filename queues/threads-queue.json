@@ -692,6 +692,32 @@
   "short": "c1115-ess-clip-f"
  },
  {
+  "ref": "th-news-1116-apod-ngc-7129-star",
+  "at": "2026-11-16 12:00",
+  "tag": "JWST",
+  "text": "How do stars form?\n\nTo help answer this question, NASA used the James Webb Space Telescope to take the featured detailed image of the star-forming region NGC 7129 in infrared light.\n\nSource: NASA Astronomy Picture of the Day, \"NGC 7129: Star Formation with Jets from Webb\" (16 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-16-ngc-7129-star-formation-with-jets-from-webb/",
+  "replies": [
+   "Star formation progresses when gravity pulls together massive amounts of gas, but soon things can get complicated when previously formed stars emit powerful jets and winds – and some then explode. Opaque dust can form in the cool atmospheres of stars and, when dispersed, can obstruct visible-light images.\n\nImage: NASA, ESA, CSA, STScI, JWST; Processing: A. Pagan (STScI)."
+  ],
+  "news_title": "APOD: 2026 November 16 – NGC 7129: Star Formation with Jets from Webb"
+ },
+ {
+  "ref": "th-quiz-1116-number-moons-min",
+  "at": "2026-11-16 16:00",
+  "tag": "Science",
+  "poll": [
+   "Mars",
+   "Neptune",
+   "Jupiter"
+  ],
+  "text": "Yesterday's answer: Mercury, 4.3 km/s to escape (NASA Planetary Fact Sheet).\n\nToday's quiz 🌙 Which of these planets has the fewest known moons?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Number of Moons-1",
+  "answer": "Mars, 2 known moons (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1116-ess-clip-g",
   "at": "2026-11-16 21:00",
   "tag": "Hubble",

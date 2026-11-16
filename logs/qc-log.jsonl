@@ -43,3 +43,7 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1115-apod-moon-venus-spica", "ok": true, "score": 70, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1115-escape-velocity-min", "ok": true, "score": 78, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-c1116-ess-clip-g", "ok": true, "score": 74, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1116-apod-ngc-7129-star", "ok": true, "score": 87, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1116-gemini-astronaut-photos", "ok": true, "score": 59, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1116-nsf-noirlab-operated", "ok": true, "score": 65, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-quiz-1116-number-moons-min", "ok": true, "score": 80, "errors": []}

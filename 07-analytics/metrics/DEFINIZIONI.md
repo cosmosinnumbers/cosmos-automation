@@ -61,6 +61,8 @@ Una metrica rifiutata dall'API va in `missing` con il motivo: nei rapporti si sc
 - `reposts`: Repost.
 - `quotes`: Citazioni.
 - `shares`: Condivisioni.
+- `acct_link_clicks_7d`: Account: clic di persone sui link dei nostri post e risposte negli ultimi 7 giorni (threads_insights 'clicks'). I link corti di Gumroad contano anche i robot delle anteprime: questo no.
+- `links_7d`: Account: gli stessi clic divisi per link.
 
 ## gumroad
 

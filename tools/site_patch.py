@@ -55,7 +55,7 @@ def fix_html(name: str, s: str) -> str:
         am = links.amazon()
         if am and 'data-k="amazon"' not in s:
             s = s.replace("<!-- 3. Newsletter", f'<a class="l" href="{am}" data-k="amazon">📦 LOOK UP on Amazon'
-                          "<small>Kindle and paperback</small></a>\n\n<!-- 3. Newsletter", 1)
+                          f"<small>{links.amazon_formats()[0].upper() + links.amazon_formats()[1:]} edition</small></a>\n\n<!-- 3. Newsletter", 1)
     if name == "index.html" and 'href="sky.html"' not in s:
         s = s.replace('<a href="look-up.html">LOOK UP guide</a><a href="links.html">Links</a></nav>',
                       '<a href="sky.html">Sky this month</a><a href="look-up.html">LOOK UP guide</a><a href="links.html">Links</a></nav>', 1)

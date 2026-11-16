@@ -52,13 +52,17 @@ def test_threads_capped_by_its_own_count():
 
 
 def test_amazon_only_when_live():
-    assert links.amazon() == "" and not any("Amazon" in t for t in cta.all_texts())   # config/stores.json is empty today
+    assert all(len(t) <= 280 for t in cta.all_texts())
     with tempfile.TemporaryDirectory() as d:
         old, links.STORES = links.STORES, Path(d) / "stores.json"
         links.STORES.write_text(json.dumps({"amazon_kindle": "https://www.amazon.com/dp/B0TEST", "gumroad_seller_id": "1", "site": "https://x.test/"}))
         try:
             texts = cta.all_texts()
             assert any("amazon.com/dp/B0TEST" in t for t in texts) and all(len(t) <= 280 for t in texts)
+            assert links.amazon_formats() == "Kindle"   # the paperback is not named before it has a link
+            links.STORES.write_text(json.dumps({"site": "https://x.test/"}))
+            assert links.amazon() == "" and not any("Amazon" in t for t in cta.all_texts())
+            links.STORES.write_text(json.dumps({"amazon_kindle": "https://www.amazon.com/dp/B0TEST", "gumroad_seller_id": "1", "site": "https://x.test/"}))
             assert links.is_product_link("see https://www.amazon.com/dp/B0TEST")
             page = sky_page.build(json.loads((sky_page.OUT / "sky.json").read_text("utf-8")), date(2026, 12, 5))
             assert "amazon.com/dp/B0TEST" in page and "COSMOS9" not in page and "follow_from_embed_form" in page

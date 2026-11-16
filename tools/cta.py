@@ -36,7 +36,7 @@ def texts(source: str = "threads", sky: bool = False) -> list[str]:
     ]
     am = links.amazon()
     if am:   # live on Amazon: one text in the rotation for readers who buy books there, not on a store they never heard of
-        out.append(f"LOOK UP is now on Amazon too, Kindle and paperback: {am}\n"
+        out.append(f"LOOK UP is now on Amazon too ({links.amazon_formats()}): {am}\n"
                    f"Or the PDF with 14 bonus posters: {look}\n{CODE}")
     if sky:
         out += [

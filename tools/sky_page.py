@@ -90,7 +90,7 @@ table{{border-collapse:collapse;width:100%}} td{{padding:10px 8px;border-top:1px
 
 <div class="box"><h2>Want to know what everything else up there is?</h2>
 <p><strong>LOOK UP</strong> is our beginner's guide to the night sky: 173 pages, 45 field exercises, a month-by-month 2027 sky calendar and the 2 August 2027 total solar eclipse. Eyes and ordinary binoculars only. 30-day refund.</p>
-<p><a class="btn" href="{look}">Get LOOK UP (PDF + EPUB)</a>{f'<a class="btn" style="background:transparent;color:var(--acc);border:2px solid var(--acc)" href="{am}">Kindle and paperback on Amazon</a>' if am else ''}</p>
+<p><a class="btn" href="{look}">Get LOOK UP (PDF + EPUB)</a>{f'<a class="btn" style="background:transparent;color:var(--acc);border:2px solid var(--acc)" href="{am}">{links.amazon_formats()[0].upper() + links.amazon_formats()[1:]} edition on Amazon</a>' if am else ''}</p>
 <p class="mut">{price}. <a href="look-up.html">Read Chapter 1 free</a>.</p></div>
 
 <p class="mut" style="font-size:.9em">{e(sky['method'])}</p>

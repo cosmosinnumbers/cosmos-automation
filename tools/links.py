@@ -47,6 +47,12 @@ def amazon() -> str:
     return store("amazon_paperback") or store("amazon_kindle")
 
 
+def amazon_formats() -> str:
+    """How to name what Amazon sells today: the paperback is named only once its link is in config/stores.json."""
+    return "Kindle and paperback" if store("amazon_paperback") and store("amazon_kindle") else \
+           "paperback" if store("amazon_paperback") else "Kindle"
+
+
 def sky_page(source: str = "") -> str:
     """The sky calendar as a web page on our site: nothing to download, no email asked (funnel review 16/11/2026)."""
     return store("site") + "sky.html" + (f"?src={source}" if source else "")

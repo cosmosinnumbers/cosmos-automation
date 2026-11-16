@@ -1,6 +1,6 @@
 {
- "start": "2026-11-14",
- "end": "2026-12-13",
+ "start": "2026-11-16",
+ "end": "2026-12-15",
  "days": 30,
  "latitude": "40° N",
  "method": "Computed with PyEphem for 40° N. Meteor shower peaks and rates: IMO Meteor Shower Calendar. Dates are UTC and can shift by one day where you live.",
@@ -8,8 +8,8 @@
   {
    "name": "Mercury",
    "text": "before dawn, low in the south-east before sunrise; by the end of the period: hidden in the Sun's glare",
-   "mag": -0.1,
-   "constellation": "Virgo",
+   "mag": -0.3,
+   "constellation": "Libra",
    "when": "before dawn",
    "visible": true
   },
@@ -106,19 +106,20 @@
    "kind": "moon",
    "name": "New Moon",
    "text": "New Moon: the darkest nights of the month, best for faint stars and the Milky Way."
+  },
+  {
+   "at": "2026-12-14T13:41+00:00",
+   "date": "2026-12-14",
+   "kind": "meteors",
+   "name": "Geminids meteor shower peak",
+   "shower": "Geminids",
+   "zhr": 150,
+   "parent": "asteroid 3200 Phaethon",
+   "moon_lit_pct": 25,
+   "text": "Geminids peak: up to 150 meteors an hour under a perfect dark sky, debris of asteroid 3200 Phaethon. Moon 25% lit: a dark sky, the Moon is out of the way. Best after midnight."
   }
  ],
  "moon": [
-  {
-   "date": "2026-11-14",
-   "lit": 26,
-   "waxing": true
-  },
-  {
-   "date": "2026-11-15",
-   "lit": 34,
-   "waxing": true
-  },
   {
    "date": "2026-11-16",
    "lit": 44,
@@ -258,40 +259,50 @@
    "date": "2026-12-13",
    "lit": 19,
    "waxing": true
+  },
+  {
+   "date": "2026-12-14",
+   "lit": 27,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-15",
+   "lit": 36,
+   "waxing": true
   }
  ],
  "charts": {
-  "date": "2026-11-21",
+  "date": "2026-11-23",
   "evening": [
    {
     "name": "Saturn",
-    "az": 120,
-    "alt": 32,
+    "az": 121,
+    "alt": 33,
     "mag": 0.7
    }
   ],
   "morning": [
    {
     "name": "Mercury",
-    "az": 116,
+    "az": 117,
     "alt": 10,
-    "mag": -0.4
+    "mag": -0.5
    },
    {
     "name": "Venus",
-    "az": 127,
-    "alt": 23,
+    "az": 128,
+    "alt": 25,
     "mag": -4.4
    },
    {
     "name": "Mars",
-    "az": 186,
-    "alt": 64,
+    "az": 190,
+    "alt": 63,
     "mag": 0.6
    },
    {
     "name": "Jupiter",
-    "az": 191,
+    "az": 196,
     "alt": 63,
     "mag": -2.0
    }

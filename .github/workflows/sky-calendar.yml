@@ -67,6 +67,13 @@ jobs:
       - name: Tracked links for the new product
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
         run: python tools/gumroad_utm.py create
+      # Funnel review 16/11/2026: the same calendar as a page of the site (no download, no email asked)
+      - name: Sky page on the site (sky.html)
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+        continue-on-error: true
+        env:
+          PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
+        run: python tools/sky_page.py
       - name: Save
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
         run: |

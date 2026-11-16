@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 M = ROOT / "07-analytics" / "metrics"
 OUT, LOG = ROOT / "reports" / "funnel.md", M / "funnel.jsonl"
 FREE = ("free", "20 numbers", "30 nights")   # how the free products are recognised from their title
+CONTROL = {("x", "reply")}   # tracked links that are published nowhere (X is off since 26/10/2026): robots only
 
 
 def rows(name: str) -> list[dict]:
@@ -64,28 +65,57 @@ def build(days: int = 7, today: date | None = None) -> dict:
     out["ig_reach"] = sum(r["metrics"].get("acct_reach") or 0 for r in ig) if ig else None
     out["ig_link_taps"] = sum(r["metrics"].get("acct_website_clicks") or 0 for r in ig) if ig else None
 
-    th = defaultdict(dict)
+    th, th_acct = defaultdict(dict), {}
     for r in rows("threads"):
-        th[r["id"]][r["date"]] = r["metrics"].get("views", 0)
+        if r.get("level") == "account":
+            if "acct_link_clicks_7d" in r["metrics"] and s < r["date"] <= t:
+                th_acct = r["metrics"]   # the last reading inside the window
+        else:
+            th[r["id"]][r["date"]] = r["metrics"].get("views", 0)
     out["threads_views"] = sum(grow(v, t, s) for v in th.values()) if th else None
+    out["threads_link_clicks"] = th_acct.get("acct_link_clicks_7d") if days == 7 else None
 
-    clicks, robots = {}, 0
-    series = defaultdict(dict)
-    meta = {}
+    fb = defaultdict(dict)
+    for r in rows("facebook"):
+        if r.get("level") == "post" and r["metrics"].get("clicks") is not None:
+            fb[r["id"]][r["date"]] = r["metrics"]["clicks"]
+    out["fb_post_clicks"] = sum(grow(v, t, s) for v in fb.values()) if fb else None
+
+    # Clicks counted by Gumroad on the short links. Robots open them too (funnel review 16/11/2026): every link got 2
+    # "clicks" the day it was made, and a link posted on Threads or Facebook gets about 20 more per post from the
+    # preview crawlers (164 "clicks" on 8 Threads replies in two days, with zero downloads). So:
+    # - CONTROL links are published nowhere: what they count is robots, and it is taken off every link of the product;
+    # - a link on a platform that counts human link clicks itself is capped by that number (Instagram link taps,
+    #   Threads link clicks, Facebook clicks on the posts); with no such number its clicks are left out and shown
+    #   apart as "non verificabili", never added to the human total.
+    series, meta = defaultdict(dict), {}
     for r in rows("gumroad-utm"):
         series[r["id"]][r["date"]] = r["metrics"].get("unique_clicks") or 0
         meta[r["id"]] = (r["campaign"], r["source"], r["medium"])
-    for i, v in series.items():
-        d = grow(v, t, s)
-        if not d:
+    raw = {meta[i]: grow(v, t, s) for i, v in series.items()}
+    base = defaultdict(int)
+    for (camp, src, med), d in raw.items():
+        if (src, med) in CONTROL:
+            base[camp] = max(base[camp], d)
+    caps = {("instagram", "bio"): out["ig_link_taps"], ("threads", "reply"): out["threads_link_clicks"],
+            ("facebook", "post"): out["fb_post_clicks"]}
+    clicks, unverified, robots = {}, {}, 0
+    left = dict(caps)   # one human number per platform, shared by the links of all products
+    for (camp, src, med), d in sorted(raw.items(), key=lambda kv: -kv[1]):
+        if not d or (src, med) in CONTROL:
+            robots += d
             continue
-        camp, src, med = meta[i]
-        if (src, med) == ("instagram", "bio") and out["ig_link_taps"] is not None and d > out["ig_link_taps"]:
-            robots += d - out["ig_link_taps"]   # Instagram counted fewer taps than Gumroad counted clicks: robots
-            d = out["ig_link_taps"]
-        if d:
-            clicks[f"{camp} · {src} {med}"] = d
-    out["clicks"], out["robot_clicks"] = clicks, robots
+        name, human = f"{camp} · {src} {med}", max(0, d - base[camp])
+        if (src, med) in caps:
+            if left[(src, med)] is None:
+                unverified[name] = d
+                continue
+            human = min(human, left[(src, med)])
+            left[(src, med)] -= human
+        robots += d - human
+        if human:
+            clicks[name] = human
+    out["clicks"], out["robot_clicks"], out["unverified_clicks"] = clicks, robots, unverified
     out["human_clicks"] = sum(clicks.values())
 
     sales = defaultdict(dict)
@@ -108,10 +138,11 @@ def n(v) -> str:
 def verdict(f: dict) -> list[str]:
     views = sum(v or 0 for v in (f["yt_views"], f["ig_reach"], f["threads_views"]))
     hc, L = f["human_clicks"], []
-    if views and hc * 1000 < views * 3:
+    if views and (hc < 30 or hc * 1000 < views * 3):
         L.append(f"- **Collo di bottiglia: il clic.** Clic veri: {n(hc)} su {n(views)} visualizzazioni "
-                 f"({hc / views * 100:.2f}%). Finché sono sotto lo 0,3% non serve toccare prezzo o pagina: servono "
-                 "contenuti da cielo di stasera, video lunghi (link cliccabili) e link del canale in ordine.")
+                 f"({hc / views * 100:.2f}%). Sotto i 30 clic veri a settimana (o lo 0,3%) non si può giudicare né "
+                 "prezzo né pagina: servono contenuti da cielo di stasera, video lunghi (link cliccabili), la pagina "
+                 "Amazon e link del canale in ordine.")
     elif hc >= 30 and not f["free_downloads"] and not f["paid_sales"]:
         L.append(f"- **Collo di bottiglia: la pagina.** {n(hc)} clic veri e nessun download né vendita: rivedere "
                  "titolo, copertina e prime righe delle pagine Gumroad.")
@@ -124,8 +155,12 @@ def verdict(f: dict) -> list[str]:
     L.append(f"- Regola pratica: una vendita ogni 50-100 clic veri di persone interessate al cielo. Questa settimana "
              f"ne mancano almeno {need} per aspettarsi la prima.")
     if f["robot_clicks"]:
-        L.append(f"- {n(f['robot_clicks'])} clic del link in bio di Instagram sono robot (Instagram ha contato "
-                 f"solo {n(f['ig_link_taps'])} tocchi sul link): esclusi dai conti.")
+        L.append(f"- {n(f['robot_clicks'])} clic contati da Gumroad sono robot (anteprime dei link, controlli "
+                 "automatici): esclusi dai conti. Si riconoscono perché li prendono anche i link mai pubblicati.")
+    if f["unverified_clicks"]:
+        L.append(f"- {n(sum(f['unverified_clicks'].values()))} clic non verificabili (" +
+                 ", ".join(f"{k}: {v}" for k, v in f["unverified_clicks"].items()) +
+                 "): la piattaforma non ci ha dato il suo conteggio dei clic di persone, quindi non entrano nel totale.")
     return L
 
 

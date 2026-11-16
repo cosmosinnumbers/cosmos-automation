@@ -34,7 +34,9 @@ DEFAULT_FRAMES = {"orbit": 54, "vertigo": 75, "zoomthrough": 10, "headlines": 90
                   "phonescreens": 75, "framebreak": 75, "pullback": 75, "glitch": 8, "typewriter": 90,
                   # Katana kit (06/11/2026): kinetic slam type, 1-bit impact frame, product-launch light sweep,
                   # rapid flash-cut montage
-                  "katanatype": 75, "impactframe": 66, "lightsweep": 84, "flashcuts": 75}
+                  "katanatype": 75, "impactframe": 66, "lightsweep": 84, "flashcuts": 75,
+                  # 16 (15/11/2026): "N times heavier than the Sun" as a pile of dots
+                  "scalecompare": 90}
 EFFECTS = tuple(DEFAULT_FRAMES)
 
 

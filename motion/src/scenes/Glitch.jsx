@@ -9,7 +9,7 @@ import { DISPLAY, Stage, rng, theme, useUnit } from "../lib.jsx";
 const Content = ({ p, t, u }) => (p.src ? (
   <Img src={p.src} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
 ) : (
-  <Stage t={t}>
+  <Stage t={t} poster={p.poster} f={f}>
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", padding: 60 * u, textAlign: "center",
                            fontFamily: DISPLAY, fontWeight: 700, color: t.text, fontSize: 120 * u, lineHeight: 1.02 }}>
       {p.text || ""}

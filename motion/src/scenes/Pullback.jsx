@@ -21,7 +21,7 @@ export const Pullback = (p) => {
   const titleIn = spring({ frame: f - D * 0.7, fps, config: { damping: 13, stiffness: 140 } });
   const fit = Math.min(1, height * 0.94 / boardH);
   return (
-    <Stage t={t} glow={0.2}>
+    <Stage t={t} poster={p.poster} f={f} glow={0.2}>
       <AbsoluteFill style={{ perspective: 2000 * u }}>
         <div style={{ position: "absolute", left: (width - (cols * cw + (cols - 1) * gap)) / 2, top: height / 2 - focusY,
                       transformOrigin: `50% ${focusY}px`, transform: `scale(${Math.max(fit, zoom * fit)}) rotateX(${12 * (1 - prog)}deg)`,

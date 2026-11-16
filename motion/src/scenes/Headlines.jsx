@@ -19,7 +19,7 @@ export const Headlines = (p) => {
   const wallIn = spring({ frame: f, fps, config: { damping: 20, stiffness: 80 } });
   const titleIn = spring({ frame: f - 10, fps, config: { damping: 13, stiffness: 150 } });
   return (
-    <Stage t={t} glow={0.3}>
+    <Stage t={t} poster={p.poster} f={f} glow={0.3}>
       <AbsoluteFill style={{ perspective: 1400 * u, alignItems: "center", justifyContent: "center" }}>
         <div style={{ display: "flex", gap: 28 * u, transformStyle: "preserve-3d",
                       transform: `rotateX(${34 - 6 * wallIn}deg) rotateZ(${-14}deg) scale(${(vertical ? 1.45 : 1.15) * (0.85 + 0.15 * wallIn)})` }}>

@@ -125,6 +125,7 @@ jobs:
           BACKUP_LLM_MODELS: ${{ secrets.BACKUP_LLM_MODELS }}
           GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
           LLM_FIRST: ${{ vars.LLM_FIRST }}
+          SHORT_LAYOUT: ${{ vars.SHORT_LAYOUT }}   # empty = full-bleed 9:16 (15/11/2026); "box" = the old boxed layout
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
           GLM_API_KEY: ${{ secrets.GLM_API_KEY }}

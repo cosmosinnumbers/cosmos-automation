@@ -23,7 +23,7 @@ export const PaperCut = (p) => {
   const n = words.length;
   const size = (n <= 4 ? 128 : n <= 8 ? 104 : n <= 12 ? 86 : 70) * u;
   return (
-    <Stage t={t} glow={0.15}>
+    <Stage t={t} poster={p.poster} f={f} glow={0.15}>
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
         {/* drop shadow first, then the sheet */}
         <div style={{ position: "absolute", width: sw, height: sh, borderRadius: 6 * u, background: "#000",

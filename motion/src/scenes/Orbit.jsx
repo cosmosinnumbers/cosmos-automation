@@ -25,7 +25,7 @@ export const Orbit = (p) => {
   const labelIn = spring({ frame: f - 8, fps, config: { damping: 12, stiffness: 160 } });
   const kickIn = spring({ frame: f - 14, fps, config: { damping: 14, stiffness: 140 } });
   return (
-    <Stage t={t} glow={0.6}>
+    <Stage t={t} poster={p.poster} f={f} glow={0.6}>
       {/* light streaks behind the phone */}
       {[0, 1, 2, 3, 4, 5].map((k) => (
         <div key={k} style={{ position: "absolute", left: `${10 + k * 16}%`, top: 0, width: 2 * u, height: "100%",

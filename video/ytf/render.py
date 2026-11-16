@@ -740,7 +740,11 @@ def render_audio(script: dict, video: Path, timings: dict, shots: list[dict], to
     ln = (f"loudnorm=I=-14:TP=-1.5:LRA=11:measured_I={meas['input_i']}:measured_TP={meas['input_tp']}:"
           f"measured_LRA={meas['input_lra']}:measured_thresh={meas['input_thresh']}:"
           f"offset={meas['target_offset']}:linear=true")
-    run(base + ["-filter_complex", graph + f";[mx]{ln}[a]", "-map", "[a]", "-ar", "48000", build / out])
+    # limiter after the loudness pass (15/11/2026): stacked hits (impact + shimmer + pops) made the AAC encoder
+    # overshoot up to +1.5 dBFS and the video QC blocked the Short for clipping. -3 dB of ceiling leaves room for
+    # the encoder (measured overshoot: up to 3 dB); loudness stays at -14 LUFS.
+    run(base + ["-filter_complex", graph + f";[mx]{ln},alimiter=limit=0.7:level=disabled:attack=5:release=80[a]",
+                "-map", "[a]", "-ar", "48000", build / out])
     return meas
 
 
@@ -758,11 +762,12 @@ class VideoReader:
     """Frames of a stock clip, scaled and cropped to fill w x h at the project frame rate, looped
     if the shot is longer than the clip. Audio of the clip is never used."""
 
-    def __init__(self, path: Path, w: int, h: int, start: float = 0.0, grade: bool = True):
+    def __init__(self, path: Path, w: int, h: int, start: float = 0.0, grade: bool = True,
+                 eq: str = "eq=saturation=0.85:brightness=-0.03"):
         self.w, self.h = w, h
         vf = f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},fps={FPS}"
-        if grade:   # stock footage: a touch darker and calmer, so it sits with the brand (not our own graphics)
-            vf += ",eq=saturation=0.85:brightness=-0.03"
+        if grade:   # stock footage: a touch darker and calmer, so it sits with the brand (not our own graphics);
+            vf += "," + eq   # the full-bleed Shorts pass their own look (fullbleed.EQ_FULL)
         self.cmd = [ffmpeg_exe(), "-hide_banner", "-loglevel", "error"] + (["-stream_loop", "-1"] if grade else []) + [
                     "-ss", str(start), "-i", str(path), "-an", "-vf", vf,
                     "-f", "rawvideo", "-pix_fmt", "rgb24", "-"]

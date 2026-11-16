@@ -40,7 +40,7 @@ export const Vertigo = (p) => {
   const pop = spring({ frame: f - 2, fps, config: { damping: 11, stiffness: 170 } });
   const cw0 = vertical ? 820 * u : 900 * u;
   return (
-    <Stage t={t} glow={0.2}>
+    <Stage t={t} poster={p.poster} f={f} glow={0.2}>
       <AbsoluteFill style={{ perspective: persp, perspectiveOrigin: "50% 50%" }}>
         <div style={{ position: "absolute", left: "50%", top: "50%", transformStyle: "preserve-3d" }}>
           {/* vanishing-point glow */}

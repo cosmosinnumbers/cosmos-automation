@@ -54,7 +54,7 @@ export const FrameBreak = (p) => {
   const flash = broken ? lerp(f, burst, burst + 5, 0.7, 0) : 0;
   const posterBg = src ? `url(${src}) center/cover` : `linear-gradient(160deg, ${t.bg2}, ${t.accent2}66)`;
   return (
-    <Stage t={t} glow={0.35}>
+    <Stage t={t} poster={p.poster} f={f} glow={0.35}>
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", perspective: 1600 * u }}>
         <div style={{ position: "relative", width: pw, height: ph, transform: `scale(${0.8 + 0.2 * inS}) rotate(${-2 * inS}deg)`,
                       opacity: Math.min(1, inS * 2) }}>

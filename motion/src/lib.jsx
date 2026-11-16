@@ -98,9 +98,21 @@ export const wordsAt = (p, i) => {
   return w.length ? w[i % w.length] : null;
 };
 
-export const Stage = ({ t, children, glow = 0.35 }) => (
+// The background of a scene. With `poster` (a still of the footage of that moment, passed by the full-bleed Shorts
+// since 15/11/2026) the scene plays over the dimmed, slowly pushing picture instead of a flat gradient: the video
+// never "leaves" the footage for a slide.
+export const Stage = ({ t, children, glow = 0.35, poster, f = 0 }) => (
   <div style={{ position: "absolute", inset: 0, overflow: "hidden",
                 background: `radial-gradient(ellipse at 50% 45%, ${t.bg2} 0%, ${t.bg} 70%)` }}>
+    {poster ? (
+      <>
+        <Img src={poster} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
+                                   transform: `scale(${1.08 + f * 0.0012})`,
+                                   filter: "brightness(0.55) saturate(1.0) blur(5px)" }} />
+        <div style={{ position: "absolute", inset: 0,
+                      background: `radial-gradient(ellipse at 50% 45%, ${t.bg}40 0%, ${t.bg}b0 85%)` }} />
+      </>
+    ) : null}
     <div style={{ position: "absolute", inset: 0, opacity: glow,
                   background: `radial-gradient(circle at 50% 50%, ${t.glow}33 0%, transparent 55%)` }} />
     {children}

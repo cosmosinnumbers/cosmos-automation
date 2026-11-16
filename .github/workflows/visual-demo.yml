@@ -1,11 +1,9 @@
-# Before/after material for the "more visual" work (15/11/2026): fetches again the NASA material of Shorts that
-# are already out and keeps it as a prerelease "demo-visual-assets" (not a Short: no publisher reads this tag).
+# Before/after material (15/11/2026, manual only): fetches again the NASA material of Shorts that are already out
+# and keeps it as a prerelease "demo-visual-assets" (not a Short: no publisher reads this tag), so a new look can
+# be rendered on the same story and compared with the published file. Safe to delete the prerelease afterwards.
 name: visual-demo
 
 on:
-  push:
-    branches: ["claude/project-thread-j0zha0"]
-    paths: [".github/workflows/visual-demo.yml", "tools/demo_assets.py"]
   workflow_dispatch:
     inputs:
       tags:

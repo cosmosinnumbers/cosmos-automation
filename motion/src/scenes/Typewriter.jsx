@@ -21,7 +21,7 @@ export const Typewriter = (p) => {
   const size = (vertical ? 62 : 50) * u;
   const out = shown.split("\n");
   return (
-    <Stage t={t} glow={0.3}>
+    <Stage t={t} poster={p.poster} f={f} glow={0.3}>
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
         <div style={{ width: ww, borderRadius: 22 * u, overflow: "hidden", background: "#070a14ee",
                       border: `${2 * u}px solid ${t.text}26`, boxShadow: `0 ${40 * u}px ${110 * u}px #000d, 0 0 ${60 * u}px ${t.glow}22`,

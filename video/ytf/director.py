@@ -33,6 +33,33 @@ SHOCK = re.compile(r"\b(times|record|largest|biggest|smallest|fastest|hottest|co
 CONTRAST = re.compile(r"\b(but|however|yet|actually|surprising(ly)?|turns out|instead|unexpected(ly)?|"
                       r"in fact|wrong|mystery)\b", re.I)
 BIG = re.compile(r"\b(whole|entire|all of|altogether|in total|total|overall|system|together|every)\b", re.I)
+# "33 times heavier than our Sun": the number, the comparison word and the thing everybody knows
+COMPARE = re.compile(r"(?<![\w.,-])(\d[\d,]*(?:\.\d+)?)\s*(?:times|x)\s+(?:as\s+)?(heavier|bigger|larger|wider|hotter|brighter|"
+                     r"faster|farther|older|taller|denser|longer|more massive|more powerful|massive|big|large|wide|"
+                     r"bright|hot|fast|far|old)\s+(?:than|as)\s+((?:(?:our|the|a|an|planet)\s+)?[A-Za-z][\w-]*(?:\s+[A-Z][\w-]*)?)")
+
+
+def compare_info(text: str) -> dict | None:
+    """Props of the Scale Compare scene for a sentence like "a star 33 times heavier than our Sun", else None.
+    Only whole-ish multiples from 2 to 300 (one dot each)."""
+    m = COMPARE.search(text)
+    if not m:
+        return None
+    tok = m.group(1).rstrip(",")
+    try:
+        value = float(tok.replace(",", ""))
+    except ValueError:
+        return None
+    if not 2 <= value <= 300:
+        return None
+    word = m.group(2).lower()
+    word = {"massive": "more massive", "big": "bigger", "large": "larger", "wide": "wider", "bright": "brighter",
+            "hot": "hotter", "fast": "faster", "far": "farther", "old": "older"}.get(word, word)
+    ref = re.sub(r"^(our|a|an)\s+", "the ", m.group(3).strip(), flags=re.I)
+    return {"value": value, "decimals": len(tok.split(".")[1]) if "." in tok else 0, "word": word, "refName": ref,
+            "display": f"{tok}×"}
+
+
 UNITS = {"kilometers": "km", "kilometres": "km", "km": "km", "miles": "mi", "meters": "m", "metres": "m",
          "percent": "%", "%": "%", "degrees": "°", "kelvin": "K", "years": "years", "days": "days", "hours": "h",
          "minutes": "min", "seconds": "s", "billion": "billion", "million": "million", "trillion": "trillion",
@@ -165,6 +192,10 @@ def effect_sounds(effect: str, dur: float, props: dict) -> list[tuple[float, str
             c += round(step)
             step = max(3.0, step * 0.82)
         return out + [(min(dur, 0.9), "impact")]
+    if effect == "scalecompare":
+        land = min(dur * 0.62, 1.7)
+        n = int(min(12, max(3, props.get("value", 6))))
+        return [(0.0, "swish")] + [(0.13 + k * (land - 0.2) / n, "pop") for k in range(n)] + [(land, "impact"), (land + 0.05, "shimmer")]
     if effect == "whip":
         return [(0.0, "whoosh")]
     if effect == "dither":
@@ -225,7 +256,8 @@ def plan_short(spec: dict, timings: dict, brand: str = "cosmos", n_cuts: int = 0
             t0 = max(2.4, s["start"] + 0.1)
             t1 = min(t0 + 3.0, dur - 3.0)
             if t1 - t0 >= 2.0 and free(t0, t1):
-                add("charts", t0, t1, {**info, "label": agency(src) + " data"})
+                cmp_ = compare_info(s["text"])   # "N times heavier than the Sun": the pile of dots, not the dashboard
+                add("scalecompare", t0, t1, cmp_) if cmp_ else add("charts", t0, t1, {**info, "label": agency(src) + " data"})
                 used.add(i)
                 break
     # middle: one or two scenes, by content

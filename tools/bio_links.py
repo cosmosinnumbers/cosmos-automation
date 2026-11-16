@@ -39,7 +39,10 @@ def facebook():
     old = [u for u in old if "gumroad.com" not in u and not u.startswith("https://gum.co/u/")]
     base = ["https://cosmosinnumbers.github.io/links.html?src=fb", "https://cosmosinnumbers.github.io/",
             "https://www.tiktok.com/@cosmosinnumbers", "https://www.instagram.com/cosmos.innumbers/"]
-    sites = [free, look, *dict.fromkeys([*old, *base])]  # keep the links already there (site, TikTok, Instagram)
+    import links
+    old = [u for u in old if "amazon." not in u]
+    am = [links.amazon()] if links.amazon() else []   # LOOK UP on Amazon, once config/stores.json has the link
+    sites = [free, look, *am, *dict.fromkeys([*old, *base])]  # keep the links already there (site, TikTok, Instagram)
     website = ", ".join(sites)
     about = cur.get("about") or ""
     if free not in about:

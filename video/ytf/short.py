@@ -11,6 +11,7 @@ Re-uses the long video's assets.yaml (same licences, same credits) and sources.
 """
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -19,6 +20,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 sys.path.insert(0, str(Path(__file__).parent))
 import director  # noqa: E402
+import fullbleed  # noqa: E402
 import motion  # noqa: E402
 import render  # noqa: E402
 import meta  # noqa: E402
@@ -207,6 +209,69 @@ def write_upload(sd, spec, src_dir, assets, dur):
     (sd / "out" / "upload.md").write_text("\n".join(md) + "\n", "utf-8")
 
 
+def frames_full(proc, n, dur, per, fvis, inserts, trans, spec, timings, tag=None):
+    """The full-bleed frame loop (fullbleed.py): picture on the whole frame, a new framing every ~2.5 s, the
+    transitions on the whole picture, text on a gradient inside the safe area."""
+    caps = fullbleed.caption_chunks(timings)
+    head = fullbleed.Headline(spec["headline"], tag)
+    scrim = fullbleed.scrim()
+    n_sub = max(1, round(per / fullbleed.SUB_S))
+    sub_len = per / n_sub
+    promo = spec.get("promo")
+    readers: dict[int, render.VideoReader] = {}
+    last = None
+    for i in range(n):
+        t = i / FPS
+        k = min(len(fvis) - 1, int(min(t, dur - 0.001) // per))
+        v = fvis[k]
+        ins_k = next((j for j, ins in enumerate(inserts) if ins["t0"] <= t < ins["t1"]), None)
+        if ins_k is not None:
+            if ins_k not in readers:
+                readers[ins_k] = render.VideoReader(Path(inserts[ins_k]["file"]), SW, SH, 0.0, grade=False)
+            f = readers[ins_k].next()
+            show_caps = inserts[ins_k]["captions"]
+            if t < dur - 0.01:
+                v.skip()
+        else:
+            for kk in [j for j in readers if inserts[j]["t1"] <= t]:
+                readers.pop(kk).close()
+            if t >= dur and last is not None:
+                f = last.copy()
+            else:
+                rel = t - k * per
+                sub = min(n_sub - 1, int(rel // sub_len))
+                f = v.frame(sub, (rel - sub * sub_len) / sub_len)
+                f = fullbleed.hook_burst(f, t)
+                last = f
+            cut = next((c for c in trans if c - 5 <= i < c + 5), None)
+            if cut is not None and trans[cut] == "zoomthrough":
+                f = motion.zoom_out_of(f, (i - cut + 6) / 6) if i < cut else motion.zoom_into(f, (i - cut + 1) / 5)
+            elif cut is not None and trans[cut] == "whip":
+                f = motion.whip_out(f, (i - cut + 6) / 6) if i < cut else motion.whip_in(f, (i - cut + 1) / 5)
+            elif cut is not None and trans[cut] == "glitch" and cut - 4 <= i < cut + 4:
+                f = motion.glitch(f, i - cut + 4, 8, seed=cut)
+            elif cut is not None and trans[cut] == "dither" and cut - 4 <= i < cut + 4:
+                f = motion.dither(f, i - cut + 4, 8)
+            f.paste(scrim, (0, 0), scrim)
+            show_caps = True
+            d = ImageDraw.Draw(f)
+            if v.credit:
+                fullbleed.small_text(d, (28, SH - 74), (f"Video: {v.credit}" if v.is_video else f"Image: {v.credit}")[:70])
+            if v.label:
+                fullbleed.label_pill(d, (40, head.bottom + 14), v.label)
+        if t < dur:
+            head.draw(f, t)
+        d = ImageDraw.Draw(f)
+        if promo:
+            fullbleed.label_pill(d, (40, 1180), promo)
+        if show_caps and t < dur:
+            fullbleed.draw_caption(d, caps, t)
+        d.rectangle((0, SH - 8, int(SW * (i + 1) / n), SH), fill=BRAND["cyan"])   # progress bar: retention cue
+        proc.stdin.write(f.tobytes())
+    for r in readers.values():
+        r.close()
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     sd = Path(sys.argv[1]).resolve()
@@ -226,9 +291,18 @@ def main():
     dur = timings["duration"]
     print(f"short narration {dur:.1f}s")
 
-    # prepare visuals for the box under the headline
+    # layout: "full" = the picture fills the whole 9:16 frame (default since 15/11/2026), "box" = the old boxed look
+    full = (os.environ.get("SHORT_LAYOUT") or spec.get("layout") or "full") != "box"
+    # prepare visuals: full-bleed 9:16 framings, or the box under the headline
     vis = []
-    for v in spec["visuals"]:
+    fvis = []
+    for n_v, v in enumerate(spec["visuals"] if full else []):
+        a = assets[v["src"]]
+        fvis.append(fullbleed.Visual(src_dir / a["file"], "video" if a["type"] == "video" else
+                                     ("chart" if a["type"] == "chart" else "image"), v.get("start", 0.0), v.get("fit"),
+                                     a.get("credit", ""), "ARTIST'S CONCEPT" if a.get("kind") == "illustration" else None,
+                                     index=n_v))
+    for v in ([] if full else spec["visuals"]):
         a = assets[v["src"]]
         label = "ARTIST'S CONCEPT" if a.get("kind") == "illustration" else None
         if a["type"] == "video":   # real footage: frames read in order while the clip is on screen
@@ -238,7 +312,8 @@ def main():
         kind = "chart" if a["type"] == "chart" else "image"
         canvas = short_canvas(src_dir / a["file"], kind, v.get("fit"))
         vis.append((canvas, a.get("credit", ""), label, v.get("motion", "zoom_in"), ZOOM[kind]))
-    per = dur / len(vis)
+    per = dur / len(spec["visuals"])
+    n_vis = len(spec["visuals"])
     caps = caption_words(timings)
     brand = spec.get("brand", "cosmos")
 
@@ -246,18 +321,28 @@ def main():
     long_src = load_yaml(src_dir / "script.yaml").get("sources", []) if (src_dir / "script.yaml").exists() else []
     sources_full = [s for s in long_src if s["id"] in set(spec.get("sources", []))] or long_src
     plan = director.plan_short({**spec, "sources_full": sources_full}, timings, brand,
-                               cut_times=[k * per for k in range(1, len(vis))]) if spec.get("motion", True) else \
+                               cut_times=[k * per for k in range(1, n_vis)]) if spec.get("motion", True) else \
         {"inserts": [], "transitions": [], "tail": 0.0, "events": []}
     plan = director.creative_pass(spec["narration"], plan)
     srcs = [(src_dir / assets[v["src"]]["file"], "video" if assets[v["src"]]["type"] == "video" else "image",
              v.get("start", 0.0)) for v in spec["visuals"] if assets[v["src"]]["type"] in ("video", "image")]
+    tag = next((i["props"].get("label") for i in plan["inserts"] if i["effect"] == "orbit"), None)
+    if full:   # the hook is the picture itself (zoom burst + headline slam): no phone card in front of it
+        plan["inserts"] = [i for i in plan["inserts"] if i["effect"] != "orbit"]
     tiles = motion.tiles(srcs) if plan["inserts"] and motion.available() else []
     jobs = []
     for k, ins in enumerate(plan["inserts"]):
         frames = max(6, round((ins["t1"] - ins["t0"]) * FPS))
+        extra = {}
+        if full and motion.available():   # every scene plays over a still of the footage of that moment
+            try:
+                kv = min(n_vis - 1, int(min(ins["t0"], dur - 0.001) // per))
+                extra["poster"] = fullbleed.data_uri(fvis[kv].still(min(ins["t0"], dur) - kv * per))
+            except Exception as e:  # noqa: BLE001 - a missing still only means the scene's own background
+                print("  poster skipped:", type(e).__name__, e)
         jobs.append({"effect": ins["effect"], "out": str(build / f"fx_{k:02d}_{ins['effect']}.mp4"),
-                     "props": {"brand": brand, "tiles": tiles, **ins["props"], "width": SW, "height": SH, "fps": FPS,
-                               "frames": frames}})
+                     "props": {"brand": brand, "tiles": tiles, **extra, **ins["props"], "width": SW, "height": SH,
+                               "fps": FPS, "frames": frames}})
     done = motion.render_jobs(jobs, build)
     inserts = [dict(ins, file=j["out"]) for ins, j in zip(plan["inserts"], jobs) if j["out"] in done]
     tail = plan["tail"] if any(i["t0"] >= dur - 0.01 for i in inserts) else 0.0
@@ -297,6 +382,9 @@ def main():
     n = round(total * FPS)
     readers: dict[int, render.VideoReader] = {}
     last_vis = None
+    if full:
+        frames_full(proc, n, dur, per, fvis, inserts, trans, spec, timings, tag)
+        n = 0
     for i in range(n):
         t = i / FPS
         ins_k = next((k for k, ins in enumerate(inserts) if ins["t0"] <= t < ins["t1"]), None)
@@ -380,6 +468,8 @@ def main():
     for v_ in vis:
         if v_[3] == "video":
             v_[0].close()
+    for v_ in fvis:
+        v_.close()
 
     render.render_audio({"music": spec.get("music", {"seed": 5, "mood": "wonder"})}, sd, timings, [],
                         total=total, events=events or [(total + 1, "tick")])
@@ -390,9 +480,26 @@ def main():
     if social:
         print("-> social variant", social)
     write_upload(sd, spec, src_dir, assets, dur)
-    save_json(build / "short_meta.json", {"duration": dur, "captions": len(caps)})
+    save_json(build / "short_meta.json", {"duration": dur, "captions": len(caps), "layout": "full" if full else "box"})
     print("->", dest)
 
 
+def run_safe():
+    """A daily Short is never lost because of the new layout: if the full-bleed render fails, the boxed layout
+    (in use until 15/11/2026) renders the same script and voice."""
+    try:
+        main()
+    except Exception:  # noqa: BLE001
+        if os.environ.get("SHORT_LAYOUT") == "box" or "--meta-only" in sys.argv:
+            raise
+        import traceback
+        traceback.print_exc()
+        print("::warning::full-bleed layout failed, rendering the boxed layout instead", flush=True)
+        os.environ["SHORT_LAYOUT"] = "box"
+        if "--reuse-voice" not in sys.argv:
+            sys.argv.append("--reuse-voice")
+        main()
+
+
 if __name__ == "__main__":
-    main()
+    run_safe()

@@ -50,6 +50,29 @@ Numbers) nello script.yaml / short.yaml; `motion: false` spegne gli effetti per 
 Se Node o Chrome non partono in Actions, il video esce lo stesso senza scene (mai uno Short perso per un effetto).
 Tempo in più per uno Short: circa 1 minuto.
 
+## Short a tutto schermo (15/11/2026, `video/ytf/fullbleed.py`)
+Richiesta di simone: "voglio più visual subito sui miei video". Analisi e scelte in `docs/visual-upgrade.md`.
+- Prima il filmato stava in un riquadro 1080x900 (il 47% dello schermo) tra due fasce scure. Ora **l'immagine riempie
+  tutto il 9:16**: ogni clip e ogni foto è ritagliata intorno alla zona più ricca di dettagli (`fullbleed.focus`).
+- **Una nuova inquadratura ogni ~2,5 s** sulla stessa immagine (avvicinamento, dettaglio, carrellata, allontanamento):
+  una foto NASA dà 2-3 inquadrature diverse. Nell'esempio gli stacchi passano da 44 a 58 e la pausa più lunga da 10,8 a 5,4 s.
+- **Aggancio**: nel primo mezzo secondo l'immagine arriva con uno zoom e un lampo, il titolo entra parola per parola
+  (non più il telefono Orbit davanti al filmato). Etichetta fonte ("NASA · NEW") sopra il titolo.
+- **Sottotitoli**: 3 parole alla volta, più grandi, la parola detta in arancione che "scatta"; titolo e sottotitoli
+  dentro la zona sicura di Shorts/Reel/TikTok su una sfumatura scura.
+- **Scene Remotion sopra il filmato**: ogni scena riceve `poster` (fermo immagine di quel momento) e lo usa come sfondo
+  al posto del blu piatto (`Stage` in `motion/src/lib.jsx`).
+- **16 Scale Compare** (`scalecompare`): "33 times heavier than the Sun" diventa una pila di 33 pallini accanto a 1
+  (è un conteggio, non un disegno in scala: resta vero per massa, dimensione, luminosità). Regola: `director.compare_info`,
+  multipli da 2 a 300, al posto di Charts sulla prima frase con il numero.
+- **Scelta del materiale** (`auto_short.footage`): la prima immagine è una foto sul soggetto (prima era una clip, spesso
+  generica); mai più clip di rubriche ("This Week @NASA", "What's Up": sigle, loghi, persone che parlano); foto sotto
+  700 px scartate; fino a 6 foto invece di 4; bastano le foto in tema, niente clip generiche di riempimento.
+- **Audio**: limitatore dopo la normalizzazione (il codificatore AAC sforava fino a +1,5 dBFS e il QC bloccava).
+- Grafici e panorami molto larghi restano interi su una copia sfocata. `layout: box` in short.yaml o variabile del
+  repository `SHORT_LAYOUT=box` riportano il vecchio riquadro.
+- Non toccati: clip dei lunghi (`clip.py`, il 16:9 contiene grafiche che un ritaglio taglierebbe) e video lunghi.
+
 ## Suoni (`video/ytf/sfx.py`)
 1. Libreria: `tools/sfx_library.py` (workflow `sfx-library`, mensile o a mano) cerca su Openverse **solo CC0**,
    scarica, normalizza in `assets/sfx/openverse/` e registra titolo, autore, pagina e licenza in `library.json`.

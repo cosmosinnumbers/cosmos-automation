@@ -19,6 +19,7 @@ import { KatanaType } from "./scenes/KatanaType.jsx";
 import { ImpactFrame } from "./scenes/ImpactFrame.jsx";
 import { LightSweep } from "./scenes/LightSweep.jsx";
 import { FlashCuts } from "./scenes/FlashCuts.jsx";
+import { ScaleCompare } from "./scenes/ScaleCompare.jsx";
 
 export const SCENES = {
   orbit: [Orbit, 54], vertigo: [Vertigo, 75], zoomthrough: [ZoomThrough, 10], headlines: [Headlines, 90],
@@ -26,6 +27,8 @@ export const SCENES = {
   pullback: [Pullback, 75], glitch: [Glitch, 8], typewriter: [Typewriter, 90],
   // Katana kit (06/11/2026)
   katanatype: [KatanaType, 75], impactframe: [ImpactFrame, 66], lightsweep: [LightSweep, 84], flashcuts: [FlashCuts, 75],
+  // 16 (15/11/2026): "N times heavier than the Sun" as a pile of dots
+  scalecompare: [ScaleCompare, 90],
 };
 
 const withFonts = (C) => (props) => {

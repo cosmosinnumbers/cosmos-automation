@@ -607,7 +607,9 @@ def numbers(text: str) -> list[str]:
 
 # talking heads, briefings, title cards, mascots and posters: never the picture of a Short about a measured number
 BAD_VISUAL = re.compile(r"presentation|briefing|news conference|press|interview|panel|podcast|episode|report|webcast|"
-                        r"emoji|mascot|cartoon|clip ?art|poster|logo|infographic|live ?stream|\bq&a\b|\bsocial\b", re.I)
+                        r"emoji|mascot|cartoon|clip ?art|poster|logo|infographic|live ?stream|\bq&a\b|\bsocial\b|"
+                        # weekly news shows: title cards, logos and people talking, never the subject (15/11/2026)
+                        r"this week ?@ ?nasa|what'?s up\b|skywatching tips|nasa in silicon valley|\bx-?press\b|\bhighlights? reel\b", re.I)
 BAD_OPEN = re.compile(r"^\s*(did you know|in this video|today|welcome|hey|hello|have you ever|what if|imagine)\b", re.I)
 BAD_END = re.compile(r"(subscribe|thanks for watching|see you|follow for|like and)", re.I)
 
@@ -687,6 +689,15 @@ def fetch_image(it, news_dir, assets, key):
         return None
     rel = f"assets/stock/nasa-img-{re.sub(r'[^A-Za-z0-9_-]', '_', d['nasa_id'])}.jpg"
     stock.download(jpg.replace("http://", "https://"), news_dir / rel)
+    try:   # full-bleed Shorts (15/11/2026): a small picture blown up to 1080x1920 looks soft, take the next one
+        from PIL import Image
+        with Image.open(news_dir / rel) as im:
+            small = min(im.size) < 700
+    except Exception:  # noqa: BLE001
+        small = True
+    if small and key != "img_main":
+        (news_dir / rel).unlink(missing_ok=True)
+        return None
     concept = any(w in (d.get("description", "") + d["title"]).lower() for w in ("concept", "illustration", "rendering", "artist"))
     assets[key] = {"file": rel, "type": "image", "kind": "illustration" if concept else "photo",
                    "title": d["title"], "source": f"https://images.nasa.gov/details/{d['nasa_id']}",
@@ -701,6 +712,9 @@ def nasa_image(query, news_dir, assets):
         if fetch_image(it, news_dir, assets, "img_main"):
             return "img_main"
     return None
+
+
+MAX_IMGS = 6   # was 4: with the full-bleed layout every picture gives 2-3 framings, more pictures = more cuts
 
 
 def footage(spec, news_dir) -> list[dict]:
@@ -742,6 +756,8 @@ def footage(spec, news_dir) -> list[dict]:
             sid = it["data"][0]["nasa_id"]
             if sid in seen:
                 continue
+            if BAD_VISUAL.search(it["data"][0].get("title", "")):   # never, not even as generic filler
+                continue
             if strict[0] and relevance(it) < 1:   # the viewer sees Hubble repair footage in a Mars story: not shown
                 continue
             seen.add(sid)
@@ -765,7 +781,7 @@ def footage(spec, news_dir) -> list[dict]:
     imgs, seen_img = [], set()
     short_qs = [" ".join(q.split()[:2]) for q in queries] + sorted(names_l)   # long queries find little: try 2 words, then each name
     for q in dict.fromkeys([spec.get("image_query", "")] + queries + short_qs):
-        if len(imgs) >= 4 or not q.strip():
+        if len(imgs) >= MAX_IMGS or not q.strip():
             continue
         try:
             items = sorted(nasa_items(q, "image")[:20], key=lambda it: -relevance(it))
@@ -775,7 +791,7 @@ def footage(spec, news_dir) -> list[dict]:
         print(f"  NASA images '{q}': {len(items)} found, {sum(1 for it in items if relevance(it) >= 1)} on topic")
         for it in items:
             nid = it["data"][0]["nasa_id"]
-            if len(imgs) >= 4 or nid in seen_img or relevance(it) < 1:
+            if len(imgs) >= MAX_IMGS or nid in seen_img or relevance(it) < 1:
                 continue
             seen_img.add(nid)
             try:
@@ -786,7 +802,7 @@ def footage(spec, news_dir) -> list[dict]:
             if k:
                 imgs.append(k)
     print(f"  on-topic visuals: {len(picked)} clips + {len(imgs)} images (topic words: {sorted(topic)[:8]})")
-    if len(picked) < 1 or len(picked) + len(imgs) < 3:
+    if len(picked) + len(imgs) < 4:   # (was: also whenever no clip was on topic; on-topic pictures are enough now)
         # not enough on-topic material: old behaviour, key words and generic NASA footage up to 2 real clips
         strict[0] = False
         words = [w for q in queries for w in q.split() if len(w) > 3 and w.lower() not in ("nasa", "with", "from", "space")]
@@ -803,13 +819,15 @@ def footage(spec, news_dir) -> list[dict]:
         dur = media_duration(news_dir / assets[k]["file"])
         vids.append({"src": k, "start": round(min(8.0, dur * 0.2), 1), "_dur": dur})  # skip title cards at the start
     visuals = []
-    for n in range(max(len(vids), len(imgs))):   # clip, picture, clip, picture: the look changes at every cut
-        if n < len(vids):
-            visuals.append({k: v for k, v in vids[n].items() if k != "_dur"})
+    # picture, clip, picture, clip: the look changes at every cut. The picture goes first since 15/11/2026: it is
+    # chosen on the subject of the story, so the first frame (the hook) shows the subject, full screen.
+    for n in range(max(len(vids), len(imgs))):
         if n < len(imgs):
             visuals.append({"src": imgs[n], "motion": "zoom_in" if n % 2 == 0 else "zoom_out"})
+        if n < len(vids):
+            visuals.append({k: v for k, v in vids[n].items() if k != "_dur"})
     for v in vids:   # a second, different stretch of the longer clips: a real cut at least every ~6 s
-        if v["_dur"] >= 16 and len(visuals) < 7:
+        if v["_dur"] >= 16 and len(visuals) < 8:
             visuals.append({"src": v["src"], "start": round(min(v["_dur"] - 7.0, v["_dur"] * 0.55), 1)})
     return visuals
 

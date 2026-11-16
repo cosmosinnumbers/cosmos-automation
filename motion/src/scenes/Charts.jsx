@@ -19,7 +19,7 @@ export const Charts = (p) => {
   const t = theme(p);
   const N = 16;
   const pw = vertical ? width * 0.88 : width * 0.72;
-  const ph = vertical ? height * 0.5 : height * 0.78;
+  const ph = vertical ? height * 0.4 : height * 0.78;
   const chartH = ph * (vertical ? 0.52 : 0.5);
   const panelIn = spring({ frame: f, fps, config: { damping: 18, stiffness: 120 } });
   const countEnd = Math.min(durationInFrames * 0.6, fps * 1.6);
@@ -31,10 +31,10 @@ export const Charts = (p) => {
     : val != null ? `${p.prefix || ""}${fmt(val, dec)}${p.suffix || ""}` : finalTxt;
   const big = (finalTxt.length <= 8 ? 170 : finalTxt.length <= 12 ? 130 : 100) * u;
   return (
-    <Stage t={t} glow={0.25}>
+    <Stage t={t} poster={p.poster} f={f} glow={0.25}>
       {/* vertical: panel kept between the Short's headline (top) and its captions (bottom third) */}
       <AbsoluteFill style={{ alignItems: "center", justifyContent: vertical ? "flex-start" : "center",
-                             paddingTop: vertical ? 360 * u : 0 }}>
+                             paddingTop: vertical ? 450 * u : 0 }}>
         <div style={{ width: pw, height: ph, borderRadius: 34 * u, background: `linear-gradient(160deg, ${t.bg2}, ${t.bg})`,
                       border: `${2 * u}px solid ${t.text}1f`, boxShadow: `0 ${40 * u}px ${100 * u}px #000b`,
                       padding: 54 * u, boxSizing: "border-box", position: "relative",

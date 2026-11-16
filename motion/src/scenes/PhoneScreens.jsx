@@ -37,7 +37,7 @@ export const PhoneScreens = (p) => {
   const scroll = f * 2.2 * u;
   const labels = p.labels || [];
   return (
-    <Stage t={t} glow={0.5}>
+    <Stage t={t} poster={p.poster} f={f} glow={0.5}>
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
         {[0, 1, 2, 3, 4].map((k) => {
           const ph = ((f / fps) * 0.7 + k / 5) % 1;

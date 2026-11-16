@@ -28,7 +28,7 @@ export const ZoomThrough = (p) => {
   const flash = lerp(f, crash - 2, crash, 0, 1) * lerp(f, crash, crash + 3, 1, 0);
   const blur = lerp(f, 0, crash, 0, 14 * u, Easing.in(Easing.quad));
   return (
-    <Stage t={t}>
+    <Stage t={t} poster={p.poster} f={f}>
       <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity: 1 - passA * 0 }}>
         <div style={{ transform: `scale(${s2})`, opacity: 1 - passA }}>
           <Grid p={p} t={t} u={u} offset={20} cols={cols} rows={rows} gap={gap} w={w} h={h} lit />

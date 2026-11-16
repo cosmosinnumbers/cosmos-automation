@@ -35,7 +35,8 @@ def _product() -> str:
     name, free = links.free("youtube", "description")
     return (f"🆓 {name[0].upper() + name[1:]}: {free}\n"
             f"📘 LOOK UP, our beginner's guide to the night sky, no telescope needed: {links.link(links.LOOK_UP, 'youtube', 'description')} "
-            + ("(code COSMOS9 → $7.41 until Nov 30)" if date.today() <= date(2026, 11, 30) else "")).strip()
+            + ("(code COSMOS9 → $7.41 until Nov 30)" if date.today() <= date(2026, 11, 30) else "")).strip() \
+        + (f"\n📦 Kindle and paperback on Amazon: {links.amazon()}" if links.amazon() else "")
 
 
 PRODUCT = _product()

@@ -72,6 +72,9 @@ DEFS = {
     "threads": {
         "views": "Visualizzazioni del post (Threads insights 'views').",
         "likes": "Mi piace.", "replies": "Risposte.", "reposts": "Repost.", "quotes": "Citazioni.", "shares": "Condivisioni.",
+        "acct_link_clicks_7d": "Account: clic di persone sui link dei nostri post e risposte negli ultimi 7 giorni "
+                               "(threads_insights 'clicks'). I link corti di Gumroad contano anche i robot delle anteprime: questo no.",
+        "links_7d": "Account: gli stessi clic divisi per link.",
     },
     "gumroad": {
         "sales": "Vendite totali del prodotto (Gumroad API products.sales_count).",
@@ -316,6 +319,19 @@ def threads():
         met = {d["name"]: (d.get("values") or [{}])[0].get("value", d.get("total_value", {}).get("value")) for d in (j or {}).get("data", [])}
         miss = {} if j else {k: e for k in ("views", "likes", "replies", "reposts", "quotes", "shares")}
         rows.append(row("post", p["id"], p.get("text"), (p.get("media_type") or "").lower(), p.get("timestamp", ""), met, miss))
+    # Link clicks counted by Threads itself (funnel review 16/11/2026): the Gumroad short links showed about 20
+    # "clicks" for every reply that carried one, the robots that build the link preview. This is the human number.
+    until = int(now().timestamp())
+    j, e = th(f"{c['user_id']}/threads_insights", metric="clicks", since=until - 7 * 86400, until=until)
+    acct, amiss = {}, {}
+    d = next((x for x in (j or {}).get("data", []) if x.get("name") == "clicks"), None)
+    if d is None:
+        amiss = {"acct_link_clicks_7d": e or "clicks non restituito dall'API"}
+    else:
+        by = {v.get("link_url", ""): int(v.get("value") or 0) for v in d.get("link_total_values") or []}
+        tot = (d.get("total_value") or {}).get("value")
+        acct = {"acct_link_clicks_7d": sum(by.values()) if by or tot is None else int(tot), "links_7d": by}
+    rows.append(row("account", c["user_id"], metrics=acct, missing=amiss))
     save("threads", rows)
 
 

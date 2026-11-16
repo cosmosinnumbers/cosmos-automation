@@ -34,6 +34,10 @@ def texts(source: str = "threads", sky: bool = False) -> list[str]:
         f"Most people who say \"I can't see anything up there\" were never shown where to look. LOOK UP fixes that: {look}\n{CODE}",
         f"{first}\nThe full beginner's guide to the night sky is LOOK UP: {look}\n{CODE}",
     ]
+    am = links.amazon()
+    if am:   # live on Amazon: one text in the rotation for readers who buy books there, not on a store they never heard of
+        out.append(f"LOOK UP is now on Amazon too, Kindle and paperback: {am}\n"
+                   f"Or the PDF with 14 bonus posters: {look}\n{CODE}")
     if sky:
         out += [
             f"Go out and find it: LOOK UP shows where and when to look, with your eyes or ordinary binoculars: {look}\n{CODE}",
@@ -42,7 +46,11 @@ def texts(source: str = "threads", sky: bool = False) -> list[str]:
     return out
 
 
-TEXTS = texts() + texts(sky=True)[-2:]   # every text that can go out (tests/test_post_qc.py checks them all)
+def all_texts() -> list[str]:
+    return texts() + texts(sky=True)[-2:]
+
+
+TEXTS = all_texts()   # every text that can go out (tests/test_post_qc.py checks them all)
 
 
 def first_reply(ref: str, replies: list[str], expired: bool = False, source: str = "threads", post: str = "") -> list[str]:

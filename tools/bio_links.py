@@ -67,11 +67,14 @@ def youtube():
     head = (f"🔭 Free sky calendar, The Next 30 Nights (what to see this month): {sky}\n"
             f"📘 LOOK UP, our beginner's stargazing guide: {look}\n"
             f"🆓 Free PDF, The Solar System in 20 Numbers: {free}")
+    import links
+    if links.amazon():   # LOOK UP on Amazon takes the third line: the channel description has room for three at most
+        head = head.rsplit("\n", 1)[0] + f"\n📦 LOOK UP on Amazon ({links.amazon_formats()}): {links.amazon()}"
     if cur.startswith(head):
         print("already done")
         return
     rest = cur.split("\n")
-    while rest and (not rest[0].strip() or "gum.co/" in rest[0] or "gumroad.com/l/" in rest[0]):  # our old link lines
+    while rest and (not rest[0].strip() or "gum.co/" in rest[0] or "gumroad.com/l/" in rest[0] or "amazon.com/dp/" in rest[0]):  # our old link lines
         rest.pop(0)
     new = head + "\n\n" + "\n".join(rest)
     if len(new) > 1000:  # YouTube refuses a channel description over 1000 characters: the third line goes

@@ -1,83 +1,146 @@
 {
- "updated": "2026-11-03",
+ "updated": "2026-11-16",
  "winners": [
   {
    "title": "11 Earths Fit Across Jupiter (NASA data)",
    "kind": "short",
-   "score": 2.48,
-   "views": 955,
+   "score": 2.82,
+   "views": 956,
    "view_pct": 59.3
   },
   {
    "title": "NASA's Roman Telescope Got Sharper by Moving a Mirror",
    "kind": "short",
-   "score": 2.36,
-   "views": 927,
-   "view_pct": 52.5
+   "score": 2.71,
+   "views": 934,
+   "view_pct": 52.9
   },
   {
    "title": "The Moon Swings 295 °C in One Day. Here's Why (NASA data)",
    "kind": "short",
-   "score": 1.96,
-   "views": 744,
-   "view_pct": 49.6
+   "score": 2.23,
+   "views": 747,
+   "view_pct": 49.7
+  },
+  {
+   "title": "Every Type of Planet We've Actually Found Beyond Our Solar System",
+   "kind": "long",
+   "score": 1.84,
+   "views": 94,
+   "view_pct": 13.2
+  },
+  {
+   "title": "The 5 Spacecraft Leaving Our Solar System — Where Are They Right Now?",
+   "kind": "long",
+   "score": 1.81,
+   "views": 45,
+   "view_pct": 30.9
+  },
+  {
+   "title": "Every Planet Ranked From Hottest to Coldest (The Hottest Isn't the Closest)",
+   "kind": "long",
+   "score": 1.27,
+   "views": 35,
+   "view_pct": 20.2
   }
  ],
  "losers": [
   {
    "title": "The Nearest Star to the Sun Is Invisible to the Naked Eye",
    "kind": "short",
-   "score": 0.43,
-   "views": 22,
-   "view_pct": 46.1
+   "score": 0.45,
+   "views": 25,
+   "view_pct": 48.3
   },
   {
    "title": "Voyager 1 Is About to Be One Light-Day Away. And That's Nothing",
    "kind": "short",
-   "score": 0.4,
+   "score": 0.39,
    "views": 16,
    "view_pct": 44.0
+  },
+  {
+   "title": "Why NASA Will Fly Past Europa 49 Times",
+   "kind": "long",
+   "score": 0.43,
+   "views": 8,
+   "view_pct": 8.4
+  },
+  {
+   "title": "The Sun Will Swell 200 Times Wider: How It All Ends",
+   "kind": "long",
+   "score": 0.15,
+   "views": 7,
+   "view_pct": 1.2
   }
  ],
  "rules": [
-  "keep the title at 55 characters or fewer"
+  "avoid a bare number in the title",
+  "longer titles did better: allow up to 70 characters"
  ],
  "features": {
   "short:number_in_title": {
    "kind": "short",
-   "with": 1.12,
+   "with": 1.09,
    "without": 1.1,
-   "n_with": 8,
-   "n_without": 9,
-   "lift": 0.02,
+   "n_with": 19,
+   "n_without": 12,
+   "lift": -0.01,
    "rule": null
   },
   "short:scale_comparison": {
    "kind": "short",
-   "with": 1.26,
-   "without": 1.07,
-   "n_with": 4,
-   "n_without": 13,
+   "with": 1.25,
+   "without": 1.06,
+   "n_with": 5,
+   "n_without": 26,
    "lift": 0.18,
    "rule": null
   },
   "short:short_title": {
    "kind": "short",
-   "with": 1.51,
-   "without": 0.95,
-   "n_with": 5,
+   "with": 1.15,
+   "without": 1.01,
+   "n_with": 19,
    "n_without": 12,
-   "lift": 0.59,
-   "rule": "keep the title at 55 characters or fewer"
+   "lift": 0.14,
+   "rule": null
+  },
+  "short:question_title": {
+   "kind": "short",
+   "with": 0.96,
+   "without": 1.11,
+   "n_with": 3,
+   "n_without": 28,
+   "lift": -0.13,
+   "rule": null
   },
   "short:under_35s": {
    "kind": "short",
-   "with": 1.4,
-   "without": 0.86,
-   "n_with": 8,
-   "n_without": 9,
-   "lift": 0.63,
+   "with": 1.52,
+   "without": 0.89,
+   "n_with": 10,
+   "n_without": 21,
+   "lift": 0.71,
    "rule": "keep the Short at 35 seconds or fewer"
+  },
+  "long:number_in_title": {
+   "kind": "long",
+   "with": 0.83,
+   "without": 1.37,
+   "n_with": 4,
+   "n_without": 3,
+   "lift": -0.39,
+   "rule": "avoid a bare number in the title"
+  },
+  "long:short_title": {
+   "kind": "long",
+   "with": 0.51,
+   "without": 1.48,
+   "n_with": 3,
+   "n_without": 4,
+   "lift": -0.66,
+   "rule": "longer titles did better: allow up to 70 characters"
   }
  }
 }

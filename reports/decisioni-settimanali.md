@@ -1,5 +1,23 @@
 # Decisioni settimanali (GitHub Actions)
 
+## 16/11/2026: scorecard `reports/scorecard-2026-11-16.md`
+### Interpretazione
+- Dal 2026-11-07 al 2026-11-15, i YouTube Short guidano la distribuzione con 991 visualizzazioni nella settimana su 35 post totali (mediana 164 visualizzazioni).
+- Su Threads, i post di testo hanno generato 1.949 visualizzazioni nella settimana con 11 nuovi post (mediana 40), superando i video che hanno ottenuto 707 visualizzazioni con 5 nuovi post (mediana 47).
+- Su Instagram, i Reel registrano 556 visualizzazioni nella settimana su 19 post totali (mediana 135, tempo di visione mediano 6,9 s), ma gli acct_website_clicks sono passati solo da 0 a 1.
+- Su Facebook la distribuzione è limitata (Reel con mediana 3 visualizzazioni e tempo di visione mediano 1,9 s); il formato photo rappresenta un campione troppo piccolo per trarre conclusioni (1 solo post totalizzato).
+- L'impatto reale sul business resta ignoto: visite e vendite su Gumroad al 2026-11-15 non sono misurate dall'API, e i clic sui link di YouTube non sono esposti.
+
+### Decisioni (ipotesi da testare)
+- Nessuna decisione: Le visite e le vendite su Gumroad non sono misurate dall'API e i clic sui link di YouTube non sono esposti. Con un solo clic sul sito registrato da Instagram tra il 2026-11-07 e il 2026-11-15, i dati sul comportamento d'acquisto sono insufficienti per definire decisioni di business validate.
+
+### Prossimo test utile
+- Inserire un link tracciato UTM per LOOK UP nei commenti in evidenza dei YouTube Short e nella bio di Instagram per misurare i clic reali generati al prodotto per 14 giorni.
+
+### Idee dai competitor
+- Short su confronti numerici veloci tra corpi celesti (es. dati sul numero di lune per pianeta), ispirato ai video di comparazione più visti nella nicchia.
+- Post di testo su Threads focalizzati su eventi astronomici del mese corrente sintetizzati in numeri, adattati al format essenziale del canale.
+
 ## 02/11/2026: scorecard `reports/scorecard-2026-11-02.md`
 ### Interpretazione
 - Dal 2026-10-27 al 2026-11-02, le visite e le vendite su Gumroad per il prodotto LOOK UP non sono state misurate.

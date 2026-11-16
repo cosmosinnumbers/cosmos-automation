@@ -25,3 +25,8 @@ jobs:
           PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
           DRY: ${{ inputs.dry_run }}
         run: python tools/site_patch.py $([ "$DRY" = "true" ] && echo --dry-run)
+      - name: Sky page (sky.html), sitemap, robots.txt
+        if: ${{ !inputs.dry_run }}
+        env:
+          PAGES_TOKEN: ${{ secrets.PAGES_TOKEN }}
+        run: python tools/sky_page.py

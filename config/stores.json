@@ -1,6 +1,6 @@
 {
- "_note": "Where LOOK UP is sold besides Gumroad. Leave a link empty until the book is live: tools/links.py then leaves Amazon out of every text. Kindle A3WHKP01GVPPK and paperback 8A6NMNZYTYY were sent to KDP on 14/11/2026.",
- "amazon_kindle": "",
+ "_note": "Where LOOK UP is sold besides Gumroad. Leave a link empty until the book is live: tools/links.py then leaves Amazon out of every text. Kindle live since 16/11/2026 (ASIN B0HRW2BJX3, same on every Amazon country site). Paperback (KDP 8A6NMNZYTYY, ISBN 9798142492463) still unavailable on 16/11: add its link only when it can be bought.",
+ "amazon_kindle": "https://www.amazon.com/dp/B0HRW2BJX3",
  "amazon_paperback": "",
  "gumroad_seller_id": "5208571117217",
  "site": "https://cosmosinnumbers.github.io/"

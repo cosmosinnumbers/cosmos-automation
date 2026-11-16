@@ -1,0 +1,908 @@
+{
+ "youtube": {
+  "videos": [
+   {
+    "id": "INmLPyGjsMI",
+    "title": "The Black Hole That Makes Stars",
+    "channel": "Past the Blue",
+    "published": "2026-10-28",
+    "duration": "PT1M3S",
+    "views": 9193468,
+    "views_per_day": 483866,
+    "likes": 429438,
+    "comments": 7658,
+    "engagement": 0.0475
+   },
+   {
+    "id": "sfky54VSchE",
+    "title": "Starship Flight 15: SpaceX Double Catch Attempt!",
+    "channel": "What about it!?",
+    "published": "2026-11-14",
+    "duration": "PT11H17M50S",
+    "views": 916283,
+    "views_per_day": 458141,
+    "likes": 14985,
+    "comments": 39,
+    "engagement": 0.0164
+   },
+   {
+    "id": "p0EqvHzr_X4",
+    "title": "Why NASA Is Paying to Destroy the ISS",
+    "channel": "Past the Blue",
+    "published": "2026-10-23",
+    "duration": "PT1M31S",
+    "views": 7863580,
+    "views_per_day": 341894,
+    "likes": 178961,
+    "comments": 8270,
+    "engagement": 0.0238
+   },
+   {
+    "id": "uyFdbzAcOZw",
+    "title": "SpaceX Starship Flight 15 - Coast Phase Part 1 - LIVE",
+    "channel": "NASASpaceflight",
+    "published": "2026-11-14",
+    "duration": "PT11H54M4S",
+    "views": 674599,
+    "views_per_day": 337299,
+    "likes": 5699,
+    "comments": 18,
+    "engagement": 0.0085
+   },
+   {
+    "id": "_fw3vnQconI",
+    "title": "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn",
+    "channel": "Helpyn Facts'",
+    "published": "2026-10-31",
+    "duration": "PT1M",
+    "views": 4806135,
+    "views_per_day": 300383,
+    "likes": 0,
+    "comments": 488,
+    "engagement": 0.0001
+   },
+   {
+    "id": "ebd0XMp5vR0",
+    "title": "The Sun Is Dragging Us Into the Deep Unknown at 828,000 km/h! 🌌 #SpaceFacts #MilkyWay #Universe",
+    "channel": "Galaxy Jiya 001",
+    "published": "2026-11-03",
+    "duration": "PT25S",
+    "views": 3642862,
+    "views_per_day": 280220,
+    "likes": 68497,
+    "comments": 1234,
+    "engagement": 0.0191
+   },
+   {
+    "id": "dv-Czhabars",
+    "title": "SIZE OF SOLAR SYSTEM! 💀",
+    "channel": "Jase Cosmology",
+    "published": "2026-10-26",
+    "duration": "PT29S",
+    "views": 5192662,
+    "views_per_day": 259633,
+    "likes": 57114,
+    "comments": 455,
+    "engagement": 0.0111
+   },
+   {
+    "id": "NxnN30MUoaA",
+    "title": "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+    "channel": "susballs",
+    "published": "2026-11-03",
+    "duration": "PT7S",
+    "views": 2363688,
+    "views_per_day": 196974,
+    "likes": 11565,
+    "comments": 400,
+    "engagement": 0.0051
+   },
+   {
+    "id": "Hxk8pTWURNw",
+    "title": "JWST Just Found A Black Hole Inside A Star",
+    "channel": "AstroKobi",
+    "published": "2026-11-09",
+    "duration": "PT22M16S",
+    "views": 1173960,
+    "views_per_day": 195660,
+    "likes": 9935,
+    "comments": 1051,
+    "engagement": 0.0094
+   },
+   {
+    "id": "JR4kcGfZps0",
+    "title": "Anh trai dùng điện thoại chụp được ảnh mà Nasa phải tốn tiền triệu ms chụp được #docvithegioi #news",
+    "channel": "Đọc Vị Thế Giới",
+    "published": "2026-11-11",
+    "duration": "PT43S",
+    "views": 950839,
+    "views_per_day": 190167,
+    "likes": 15896,
+    "comments": 214,
+    "engagement": 0.0169
+   },
+   {
+    "id": "OVMRncCa-tI",
+    "title": "La Voyager 1, se calló 48h, después volvió sola, la NASA no sabe por qué.",
+    "channel": "La Mirada Tecno",
+    "published": "2026-11-08",
+    "duration": "PT3M",
+    "views": 1247868,
+    "views_per_day": 178266,
+    "likes": 66070,
+    "comments": 1403,
+    "engagement": 0.0541
+   },
+   {
+    "id": "zMt9YzQ_hf4",
+    "title": "HOW BIG IS THE SOLAR SYSTEM!💀☝️",
+    "channel": "Limitless fax ",
+    "published": "2026-10-30",
+    "duration": "PT29S",
+    "views": 2655585,
+    "views_per_day": 165974,
+    "likes": 24095,
+    "comments": 510,
+    "engagement": 0.0093
+   },
+   {
+    "id": "tKikZXrcZCQ",
+    "title": "Why Nothing Can Survive Venus",
+    "channel": "Facts' Mine",
+    "published": "2026-10-24",
+    "duration": "PT57S",
+    "views": 3109218,
+    "views_per_day": 135183,
+    "likes": 170782,
+    "comments": 660,
+    "engagement": 0.0551
+   },
+   {
+    "id": "cZs0UphKT1k",
+    "title": "The Skeleton Left Outside In Space",
+    "channel": "Past the Blue",
+    "published": "2026-10-30",
+    "duration": "PT1M17S",
+    "views": 2064261,
+    "views_per_day": 121427,
+    "likes": 39017,
+    "comments": 686,
+    "engagement": 0.0192
+   },
+   {
+    "id": "wka6dUErnQU",
+    "title": "NASA가 종이접기 작가를 부른이유ㄷㄷ",
+    "channel": "소란도란",
+    "published": "2026-10-25",
+    "duration": "PT22S",
+    "views": 2462577,
+    "views_per_day": 111935,
+    "likes": 16008,
+    "comments": 281,
+    "engagement": 0.0066
+   },
+   {
+    "id": "INjqjSjtPKc",
+    "title": "Special Story: NASA Telescope Heads Towards Earth! Is Cuttack in the Possible Debris Zone ?",
+    "channel": "OTV",
+    "published": "2026-11-04",
+    "duration": "PT4M33S",
+    "views": 1328163,
+    "views_per_day": 110680,
+    "likes": 4169,
+    "comments": 316,
+    "engagement": 0.0034
+   },
+   {
+    "id": "CiMGXfEjF7c",
+    "title": "Solar System's Biggest Lie!💀☝",
+    "channel": "Astrryy",
+    "published": "2026-10-28",
+    "duration": "PT32S",
+    "views": 1898191,
+    "views_per_day": 99904,
+    "likes": 0,
+    "comments": 461,
+    "engagement": 0.0002
+   },
+   {
+    "id": "XGespfNXeSk",
+    "title": "First evidence of a runaway black hole. #blackhole #jwst #hubble #galaxy #universe",
+    "channel": "Siddharth Choudhary",
+    "published": "2026-11-03",
+    "duration": "PT1M46S",
+    "views": 1257055,
+    "views_per_day": 96696,
+    "likes": 50446,
+    "comments": 418,
+    "engagement": 0.0405
+   },
+   {
+    "id": "ybuGx_I5tZI",
+    "title": "धरती से ऊपर जाते रहो तो आखिर कहाँ तक पहुँचोगे? 😱 पूरा ब्रह्मांड देख लो! | Space Journey | #space",
+    "channel": "Infinityx: The Company ",
+    "published": "2026-11-04",
+    "duration": "PT1M47S",
+    "views": 1072852,
+    "views_per_day": 89404,
+    "likes": 40687,
+    "comments": 631,
+    "engagement": 0.0385
+   },
+   {
+    "id": "BdRisD_BV8o",
+    "title": "ALERTA Super Niño: la NASA descubre anomalía en el océano que agravará el fenómeno",
+    "channel": "Ciudadano news",
+    "published": "2026-10-19",
+    "duration": "PT53S",
+    "views": 2433119,
+    "views_per_day": 86897,
+    "likes": 27773,
+    "comments": 994,
+    "engagement": 0.0118
+   },
+   {
+    "id": "IGmBjaG6qC0",
+    "title": "November 2026 Space Events 🤩 #space #earth #shorts",
+    "channel": "AstroPlanet",
+    "published": "2026-10-29",
+    "duration": "PT27S",
+    "views": 1545543,
+    "views_per_day": 85863,
+    "likes": 23179,
+    "comments": 641,
+    "engagement": 0.0154
+   },
+   {
+    "id": "L93K2vvrfdo",
+    "title": "SPACE NEWS: Swift Observatory/Telescope fell back to Earth from space #astronomy #science #nasa",
+    "channel": "ASTRO ALEXANDRA",
+    "published": "2026-11-05",
+    "duration": "PT1M5S",
+    "views": 836349,
+    "views_per_day": 83634,
+    "likes": 33384,
+    "comments": 955,
+    "engagement": 0.0411
+   },
+   {
+    "id": "VizfA8znDW8",
+    "title": "The Cat’s Head Nebula: A Cosmic Nursery ✨🐈‍⬛😱",
+    "channel": "Deep Space | Exploring the Unknown",
+    "published": "2026-11-05",
+    "duration": "PT24S",
+    "views": 886901,
+    "views_per_day": 80627,
+    "likes": 8754,
+    "comments": 96,
+    "engagement": 0.01
+   },
+   {
+    "id": "-bWDaNcW-t8",
+    "title": "How NASA Landed Perseverance Rover on Mars in 7 Minutes",
+    "channel": "Vantolith",
+    "published": "2026-11-03",
+    "duration": "PT1M34S",
+    "views": 968809,
+    "views_per_day": 74523,
+    "likes": 15344,
+    "comments": 305,
+    "engagement": 0.0162
+   },
+   {
+    "id": "QXP1XJC5Go4",
+    "title": "طائرات مدنية أسرع من الصوت؟ - شبكات",
+    "channel": "AlJazeera Arabic  قناة الجزيرة",
+    "published": "2026-11-03",
+    "duration": "PT2M54S",
+    "views": 846948,
+    "views_per_day": 70579,
+    "likes": 12654,
+    "comments": 177,
+    "engagement": 0.0151
+   }
+  ],
+  "comments_analyzed": 339,
+  "sentiment": {
+   "n": 339,
+   "pos": 0.47,
+   "neu": 0.33,
+   "neg": 0.2
+  },
+  "top_words": [
+   "imagine",
+   "mercury",
+   "space",
+   "part",
+   "birthday",
+   "please",
+   "moon",
+   "november",
+   "it's",
+   "earth",
+   "when",
+   "fact",
+   "venus",
+   "universe",
+   "black"
+  ],
+  "audience_questions": [
+   "So...a galaxy could just decide to hurl a blackhole our way?",
+   "2:00:55 \n\nWhen booster started touching steam from the ocean landing, it looks like the hull implodes.  Anyone see that?",
+   "what's venting out the side?",
+   "Well, how sad is that?",
+   "Remind me again, what was the ROI on the space station?",
+   "why are we looking at the moon?",
+   "What if our universe is an atom of another world?",
+   "Why were both Voyager 1 and Voyager 2 labeled as being inside the Sun the entire time?",
+   "(what i asked chatgpt \n\n\nWhat is the difference between mercury and sun?",
+   "What is the proof of saying that?"
+  ]
+ },
+ "reddit": {
+  "source": "rss",
+  "posts": [
+   {
+    "sub": "space",
+    "title": "Starship 42 successfully CAUGHT by the Mechazilla chopsticks after a day in orbit — becoming the first time in history an orbital rocket has ever been fully recovered",
+    "url": "https://www.reddit.com/r/space/comments/1xwdou6/starship_42_successfully_caught_by_the_mechazilla/"
+   },
+   {
+    "sub": "space",
+    "title": "Euclid space telescope just dropped its first major release of data since launch in 2023. Capturing more than a billion objects and covering an area of the sky as big as 9500 full Moons, the ESA's dark Universe detective has laid the foundation to create the largest-ever 3D map of the cosmos",
+    "url": "https://www.reddit.com/r/space/comments/1xuetnh/euclid_space_telescope_just_dropped_its_first/"
+   },
+   {
+    "sub": "space",
+    "title": "The Hubble Space Telescope Is Sinking. NASA Is Looking for Ways to Keep It Afloat",
+    "url": "https://www.reddit.com/r/space/comments/1xv4fm6/the_hubble_space_telescope_is_sinking_nasa_is/"
+   },
+   {
+    "sub": "space",
+    "title": "Pöllat and the galactic core",
+    "url": "https://www.reddit.com/r/space/comments/1xx7cz9/pöllat_and_the_galactic_core/"
+   },
+   {
+    "sub": "space",
+    "title": "Rocket Lab — Our spacecraft just made interplanetary history - twice. Blue & Gold flawlessly executed powered Earth gravity assists, two days apart, to slingshot our planet and shoot for Mars’ orbit. This is the first time the highly complex maneuver has been executed successfully by spacecraft.",
+    "url": "https://www.reddit.com/r/space/comments/1xtc0ft/rocket_lab_our_spacecraft_just_made/"
+   },
+   {
+    "sub": "space",
+    "title": "Vulcan LEO-1 suffers an anomaly in flight",
+    "url": "https://www.reddit.com/r/space/comments/1xx36xq/vulcan_leo1_suffers_an_anomaly_in_flight/"
+   },
+   {
+    "sub": "space",
+    "title": "NASA officially planning to reopen inquiry to return samples collected by Perseverance Rover on Mars / One-year study begins Jan ‘27",
+    "url": "https://www.reddit.com/r/space/comments/1xspun8/nasa_officially_planning_to_reopen_inquiry_to/"
+   },
+   {
+    "sub": "space",
+    "title": "Pentagon mulls placing fleet of military satellites around the Moon",
+    "url": "https://www.reddit.com/r/space/comments/1xsgbid/pentagon_mulls_placing_fleet_of_military/"
+   },
+   {
+    "sub": "space",
+    "title": "Happy Carl Sagan Day",
+    "url": "https://www.reddit.com/r/space/comments/1xrue0w/happy_carl_sagan_day/"
+   },
+   {
+    "sub": "space",
+    "title": "China’s Tianwen-4 Jupiter mission to attempt Callisto moon landing",
+    "url": "https://www.reddit.com/r/space/comments/1xv6f11/chinas_tianwen4_jupiter_mission_to_attempt/"
+   },
+   {
+    "sub": "space",
+    "title": "Do you believe there is complex life out there?",
+    "url": "https://www.reddit.com/r/space/comments/1xs3s12/do_you_believe_there_is_complex_life_out_there/"
+   },
+   {
+    "sub": "space",
+    "title": "'Stupendously large' primordial black holes ruled out as a dark matter source",
+    "url": "https://www.reddit.com/r/space/comments/1xrypsy/stupendously_large_primordial_black_holes_ruled/"
+   },
+   {
+    "sub": "space",
+    "title": "NASA takes an all-hands-on-deck approach in its return to the Moon | Agency is reaching out to all corners of the US commercial space industry, casting an extraordinarily wide net to reach even companies that have yet to fly any hardware into orbit: “The pace that’s occurring,...is unprecedented”",
+    "url": "https://www.reddit.com/r/space/comments/1xtwn8v/nasa_takes_an_allhandsondeck_approach_in_its/"
+   },
+   {
+    "sub": "space",
+    "title": "New exhibit featuring the full-sized Space Shuttle Endeavour opens TODAY, 11/13/2026 - at California Science Center!",
+    "url": "https://www.reddit.com/r/space/comments/1xvce4g/new_exhibit_featuring_the_fullsized_space_shuttle/"
+   },
+   {
+    "sub": "space",
+    "title": "'There's tremendous demand': Rocket Lab raises price of Neutron launch from $55 million to $70 million",
+    "url": "https://www.reddit.com/r/space/comments/1xtszdd/theres_tremendous_demand_rocket_lab_raises_price/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "Prominence size",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xsfiyc/prominence_size/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "Met my hero the other night Astrophysicist Neil degrasse Tyson.",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xw1bn2/met_my_hero_the_other_night_astrophysicist_neil/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "After Seven years, I finally got it.",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xvxt8k/after_seven_years_i_finally_got_it/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "M42 - Orion",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xvm72z/m42_orion/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "M31 Andromeda Galaxy",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xuoye8/m31_andromeda_galaxy/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "Flaming Star Nebula (IC 405) | 22.5 Hours from Bortle 7 Skies",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xru0su/flaming_star_nebula_ic_405_225_hours_from_bortle/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "Voie lactée d’hiver, Andromède et triangle au téléphone",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xx5gnu/voie_lactée_dhiver_andromède_et_triangle_au/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "The Pleiades",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xtb0sr/the_pleiades/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "Elephant Trunk in SHO",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xsg91o/elephant_trunk_in_sho/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "Andromeda Galaxy",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xsv459/andromeda_galaxy/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "A proper FOV: The Eagle Nebula",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xu0rai/a_proper_fov_the_eagle_nebula/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "IC 1805",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xwiwtw/ic_1805/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "Crescent Nebula",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xw0vqn/crescent_nebula/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "IC443 in SHO - A small supernova remnant",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xtrxw4/ic443_in_sho_a_small_supernova_remnant/"
+   },
+   {
+    "sub": "astronomy",
+    "title": "First Time Orion-nebula",
+    "url": "https://www.reddit.com/r/Astronomy/comments/1xvdah9/first_time_orionnebula/"
+   }
+  ],
+  "posts_analyzed": 60,
+  "sentiment": {
+   "n": 60,
+   "pos": 0.53,
+   "neu": 0.33,
+   "neg": 0.13
+  },
+  "top_words": [
+   "nasa",
+   "moon",
+   "earth",
+   "space",
+   "nebula",
+   "star",
+   "first",
+   "mars",
+   "voyager",
+   "science",
+   "credit",
+   "missions",
+   "mission",
+   "spacecraft",
+   "years"
+  ],
+  "audience_questions": [
+   "Do you believe there is complex life out there?"
+  ]
+ },
+ "instagram": {
+  "space": [
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 166498,
+    "comments": 924,
+    "url": "https://www.instagram.com/p/DfVLt90jS3Q/",
+    "caption": "POV: you're looking at Earth from the ISS\n\nThe \"cupola\" of the International Space Station allows astronauts to track arriving spacecraft and operate "
+   },
+   {
+    "type": "IMAGE",
+    "likes": 24619,
+    "comments": 113,
+    "url": "https://www.instagram.com/p/Dfu7PC4iqL2/",
+    "caption": "O céu vai escurecer a meio do dia durante vários minutos em agosto de 2027. O fenómeno astronómico, previsto para o dia 2, promete proporcionar um dos"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 14115,
+    "comments": 89,
+    "url": "https://www.instagram.com/p/De5ozgjyyuV/",
+    "caption": "ब्रह्मांड का सबसे बड़ा रहस्य टूटा! विशाल ब्लैक होल डार्क मैटर नहीं हैं? \n\nक्या आप जानते हैं कि ब्रह्मांड का ज्यादातर हिस्सा हमें दिखता ही नहीं? वैज्ञा"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 9601,
+    "comments": 58,
+    "url": "https://www.instagram.com/p/Dee3JzCpS3E/",
+    "caption": "A black hole and a treble clef walk into the universe...⚫🎼\n\nScientists using Chandra have discovered that the origin of an unusual source of radio wav"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 5883,
+    "comments": 18,
+    "url": "https://www.instagram.com/p/DeOoORdIA1b/",
+    "caption": "우주 하트 나.🖤 안테나 은하라고 불리는 두 은하는 하트를 꼭 닮았습니다. 서로 가까이 다가선 두 은하가 중력의 영향으로 모양이 변하면서 커다란 하트처럼 보이는데요.💫 우주에서는 은하끼리 부딪히거나 서로 끌어당기는 과정에서 이렇게 독특한 모양이 만들어지기도 합니다. 별"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 4551,
+    "comments": 403,
+    "url": "https://www.instagram.com/p/DeV2MrYlAKF/",
+    "caption": "Imagine landing on the Moon after traveling nearly a quarter of a million miles from Earth, only to discover that your spacecraft is sitting at a noti"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 3231,
+    "comments": 109,
+    "url": "https://www.instagram.com/p/De998zLEYv7/",
+    "caption": "Blacktron Minotaur - Here is my latest LEGO MOC, a mech! After posting the Blacktron Hovercar a few months ago and realizing I’ve only been building B"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 2068,
+    "comments": 54,
+    "url": "https://www.instagram.com/p/DefTNvdR0Tp/",
+    "caption": "«Από τον Άρη στα Κάτω Πατήσια. Κρίμα.».\n.\n.\n#athens #greece #space #ufo"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 1953,
+    "comments": 241,
+    "url": "https://www.instagram.com/p/DetE3EyxpPY/",
+    "caption": "🌍🔥 A shocking prediction about the end of the world has sparked discussions online! An American scientist’s mathematical calculations reportedly point"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 1854,
+    "comments": 30,
+    "url": "https://www.instagram.com/p/DfPsOPRgByO/",
+    "caption": "Wernher von Braun (1912–1977) was a German-born rocket scientist who became one of the most influential figures in the American space program. During "
+   }
+  ],
+  "astronomy": [
+   {
+    "type": "IMAGE",
+    "likes": 38030,
+    "comments": 212,
+    "url": "https://www.instagram.com/p/DelvYPZJewa/",
+    "caption": "The Schwarzschild radius is the number that actually defines a black hole: compress any mass down inside that radius and escape velocity exceeds c, so"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 32828,
+    "comments": 2575,
+    "url": "https://www.instagram.com/p/DcEZyiwD_uB/",
+    "caption": "dil’spaC𝑒-⊙uriosity Ep. 3: How to Add NASA to Your Resume [open to Non-US citizens] ✨\n\nAs a non-STEM girl learning STEM and non-US citizen, this is su"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 24619,
+    "comments": 113,
+    "url": "https://www.instagram.com/p/Dfu7PC4iqL2/",
+    "caption": "O céu vai escurecer a meio do dia durante vários minutos em agosto de 2027. O fenómeno astronómico, previsto para o dia 2, promete proporcionar um dos"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 12636,
+    "comments": 58,
+    "url": "https://www.instagram.com/p/DdJ4aWpErUs/",
+    "caption": "Make a wish 🌠✨ \n.\n.\n.\n#Shootingstars #stargazing #astrophile #astronomy #sonyalpha"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 9601,
+    "comments": 58,
+    "url": "https://www.instagram.com/p/Dee3JzCpS3E/",
+    "caption": "A black hole and a treble clef walk into the universe...⚫🎼\n\nScientists using Chandra have discovered that the origin of an unusual source of radio wav"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 5726,
+    "comments": 40,
+    "url": "https://www.instagram.com/p/DdRUcc_z9tj/",
+    "caption": "Venus Shines Beside Crescent Moon In Spectacular Celestial Display\n\n𝐊𝐨𝐡𝐢𝐦𝐚, 𝐒𝐞𝐩𝐭𝐞𝐦𝐛𝐞𝐫 𝟏𝟒 (𝐖𝐄 𝐓𝐇𝐄 𝐍𝐀𝐆𝐀𝐒): Skywatchers were treated to a beautiful celes"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 4686,
+    "comments": 11,
+    "url": "https://www.instagram.com/p/DfwRmufl59d/",
+    "caption": "Imagine sitting inside a giant dome where the stars, planets and distant galaxies seem to unfold right above you. The night sky comes alive and takes "
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 4551,
+    "comments": 403,
+    "url": "https://www.instagram.com/p/DeV2MrYlAKF/",
+    "caption": "Imagine landing on the Moon after traveling nearly a quarter of a million miles from Earth, only to discover that your spacecraft is sitting at a noti"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 4223,
+    "comments": 21,
+    "url": "https://www.instagram.com/p/DerzLLAlgnJ/",
+    "caption": "Houston, we have an update: our epic Chart of Cosmic Exploration now runs all the way to Artemis II. 🚀\n\nThis stellar schematic traces the flight paths"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 3267,
+    "comments": 12,
+    "url": "https://www.instagram.com/p/DfvUyShlyoj/",
+    "caption": "NASA’s Hubble Space Telescope just revealed a mystery in our cosmic neighborhood. In a paper published Monday in The Astrophysical Journal, researcher"
+   }
+  ],
+  "nasa": [
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 236096,
+    "comments": 2131,
+    "url": "https://www.instagram.com/p/Dd7J2GbFx1V/",
+    "caption": "Meet the space travelers of Crew-13!\n\nNASA astronauts Jessica Watkins and Luke Delaney, Canadian Space Agency astronaut Joshua Kutryk, and cosmonaut S"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 133396,
+    "comments": 0,
+    "url": "https://www.instagram.com/p/DePUJOmkhYI/",
+    "caption": "Sie war entscheidend am Apollo-Mondprogramm der NASA beteiligt und galt als eine Pionierin der Informatik: Nun ist die US-Wissenschaftlerin Margaret H"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 55625,
+    "comments": 669,
+    "url": "https://www.instagram.com/p/De6cbLsiH3S/",
+    "caption": "Badan Penerbangan dan Antariksa Amerika Serikat (NASA) menyoroti kebakaran hutan dan lahan (karhutla) di Pulau Papua yang menyebabkan lonjakan emisi k"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 29463,
+    "comments": 25,
+    "url": "https://www.instagram.com/p/DeI-8GPiOiD/",
+    "caption": "Non tutti lo sanno ma ogni giorno, da più di trentun anni, nella pagina \"Astronomy Picture of the Day\" (APOD), la NASA pubblica un'immagine o una foto"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 28023,
+    "comments": 107,
+    "url": "https://www.instagram.com/p/Dd83CYFlPL-/",
+    "caption": "Reaching for the stars.\n\nThe U.S. Navy and nasa recently conducted hoist training with the crew of Artemis III in the San Diego Bay, marking the first"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 7409,
+    "comments": 273,
+    "url": "https://www.instagram.com/p/DfLc6dORrU9/",
+    "caption": "🚨 ATENÇÃO: ASSISTA O VÍDEO NO YOUTUBE \n\nE SE O MUNDO FICASSE 3 DIAS NA ESCURIDÃO?\n\nEstariam os governos se preparando para um possível apagão mundial?"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 7335,
+    "comments": 8,
+    "url": "https://www.instagram.com/p/DfSlN4KAygs/",
+    "caption": "🌟 🌟 ♡ ⭐️ ⭐️ \n\nHandcrafted felt props by #SoriideaS \n.\n#pusheen #feltart\n#fanart #nasa"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 7088,
+    "comments": 918,
+    "url": "https://www.instagram.com/p/DfTHSoUFyKN/",
+    "caption": "Um equipamento científico de aproximadamente 1,5 tonelada está em trajetória de reentrada na atmosfera terrestre. A queda do observatório espacial Nei"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 7082,
+    "comments": 181,
+    "url": "https://www.instagram.com/p/DfasPksDXNU/",
+    "caption": "FENÔMENO PODE AFETAR SISTEMAS DE COMUNICAÇÃO\n\nUma tempestade geomagnética atingirá o planeta Terra entre esta sexta (6) e o domingo (8), de acordo com"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 6848,
+    "comments": 88,
+    "url": "https://www.instagram.com/p/Dd-vNmxjLVC/",
+    "caption": "7 Stunden und 55 Minuten: Laut der US-Raumfahrtbehörde Nasa ist das die schnellste Zeitspanne vom Start bis zum Andocken eines US-Raumschiffs in der G"
+   }
+  ],
+  "stargazing": [
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 100156,
+    "comments": 185,
+    "url": "https://www.instagram.com/p/DbgHzEXlGq7/",
+    "caption": "The best Perseid viewing conditions until 2029 happen two weeks from now, and the peak lands midweek. New moon, no light pollution, and you can watch "
+   },
+   {
+    "type": "IMAGE",
+    "likes": 75405,
+    "comments": 109,
+    "url": "https://www.instagram.com/p/Db6GBQYyBLN/",
+    "caption": "Jis qadar jis ki qadar ki\nUs qadar be-qadar hue hum\n.\n.\n.\n#poetry #hanle #stargazing #poetic #mountains"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 38297,
+    "comments": 88,
+    "url": "https://www.instagram.com/p/DbZdYK-CTsT/",
+    "caption": "There's just something special about a starry night. ⭐\n\nSkye and Lyra have gone out to stargaze! 🔭\n\nSkye is keen to teach Lyra some interesting facts "
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 12636,
+    "comments": 58,
+    "url": "https://www.instagram.com/p/DdJ4aWpErUs/",
+    "caption": "Make a wish 🌠✨ \n.\n.\n.\n#Shootingstars #stargazing #astrophile #astronomy #sonyalpha"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 11037,
+    "comments": 64,
+    "url": "https://www.instagram.com/p/Dbn5Nuxzm5d/",
+    "caption": "Stargazing In Mustang. \n\n#stargazing #milkyway #astrophotography #nightsky #stars"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 10345,
+    "comments": 94,
+    "url": "https://www.instagram.com/p/DcFhYXuD9Y5/",
+    "caption": "Meteor shower dekhne nikla tha…\nbut I didn’t know ki aaj ki raat ek memory ban jayegi.\nKuch moments camera mein capture hote hain,\naur kuch seedha dil"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 7011,
+    "comments": 284,
+    "url": "https://www.instagram.com/p/Db02Ie_lPyr/",
+    "caption": "Want to photograph the Perseid meteor shower with an iPhone, Samsung, DSLR, mirrorless camera or Insta360? ☄️\n\nThe biggest mistake is waiting until yo"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 3951,
+    "comments": 14,
+    "url": "https://www.instagram.com/p/DcQV089T8DJ/",
+    "caption": "Not all treasure is silver and gold mate.\n- Captain Jack Sparrow.\n\n#lehladakhdiaries #bikersofınstagram #stargazing #lehladhak2026 #explore"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 3674,
+    "comments": 329,
+    "url": "https://www.instagram.com/p/DZIpa4RkhjQ/",
+    "caption": "👽2026 #milkyway season has arrived Joshua Tree - April through August 2026.\n.\nJune/July are the best months (because the Milky Way is visible right af"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 3217,
+    "comments": 14,
+    "url": "https://www.instagram.com/p/DYuzQQlDnr-/",
+    "caption": "A moon, half-full.\n\nThe Moon appeared half-full during its First Quarter\nphase on May 23, 2026, as it stood exactly 90 degrees\naway from the Sun in it"
+   }
+  ],
+  "jameswebb": [
+   {
+    "type": "IMAGE",
+    "likes": 111851,
+    "comments": 3340,
+    "url": "https://www.instagram.com/p/DIRxki8vuHb/",
+    "caption": "¿UN MUNDO HABITABLE A 120 AÑOS LUZ?\n🌌🪐👽\n\nUn planeta llamado K2-18b, ubicado a 120 años luz de la Tierra, podría cambiarlo todo. Observado por el teles"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 63535,
+    "comments": 252,
+    "url": "https://www.instagram.com/p/DTvk2wujClp/",
+    "caption": "Webb has zoomed into the Helix Nebula to give an up-close view of the possible eventual fate of our own Sun and planetary system. In Webb’s high-resol"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 41534,
+    "comments": 852,
+    "url": "https://www.instagram.com/p/DIi10CYtjqp/",
+    "caption": "Vida lá fora?📡👽️⁠\n⁠\nUma pesquisa da Universidade de Cambridge, no Reino Unido, utilizou o supertelescópio espacial James Webb, da Nasa, para detectar "
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 36274,
+    "comments": 63,
+    "url": "https://www.instagram.com/p/DC09z4EMyJC/",
+    "caption": "Mystische Form: Dieses neue Foto vom James-Webb-Teleskop der NASA zeigt die „Sombrero-Galaxie“. In der Mitte der Galaxie befindet sich ein schwarzes L"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 34257,
+    "comments": 379,
+    "url": "https://www.instagram.com/p/DJkceuexBxb/",
+    "caption": "James Webb: o telescópio que olha com o coração ✨🔭💛\n\nO Telescópio Espacial James Webb não é só uma máquina incrível voando pelo espaço... ele é como o"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 27125,
+    "comments": 292,
+    "url": "https://www.instagram.com/p/C3qcrCVPc8B/",
+    "caption": "O Telescópio Espacial James Webb (esawebb) é uma das ferramentas científicas mais revolucionárias já desenvolvidas pela humanidade. As imagens e descr"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 24991,
+    "comments": 434,
+    "url": "https://www.instagram.com/p/DIj968QOWIm/",
+    "caption": "🔭 En un descubrimiento potencialmente histórico, científicos que utilizan el telescopio espacial #JamesWebb han obtenido lo que llaman las señales más"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 14037,
+    "comments": 50,
+    "url": "https://www.instagram.com/p/DLnDrNnP3ma/",
+    "caption": "Cosmic gymnastics 🤸‍ \n\nAbout 400 million years ago, a high-speed galactic collision created the Cartwheel Galaxy, pictured here by NASAWebb. \n\nThe col"
+   },
+   {
+    "type": "IMAGE",
+    "likes": 13977,
+    "comments": 59,
+    "url": "https://www.instagram.com/p/DC0xrQWt7J9/",
+    "caption": "Die Nasa hat ein neues Bild der \"Sombrero-Galaxie\" veröffentlicht. Die Aufnahme des James-Webb-Weltraumteleskops bringe neue Details der Galaxie zum V"
+   },
+   {
+    "type": "CAROUSEL_ALBUM",
+    "likes": 11972,
+    "comments": 165,
+    "url": "https://www.instagram.com/p/DDdJ5betUTg/",
+    "caption": "🌌 NASA FOTOGRAFÍA EL EXOPLANETA MÁS FRÍO CONOCIDO 🌌\n\nEl Telescopio Espacial James Webb ha capturado una imagen directa de Epsilon Indi Ab, un exoplane"
+   }
+  ]
+ },
+ "trends": {
+  "james webb": {
+   "last_4w": 2,
+   "change": 1
+  },
+  "black hole": {
+   "last_4w": 6,
+   "change": 0
+  },
+  "stargazing": {
+   "last_4w": 1,
+   "change": 0
+  },
+  "meteor shower": {
+   "last_4w": 2,
+   "change": -1
+  },
+  "mars": {
+   "last_4w": 38,
+   "change": 0
+  }
+ }
+}

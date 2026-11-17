@@ -812,7 +812,7 @@
      }
     },
     {
-     "say": "That is about 2.5 million light-years in one glance, and every light-year is about 9 trillion kilometers.",
+     "say": "Looking at Andromeda, you reach about 2.5 million light-years in one glance, and every light-year is about 9 trillion kilometers.",
      "show": {
       "type": "counter",
       "value": 2.5,

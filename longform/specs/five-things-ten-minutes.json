@@ -416,25 +416,6 @@
      }
     },
     {
-     "say": "NASA's fact sheets list 95 natural satellites for Jupiter and 274 for Saturn. That is a lot of company out there.",
-     "show": {
-      "type": "bars",
-      "title": "NATURAL SATELLITES",
-      "items": [
-       {
-        "label": "Jupiter",
-        "value": 95,
-        "display": "95"
-       },
-       {
-        "label": "Saturn",
-        "value": 274,
-        "display": "274"
-       }
-      ]
-     }
-    },
-    {
      "say": "So which planet will you catch first, the bright giant or the ringed one?",
      "show": {
       "type": "kinetic",
@@ -753,7 +734,7 @@
      }
     },
     {
-     "say": "Five objects, five distances: 384,400 kilometers, then millions of kilometers, then 445, 1,500 and 2.5 million light-years. So what do you do tonight?",
+     "say": "So far: the Moon, a planet, the Pleiades, the Orion Nebula, and now Andromeda at about 2.5 million light-years. So what do you do tonight?",
      "show": {
       "type": "scale",
       "title": "THE DISTANCE LADDER (LIGHT-YEARS)",
@@ -822,10 +803,10 @@
      }
     },
     {
-     "say": "Remember the delays: 1.3 seconds for the Moon, about 33 minutes for Jupiter, 1,500 years for the Orion Nebula.",
+     "say": "Remember the delays: about a second for the Moon, more than half an hour for Jupiter, 1,500 years for the Orion Nebula.",
      "show": {
       "type": "kinetic",
-      "text": "1.3 S · 33 MIN · 1,500 YEARS",
+      "text": "SECONDS · MINUTES · 1,500 YEARS",
       "accent": [
        "1,500"
       ]

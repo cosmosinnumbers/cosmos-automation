@@ -19,6 +19,10 @@ on:
     - cron: "30 11 * * *"   # 12:30 Italian time (winter): SECOND Short of the day, hot news of the last 48 h (owner 03/11/2026)
   workflow_dispatch:
     inputs:
+      clock:
+        description: "Started by the external clock (clock.yml): behave like the scheduled run"
+        type: boolean
+        default: false
       second:
         description: "Second Short of the day (hot news, release b<MMDD>-*, YouTube at 15:00)"
         type: boolean
@@ -51,6 +55,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       # second Short of the day (12:30 cron or the "second" input): prefix b, hot news, no retries, no reserve, no alert
       SECOND: ${{ github.event.schedule == '30 11 * * *' || inputs.second == true }}
+      AUTO: ${{ github.event_name == 'schedule' || inputs.clock == true }}  # scheduled run or external clock (17/11/2026)
     steps:
       - uses: actions/checkout@v7
         with: {ref: "${{ github.ref }}"}  # tip of the branch: a re-run sees the logs of the attempt before (self-heal)
@@ -62,10 +67,10 @@ jobs:
             echo "Second Short switched off (SECOND_SHORT_ENABLED=false)."; echo "done=true" >> "$GITHUB_OUTPUT"; exit 0
           fi
           tag=$(gh release list --limit 20 --json tagName --jq '.[].tagName' | grep "^$p$(date +%m%d)-" | head -1 || true)
-          if [ -n "$tag" ] && [ "${{ github.event_name }}" = "schedule" ]; then
+          if [ -n "$tag" ] && [ "$AUTO" = "true" ]; then
             echo "Today's Short is already out ($tag): nothing to do."; echo "done=true" >> "$GITHUB_OUTPUT"
           fi
-          [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date +%H)" -ge 14 ] && echo "last=true" >> "$GITHUB_OUTPUT"; true
+          { [ "$AUTO" != "true" ] || [ "$(date +%H)" -ge 14 ]; } && echo "last=true" >> "$GITHUB_OUTPUT"; true
       - uses: actions/setup-python@v7
         if: steps.today.outputs.done != 'true'
         with:
@@ -188,7 +193,7 @@ jobs:
           retention-days: 3
       - name: Reserve Short (last attempt of the day)
         id: reserve
-        if: github.event_name == 'schedule' && env.SECOND != 'true' && steps.today.outputs.done != 'true' && steps.short.outputs.id == '' && steps.today.outputs.last == 'true'
+        if: env.AUTO == 'true' && env.SECOND != 'true' && steps.today.outputs.done != 'true' && steps.short.outputs.id == '' && steps.today.outputs.last == 'true'
         continue-on-error: true
         run: |
           python tools/reserve_short.py
@@ -204,7 +209,7 @@ jobs:
           fi
           title="Short non uscito $(date +%d/%m/%Y)"
           body="Tutti i tentativi di oggi sono falliti e la riserva è vuota. Log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          if [ "${{ vars.SELF_HEAL }}" = "false" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ vars.SELF_HEAL }}" = "false" ] || [ "$AUTO" != "true" ]; then
             gh label create alert --color B60205 --description "Automazione fallita" 2>/dev/null || true
             gh issue create --title "$title" --body "$body" --label alert --assignee Redwraith || gh issue create --title "$title" --body "$body" --label alert
           else

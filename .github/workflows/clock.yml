@@ -1,0 +1,42 @@
+# External clock (17/11/2026): cron-job.org calls this workflow every 5 minutes through the GitHub API
+# (POST /repos/cosmosinnumbers/cosmos-automation/actions/workflows/clock.yml/dispatches, body {"ref":"main"}).
+# tools/clock.py then starts the time-critical workflows of config/clock.json at their Italian time.
+# Runs started here use GITHUB_TOKEN, so self-heal still covers them (triggering actor github-actions[bot]).
+# Off switch: repository variable CLOCK_ENABLED=false (or disable this workflow, or pause the cron-job.org job).
+name: clock
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: only print what would start"
+        type: boolean
+        default: false
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: clock
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    if: vars.CLOCK_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            tools/clock.py
+            config/clock.json
+          sparse-checkout-cone-mode: false
+      - name: Start what is due
+        env:
+          GH_TOKEN: ${{ github.token }}
+          IN_DRY: ${{ inputs.dry_run }}
+        run: |
+          args=(); [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          python3 tools/clock.py "${args[@]}"

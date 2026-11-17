@@ -1,0 +1,18 @@
+{
+  "_doc": "External clock (17/11/2026): GitHub cron started hours late or not at all from 15/11. cron-job.org starts clock.yml every 5 min; tools/clock.py starts each workflow below at its Italian time, unless a run of it (schedule or dispatch) already started since that time. Times are Europe/Rome all year, so no summer-time crons are needed here. Late GitHub cron runs stay as a no-op backup (every workflow below is idempotent).",
+  "window_min": 60,
+  "jobs": [
+    {"workflow": "shorts-build.yml", "at": "06:30", "inputs": {"clock": true}},
+    {"workflow": "threads-build.yml", "at": "07:40", "inputs": {"dry_run": false}},
+    {"workflow": "youtube-long-upload.yml", "at": "10:00", "inputs": {"dry_run": false}},
+    {"workflow": "shorts-build.yml", "at": "11:00", "inputs": {"clock": true}},
+    {"workflow": "publish.yml", "at": "11:45", "inputs": {"dry_run": false}},
+    {"workflow": "shorts-build.yml", "at": "12:30", "inputs": {"clock": true, "second": true}},
+    {"workflow": "youtube-upload.yml", "at": "14:45", "inputs": {"dry_run": false}},
+    {"workflow": "shorts-build.yml", "at": "15:00", "inputs": {"clock": true}},
+    {"workflow": "publish.yml", "at": "15:45", "inputs": {"dry_run": false}},
+    {"workflow": "publish.yml", "at": "18:45", "inputs": {"dry_run": false}},
+    {"workflow": "publish.yml", "at": "20:45", "inputs": {"dry_run": false}},
+    {"workflow": "youtube-upload.yml", "at": "20:45", "inputs": {"dry_run": false}}
+  ]
+}

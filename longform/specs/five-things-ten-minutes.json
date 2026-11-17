@@ -522,7 +522,7 @@
      "spot": true
     },
     {
-     "say": "So far: the Moon, a planet of our own Solar System, and now the Pleiades at about 445 light-years. But the next one is not even a star.",
+     "say": "So far: the Moon, then Jupiter or Saturn, and now the Pleiades at about 445 light-years. But the next one is not even a star.",
      "show": {
       "type": "footage",
       "query": "stars night sky"
@@ -804,7 +804,7 @@
      }
     },
     {
-     "say": "Remember the delays: about a second for the Moon, more than half an hour for Jupiter, 1,500 years for the Orion Nebula.",
+     "say": "Remember the delays: moonlight travels about a second, Jupiter's light over half an hour, and the Orion Nebula's light about 1,500 years.",
      "show": {
       "type": "kinetic",
       "text": "SECONDS · MINUTES · 1,500 YEARS",

@@ -490,7 +490,10 @@ def review(spec: dict, sources: list[dict]) -> list[str]:
     src = "\n\n".join(f"[{s['id']}] {s['url']}\n{s['text'][:6000]}" for s in sources)
     # our own guide lines are not facts to find in the sources (script_check covers them): on 10/11/2026 the reviewer
     # rejected a whole video because "LOOK UP is not in the NASA fact sheets"
-    scr = "\n".join(f"- {b.get('say', '')}" for _, b in beats(spec) if "LOOK UP" not in str(b.get("say", "")))
+    # a derived number shows its arithmetic (already redone by calc_results): on 17/11/2026 the reviewer called the
+    # Moon's 1.3 light-seconds (384,400 km / 300,000 km/s) "not in any source" three runs out of four
+    scr = "\n".join(f"- {b.get('say', '')}" + (f" [computed from the sources: {b['calc']}]" if b.get("calc") else "")
+                    for _, b in beats(spec) if "LOOK UP" not in str(b.get("say", "")))
     msgs = [{"role": "user", "parts": [{"text": REVIEW.format(sources=src, script=scr)}]}]
     # the reviewer is GLM with reasoning on (the strongest model, and not the Gemini that wrote the script) when
     # GLM_API_KEY exists; else Groq/xAI as before

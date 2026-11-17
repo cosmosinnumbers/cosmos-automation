@@ -383,5 +383,31 @@
   "at": "2026-11-17 20:50",
   "action": "fb-story",
   "video_url": "media/shorts/c1116-ess-clip-g_story.mp4"
+ },
+ {
+  "ref": "sr-c1117-p6-clip-b",
+  "at": "2026-11-18 20:52",
+  "action": "ig-reel",
+  "video_url": "media/shorts/c1117-p6-clip-b.mp4",
+  "caption": "How do we know Europa hides an ocean?\n\nFull video on YouTube: @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "fr-c1117-p6-clip-b",
+  "at": "2026-11-18 20:52",
+  "action": "fb-reel",
+  "video_url": "media/shorts/c1117-p6-clip-b.mp4",
+  "caption": "How do we know Europa hides an ocean?\n\nFull video on YouTube: @CosmosinNumbers\n📘 LOOK UP stargazing guide: https://gum.co/u/5lo91i50 · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "si-c1117-p6-clip-b",
+  "at": "2026-11-18 20:52",
+  "action": "ig-story",
+  "video_url": "media/shorts/c1117-p6-clip-b_story.mp4"
+ },
+ {
+  "ref": "sf-c1117-p6-clip-b",
+  "at": "2026-11-18 20:52",
+  "action": "fb-story",
+  "video_url": "media/shorts/c1117-p6-clip-b_story.mp4"
  }
 ]

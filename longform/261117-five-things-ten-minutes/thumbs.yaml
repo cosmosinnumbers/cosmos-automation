@@ -1,0 +1,42 @@
+A:
+  bg: thumb_A
+  lines:
+  - 'NO'
+  - TELESCOPE
+  - NEEDED
+  accent: amber
+  badge: REAL NASA DATA
+  side: left
+  focus:
+  - 0.5
+  - 0.5
+  highlight: 0
+  stickman: false
+B:
+  bg: thumb_B
+  lines:
+  - 2.5 MILLION
+  - LIGHT-YEARS
+  - BY EYE
+  accent: cyan
+  badge: REAL NASA DATA
+  side: left
+  focus:
+  - 0.5
+  - 0.5
+  highlight: 0
+  stickman: true
+C:
+  bg: thumb_C
+  lines:
+  - 5 THINGS
+  - TO SEE
+  - TONIGHT
+  accent: amber
+  badge: REAL NASA DATA
+  side: left
+  focus:
+  - 0.5
+  - 0.5
+  highlight: 0
+  stickman: true

@@ -1,0 +1,324 @@
+img_1:
+  file: assets/stock/nasa-img-PIA09956.jpg
+  type: image
+  kind: illustration
+  title: Fantastic Four Galaxies with Planet Artist Concept
+  source: https://images.nasa.gov/details/PIA09956
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_2:
+  file: assets/stock/nasa-img-iss073e0982261.jpg
+  type: image
+  kind: photo
+  title: The Milky Way spans the night sky above a yellow-green airglow
+  source: https://images.nasa.gov/details/iss073e0982261
+  credit: NASA/JSC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_3:
+  file: assets/stock/nasa-img-PIA26681.jpg
+  type: image
+  kind: photo
+  title: ' Image of Sun From NASA''s Solar Dynamics Observatory'
+  source: https://images.nasa.gov/details/PIA26681
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_4:
+  file: assets/stock/nasa-img-PIA12110.jpg
+  type: image
+  kind: photo
+  title: Hubble Deep Field Image Unveils Myriad Galaxies Back to the Beginning of Time
+  source: https://images.nasa.gov/details/PIA12110
+  credit: NASA/STScI (Hubble)
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_5:
+  file: assets/stock/nasa-NHQ_2019_0311_Go Forward to the Moon.mp4
+  type: video
+  kind: footage
+  title: Go Forward to the Moon
+  source: https://images.nasa.gov/details/NHQ_2019_0311_Go Forward to the Moon
+  credit: NASA/HQ
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_6:
+  file: assets/stock/nasa-img-PIA10569.jpg
+  type: image
+  kind: photo
+  title: It Full of Moons!
+  source: https://images.nasa.gov/details/PIA10569
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_7:
+  file: assets/stock/nasa-img-as11-44-6552.jpg
+  type: image
+  kind: photo
+  title: View of Earth rising over Moon's horizon taken from Apollo 11 spacecraft
+  source: https://images.nasa.gov/details/as11-44-6552
+  credit: NASA/JSC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_8:
+  file: assets/stock/nasa-img-ARC-1990-A91-2007.jpg
+  type: image
+  kind: photo
+  title: ARC-1990-A91-2007
+  source: https://images.nasa.gov/details/ARC-1990-A91-2007
+  credit: NASA/ARC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_9:
+  file: assets/stock/nasa-GSFC_20190618_LRO_m13229_10Years.mp4
+  type: video
+  kind: footage
+  title: 10 Years at the Moon
+  source: https://images.nasa.gov/details/GSFC_20190618_LRO_m13229_10Years
+  credit: NASA/GSFC (David Ladd, Noah Petro)
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_10:
+  file: assets/stock/nasa-img-PIA01518.jpg
+  type: image
+  kind: photo
+  title: Jupiter Plume
+  source: https://images.nasa.gov/details/PIA01518
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_11:
+  file: assets/stock/nasa-img-PIA21771.jpg
+  type: image
+  kind: illustration
+  title: Juno Over Jupiter's South Pole (Illustration)
+  source: https://images.nasa.gov/details/PIA21771
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_12:
+  file: assets/stock/nasa-img-PIA22766.jpg
+  type: image
+  kind: illustration
+  title: Cassini orbiting Saturn (Illustration)
+  source: https://images.nasa.gov/details/PIA22766
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_13:
+  file: assets/stock/nasa-JPL-20210701-WHATSUf-0001-Whats-Up-July-2021.mp4
+  type: video
+  kind: footage
+  title: 'What''s Up: July 2021 Skywatching Tips from NASA '
+  source: https://images.nasa.gov/details/JPL-20210701-WHATSUf-0001-Whats-Up-July-2021
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_14:
+  file: assets/stock/nasa-img-PIA09262.jpg
+  type: image
+  kind: photo
+  title: Pink Pleiades
+  source: https://images.nasa.gov/details/PIA09262
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_15:
+  file: assets/stock/nasa-JPL-20201101-WHATSUf-0001-Whats_Up_November_2020.mp4
+  type: video
+  kind: footage
+  title: 'What''s Up: November 2020 Skywatching Tips from NASA '
+  source: https://images.nasa.gov/details/JPL-20201101-WHATSUf-0001-Whats_Up_November_2020
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_18:
+  file: assets/stock/nasa-JPL-20250415-MARSf-0001-What_You_See_at_Night_on_Mars_2160cc.mp4
+  type: video
+  kind: footage
+  title: 'Mars After Dark: What NASA Rovers Really See'
+  source: https://images.nasa.gov/details/JPL-20250415-MARSf-0001-What_You_See_at_Night_on_Mars_2160cc
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_19:
+  file: assets/stock/nasa-img-sts054-97-018.jpg
+  type: image
+  kind: photo
+  title: STS-54 astronomical observation of the constellation Orion
+  source: https://images.nasa.gov/details/sts054-97-018
+  credit: NASA/JSC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_20:
+  file: assets/stock/nasa-img-PIA04227.jpg
+  type: image
+  kind: photo
+  title: Orion Nebula and Bow Shock
+  source: https://images.nasa.gov/details/PIA04227
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_21:
+  file: assets/stock/nasa-JPL-20221122-SOLSYSf-0001-Orion Dust and Death.mp4
+  type: video
+  kind: footage
+  title: Dust and Drama in the Orion Nebula from NASA and ESA Images
+  source: https://images.nasa.gov/details/JPL-20221122-SOLSYSf-0001-Orion Dust and Death
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_22:
+  file: assets/stock/nasa-img-PIA13448.jpg
+  type: image
+  kind: photo
+  title: A Flame in Orion Belt
+  source: https://images.nasa.gov/details/PIA13448
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_23:
+  file: assets/stock/nasa-img-GSFC_20171208_Archive_e002105.jpg
+  type: image
+  kind: illustration
+  title: NASA's Hubble Universe in 3-D
+  source: https://images.nasa.gov/details/GSFC_20171208_Archive_e002105
+  credit: NASA/GSFC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_24:
+  file: assets/stock/nasa-img-PIA16680.jpg
+  type: image
+  kind: photo
+  title: Betelgeuse Enigmatic Environment
+  source: https://images.nasa.gov/details/PIA16680
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_25:
+  file: assets/stock/nasa-ARC-20200103-AAV3244-SOFIA-GalacticCenter-RptrPkg-NASAWeb.mp4
+  type: video
+  kind: footage
+  title: SOFIA Reveals New View of Milky Way’s Center
+  source: https://images.nasa.gov/details/ARC-20200103-AAV3244-SOFIA-GalacticCenter-RptrPkg-NASAWeb
+  credit: NASA/ARC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_26:
+  file: assets/stock/nasa-img-PIA04921.jpg
+  type: image
+  kind: photo
+  title: Andromeda Galaxy
+  source: https://images.nasa.gov/details/PIA04921
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_27:
+  file: assets/stock/nasa-JPL-20240201-WHATSUf-0001-Whats_Up_February_2024.mp4
+  type: video
+  kind: footage
+  title: 'What''s Up: February 2024 Skywatching Tips from NASA'
+  source: https://images.nasa.gov/details/JPL-20240201-WHATSUf-0001-Whats_Up_February_2024
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_28:
+  file: assets/stock/nasa-img-0002272.jpg
+  type: image
+  kind: photo
+  title: History of Chandra X-Ray Observatory
+  source: https://images.nasa.gov/details/0002272
+  credit: NASA/MSFC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_29:
+  file: assets/stock/nasa-img-GSFC_20171208_Archive_e000833.jpg
+  type: image
+  kind: photo
+  title: Hubble's High-Definition Panoramic View of the Andromeda Galaxy
+  source: https://images.nasa.gov/details/GSFC_20171208_Archive_e000833
+  credit: NASA/GSFC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_30:
+  file: assets/stock/nasa-img-hubble-sees-galaxy-hiding-in-the-night-sky_26774948406_o.jpg
+  type: image
+  kind: photo
+  title: Hiding in the night sky
+  source: https://images.nasa.gov/details/hubble-sees-galaxy-hiding-in-the-night-sky_26774948406_o
+  credit: NASA/GSFC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_31:
+  file: assets/stock/nasa-img-PIA01368.jpg
+  type: image
+  kind: photo
+  title: Jupiter Moon Io
+  source: https://images.nasa.gov/details/PIA01368
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_32:
+  file: assets/stock/nasa-img-PIA25434.jpg
+  type: image
+  kind: photo
+  title: Orion Nebula in Infrared
+  source: https://images.nasa.gov/details/PIA25434
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_33:
+  file: assets/stock/nasa-JPL-20201001-WHATSUf-0001-Whats_Up_October_2020.mp4
+  type: video
+  kind: footage
+  title: 'What''s Up: October 2020 Skywatching Tips from NASA'
+  source: https://images.nasa.gov/details/JPL-20201001-WHATSUf-0001-Whats_Up_October_2020
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+img_34:
+  file: assets/stock/nasa-img-KSC-2012-3523.jpg
+  type: image
+  kind: photo
+  title: KSC-2012-3523
+  source: https://images.nasa.gov/details/KSC-2012-3523
+  credit: NASA/KSC
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+vid_35:
+  file: assets/stock/nasa-JPL-20260901-WHATSUf-0001-Whats_Up_September_2026.mp4
+  type: video
+  kind: footage
+  title: 'What''s Up: September 2026 Skywatching Tips from NASA'
+  source: https://images.nasa.gov/details/JPL-20260901-WHATSUf-0001-Whats_Up_September_2026
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+thumb_A:
+  file: assets/stock/nasa-img-PIA25163.jpg
+  type: image
+  kind: photo
+  title: Andromeda Galaxy Imaged by Herschel, Planck, IRAS, COBE
+  source: https://images.nasa.gov/details/PIA25163
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+thumb_B:
+  file: assets/stock/nasa-img-PIA16682.jpg
+  type: image
+  kind: photo
+  title: Cool Andromeda
+  source: https://images.nasa.gov/details/PIA16682
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok
+thumb_C:
+  file: assets/stock/nasa-img-PIA01322.jpg
+  type: image
+  kind: photo
+  title: Chaos at the Heart of Orion
+  source: https://images.nasa.gov/details/PIA01322
+  credit: NASA/JPL
+  license: NASA media usage guidelines (generally not copyrighted; no endorsement, no logos)
+  check: ok

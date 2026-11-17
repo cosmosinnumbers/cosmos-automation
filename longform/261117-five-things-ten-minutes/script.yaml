@@ -25,9 +25,7 @@ tags:
 - night sky tonight
 - real space data
 - stargazing
-description_intro: 'Five things anyone can find in the night sky in about ten minutes, with no telescope,
-  and how far away each one really is: the Moon, Jupiter or Saturn, the Pleiades, the Orion Nebula with
-  Betelgeuse, and the Andromeda Galaxy. Every number comes from NASA fact sheets and NASA Hubble pages.'
+description_intro: Five things anyone can see tonight with no telescope, and how far away each one really is. Every number comes from NASA fact sheets and Hubble pages.
 progress_bar: true
 cut_sfx: true
 chapters: false
@@ -449,9 +447,12 @@ segments:
     happened around the year 1300. Its light only just arrived. Hundreds of light-years, then 1,500. Yet
     the last object breaks the scale completely.'
   visuals:
-  - type: image
-    src: img_19
-    motion: zoom_in
+  - type: kinetic
+    text: LOOK JUST BELOW ORION'S BELT
+    accent:
+    - ORION'S
+    bg: img_20
+    dim: 0.6
   - type: image
     src: img_20
     motion: pan_left

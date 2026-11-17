@@ -47,3 +47,6 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1116-gemini-astronaut-photos", "ok": true, "score": 59, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-news-1116-nsf-noirlab-operated", "ok": true, "score": 65, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1116-number-moons-min", "ok": true, "score": 80, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1117-gemini-astronaut-photos", "ok": true, "score": 59, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-quiz-1117-escape-velocity-max", "ok": true, "score": 82, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-c1117-p6-clip-b", "ok": true, "score": 66, "errors": []}

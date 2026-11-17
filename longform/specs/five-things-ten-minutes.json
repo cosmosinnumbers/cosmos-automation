@@ -522,7 +522,7 @@
      "spot": true
     },
     {
-     "say": "So far: the Moon, then Jupiter or Saturn, and now the Pleiades at about 445 light-years. But the next one is not even a star.",
+     "say": "So far: the Moon, then Jupiter or Saturn, and now the Pleiades at about 445 light-years. So what is waiting just below Orion's belt?",
      "show": {
       "type": "footage",
       "query": "stars night sky"
@@ -766,11 +766,12 @@
     "S5",
     "S6",
     "S7",
-    "S9"
+    "S9",
+    "S10"
    ],
    "beats": [
     {
-     "say": "Here is the ten-minute plan. Start with the Moon if it is up, then look for one of the bright planets.",
+     "say": "Here is the ten-minute plan. Start with the Moon if it is up: it is the easiest warm-up, about 30 Earths away.",
      "show": {
       "type": "image",
       "query": "Moon and Jupiter"

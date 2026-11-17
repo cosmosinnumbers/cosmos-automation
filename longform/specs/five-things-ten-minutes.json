@@ -243,7 +243,7 @@
      }
     },
     {
-     "say": "Moonlight is sunlight bouncing off grey rock, and it needs about 1.3 seconds to cross that gap and reach you.",
+     "say": "Light covers about 300,000 kilometers every second. Divide 384,400 by 300,000, and moonlight needs about 1.3 seconds to reach you.",
      "show": {
       "type": "counter",
       "value": 1.3,
@@ -522,7 +522,7 @@
      "spot": true
     },
     {
-     "say": "So far: the Moon at 1.3 light-seconds, Jupiter at more than half a light-hour, the Pleiades at about 445 light-years. But the next one is not even a star.",
+     "say": "So far: the Moon, a planet of our own Solar System, and now the Pleiades at about 445 light-years. But the next one is not even a star.",
      "show": {
       "type": "footage",
       "query": "stars night sky"
@@ -765,6 +765,7 @@
    "sources": [
     "S1",
     "S3",
+    "S4",
     "S5",
     "S6",
     "S7",

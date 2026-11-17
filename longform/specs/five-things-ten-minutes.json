@@ -763,9 +763,6 @@
   {
    "title": "Your ten minutes",
    "sources": [
-    "S1",
-    "S3",
-    "S4",
     "S5",
     "S6",
     "S7",
@@ -773,7 +770,7 @@
    ],
    "beats": [
     {
-     "say": "Here is the ten-minute plan. Start with the Moon if it is up, then look for Jupiter or Saturn.",
+     "say": "Here is the ten-minute plan. Start with the Moon if it is up, then look for one of the bright planets.",
      "show": {
       "type": "image",
       "query": "Moon and Jupiter"
@@ -804,7 +801,7 @@
      }
     },
     {
-     "say": "Remember the delays: moonlight travels about a second, Jupiter's light over half an hour, and the Orion Nebula's light about 1,500 years.",
+     "say": "Remember the rule: the farther the object, the older its light. The Orion Nebula is about 1,500 light-years away, so its light is about 1,500 years old.",
      "show": {
       "type": "kinetic",
       "text": "SECONDS · MINUTES · 1,500 YEARS",

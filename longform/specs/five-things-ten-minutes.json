@@ -1,0 +1,67 @@
+{
+ "id": "five-things-ten-minutes",
+ "title": "probe 10",
+ "sources": [
+  {
+   "title": "NASA Moon Fact Sheet",
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+  },
+  {
+   "title": "NASA: Moon facts",
+   "url": "https://science.nasa.gov/moon/facts/"
+  },
+  {
+   "title": "NASA Jupiter Fact Sheet",
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/jupiterfact.html"
+  },
+  {
+   "title": "NASA Saturn Fact Sheet",
+   "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/saturnfact.html"
+  },
+  {
+   "title": "NASA Hubble: Messier 45 (Pleiades)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-45/"
+  },
+  {
+   "title": "NASA Hubble: Messier 42 (Orion Nebula)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-42/"
+  },
+  {
+   "title": "NASA Hubble: Messier 31 (Andromeda Galaxy)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-31/"
+  },
+  {
+   "title": "NASA: Betelgeuse",
+   "url": "https://science.nasa.gov/missions/hubble/hubble-finds-that-betelgeuses-mysterious-dimming-is-due-to-a-traumatic-outburst/"
+  },
+  {
+   "title": "NASA: What is a light-year?",
+   "url": "https://science.nasa.gov/learn/basics-of-space-flight/chapter1-3/"
+  },
+  {
+   "title": "NASA Space Place: How far away is the Moon?",
+   "url": "https://spaceplace.nasa.gov/moon-distance/en/"
+  },
+  {
+   "title": "NASA: Andromeda galaxy",
+   "url": "https://science.nasa.gov/missions/hubble/nasas-hubble-traces-hidden-history-of-andromeda-galaxy/"
+  }
+ ],
+ "chapters": [
+  {
+   "title": "x",
+   "sources": [
+    "S1"
+   ],
+   "beats": [
+    {
+     "say": "probe?",
+     "show": {
+      "type": "kinetic",
+      "text": "X"
+     }
+    }
+   ]
+  }
+ ]
+}

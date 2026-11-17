@@ -359,6 +359,20 @@
   "video_url": "media/shorts/c1115-ess-clip-f_story.mp4"
  },
  {
+  "ref": "car-a1103-swift-space-telescope-reentry",
+  "at": "2026-11-17 19:00",
+  "action": "ig-carousel",
+  "images": [
+   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/01.jpg",
+   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/02.jpg",
+   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/03.jpg",
+   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/04.jpg",
+   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/05.jpg",
+   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/06.jpg"
+  ],
+  "caption": "A 3,200-Pound Space Telescope Is Falling to Earth Which number surprised you most?\n\nFull video on YouTube: @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\nData: NASA’s Swift Observatory to Re-Enter Atmosphere.\n\nText from our fact-checked Short, AI-assisted and checked by code against the sources. Images: NASA Image Library (public domain), credited on each slide.\n\n#space #astronomy #nasa #science #universe"
+ },
+ {
   "ref": "sr-c1116-ess-clip-g",
   "at": "2026-11-17 20:50",
   "action": "ig-reel",
@@ -411,17 +425,29 @@
   "video_url": "media/shorts/c1117-p6-clip-b_story.mp4"
  },
  {
-  "ref": "car-a1103-swift-space-telescope-reentry",
-  "at": "2026-11-17 19:00",
-  "action": "ig-carousel",
-  "images": [
-   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/01.jpg",
-   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/02.jpg",
-   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/03.jpg",
-   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/04.jpg",
-   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/05.jpg",
-   "https://cosmosinnumbers.github.io/media/carousels/a1103-swift-space-telescope-reentry/06.jpg"
-  ],
-  "caption": "A 3,200-Pound Space Telescope Is Falling to Earth Which number surprised you most?\n\nFull video on YouTube: @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\nData: NASA’s Swift Observatory to Re-Enter Atmosphere.\n\nText from our fact-checked Short, AI-assisted and checked by code against the sources. Images: NASA Image Library (public domain), credited on each slide.\n\n#space #astronomy #nasa #science #universe"
+  "ref": "sr-c1118-p6-clip-c",
+  "at": "2026-11-19 20:54",
+  "action": "ig-reel",
+  "video_url": "media/shorts/c1118-p6-clip-c.mp4",
+  "caption": "Has anyone actually seen Europa's ocean?\n\nFull video on YouTube: @CosmosinNumbers (link in bio)\n📘 LOOK UP stargazing guide: link in bio · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "fr-c1118-p6-clip-c",
+  "at": "2026-11-19 20:54",
+  "action": "fb-reel",
+  "video_url": "media/shorts/c1118-p6-clip-c.mp4",
+  "caption": "Has anyone actually seen Europa's ocean?\n\nFull video on YouTube: @CosmosinNumbers\n📘 LOOK UP stargazing guide: https://gum.co/u/5lo91i50 · code COSMOS9\n\nSources in the YouTube description. Synthetic voice; script drafted with AI assistance and fact-checked.\n#space #astronomy #science"
+ },
+ {
+  "ref": "si-c1118-p6-clip-c",
+  "at": "2026-11-19 20:54",
+  "action": "ig-story",
+  "video_url": "media/shorts/c1118-p6-clip-c_story.mp4"
+ },
+ {
+  "ref": "sf-c1118-p6-clip-c",
+  "at": "2026-11-19 20:54",
+  "action": "fb-story",
+  "video_url": "media/shorts/c1118-p6-clip-c_story.mp4"
  }
 ]

@@ -762,5 +762,38 @@
    "Full video: Why NASA Will Fly Past Europa 49 Times: https://youtu.be/0dYQy7Ku2_s"
   ],
   "short": "c1117-p6-clip-b"
+ },
+ {
+  "ref": "th-data-1118-mercury-length-day",
+  "at": "2026-11-18 12:00",
+  "tag": "Space",
+  "text": "🕰️ Mercury's day is 176 times Earth's.\n\nNASA lists 4222.6 hours for Mercury and 24.0 hours for Earth. Measured from one sunrise to the next.\n\nData: NASA Planetary Fact Sheet.\nhttps://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+  "replies": []
+ },
+ {
+  "ref": "th-quiz-1118-mass-min",
+  "at": "2026-11-18 17:55",
+  "tag": "Science",
+  "poll": [
+   "Saturn",
+   "Jupiter",
+   "Mars"
+  ],
+  "text": "Yesterday's answer: Jupiter, 59.5 km/s to escape (NASA Planetary Fact Sheet).\n\nToday's quiz ⚖️ Which of these planets is the least massive?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Mass-1",
+  "answer": "Mars, 0.642 × 10^24 kg (NASA Planetary Fact Sheet)"
+ },
+ {
+  "ref": "th-c1118-p6-clip-c",
+  "at": "2026-11-18 21:00",
+  "tag": "Hubble",
+  "text": "Has anyone actually seen Europa's ocean?\n\nNo spacecraft has drilled through Europa's ice. The ocean's depth, salinity, and exchange with the surface remain uncertain.\n\nSources: in the full video's description on YouTube.\nNarration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers",
+  "replies": [
+   "Full video: Why NASA Will Fly Past Europa 49 Times: https://youtu.be/0dYQy7Ku2_s"
+  ],
+  "short": "c1118-p6-clip-c"
  }
 ]

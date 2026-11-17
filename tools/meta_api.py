@@ -39,6 +39,9 @@ LIMITS_WARMUP = {("ig", "reel"): (1, 20), ("ig", "story"): (1, 4), ("fb", "reel"
 LIMITS = {("ig", "reel"): (1, 12), ("ig", "story"): (2, 3), ("fb", "reel"): (2, 3), ("fb", "story"): (2, 3),
           ("ig", "post"): (1, 20), ("fb", "post"): (1, 20)}
 # Instagram reinstated on 16/10/2026 after the appeal: every other day until 30/10, then the warm-up limits above
+# The "max N per 24h" count looks back 22 h, not 24 h: daily slots drift and cron starts late, so yesterday's
+# Reel published at 20:51:28 blocked today's 20:50 Reel by seconds (17/11/2026). The min gap still applies.
+DAY_WINDOW_S = 22 * 3600
 IG_SLOW_UNTIL = 1793397600  # 30/10/2026 22:00 UTC
 LIMITS_IG_SLOW = {("ig", "reel"): (1, 44), ("ig", "story"): (1, 44), ("ig", "post"): (1, 20)}
 
@@ -57,9 +60,9 @@ def guard(platform, kind, at=None):
         table = LIMITS_IG_SLOW
     maxn, gap_h = table[(platform, kind)]
     ev = _events()
-    same = [e for e in ev if e["p"] == platform and e["k"] == kind and abs(e["at"] - at) < 86400]
+    same = [e for e in ev if e["p"] == platform and e["k"] == kind and abs(e["at"] - at) < DAY_WINDOW_S]
     if len(same) >= maxn:
-        sys.exit(f"PACING: {platform} {kind} already {len(same)} within 24h of that time (max {maxn}). Pick another day.")
+        sys.exit(f"PACING: {platform} {kind} already {len(same)} within 22h of that time (max {maxn}). Pick another day.")
     # a Story may accompany its own Reel at the same time; otherwise same-kind actions must be gap_h apart
     near = [e for e in ev if e["p"] == platform and e["k"] == kind and abs(e["at"] - at) < gap_h * 3600]
     if near:

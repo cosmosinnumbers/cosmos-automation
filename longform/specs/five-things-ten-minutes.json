@@ -1,6 +1,57 @@
 {
  "id": "five-things-ten-minutes",
- "title": "probe 10",
+ "title": "5 Things You Can See Tonight Without a Telescope",
+ "alt_titles": [
+  "Your Eyes Can See 2.5 Million Light-Years. Here's How",
+  "5 Naked-Eye Sights and How Far Away They Really Are"
+ ],
+ "description_intro": "Five things anyone can find in the night sky in about ten minutes, with no telescope, and how far away each one really is: the Moon, Jupiter or Saturn, the Pleiades, the Orion Nebula with Betelgeuse, and the Andromeda Galaxy. Every number comes from NASA fact sheets and NASA Hubble pages.",
+ "tags": [
+  "what can you see without a telescope",
+  "naked eye astronomy",
+  "stargazing for beginners",
+  "andromeda galaxy naked eye",
+  "orion nebula",
+  "pleiades",
+  "how far is the moon",
+  "jupiter brightness",
+  "light year explained",
+  "night sky tonight",
+  "real space data",
+  "stargazing"
+ ],
+ "hashtags": [
+  "stargazing",
+  "astronomy",
+  "space"
+ ],
+ "thumbs": [
+  {
+   "lines": [
+    "NO",
+    "TELESCOPE",
+    "NEEDED"
+   ],
+   "query": "Andromeda galaxy"
+  },
+  {
+   "lines": [
+    "2.5 MILLION",
+    "LIGHT-YEARS",
+    "BY EYE"
+   ],
+   "query": "Andromeda galaxy M31",
+   "stickman": true
+  },
+  {
+   "lines": [
+    "5 THINGS",
+    "TO SEE",
+    "TONIGHT"
+   ],
+   "query": "Orion Nebula Hubble"
+  }
+ ],
  "sources": [
   {
    "title": "NASA Moon Fact Sheet",
@@ -45,28 +96,781 @@
   {
    "title": "NASA: Andromeda galaxy",
    "url": "https://science.nasa.gov/missions/hubble/nasas-hubble-traces-hidden-history-of-andromeda-galaxy/"
-  },
-  {
-   "title": "NASA: Light-year",
-   "url": "https://science.nasa.gov/glossary/light-year/"
-  },
-  {
-   "title": "NASA Imagine the Universe: Cosmic distance scales",
-   "url": "https://imagine.gsfc.nasa.gov/features/cosmic/"
   }
  ],
  "chapters": [
   {
-   "title": "x",
+   "title": "The challenge",
    "sources": [
-    "S1"
+    "S2",
+    "S7",
+    "S9",
+    "S10"
    ],
    "beats": [
     {
-     "say": "probe?",
+     "say": "How far can your naked eye really see? Much farther than most people guess, and you can check it tonight.",
+     "show": {
+      "type": "image",
+      "query": "night sky stars"
+     }
+    },
+    {
+     "say": "By the end you'll know five things anyone can find in about ten minutes, with no telescope, and how far away each one is.",
      "show": {
       "type": "kinetic",
-      "text": "X"
+      "text": "5 THINGS. NO TELESCOPE.",
+      "accent": [
+       "NO",
+       "TELESCOPE"
+      ]
+     }
+    },
+    {
+     "say": "The nearest one is about 384,400 kilometers away. The farthest is about 2.5 million light-years away.",
+     "show": {
+      "type": "kinetic",
+      "text": "384,400 KM → 2.5 MILLION LIGHT-YEARS",
+      "accent": [
+       "2.5",
+       "MILLION"
+      ]
+     }
+    },
+    {
+     "say": "So here is a quick guess before we start. Which of the five do you think is the farthest thing your eyes can reach?",
+     "show": {
+      "type": "image",
+      "query": "Milky Way night sky"
+     }
+    },
+    {
+     "say": "First, the ruler we will use. A light-year is the distance light travels in one Earth year: about 9 trillion kilometers.",
+     "show": {
+      "type": "counter",
+      "value": 9,
+      "suffix": " trillion km",
+      "label": "ONE LIGHT-YEAR",
+      "sub": "NASA Space Place"
+     }
+    },
+    {
+     "say": "Light moves at about 300,000 kilometers per second. Even at that speed, the night sky always shows you the past.",
+     "show": {
+      "type": "counter",
+      "value": 300000,
+      "suffix": " km/s",
+      "label": "SPEED OF LIGHT",
+      "sub": "NASA Space Place"
+     }
+    },
+    {
+     "say": "Even daylight is old. The Sun's light takes about 8.3 minutes to reach us, so you always see the Sun as it was.",
+     "show": {
+      "type": "image",
+      "query": "Sun Solar Dynamics Observatory"
+     }
+    },
+    {
+     "say": "The farther away an object is, the older the light that lands in your eyes tonight.",
+     "show": {
+      "type": "image",
+      "query": "Hubble deep field galaxies"
+     }
+    },
+    {
+     "say": "So every object on this list is also a time machine, each one with a different delay.",
+     "show": {
+      "type": "kinetic",
+      "text": "EVERY LIGHT ARRIVES LATE",
+      "accent": [
+       "LATE"
+      ]
+     }
+    },
+    {
+     "say": "We start with the easiest one of all. What could be simpler than the Moon? Yet its numbers are stranger than they look.",
+     "show": {
+      "type": "footage",
+      "query": "Moon"
+     }
+    }
+   ]
+  },
+  {
+   "title": "The Moon",
+   "sources": [
+    "S1",
+    "S2",
+    "S9",
+    "S10"
+   ],
+   "beats": [
+    {
+     "say": "Object one is the Moon, and it is much farther away than most drawings make it look.",
+     "show": {
+      "type": "image",
+      "query": "full Moon"
+     }
+    },
+    {
+     "say": "It is an average of 384,400 kilometers away. According to NASA, 30 Earth-sized planets could fit in that gap.",
+     "show": {
+      "type": "counter",
+      "value": 384400,
+      "suffix": " km",
+      "label": "EARTH TO MOON",
+      "sub": "average, NASA"
+     }
+    },
+    {
+     "say": "And the distance is not fixed. According to NASA's fact sheet, it roughly ranges from 357,000 to 407,000 kilometers.",
+     "show": {
+      "type": "bars",
+      "title": "EARTH TO MOON (KM)",
+      "items": [
+       {
+        "label": "Closest",
+        "value": 357000,
+        "display": "357,000"
+       },
+       {
+        "label": "Farthest",
+        "value": 407000,
+        "display": "407,000"
+       }
+      ]
+     }
+    },
+    {
+     "say": "Moonlight is sunlight bouncing off grey rock, and it needs about 1.3 seconds to cross that gap and reach you.",
+     "show": {
+      "type": "counter",
+      "value": 1.3,
+      "suffix": " s",
+      "label": "MOONLIGHT DELAY",
+      "sub": "384,400 km ÷ 300,000 km/s"
+     },
+     "calc": "384400 / 300000 = 1.28"
+    },
+    {
+     "say": "At full Moon, its mean apparent visual magnitude is about -12.74. That is the brightest thing in the night sky.",
+     "show": {
+      "type": "kinetic",
+      "text": "MAGNITUDE −12.74",
+      "accent": [
+       "−12.74"
+      ]
+     }
+    },
+    {
+     "say": "Keep one rule in mind for the rest of the list: on the magnitude scale, the lower the number, the brighter the object.",
+     "show": {
+      "type": "image",
+      "query": "Moon rising over horizon"
+     }
+    },
+    {
+     "say": "Now look at the dark patches. Those maria are impact basins that were filled with lava between 4.2 and 1.2 billion years ago.",
+     "show": {
+      "type": "image",
+      "query": "lunar maria"
+     }
+    },
+    {
+     "say": "The bright highlands around them are older crust. One crater there, Tycho, is more than 85 kilometers wide.",
+     "show": {
+      "type": "counter",
+      "value": 85,
+      "suffix": " km",
+      "label": "TYCHO CRATER",
+      "sub": "NASA"
+     }
+    },
+    {
+     "say": "Here is a question for the comments. Before today, how far away did you think the Moon was?",
+     "show": {
+      "type": "kinetic",
+      "text": "HOW FAR DID YOU THINK?",
+      "accent": [
+       "YOU"
+      ]
+     },
+     "ask": "How far away did you think the Moon was?"
+    },
+    {
+     "say": "So far: the Moon, about 384,400 kilometers and 1.3 light-seconds away. Next comes a light that is not a star at all. But which one?",
+     "show": {
+      "type": "footage",
+      "query": "Lunar Reconnaissance Orbiter Moon"
+     },
+     "recap": true
+    }
+   ]
+  },
+  {
+   "title": "A planet",
+   "sources": [
+    "S3",
+    "S4",
+    "S9"
+   ],
+   "beats": [
+    {
+     "say": "Object two is a planet. When Jupiter is in your sky, it looks like a very bright point of light.",
+     "show": {
+      "type": "image",
+      "query": "Jupiter"
+     }
+    },
+    {
+     "say": "At its best, Jupiter reaches an apparent visual magnitude of -2.94, according to NASA's Jupiter fact sheet.",
+     "show": {
+      "type": "kinetic",
+      "text": "JUPITER: MAGNITUDE −2.94",
+      "accent": [
+       "−2.94"
+      ]
+     }
+    },
+    {
+     "say": "Its distance from us changes a lot, because both planets move. The minimum is 588.5 million kilometers, the maximum 968.5 million.",
+     "show": {
+      "type": "bars",
+      "title": "EARTH TO JUPITER (MILLION KM)",
+      "items": [
+       {
+        "label": "Closest",
+        "value": 588.5,
+        "display": "588.5"
+       },
+       {
+        "label": "Farthest",
+        "value": 968.5,
+        "display": "968.5"
+       }
+      ]
+     }
+    },
+    {
+     "say": "Even at its closest, Jupiter's light needs about 33 minutes to reach you.",
+     "show": {
+      "type": "counter",
+      "value": 33,
+      "suffix": " min",
+      "label": "JUPITER LIGHT DELAY",
+      "sub": "at its closest"
+     },
+     "calc": "588.5 * 1000000 / 300000 / 60 = 32.69"
+    },
+    {
+     "say": "Compare that with the Moon's 1.3 seconds. The Jupiter you see tonight left the planet over half an hour ago.",
+     "show": {
+      "type": "image",
+      "query": "Jupiter Juno"
+     }
+    },
+    {
+     "say": "And it is enormous. Jupiter's equatorial radius is 71,492 kilometers, about 11 times Earth's.",
+     "show": {
+      "type": "compare",
+      "title": "EQUATORIAL RADIUS",
+      "items": [
+       {
+        "label": "Jupiter",
+        "value": 71492,
+        "suffix": " km"
+       },
+       {
+        "label": "Earth",
+        "value": 6378.1,
+        "suffix": " km"
+       }
+      ]
+     }
+    },
+    {
+     "say": "Saturn can take the planet slot too. With its rings, its maximum apparent visual magnitude is -0.55.",
+     "show": {
+      "type": "image",
+      "query": "Saturn Cassini"
+     }
+    },
+    {
+     "say": "Saturn is much farther away: between 1205.5 and 1658.6 million kilometers from Earth.",
+     "show": {
+      "type": "bars",
+      "title": "EARTH TO SATURN (MILLION KM)",
+      "items": [
+       {
+        "label": "Closest",
+        "value": 1205.5,
+        "display": "1205.5"
+       },
+       {
+        "label": "Farthest",
+        "value": 1658.6,
+        "display": "1658.6"
+       }
+      ]
+     }
+    },
+    {
+     "say": "NASA's fact sheets list 95 natural satellites for Jupiter and 274 for Saturn. That is a lot of company out there.",
+     "show": {
+      "type": "bars",
+      "title": "NATURAL SATELLITES",
+      "items": [
+       {
+        "label": "Jupiter",
+        "value": 95,
+        "display": "95"
+       },
+       {
+        "label": "Saturn",
+        "value": 274,
+        "display": "274"
+       }
+      ]
+     }
+    },
+    {
+     "say": "So which planet will you catch first, the bright giant or the ringed one?",
+     "show": {
+      "type": "kinetic",
+      "text": "WHICH PLANET FIRST?",
+      "accent": [
+       "FIRST"
+      ]
+     }
+    },
+    {
+     "say": "Planets live inside our Solar System. The next object is a family of real stars, hundreds of light-years away. But how far, exactly?",
+     "show": {
+      "type": "footage",
+      "query": "night sky timelapse"
+     }
+    }
+   ]
+  },
+  {
+   "title": "The Pleiades",
+   "sources": [
+    "S5",
+    "S9"
+   ],
+   "beats": [
+    {
+     "say": "Object three is the Pleiades, also called the Seven Sisters, an open star cluster in the constellation Taurus.",
+     "show": {
+      "type": "image",
+      "query": "Pleiades"
+     }
+    },
+    {
+     "say": "NASA describes it as easy to see with the unaided eye: a small, tight group of stars.",
+     "show": {
+      "type": "footage",
+      "query": "Pleiades star cluster"
+     }
+    },
+    {
+     "say": "It sits roughly 445 light-years from Earth, though NASA notes that this number is not universally agreed upon.",
+     "show": {
+      "type": "counter",
+      "value": 445,
+      "suffix": " light-years",
+      "label": "THE PLEIADES",
+      "sub": "NASA, still debated"
+     }
+    },
+    {
+     "say": "So the light you see from it set off about 445 years before it reaches your eye tonight.",
+     "show": {
+      "type": "kinetic",
+      "text": "445 YEARS IN TRANSIT",
+      "accent": [
+       "445"
+      ]
+     }
+    },
+    {
+     "say": "The cluster contains over a thousand stars loosely bound by gravity, but a handful of bright members dominate the view.",
+     "show": {
+      "type": "image",
+      "query": "Pleiades Hubble"
+     }
+    },
+    {
+     "say": "Its apparent magnitude is 1.6, much fainter than Jupiter, yet easy to spot from a relatively dark site.",
+     "show": {
+      "type": "counter",
+      "value": 1.6,
+      "suffix": "",
+      "label": "PLEIADES MAGNITUDE",
+      "sub": "NASA"
+     }
+    },
+    {
+     "say": "Galileo Galilei was the first to observe the Pleiades through a telescope. You can do it with nothing at all.",
+     "show": {
+      "type": "kinetic",
+      "text": "NO TELESCOPE NEEDED",
+      "accent": [
+       "NO"
+      ]
+     }
+    },
+    {
+     "say": "According to NASA, the best time to observe it is December. How many of its stars can you count from where you live?",
+     "show": {
+      "type": "image",
+      "query": "Merope nebula Pleiades"
+     }
+    },
+    {
+     "say": "If you want a map for nights like this, our beginner's stargazing guide LOOK UP shows you where to look. The link is in the description.",
+     "show": {
+      "type": "kinetic",
+      "text": "LOOK UP",
+      "accent": [
+       "LOOK",
+       "UP"
+      ]
+     },
+     "spot": true
+    },
+    {
+     "say": "So far: the Moon at 1.3 light-seconds, Jupiter at more than half a light-hour, the Pleiades at about 445 light-years. But the next one is not even a star.",
+     "show": {
+      "type": "footage",
+      "query": "stars night sky"
+     },
+     "recap": true
+    }
+   ]
+  },
+  {
+   "title": "Orion",
+   "sources": [
+    "S6",
+    "S8"
+   ],
+   "beats": [
+    {
+     "say": "Object four hides in one of the best known patterns in the sky: Orion. Look just below Orion's belt.",
+     "show": {
+      "type": "image",
+      "query": "Orion constellation"
+     }
+    },
+    {
+     "say": "There sits Messier 42, the Orion Nebula. According to NASA, you can spot it with the unaided eye from a dark sky site.",
+     "show": {
+      "type": "image",
+      "query": "Orion Nebula Hubble"
+     }
+    },
+    {
+     "say": "It is only 1,500 light-years away, the closest large star-forming region to Earth.",
+     "show": {
+      "type": "counter",
+      "value": 1500,
+      "suffix": " light-years",
+      "label": "ORION NEBULA",
+      "sub": "NASA"
+     }
+    },
+    {
+     "say": "Its apparent magnitude is about 4, fainter than the Pleiades, so give your eyes a few minutes in the dark.",
+     "show": {
+      "type": "kinetic",
+      "text": "FAINT, BUT THERE",
+      "accent": [
+       "FAINT"
+      ]
+     }
+    },
+    {
+     "say": "It is a stellar nursery: an enormous cloud of dust and gas where vast numbers of new stars are being forged.",
+     "show": {
+      "type": "footage",
+      "query": "Orion Nebula"
+     }
+    },
+    {
+     "say": "Hubble's sharpest view of it used 520 different exposures, and the mosaic holds over one billion pixels.",
+     "show": {
+      "type": "image",
+      "query": "Orion Nebula mosaic"
+     }
+    },
+    {
+     "say": "At its heart, four massive young stars called the Trapezium shape the nebula and carve a cavity with ultraviolet light.",
+     "show": {
+      "type": "image",
+      "query": "Trapezium Orion Nebula"
+     }
+    },
+    {
+     "say": "Orion also holds Betelgeuse, an aging red supergiant about 725 light-years away.",
+     "show": {
+      "type": "counter",
+      "value": 725,
+      "suffix": " light-years",
+      "label": "BETELGEUSE",
+      "sub": "NASA"
+     }
+    },
+    {
+     "say": "It is so big that, if it replaced the Sun, its surface would extend past the orbit of Jupiter. Can you picture that?",
+     "show": {
+      "type": "image",
+      "query": "Betelgeuse"
+     }
+    },
+    {
+     "say": "Betelgeuse dimmed in late 2019. But that dimming really happened around the year 1300. Its light only just arrived.",
+     "show": {
+      "type": "kinetic",
+      "text": "HAPPENED ~1300. SEEN IN 2019.",
+      "accent": [
+       "1300",
+       "2019"
+      ]
+     }
+    },
+    {
+     "say": "Hundreds of light-years, then 1,500. Yet the last object breaks the scale completely.",
+     "show": {
+      "type": "footage",
+      "query": "Milky Way"
+     }
+    }
+   ]
+  },
+  {
+   "title": "Andromeda",
+   "sources": [
+    "S7",
+    "S9",
+    "S11"
+   ],
+   "beats": [
+    {
+     "say": "Object five is the Andromeda Galaxy, the nearest major galaxy to our own Milky Way.",
+     "show": {
+      "type": "image",
+      "query": "Andromeda galaxy"
+     }
+    },
+    {
+     "say": "NASA puts it at about 2.5 million light-years away. It is by far the farthest object on our list.",
+     "show": {
+      "type": "counter",
+      "value": 2.5,
+      "suffix": " million light-years",
+      "label": "ANDROMEDA GALAXY",
+      "sub": "NASA"
+     }
+    },
+    {
+     "say": "A century ago, Edwin Hubble showed that this spiral was far outside our galaxy, roughly 25 Milky Way diameters away.",
+     "show": {
+      "type": "footage",
+      "query": "spiral galaxy"
+     }
+    },
+    {
+     "say": "Its light left Andromeda about 2.5 million years ago. You are seeing the galaxy as it was back then.",
+     "show": {
+      "type": "kinetic",
+      "text": "LIGHT FROM 2.5 MILLION YEARS AGO",
+      "accent": [
+       "2.5",
+       "MILLION"
+      ]
+     }
+    },
+    {
+     "say": "With an apparent magnitude of 3.1, according to NASA, it can be seen with the naked eye, even with moderate light pollution.",
+     "show": {
+      "type": "image",
+      "query": "Andromeda galaxy M31"
+     }
+    },
+    {
+     "say": "On a very clear autumn night it looks like a faint cigar-shaped glow, roughly as wide as the Moon appears.",
+     "show": {
+      "type": "footage",
+      "query": "Andromeda galaxy Hubble"
+     }
+    },
+    {
+     "say": "That faint glow holds an estimated 1 trillion stars. Hubble can resolve more than 200 million of them.",
+     "show": {
+      "type": "compare",
+      "title": "STARS IN ANDROMEDA",
+      "items": [
+       {
+        "label": "Resolved by Hubble",
+        "value": 200,
+        "suffix": " million"
+       },
+       {
+        "label": "Estimated total",
+        "value": 1000,
+        "suffix": " billion"
+       }
+      ]
+     }
+    },
+    {
+     "say": "And this is its season: according to NASA, Andromeda is best observed in November. Have you ever seen it with your own eyes?",
+     "show": {
+      "type": "image",
+      "query": "Andromeda galaxy night sky"
+     }
+    },
+    {
+     "say": "Hubble's portrait of it needed over 1,000 orbits, spanning more than a decade.",
+     "show": {
+      "type": "counter",
+      "value": 1000,
+      "suffix": "+",
+      "label": "HUBBLE ORBITS",
+      "sub": "NASA"
+     }
+    },
+    {
+     "say": "The first known report comes from the Persian astronomer al-Sufi, in The Book of Fixed Stars from the year 964.",
+     "show": {
+      "type": "kinetic",
+      "text": "FIRST RECORDED: 964",
+      "accent": [
+       "964"
+      ]
+     }
+    },
+    {
+     "say": "Five objects, five distances: 384,400 kilometers, then millions of kilometers, then 445, 1,500 and 2.5 million light-years. So what do you do tonight?",
+     "show": {
+      "type": "scale",
+      "title": "THE DISTANCE LADDER (LIGHT-YEARS)",
+      "items": [
+       {
+        "label": "Pleiades",
+        "value": 445,
+        "display": "445"
+       },
+       {
+        "label": "Orion Nebula",
+        "value": 1500,
+        "display": "1,500"
+       },
+       {
+        "label": "Andromeda",
+        "value": 2500000,
+        "display": "2.5 million"
+       }
+      ]
+     },
+     "recap": true
+    }
+   ]
+  },
+  {
+   "title": "Your ten minutes",
+   "sources": [
+    "S1",
+    "S3",
+    "S5",
+    "S6",
+    "S7",
+    "S9"
+   ],
+   "beats": [
+    {
+     "say": "Here is the ten-minute plan. Start with the Moon if it is up, then look for Jupiter or Saturn.",
+     "show": {
+      "type": "image",
+      "query": "Moon and Jupiter"
+     }
+    },
+    {
+     "say": "Find Orion's belt, then drop your eyes just below it for the fuzzy Orion Nebula.",
+     "show": {
+      "type": "image",
+      "query": "Orion Nebula"
+     }
+    },
+    {
+     "say": "Then find the small, tight group of the Pleiades in Taurus.",
+     "show": {
+      "type": "kinetic",
+      "text": "MOON. PLANET. PLEIADES.",
+      "accent": [
+       "PLEIADES"
+      ]
+     }
+    },
+    {
+     "say": "Finish with Andromeda, the faint smudge that is best observed in November.",
+     "show": {
+      "type": "footage",
+      "query": "Andromeda galaxy"
+     }
+    },
+    {
+     "say": "Remember the delays: 1.3 seconds for the Moon, about 33 minutes for Jupiter, 1,500 years for the Orion Nebula.",
+     "show": {
+      "type": "kinetic",
+      "text": "1.3 S · 33 MIN · 1,500 YEARS",
+      "accent": [
+       "1,500"
+      ]
+     }
+    },
+    {
+     "say": "That is about 2.5 million light-years in one glance, and every light-year is about 9 trillion kilometers.",
+     "show": {
+      "type": "counter",
+      "value": 2.5,
+      "suffix": " million light-years",
+      "label": "IN ONE GLANCE",
+      "sub": "NASA"
+     }
+    },
+    {
+     "say": "No telescope, no app, no cost. Just your eyes, a dark corner and a few minutes of patience.",
+     "show": {
+      "type": "image",
+      "query": "night sky stars"
+     }
+    },
+    {
+     "say": "Which object will you look for first tonight? Tell me in the comments, and tell me what you saw.",
+     "show": {
+      "type": "kinetic",
+      "text": "WHICH ONE FIRST?",
+      "accent": [
+       "FIRST"
+      ]
+     },
+     "ask": "Which object will you look for first tonight?"
+    },
+    {
+     "say": "If you want a full sky plan for every month of 2027, LOOK UP, our beginner's stargazing guide, is linked in the description.",
+     "show": {
+      "type": "image",
+      "query": "stargazing telescope night"
+     }
+    },
+    {
+     "say": "And if real numbers about the night sky make your day, follow the channel. There is a new one every day.",
+     "show": {
+      "type": "footage",
+      "query": "Milky Way night sky"
      }
     }
    ]

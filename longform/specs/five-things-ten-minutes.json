@@ -35,8 +35,8 @@
    "url": "https://science.nasa.gov/missions/hubble/hubble-finds-that-betelgeuses-mysterious-dimming-is-due-to-a-traumatic-outburst/"
   },
   {
-   "title": "NASA: What is a light-year?",
-   "url": "https://science.nasa.gov/learn/basics-of-space-flight/chapter1-3/"
+   "title": "NASA Space Place: What is a light-year?",
+   "url": "https://spaceplace.nasa.gov/light-year/en/"
   },
   {
    "title": "NASA Space Place: How far away is the Moon?",
@@ -45,6 +45,14 @@
   {
    "title": "NASA: Andromeda galaxy",
    "url": "https://science.nasa.gov/missions/hubble/nasas-hubble-traces-hidden-history-of-andromeda-galaxy/"
+  },
+  {
+   "title": "NASA: Light-year",
+   "url": "https://science.nasa.gov/glossary/light-year/"
+  },
+  {
+   "title": "NASA Imagine the Universe: Cosmic distance scales",
+   "url": "https://imagine.gsfc.nasa.gov/features/cosmic/"
   }
  ],
  "chapters": [

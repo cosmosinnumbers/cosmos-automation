@@ -127,7 +127,7 @@
      }
     },
     {
-     "say": "The nearest one is about 384,400 kilometers away. The farthest is about 2.5 million light-years away.",
+     "say": "The nearest one on our list is about 384,400 kilometers away. The farthest one on our list is about 2.5 million light-years away.",
      "show": {
       "type": "kinetic",
       "text": "384,400 KM → 2.5 MILLION LIGHT-YEARS",
@@ -449,7 +449,7 @@
      }
     },
     {
-     "say": "NASA describes it as easy to see with the unaided eye: a small, tight group of stars.",
+     "say": "NASA describes this bright open cluster of stars as easy to see with the unaided eye.",
      "show": {
       "type": "footage",
       "query": "Pleiades star cluster"
@@ -785,7 +785,7 @@
      }
     },
     {
-     "say": "Then find the small, tight group of the Pleiades in Taurus.",
+     "say": "Then find the bright open cluster of the Pleiades, in the constellation Taurus.",
      "show": {
       "type": "kinetic",
       "text": "MOON. PLANET. PLEIADES.",

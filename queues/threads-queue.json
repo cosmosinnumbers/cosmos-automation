@@ -795,5 +795,41 @@
    "Full video: Why NASA Will Fly Past Europa 49 Times: https://youtu.be/0dYQy7Ku2_s"
   ],
   "short": "c1118-p6-clip-c"
+ },
+ {
+  "ref": "th-news-1119-apod-medium-sized-solar",
+  "at": "2026-11-19 12:00",
+  "tag": "Sun",
+  "text": "A Medium-Sized Solar Flare (NASA Astronomy Picture of the Day)\n\nWhat a flare for the chromatic! Today’s image combines a series of images taken over ten minutes capturing the Sun’s chromosphere, the layer of the Sun’s atmosphere above its surface where the temperature rises.\n\nSource: NASA APOD (18 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-18-an-m-class-solar-flare/",
+  "replies": [
+   "This is potentially due to energy from the swirling magnetic fields extending up through the Sun’s atmosphere. Those same magnetic fields can twist and snap, releasing light and energetic particles as a solar flare.\n\nImage: Mario Cogo."
+  ],
+  "news_title": "APOD: 2026 November 18 – A Medium-Sized Solar Flare"
+ },
+ {
+  "ref": "th-quiz-1119-obliquity-max",
+  "at": "2026-11-19 17:55",
+  "tag": "Science",
+  "poll": [
+   "Neptune",
+   "Jupiter",
+   "Mercury"
+  ],
+  "text": "Yesterday's answer: Mars, 0.642 × 10^24 kg (NASA Planetary Fact Sheet).\n\nToday's quiz 🌀 Which of these planets is the most tilted?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Obliquity-0",
+  "answer": "Neptune, 28.3 degrees of tilt (NASA Planetary Fact Sheet)"
+ },
+ {
+  "ref": "th-c1119-p6-clip-f",
+  "at": "2026-11-19 21:00",
+  "tag": "Moon",
+  "text": "What Europa Clipper will measure\n\nThe mission carries nine science instruments, plus a gravity experiment using the spacecraft's radio link. They work together during the encounters. Cameras and spectrometers map surface features and composition. Radar is designed to look below the ice.\n\nSources: in the full video's description on YouTube.\nNarration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers",
+  "replies": [
+   "Full video: Why NASA Will Fly Past Europa 49 Times: https://youtu.be/0dYQy7Ku2_s"
+  ],
+  "short": "c1119-p6-clip-f"
  }
 ]

@@ -1,0 +1,640 @@
+{
+ "videos": [
+  {
+   "id": "INmLPyGjsMI",
+   "title": "The Black Hole That Makes Stars",
+   "channel": "Past the Blue",
+   "published": "2026-10-28",
+   "seconds": 63,
+   "views": 9367416,
+   "views_per_day": 425791,
+   "engagement": 0.0474,
+   "acceleration": -0.04,
+   "format": "other",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "gTpn5Whu2ao",
+   "title": "SPACEX CAUGHT A STARSHIP! - SpaceX Starship Flight 15",
+   "channel": "NASASpaceflight",
+   "published": "2026-11-14",
+   "seconds": 19305,
+   "views": 1577270,
+   "views_per_day": 394317,
+   "engagement": 0.0143,
+   "acceleration": -0.248,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "spaceflight",
+   "emoji": false
+  },
+  {
+   "id": "hw5RCjUvLIQ",
+   "title": "2027 Sky Events 🤩 #space #earth #shorts",
+   "channel": "AstroPlanet",
+   "published": "2026-11-13",
+   "seconds": 27,
+   "views": 2148011,
+   "views_per_day": 358001,
+   "engagement": 0.015,
+   "acceleration": null,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "earth",
+   "emoji": true
+  },
+  {
+   "id": "p0EqvHzr_X4",
+   "title": "Why NASA Is Paying to Destroy the ISS",
+   "channel": "Past the Blue",
+   "published": "2026-10-23",
+   "seconds": 91,
+   "views": 7930702,
+   "views_per_day": 305027,
+   "engagement": 0.0238,
+   "acceleration": -0.036,
+   "format": "mission_glitch",
+   "hook": "question",
+   "theme": "iss",
+   "emoji": false
+  },
+  {
+   "id": "SijzUBTSv2c",
+   "title": "How Long Does Each Planet Take to Orbit the Sun?  | Solar System #solarsystem #space #nasa #usa",
+   "channel": "Galaxy Sabid",
+   "published": "2026-10-21",
+   "seconds": 22,
+   "views": 7707222,
+   "views_per_day": 265766,
+   "engagement": 0.009,
+   "acceleration": null,
+   "format": "audience_question",
+   "hook": "question",
+   "theme": "sun",
+   "emoji": false
+  },
+  {
+   "id": "ebd0XMp5vR0",
+   "title": "The Sun Is Dragging Us Into the Deep Unknown at 828,000 km/h! 🌌 #SpaceFacts #MilkyWay #Universe",
+   "channel": "Galaxy Jiya 001",
+   "published": "2026-11-03",
+   "seconds": 25,
+   "views": 4233642,
+   "views_per_day": 264602,
+   "engagement": 0.0191,
+   "acceleration": null,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "sun",
+   "emoji": true
+  },
+  {
+   "id": "_fw3vnQconI",
+   "title": "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn",
+   "channel": "Helpyn Facts'",
+   "published": "2026-10-31",
+   "seconds": 60,
+   "views": 4816787,
+   "views_per_day": 253515,
+   "engagement": 0.0001,
+   "acceleration": -0.052,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "dv-Czhabars",
+   "title": "SIZE OF SOLAR SYSTEM! 💀",
+   "channel": "Jase Cosmology",
+   "published": "2026-10-26",
+   "seconds": 29,
+   "views": 5231869,
+   "views_per_day": 217994,
+   "engagement": 0.011,
+   "acceleration": -0.039,
+   "format": "scale_zoom",
+   "hook": "comparison",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "WYFmPq6X9mg",
+   "title": "SpaceX Just Caught Starship on Its FIRST Attempt!",
+   "channel": "Marcus House",
+   "published": "2026-11-15",
+   "seconds": 1679,
+   "views": 820323,
+   "views_per_day": 205080,
+   "engagement": 0.0263,
+   "acceleration": null,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "spaceflight",
+   "emoji": false
+  },
+  {
+   "id": "sfky54VSchE",
+   "title": "Starship Flight 15: SpaceX Double Catch Attempt!",
+   "channel": "What about it!?",
+   "published": "2026-11-14",
+   "seconds": 40670,
+   "views": 915949,
+   "views_per_day": 183189,
+   "engagement": 0.0164,
+   "acceleration": -0.199,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "spaceflight",
+   "emoji": false
+  },
+  {
+   "id": "6XfXc9zF7DA",
+   "title": "Astronomical events in November 2026😲 (Part 2) #shorts #astronomicalevents #space #helpyn",
+   "channel": "Helpyn Facts'",
+   "published": "2026-11-07",
+   "seconds": 58,
+   "views": 2157020,
+   "views_per_day": 179751,
+   "engagement": 0.0001,
+   "acceleration": -0.057,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "LR91hK_smqY",
+   "title": "Someone Drilled a Hole in a Spaceship",
+   "channel": "Past the Blue",
+   "published": "2026-11-12",
+   "seconds": 71,
+   "views": 1254957,
+   "views_per_day": 179279,
+   "engagement": 0.0204,
+   "acceleration": null,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "NxnN30MUoaA",
+   "title": "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+   "channel": "susballs",
+   "published": "2026-11-03",
+   "seconds": 7,
+   "views": 2499541,
+   "views_per_day": 166636,
+   "engagement": 0.005,
+   "acceleration": -0.049,
+   "format": "quiz_guess",
+   "hook": "extreme_number",
+   "theme": "venus",
+   "emoji": true
+  },
+  {
+   "id": "Hxk8pTWURNw",
+   "title": "JWST Just Found A Black Hole Inside A Star",
+   "channel": "AstroKobi",
+   "published": "2026-11-09",
+   "seconds": 1336,
+   "views": 1498374,
+   "views_per_day": 166486,
+   "engagement": 0.0088,
+   "acceleration": -0.064,
+   "format": "survive_x",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "uyFdbzAcOZw",
+   "title": "SpaceX Starship Flight 15 - Coast Phase Part 1 - LIVE",
+   "channel": "NASASpaceflight",
+   "published": "2026-11-14",
+   "seconds": 42844,
+   "views": 668214,
+   "views_per_day": 133642,
+   "engagement": 0.0086,
+   "acceleration": -0.199,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "spaceflight",
+   "emoji": false
+  },
+  {
+   "id": "zMt9YzQ_hf4",
+   "title": "HOW BIG IS THE SOLAR SYSTEM!💀☝️",
+   "channel": "Limitless fax ",
+   "published": "2026-10-30",
+   "seconds": 29,
+   "views": 2664537,
+   "views_per_day": 133226,
+   "engagement": 0.0093,
+   "acceleration": -0.048,
+   "format": "scale_zoom",
+   "hook": "question",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "OVMRncCa-tI",
+   "title": "La Voyager 1, se calló 48h, después volvió sola, la NASA no sabe por qué.",
+   "channel": "La Mirada Tecno",
+   "published": "2026-11-08",
+   "seconds": 180,
+   "views": 1281059,
+   "views_per_day": 128105,
+   "engagement": 0.0541,
+   "acceleration": -0.096,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "tKikZXrcZCQ",
+   "title": "Why Nothing Can Survive Venus",
+   "channel": "Facts' Mine",
+   "published": "2026-10-24",
+   "seconds": 57,
+   "views": 3228620,
+   "views_per_day": 124177,
+   "engagement": 0.0545,
+   "acceleration": -0.025,
+   "format": "survive_x",
+   "hook": "paradox",
+   "theme": "venus",
+   "emoji": false
+  },
+  {
+   "id": "cZs0UphKT1k",
+   "title": "The Skeleton Left Outside In Space",
+   "channel": "Past the Blue",
+   "published": "2026-10-30",
+   "seconds": 77,
+   "views": 2118655,
+   "views_per_day": 105932,
+   "engagement": 0.0191,
+   "acceleration": null,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "wka6dUErnQU",
+   "title": "NASA가 종이접기 작가를 부른이유ㄷㄷ",
+   "channel": "소란도란",
+   "published": "2026-10-25",
+   "seconds": 22,
+   "views": 2625612,
+   "views_per_day": 105024,
+   "engagement": 0.0065,
+   "acceleration": -0.01,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "aCZosHTmyPY",
+   "title": "We Found a Chemical on Titan We've Never Seen Before",
+   "channel": "Astrum",
+   "published": "2026-11-04",
+   "seconds": 1750,
+   "views": 1430321,
+   "views_per_day": 102165,
+   "engagement": 0.0095,
+   "acceleration": -0.05,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "saturn",
+   "emoji": false
+  },
+  {
+   "id": "lkeySn4kyAI",
+   "title": "That time black holes outshone the universe",
+   "channel": "Dr. Blitz",
+   "published": "2026-11-14",
+   "seconds": 107,
+   "views": 405571,
+   "views_per_day": 101392,
+   "engagement": 0.036,
+   "acceleration": null,
+   "format": "other",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "MibAlwX0DQk",
+   "title": "Pilot showcases jet suit at NASA's Kennedy Space Center",
+   "channel": "ABC 7 Chicago",
+   "published": "2026-11-10",
+   "seconds": 91,
+   "views": 827339,
+   "views_per_day": 91926,
+   "engagement": 0.0045,
+   "acceleration": -0.111,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "INjqjSjtPKc",
+   "title": "Special Story: NASA Telescope Heads Towards Earth! Is Cuttack in the Possible Debris Zone ?",
+   "channel": "OTV",
+   "published": "2026-11-04",
+   "seconds": 273,
+   "views": 1329612,
+   "views_per_day": 88640,
+   "engagement": 0.0034,
+   "acceleration": -0.066,
+   "format": "quiz_guess",
+   "hook": "question",
+   "theme": "earth",
+   "emoji": false
+  },
+  {
+   "id": "CiMGXfEjF7c",
+   "title": "Solar System's Biggest Lie!💀☝",
+   "channel": "Astrryy",
+   "published": "2026-10-28",
+   "seconds": 32,
+   "views": 1935881,
+   "views_per_day": 87994,
+   "engagement": 0.0002,
+   "acceleration": -0.033,
+   "format": "scale_zoom",
+   "hook": "paradox",
+   "theme": "solar_system",
+   "emoji": true
+  }
+ ],
+ "formats": {
+  "other": {
+   "score": 2.93,
+   "videos": 14,
+   "accelerating": false,
+   "engagement": 0.0187,
+   "ours_7d": 6,
+   "examples": [
+    "The Black Hole That Makes Stars",
+    "SPACEX CAUGHT A STARSHIP! - SpaceX Starship Flight 15"
+   ]
+  },
+  "scale_zoom": {
+   "score": 2.64,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0068,
+   "ours_7d": 1,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "HOW BIG IS THE SOLAR SYSTEM!💀☝️"
+   ]
+  },
+  "news_angle": {
+   "score": 1.84,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0179,
+   "ours_7d": 0,
+   "examples": [
+    "SpaceX Just Caught Starship on Its FIRST Attempt!",
+    "We Found a Chemical on Titan We've Never Seen Before"
+   ]
+  },
+  "mission_glitch": {
+   "score": 1.83,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0238,
+   "ours_7d": 0,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS"
+   ]
+  },
+  "survive_x": {
+   "score": 1.74,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0316,
+   "ours_7d": 0,
+   "examples": [
+    "JWST Just Found A Black Hole Inside A Star",
+    "Why Nothing Can Survive Venus"
+   ]
+  },
+  "audience_question": {
+   "score": 1.59,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.009,
+   "ours_7d": 0,
+   "examples": [
+    "How Long Does Each Planet Take to Orbit the Sun?  | Solar System #solarsystem #space #nasa #usa"
+   ]
+  },
+  "quiz_guess": {
+   "score": 1.53,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0042,
+   "ours_7d": 0,
+   "examples": [
+    "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+    "Special Story: NASA Telescope Heads Towards Earth! Is Cuttack in the Possible Debris Zone ?"
+   ]
+  }
+ },
+ "hooks": {
+  "extreme_number": {
+   "score": 12.37,
+   "videos": 9,
+   "accelerating": false,
+   "engagement": 0.0147,
+   "ours_7d": null,
+   "examples": [
+    "SPACEX CAUGHT A STARSHIP! - SpaceX Starship Flight 15",
+    "2027 Sky Events 🤩 #space #earth #shorts"
+   ]
+  },
+  "other": {
+   "score": 8.9,
+   "videos": 9,
+   "accelerating": false,
+   "engagement": 0.0198,
+   "ours_7d": null,
+   "examples": [
+    "The Black Hole That Makes Stars",
+    "SpaceX Just Caught Starship on Its FIRST Attempt!"
+   ]
+  },
+  "question": {
+   "score": 4.76,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.0114,
+   "ours_7d": null,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS",
+    "How Long Does Each Planet Take to Orbit the Sun?  | Solar System #solarsystem #space #nasa #usa"
+   ]
+  },
+  "comparison": {
+   "score": 1.31,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.011,
+   "ours_7d": null,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀"
+   ]
+  },
+  "paradox": {
+   "score": 1.27,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0273,
+   "ours_7d": null,
+   "examples": [
+    "Why Nothing Can Survive Venus",
+    "Solar System's Biggest Lie!💀☝"
+   ]
+  }
+ },
+ "themes": {
+  "other": {
+   "score": 6.26,
+   "videos": 7,
+   "accelerating": false,
+   "engagement": 0.015,
+   "ours_7d": null,
+   "examples": [
+    "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn",
+    "Astronomical events in November 2026😲 (Part 2) #shorts #astronomicalevents #space #helpyn"
+   ]
+  },
+  "spaceflight": {
+   "score": 5.5,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.0164,
+   "ours_7d": null,
+   "examples": [
+    "SPACEX CAUGHT A STARSHIP! - SpaceX Starship Flight 15",
+    "SpaceX Just Caught Starship on Its FIRST Attempt!"
+   ]
+  },
+  "black_hole": {
+   "score": 4.16,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0307,
+   "ours_7d": null,
+   "examples": [
+    "The Black Hole That Makes Stars",
+    "JWST Just Found A Black Hole Inside A Star"
+   ]
+  },
+  "sun": {
+   "score": 3.18,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.014,
+   "ours_7d": null,
+   "examples": [
+    "How Long Does Each Planet Take to Orbit the Sun?  | Solar System #solarsystem #space #nasa #usa",
+    "The Sun Is Dragging Us Into the Deep Unknown at 828,000 km/h! 🌌 #SpaceFacts #MilkyWay #Universe"
+   ]
+  },
+  "earth": {
+   "score": 2.68,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0092,
+   "ours_7d": null,
+   "examples": [
+    "2027 Sky Events 🤩 #space #earth #shorts",
+    "Special Story: NASA Telescope Heads Towards Earth! Is Cuttack in the Possible Debris Zone ?"
+   ]
+  },
+  "solar_system": {
+   "score": 2.64,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0068,
+   "ours_7d": null,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "HOW BIG IS THE SOLAR SYSTEM!💀☝️"
+   ]
+  },
+  "iss": {
+   "score": 1.83,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0238,
+   "ours_7d": null,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS"
+   ]
+  },
+  "venus": {
+   "score": 1.75,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0297,
+   "ours_7d": null,
+   "examples": [
+    "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+    "Why Nothing Can Survive Venus"
+   ]
+  },
+  "saturn": {
+   "score": 0.61,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0095,
+   "ours_7d": null,
+   "examples": [
+    "We Found a Chemical on Titan We've Never Seen Before"
+   ]
+  }
+ },
+ "short_share": 0.72,
+ "audience_questions": [
+  "Awesome..what now from here?",
+  "YO THE FIRST ONE IS ON MY BDAY WHATTTTT???",
+  "Guys, you do realize they're just moving it right?",
+  "Well, how sad is that?",
+  "Why not just hook a rocket to it and send it to mars to be used as a storage depot for future missions?",
+  "Relative to what do the planets orbit clockwise or counterclockwise?",
+  "To the North Pole?",
+  "Do all planets have a tilt?",
+  "Is it possible calculate when... if ever ...all planets were aligned?"
+ ],
+ "instagram_median_likes": {
+  "IMAGE": 10837.0,
+  "CAROUSEL_ALBUM": 8743.0
+ },
+ "median_views_per_day": 166636,
+ "niche": "cosmos",
+ "date": "2026-11-19",
+ "source": "2026-W47.json",
+ "sky": [
+  {
+   "date": "2026-11-24",
+   "name": "Full Moon (supermoon)",
+   "hint": "the full Moon of 24 November 2026, a supermoon: how much closer and bigger it really is",
+   "computed": true,
+   "in_days": 5
+  }
+ ]
+}

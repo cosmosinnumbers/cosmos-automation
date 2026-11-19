@@ -55,3 +55,7 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1119-apod-medium-sized-solar", "ok": true, "score": 63, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1119-obliquity-max", "ok": true, "score": 83, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-c1119-p6-clip-f", "ok": true, "score": 64, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1120-nasa-voyager-1", "ok": true, "score": 78, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1120-nasa-voyager-1", "ok": true, "score": 81, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-quiz-1120-mean-temperature-min", "ok": true, "score": 77, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-c1120-p6-clip-d", "ok": true, "score": 62, "errors": []}

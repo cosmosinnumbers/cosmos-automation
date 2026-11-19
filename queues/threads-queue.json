@@ -831,5 +831,41 @@
    "Full video: Why NASA Will Fly Past Europa 49 Times: https://youtu.be/0dYQy7Ku2_s"
   ],
   "short": "c1119-p6-clip-f"
+ },
+ {
+  "ref": "th-news-1120-nasa-voyager-1",
+  "at": "2026-11-20 12:00",
+  "tag": "NASA",
+  "text": "NASA’s Voyager 1 Makes History Reaching One Light-Day from Earth\n\nThe probe, launched in 1977, is more than 16 billion miles away in interstellar space.\n\nSource: NASA/JPL (19 Nov 2026).",
+  "replies": [
+   "NASA’s Voyager 1 probe, humanity’s farthest-flying spacecraft, has reached one light-day from Earth, after more than 49 years of constant travel.\n\nhttps://www.jpl.nasa.gov/news/nasas-voyager-1-makes-history-reaching-one-light-day-from-earth"
+  ],
+  "news_title": "NASA’s Voyager 1 Makes History Reaching One Light-Day from Earth"
+ },
+ {
+  "ref": "th-quiz-1120-mean-temperature-min",
+  "at": "2026-11-20 17:55",
+  "tag": "Science",
+  "poll": [
+   "Saturn",
+   "Mars",
+   "Jupiter"
+  ],
+  "text": "Yesterday's answer: Neptune, 28.3 degrees of tilt (NASA Planetary Fact Sheet).\n\nToday's quiz 🌡️ Which of these planets is the coldest on average?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Mean Temperature-1",
+  "answer": "Saturn, -140 °C on average (NASA Planetary Fact Sheet)"
+ },
+ {
+  "ref": "th-c1120-p6-clip-d",
+  "at": "2026-11-20 21:00",
+  "tag": "Jupiter",
+  "text": "Why Clipper won't orbit Europa\n\nThe orbit choice is a trade. Jupiter's radiation belts can damage a spacecraft's electronics. An orbiter that stayed near Europa could receive a large radiation dose in a short time.\n\nSources: in the full video's description on YouTube.\nNarration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers",
+  "replies": [
+   "Full video: Why NASA Will Fly Past Europa 49 Times: https://youtu.be/0dYQy7Ku2_s"
+  ],
+  "short": "c1120-p6-clip-d"
  }
 ]

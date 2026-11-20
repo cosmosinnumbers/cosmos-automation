@@ -1,13 +1,13 @@
-# Funnel di vendita, ultimi 7 giorni (al 2026-11-19)
+# Funnel di vendita, ultimi 7 giorni (al 2026-11-20)
 
 Scritto ogni mattina da `tools/funnel_report.py` dopo le metriche. Un numero non letto è "non misurato".
 
 | Passo | Numero |
 |---|---|
-| Visualizzazioni YouTube (canale) | 999 |
+| Visualizzazioni YouTube (canale) | 914 |
 | di cui video lunghi (gli unici con link cliccabili) | 25 |
-| Copertura Instagram | 569 |
-| Visualizzazioni Threads | 1.235 |
+| Copertura Instagram | 674 |
+| Visualizzazioni Threads | 706 |
 | Iscritti YouTube (totale) | 11 |
 | **Clic veri verso Gumroad** | **18** |
 | Download del gratuito | 0 (totale 0) |
@@ -25,6 +25,6 @@ Scritto ogni mattina da `tools/funnel_report.py` dopo le metriche. Un numero non
 
 ## Lettura
 
-- **Collo di bottiglia: il clic.** Clic veri: 18 su 2.803 visualizzazioni (0.64%). Sotto i 30 clic veri a settimana (o lo 0,3%) non si può giudicare né prezzo né pagina: servono contenuti da cielo di stasera, video lunghi (link cliccabili), la pagina Amazon e link del canale in ordine.
+- **Collo di bottiglia: il clic.** Clic veri: 18 su 2.294 visualizzazioni (0.78%). Sotto i 30 clic veri a settimana (o lo 0,3%) non si può giudicare né prezzo né pagina: servono contenuti da cielo di stasera, video lunghi (link cliccabili), la pagina Amazon e link del canale in ordine.
 - Regola pratica: una vendita ogni 50-100 clic veri di persone interessate al cielo. Questa settimana ne mancano almeno 32 per aspettarsi la prima.
-- 357 clic contati da Gumroad sono robot (anteprime dei link, controlli automatici): esclusi dai conti. Si riconoscono perché li prendono anche i link mai pubblicati.
+- 364 clic contati da Gumroad sono robot (anteprime dei link, controlli automatici): esclusi dai conti. Si riconoscono perché li prendono anche i link mai pubblicati.

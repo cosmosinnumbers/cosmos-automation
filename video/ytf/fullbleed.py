@@ -8,6 +8,8 @@ Now the picture fills the whole 1080x1920 frame, like the Shorts that travel in 
   - charts, `fit: contain` pictures and very wide panoramas stay whole on a blurred copy of themselves
   - headline and captions sit on top of the picture over a soft dark gradient, inside the safe area of
     Shorts/Reels/TikTok (nothing important in the bottom 20% or under the right-hand buttons)
+  - no text that stays (owner 21/11/2026): the headline and its tag fade out ~2.5 s in, picture labels
+    ("ARTIST'S CONCEPT") and credits show only in the first seconds of their picture
   - captions: 3 words at a time, the spoken word bigger and amber with a pop
   - the first half second is a zoom burst + flash with the headline slamming in word by word (the hook)
 short.yaml `layout: box` (or env SHORT_LAYOUT=box) gives the old boxed layout back.
@@ -198,7 +200,8 @@ def caption_chunks(timings: dict, n: int = 3) -> list[tuple[float, float, list[t
             wt = director.word_times(s)
             groups = [wt[i:i + n] for i in range(0, len(wt), n)]
             if len(groups) > 1 and len(groups[-1]) == 1 and len(groups[-1][0][1]) <= 6:
-                groups[-2] = groups[-2] + groups.pop()
+                tail = groups.pop()          # (pop first: `groups[-2] = groups[-2] + groups.pop()` writes to
+                groups[-1] = groups[-1] + tail   # the wrong chunk, the target index is read after the pop)
             for gi, g in enumerate(groups):
                 end = groups[gi + 1][0][0] if gi + 1 < len(groups) else s["end"]
                 out.append((g[0][0], end, g))
@@ -246,8 +249,14 @@ def draw_caption(d: ImageDraw.ImageDraw, caps, t: float, size: int = 90, y0: int
         y += round(base.size * 1.16)
 
 
+HEAD_HOLD = 1.6     # seconds the headline stays after its last word lands
+HEAD_FADE = 0.35
+
+
 class Headline:
-    """The headline on top of the picture: slams in word by word during the hook, then stays."""
+    """The headline on top of the picture: slams in word by word during the hook, holds HEAD_HOLD s, then fades
+    out. Owner 21/11/2026 (screenshot of the Shorts tab): "don't put any label that stays in the video": after
+    ~2.5 s only the picture and the captions under the voice are on screen."""
 
     def __init__(self, text: str, tag: str | None = None, size: int = 78):
         self.tag = tag
@@ -278,8 +287,23 @@ class Headline:
             y += round(f.size * 1.1)
         self.bottom = y
         self.step = min(0.09, 0.7 / max(1, len(self.words)))
+        self.out_at = 0.12 + max(0, len(self.words) - 1) * self.step + 0.16 + HEAD_HOLD
+
+    def visible(self, t: float) -> bool:
+        return t < self.out_at + HEAD_FADE
 
     def draw(self, frame: Image.Image, t: float):
+        if not self.visible(t):
+            return
+        if t > self.out_at:   # fading out: draw on a copy and blend it back
+            a = 1 - (t - self.out_at) / HEAD_FADE
+            top = frame.copy()
+            self._draw(top, t)
+            frame.paste(Image.blend(frame, top, a))
+            return
+        self._draw(frame, t)
+
+    def _draw(self, frame: Image.Image, t: float):
         d = ImageDraw.Draw(frame)
         if self.tag:
             tf = _f(30)

@@ -14,10 +14,14 @@ the reels get the Katana look of video/ytf/motion.py): the clip never opens on a
 "First, the ruler.") or mid-sentence, hook_start() moves the cut to the next caption; the first HOOK_S seconds slam
 the headline word by word over a 1-bit dithered frame (flash, shake, numbers in amber with RGB split), then a whip
 pan lands in the clip. Every number punch-in also gets a short RGB split.
+Full screen (owner 21/11/2026, "don't put any label that stays in the video"): the default layout is now
+clip_full.py (the picture fills 9:16, no fixed headline, captions under the voice only); CLIP_LAYOUT=box gives the
+boxed layout described above back.
 Output: <long_video_dir>/clips/<clip_id>/out/<clip_id>.mp4 and caption.txt. Never uploads.
 """
 from __future__ import annotations
 
+import os
 import re
 import subprocess
 import sys
@@ -27,6 +31,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 sys.path.insert(0, str(Path(__file__).parent))
+import clip_full  # noqa: E402
 import motion  # noqa: E402
 import render  # noqa: E402
 from common import BRAND, FPS, ffmpeg_exe, font, load_yaml, run  # noqa: E402
@@ -160,6 +165,25 @@ def draw_caption_line(d, line: str, f, y: int) -> None:
         x += wd + space
 
 
+def layout() -> str:
+    """full (default since 21/11/2026) or box (the old 16:9 frame in a box with the headline fixed on top)."""
+    return "box" if os.environ.get("CLIP_LAYOUT", "").strip().lower() == "box" else "full"
+
+
+def end_card(f: Image.Image, t: float, dur: float, big, mid, small, y: int) -> None:
+    """Closing card "FULL VIDEO ON YOUTUBE" + LOOK UP in the last END_S seconds (owner 26/10/2026)."""
+    a = render.ease((t - (dur - END_S)) / 0.4)
+    card = Image.new("RGBA", (SW - 80, 440), (11, 16, 38, int(235 * a)))
+    cdw = ImageDraw.Draw(card)
+    for txt, fnt, col, yy in (("FULL VIDEO ON YOUTUBE", big, BRAND["amber"], 40),
+                              ("@CosmosinNumbers", mid, BRAND["star"], 160),
+                              ("LOOK UP · stargazing guide", small, BRAND["cyan"], 270),
+                              ("link in bio · code COSMOS9", small, BRAND["star"], 330)):
+        bb = cdw.textbbox((0, 0), txt, font=fnt)
+        cdw.text(((card.width - (bb[2] - bb[0])) // 2 - bb[0], yy), txt, font=fnt, fill=col + (int(255 * a),))
+    f.paste(card, (40, y), card)
+
+
 def sfx_track(build: Path, dur: float, punch_at: list[float], slams: list[float] = ()) -> Path | None:
     """Effects track (video/ytf/sfx.py: CC0 library or our own synthesis). None if numpy/soundfile are missing:
     the clip then keeps only the long video's mix."""
@@ -206,6 +230,15 @@ def main():
     big, mid, small = font("display", 84, 700), font("display", 52, 700), font("text", 38, 600)
     slam_f = font("display", 112, 800)
     slams: list[float] = []
+    if layout() == "full":   # owner 21/11/2026: full-screen picture, no text that stays (clip_full.py)
+        reader.kill()
+
+        def card(f, t):   # closing card in the middle of the full-screen picture
+            end_card(f, t, dur, big, mid, small, (SH - 440) // 2 - 60)
+
+        slams = clip_full.frames(src, vd, t0, dur, caps, headline, writer, HOOK_S, WHIP_S, END_S, punch_at,
+                                 lambda d, h, t: slam_words(d, h, t, slam_f), card)
+        n = 0
     last = Image.new("RGB", (VW, VH), BRAND["space"])
     for i in range(n):
         t = i / FPS
@@ -253,16 +286,7 @@ def main():
             bb = d.textbbox((0, 0), line, font=cap_f)
             yy += (bb[3] - bb[1]) + 14
         if t >= dur - END_S:   # closing card over the frame, captions keep running under it
-            a = render.ease((t - (dur - END_S)) / 0.4)
-            card = Image.new("RGBA", (SW - 80, 440), (11, 16, 38, int(235 * a)))
-            cdw = ImageDraw.Draw(card)
-            for txt, fnt, col, yy in (("FULL VIDEO ON YOUTUBE", big, BRAND["amber"], 40),
-                                      ("@CosmosinNumbers", mid, BRAND["star"], 160),
-                                      ("LOOK UP · stargazing guide", small, BRAND["cyan"], 270),
-                                      ("link in bio · code COSMOS9", small, BRAND["star"], 330)):
-                bb = cdw.textbbox((0, 0), txt, font=fnt)
-                cdw.text(((card.width - (bb[2] - bb[0])) // 2 - bb[0], yy), txt, font=fnt, fill=col + (int(255 * a),))
-            f.paste(card, (40, VIS_Y + (VH - card.height) // 2), card)
+            end_card(f, t, dur, big, mid, small, VIS_Y + (VH - 440) // 2)
         if t < HOOK_S + WHIP_S:   # whip pan out of the opener into the clip
             f = motion.whip_in(f, (t - HOOK_S) / WHIP_S)
         writer.stdin.write(f.tobytes())

@@ -37,3 +37,20 @@ Vedi `docs/motion-graphics.md`, sezione "Short a tutto schermo". Esempio prima/d
 2. Clip NASA a 1080p (ora 720p: a tutto schermo sono un po' morbide) e più fonti libere (ESA/Webb, ESO, NOIRLab).
 3. Altre scene "in numeri": righello delle distanze, confronto di dimensioni in scala, orbite.
 4. Misurare: ritenzione a 3 s e media degli Short dal 16/11 contro i 14 giorni prima.
+
+## 21/11/2026: Short puliti, niente testo fisso
+
+Richiesta di simone (screenshot della scheda Short): "I like more clean thumbnails like the purple one, full screen
+video, and don't put any label that stays in the video".
+
+- Clip dai lunghi (`video/ytf/clip.py` → `clip_full.py`, layout predefinito): immagine a tutto schermo 9:16, niente
+  titolo fisso in alto, niente riquadro 16:9 né fascia di testo. Le schermate grafiche del lungo (card navy, grafici
+  a punti) sono coperte dalle foto/filmati NASA del lungo (`assets.yaml`, solo soggetti nominati nella clip). Il
+  sottopancia "CHAPTER" e i crediti del lungo restano fuori dall'inquadratura. Il titolo compare solo nell'apertura
+  di 1,7 s; poi solo sottotitoli a ritmo con la voce e la barra di avanzamento. `CLIP_LAYOUT=box` = vecchio look.
+- Short notizia (`fullbleed.py`): il titolo e il badge "NASA · NEW" spariscono dopo ~2,5 s; "ARTIST'S CONCEPT" e
+  crediti solo nei primi secondi della loro immagine.
+- Copertina Reel (`tools/reel_cover.py`): fotogramma nitido a tutto schermo + solo il titolo.
+- Bug corretto: `caption_chunks` univa male l'ultima parola (`groups[-2] = groups[-2] + groups.pop()` scrive sul
+  gruppo sbagliato), negli Short notizia uscivano parole doppie o mancanti nei sottotitoli.
+- Le clip già tagliate nelle release restano col vecchio look finché non si rilancia `long-clips` con `recut: all`.

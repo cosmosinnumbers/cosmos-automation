@@ -256,18 +256,10 @@ def frames_full(proc, n, dur, per, fvis, inserts, trans, spec, timings, tag=None
             f.paste(scrim, (0, 0), scrim)
             show_caps = True
             d = ImageDraw.Draw(f)
-            # owner 21/11/2026: no label that stays: credit and "ARTIST'S CONCEPT" only when the picture arrives
-            # (the full credits are in the description)
-            rel_v = t - k * per
-            if v.credit and rel_v < CREDIT_S:
-                fullbleed.small_text(d, (28, SH - 74), (f"Video: {v.credit}" if v.is_video else f"Image: {v.credit}")[:70])
-            if v.label and rel_v < LABEL_S:
-                fullbleed.label_pill(d, (40, head.bottom + 14 if head.visible(t) else 150), v.label)
+            # owner 21/11/2026: no labels or credits on the picture at all (credits are in the description)
         if t < dur:
             head.draw(f, t)
         d = ImageDraw.Draw(f)
-        if promo:
-            fullbleed.label_pill(d, (40, 1180), promo)
         if show_caps and t < dur:
             fullbleed.draw_caption(d, caps, t)
         d.rectangle((0, SH - 8, int(SW * (i + 1) / n), SH), fill=BRAND["cyan"])   # progress bar: retention cue

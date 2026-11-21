@@ -15,8 +15,7 @@ Now (clip.py, default layout; env CLIP_LAYOUT=box gives the old look back):
         no picture at all: the frame whole on a blurred copy of itself.
   - no text that stays: the headline only slams in during the 1.7 s opener; then only the captions under the
     voice (3 words, the spoken word amber, fullbleed.draw_caption), the thin progress bar, and the closing card
-    "FULL VIDEO ON YOUTUBE" in the last 3.5 s. "ARTIST'S CONCEPT" (honesty, owner rule) shows 1.5 s when an
-    illustration starts, never for the whole shot.
+    "FULL VIDEO ON YOUTUBE" in the last 3.5 s. No picture labels at all (owner 21/11/2026: no "ARTIST'S CONCEPT" either).
 Audio is untouched: the long video's own mix (clip.py adds the effects).
 """
 from __future__ import annotations
@@ -87,6 +86,16 @@ def analyse(src: Path, t0: float, dur: float) -> list[dict]:
             out.append({**base, "t0": (s + (e - s) * j / parts) / FPS, "t1": (s + (e - s) * (j + 1) / parts) / FPS})
     out[0]["t0"] = 0.0
     out[-1]["t1"] = max(out[-1]["t1"], dur)
+    # chapter lower third: look at the whole shot, the card fades in/out so its first frames are easy to miss
+    bar = subprocess.run([ffmpeg_exe(), "-hide_banner", "-loglevel", "error", "-ss", str(t0), "-t", str(dur),
+                          "-i", str(src), "-an", "-vf", f"crop=6:95:81:845,fps={FPS}", "-f", "rawvideo",
+                          "-pix_fmt", "rgb24", "-"], capture_output=True).stdout
+    m = len(bar) // (6 * 95 * 3)
+    if m:
+        b = np.frombuffer(bar[:m * 6 * 95 * 3], np.uint8).reshape(m, 6 * 95, 3).astype(np.int16)
+        cyan = (np.abs(b - np.array(BRAND["cyan"], np.int16)).sum(-1) < 120).mean(axis=1) > 0.3
+        for sh in out:
+            sh["low"] = bool(cyan[int(sh["t0"] * FPS):max(int(sh["t0"] * FPS) + 1, int(sh["t1"] * FPS))].any())
     return out
 
 
@@ -260,7 +269,7 @@ def frames(src: Path, vd: Path, t0: float, dur: float, caps: list, headline: str
             f = contain(last)
         else:
             z = (1.0 + 0.07 * rel / span + punch)
-            low = chapter_card(last)
+            low = sh.get("low") or chapter_card(last)
             if low:   # the long video's chapter lower third is on screen: frame only what is above it
                 z = max(z, FH / 800)
             hh = FH / z
@@ -271,9 +280,13 @@ def frames(src: Path, vd: Path, t0: float, dur: float, caps: list, headline: str
         if punch > 0.005:
             f = rgb_split(f, int(punch * 200))
         if t < hook_s:   # Katana opener: the full-screen picture dithered and dimmed, the headline slams on top
-            bg = motion.dither(f.resize((SW // 8, SH // 8), Image.BILINEAR).filter(ImageFilter.GaussianBlur(3))
-                               .resize((SW, SH), Image.BILINEAR), 4, 8)
-            bg = Image.blend(bg, Image.new("RGB", (SW, SH), BRAND["space"]), 0.5)
+            # owner 21/11/2026: the grey 1-bit dither looked unprofessional: the real picture in colour, a little
+            # darker, with a soft zoom-out while the headline slams in
+            z = 1.18 - 0.18 * render.ease(t / hook_s)
+            bg = f.resize((SW, SH), Image.BILINEAR, box=((SW - SW / z) / 2, (SH - SH / z) / 2,
+                                                         (SW + SW / z) / 2, (SH + SH / z) / 2))
+            bg = Image.blend(bg, Image.new("RGB", (SW, SH), BRAND["space"]), 0.38)
+            bg.paste(sc, (0, 0), sc)
             d = ImageDraw.Draw(bg)
             slams = slam(d, headline, t)
             hit = max((1 - (t - a) / 0.1 for a in slams if 0 <= t - a < 0.1), default=0.0)
@@ -285,11 +298,6 @@ def frames(src: Path, vd: Path, t0: float, dur: float, caps: list, headline: str
             continue
         f.paste(sc, (0, 0), sc)
         d = ImageDraw.Draw(f)
-        rl = t - max(sh["t0"], hook_s + whip_s)       # an illustration under the opener gets its label after it
-        if illus and 0 <= rl < LABEL_S + 0.3:
-            a = min(1.0, rl / 0.2, (LABEL_S + 0.3 - rl) / 0.3)
-            if a > 0.05:
-                label(d, "ARTIST'S CONCEPT", a)
         if t < dur - end_s:
             fullbleed.draw_caption(d, chunks, t, size=84)
         else:

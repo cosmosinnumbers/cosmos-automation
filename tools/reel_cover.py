@@ -6,9 +6,9 @@ Why (owner 10/11/2026, screenshot of the Reels grid): with no cover_url Instagra
 open on a transition (c1110-ess-clip-a: a flat grey frame) or on a dark frame with small text, so the grid showed a
 grey square and near-black tiles.
 
-The cover: 1080x1920 JPEG, background = the frame of the clip with the most detail (blurred, darkened), brand line,
-the key number of the title very big (amber) and the title in white. All text sits in the central 1080x1080
-square (y 420-1500), safe both for the 3:4 grid crop (y 240-1680) and the old 1:1 crop. Only our own fonts (OFL)
+The cover (since 21/11/2026, "clean thumbnails, full screen"): 1080x1920 JPEG, the frame of the clip with the most
+detail, sharp and full screen, with only the title in amber low in the 3:4 grid crop (y 240-1680) over a soft
+gradient. Before: blurred, darkened frame behind brand line + big key number + white title. Only our own fonts (OFL)
 and frames of our own video: no outside assets.
 
 Hosting: Instagram fetches cover_url itself, so the JPEG goes to cosmosinnumbers.github.io/media/covers/ (secret
@@ -134,56 +134,33 @@ def key_number(title: str) -> str | None:
 
 
 def build(mp4: str, title: str, out: str | Path) -> Path:
+    """Clean full-screen cover (owner 21/11/2026, Shorts tab screenshot: "I like more clean thumbnails like the
+    purple one, full screen"): the most detailed frame of the clip, sharp, on the whole 9:16; only the title, in
+    amber, low in the 3:4 grid crop over a soft dark gradient. The lower part of the frame (where the burned-in
+    captions are) is blurred under the title, so the cover never shows half a caption. No brand line, no big
+    number block, no stars: before 21/11 the frame was blurred and darkened behind a text card."""
     from PIL import Image, ImageDraw, ImageFilter
+    import numpy as np
     title = clean_title(title)
     out = Path(out)
     with tempfile.TemporaryDirectory() as d:
         bg_path, _ = best_frame(mp4, Path(d))
-        bg = Image.open(bg_path).convert("RGB") if bg_path else Image.new("RGB", (W, H), BRAND["space"])
-    bg = bg.resize((W, H)).filter(ImageFilter.GaussianBlur(34))
-    # darken towards the brand navy, stronger in the middle where the text is
-    shade = Image.new("RGB", (W, H), BRAND["space"])
-    mask = Image.new("L", (W, H))
-    md = ImageDraw.Draw(mask)
-    for y in range(H):
-        mid = 1 - abs(y - H / 2) / (H / 2)
-        md.line([(0, y), (W, y)], fill=int(175 + 60 * mid))
-    im = Image.composite(shade, bg, mask)
+        im = Image.open(bg_path).convert("RGB").resize((W, H)) if bg_path else Image.new("RGB", (W, H), BRAND["space"])
+    # bottom: blurred (captions become a smudge) and darkened towards the brand navy, fading in from y 1000
+    y = np.arange(H, dtype=np.float32)[:, None]
+    blur_a = (np.clip((y - 1000) / 220, 0, 1) * 255 + np.zeros((1, W), np.float32)).astype(np.uint8)
+    im = Image.composite(im.filter(ImageFilter.GaussianBlur(28)), im, Image.fromarray(blur_a, "L"))
+    shade_a = ((np.clip((y - 900) / 700, 0, 1) ** 1.2 * 205 + np.clip(1 - y / 260, 0, 1) ** 2 * 80)
+               + np.zeros((1, W), np.float32)).astype(np.uint8)
+    im = Image.composite(Image.new("RGB", (W, H), BRAND["space"]), im, Image.fromarray(shade_a, "L"))
     dr = ImageDraw.Draw(im)
-    # a few stars so even a black clip gives a "space" cover
-    import random
-    rnd = random.Random(title)
-    for _ in range(140):
-        x, y, r = rnd.randrange(W), rnd.randrange(H), rnd.choice((1, 1, 1, 2, 2, 3))
-        c = rnd.randrange(120, 230)
-        dr.ellipse((x - r, y - r, x + r, y + r), fill=(c, c, min(255, c + 20)))
-
     margin = 80
-    width = W - 2 * margin
-    num = key_number(title)
-    brand_f = font("SpaceGrotesk-Bold.ttf", 40)
-    blocks = []  # (lines, font, colour, line gap)
-    if num:
-        nf, nl = fit(dr, num.upper(), "SpaceGrotesk-Bold.ttf", 230, width, 2, 110)
-        blocks.append((nl, nf, BRAND["amber"], 1.0))
-    tf, tl = fit(dr, title.upper(), "SpaceGrotesk-Bold.ttf", 120 if not num else 84, width, 5 if not num else 4)
-    blocks.append((tl, tf, BRAND["star"], 1.12))
-
-    heights = []
-    for lines, f, _, gap in blocks:
-        heights.append(sum(int(f.size * gap) for _ in lines))
-    total = 60 + sum(heights) + 50 * (len(blocks) - 1) + 120  # brand line, gap, blocks, CTA
-    y = SAFE_TOP + max(0, (SAFE_BOTTOM - SAFE_TOP - total) // 2)
-    dr.text((W // 2, y), "COSMOS IN NUMBERS", font=brand_f, fill=BRAND["cyan"], anchor="mt")
-    y += 60 + 20
-    for (lines, f, colour, gap), h in zip(blocks, heights):
-        for line in lines:
-            dr.text((W // 2 + 3, y + 4), line, font=f, fill=(0, 0, 0), anchor="mt")  # soft drop shadow
-            dr.text((W // 2, y), line, font=f, fill=colour, anchor="mt")
-            y += int(f.size * gap)
-        y += 50
-    # accent bar under the text block
-    dr.rounded_rectangle((W // 2 - 90, y, W // 2 + 90, y + 10), radius=5, fill=BRAND["cyan"])
+    tf, tl = fit(dr, title.upper(), "SpaceGrotesk-Bold.ttf", 104, W - 2 * margin, 4)
+    lh = int(tf.size * 1.1)
+    y0 = min(SAFE_BOTTOM + 60 - lh * len(tl), 1660 - lh * len(tl))   # inside the 3:4 crop (y 240-1680)
+    for i, line in enumerate(tl):
+        yy = y0 + i * lh
+        dr.text((W // 2, yy), line, font=tf, fill=BRAND["amber"], anchor="mt", stroke_width=6, stroke_fill=(0, 0, 0))
     out.parent.mkdir(parents=True, exist_ok=True)
     im.save(out, "JPEG", quality=90, optimize=True)
     return out

@@ -29,6 +29,7 @@ from common import ROOT, BRAND, CHANNEL, FPS, ffmpeg_exe, font, load_json, load_
 
 SW, SH = 1080, 1920
 VIS_W, VIS_H = 1080, 900          # visual box (taller since 22/10/2026: more room for real footage)
+LABEL_S, CREDIT_S = 1.8, 2.2   # full-bleed: seconds a picture label / credit stays when the picture arrives
 ZOOM = {"image": 0.10, "chart": 0.04}   # charts barely move so axis labels never leave the box
 
 
@@ -255,10 +256,13 @@ def frames_full(proc, n, dur, per, fvis, inserts, trans, spec, timings, tag=None
             f.paste(scrim, (0, 0), scrim)
             show_caps = True
             d = ImageDraw.Draw(f)
-            if v.credit:
+            # owner 21/11/2026: no label that stays: credit and "ARTIST'S CONCEPT" only when the picture arrives
+            # (the full credits are in the description)
+            rel_v = t - k * per
+            if v.credit and rel_v < CREDIT_S:
                 fullbleed.small_text(d, (28, SH - 74), (f"Video: {v.credit}" if v.is_video else f"Image: {v.credit}")[:70])
-            if v.label:
-                fullbleed.label_pill(d, (40, head.bottom + 14), v.label)
+            if v.label and rel_v < LABEL_S:
+                fullbleed.label_pill(d, (40, head.bottom + 14 if head.visible(t) else 150), v.label)
         if t < dur:
             head.draw(f, t)
         d = ImageDraw.Draw(f)

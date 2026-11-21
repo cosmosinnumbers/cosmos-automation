@@ -869,6 +869,32 @@
   "short": "c1120-p6-clip-d"
  },
  {
+  "ref": "th-news-1121-apod-voyager-neptune",
+  "at": "2026-11-21 12:00",
+  "tag": "Sun",
+  "text": "Voyager's Neptune (NASA Astronomy Picture of the Day)\n\nCruising through the outer solar system, the Voyager 2 spacecraft made its closest approach to Neptune on August 25, 1989, the only spacecraft to visit the most distant ice giant planet.\n\nSource: NASA APOD (21 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-21-voyagers-neptune/",
+  "replies": [
+   "Based on the images recorded during its close encounter and in the following days, this inspired composited scene covers the dim outer planet, largest moon Triton, and faint system of rings. From just beyond Neptune's orbit, the interplanetary perspective looks back toward the Sun, capturing the planet and Triton as thin sunlit crescents.\n\nImage: Assembly/Processing - Rolf Olsen, Data - Voyager 2, NASA Planetary Data System."
+  ],
+  "news_title": "APOD: 2026 November 21 – Voyager’s Neptune"
+ },
+ {
+  "ref": "th-quiz-1121-length-day-max",
+  "at": "2026-11-21 16:00",
+  "tag": "Science",
+  "poll": [
+   "Saturn",
+   "Mercury",
+   "Jupiter"
+  ],
+  "text": "Yesterday's answer: Saturn, -140 °C on average (NASA Planetary Fact Sheet).\n\nToday's quiz 🕰️ Which of these planets has the longest day?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Length of Day-0",
+  "answer": "Mercury, 4222.6 hours from sunrise to sunrise (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1121-p6-clip-e",
   "at": "2026-11-21 21:00",
   "tag": "Mars",

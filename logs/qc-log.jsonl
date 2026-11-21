@@ -59,3 +59,4 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1120-nasa-voyager-1", "ok": true, "score": 81, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1120-mean-temperature-min", "ok": true, "score": 77, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-c1120-p6-clip-d", "ok": true, "score": 62, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-c1121-p6-clip-e", "ok": true, "score": 66, "errors": []}

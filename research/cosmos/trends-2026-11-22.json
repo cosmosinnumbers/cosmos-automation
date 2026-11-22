@@ -1,0 +1,621 @@
+{
+ "videos": [
+  {
+   "id": "QsHQxRlBy6Y",
+   "title": "Something Weird is Happening Inside Earth | Dhruv Rathee",
+   "channel": "Dhruv Rathee",
+   "published": "2026-11-13",
+   "seconds": 1360,
+   "views": 15677686,
+   "views_per_day": 1741965,
+   "engagement": 0.013,
+   "acceleration": -0.093,
+   "format": "other",
+   "hook": "other",
+   "theme": "earth",
+   "emoji": false
+  },
+  {
+   "id": "wQZPZCY30hQ",
+   "title": "Last Words Of Lady Pilot",
+   "channel": "Facts' Mine",
+   "published": "2026-11-05",
+   "seconds": 63,
+   "views": 13492610,
+   "views_per_day": 793682,
+   "engagement": 0.0359,
+   "acceleration": -0.038,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "NiVGpee8M7s",
+   "title": "What Voyager 1 Found Beyond the Edge of Our Solar System",
+   "channel": "Astrum",
+   "published": "2026-11-18",
+   "seconds": 1885,
+   "views": 2183506,
+   "views_per_day": 727835,
+   "engagement": 0.0078,
+   "acceleration": -0.204,
+   "format": "news_angle",
+   "hook": "extreme_number",
+   "theme": "solar_system",
+   "emoji": false
+  },
+  {
+   "id": "INmLPyGjsMI",
+   "title": "The Black Hole That Makes Stars",
+   "channel": "Past the Blue",
+   "published": "2026-10-28",
+   "seconds": 63,
+   "views": 9584902,
+   "views_per_day": 383396,
+   "engagement": 0.0472,
+   "acceleration": -0.032,
+   "format": "other",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "-Uqzd88AhGY",
+   "title": "Voyager 1 Becomes the First Object to Pass One Light-Day from Earth 🚀",
+   "channel": "The Silent Universe",
+   "published": "2026-11-17",
+   "seconds": 92,
+   "views": 1475378,
+   "views_per_day": 295075,
+   "engagement": 0.0003,
+   "acceleration": -0.196,
+   "format": "news_angle",
+   "hook": "extreme_number",
+   "theme": "earth",
+   "emoji": true
+  },
+  {
+   "id": "p0EqvHzr_X4",
+   "title": "Why NASA Is Paying to Destroy the ISS",
+   "channel": "Past the Blue",
+   "published": "2026-10-23",
+   "seconds": 91,
+   "views": 7975528,
+   "views_per_day": 275018,
+   "engagement": 0.0238,
+   "acceleration": -0.033,
+   "format": "mission_glitch",
+   "hook": "question",
+   "theme": "iss",
+   "emoji": false
+  },
+  {
+   "id": "gTpn5Whu2ao",
+   "title": "SPACEX CAUGHT A STARSHIP! - SpaceX Starship Flight 15",
+   "channel": "NASASpaceflight",
+   "published": "2026-11-14",
+   "seconds": 19305,
+   "views": 1582777,
+   "views_per_day": 226111,
+   "engagement": 0.0142,
+   "acceleration": null,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "spaceflight",
+   "emoji": false
+  },
+  {
+   "id": "_fw3vnQconI",
+   "title": "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn",
+   "channel": "Helpyn Facts'",
+   "published": "2026-10-31",
+   "seconds": 60,
+   "views": 4825533,
+   "views_per_day": 219342,
+   "engagement": 0.0001,
+   "acceleration": -0.045,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "dv-Czhabars",
+   "title": "SIZE OF SOLAR SYSTEM! 💀",
+   "channel": "Jase Cosmology",
+   "published": "2026-10-26",
+   "seconds": 29,
+   "views": 5318244,
+   "views_per_day": 204547,
+   "engagement": 0.0109,
+   "acceleration": -0.032,
+   "format": "scale_zoom",
+   "hook": "comparison",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "LR91hK_smqY",
+   "title": "Someone Drilled a Hole in a Spaceship",
+   "channel": "Past the Blue",
+   "published": "2026-11-12",
+   "seconds": 71,
+   "views": 1627440,
+   "views_per_day": 180826,
+   "engagement": 0.0205,
+   "acceleration": -0.047,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "mfoNTDuOdXI",
+   "title": "This drawing will make you believe in God! #faith #shorts #god #news #science",
+   "channel": "Joel Cauley",
+   "published": "2026-11-09",
+   "seconds": 137,
+   "views": 2029009,
+   "views_per_day": 169084,
+   "engagement": 0.0236,
+   "acceleration": -0.058,
+   "format": "other",
+   "hook": "paradox",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "VRag078yfl0",
+   "title": "NASA's Voyager 1 will soon become the first human-made object to reach a light-day from Earth",
+   "channel": "Associated Press",
+   "published": "2026-11-13",
+   "seconds": 253,
+   "views": 1231949,
+   "views_per_day": 153993,
+   "engagement": 0.0086,
+   "acceleration": -0.122,
+   "format": "news_angle",
+   "hook": "extreme_number",
+   "theme": "earth",
+   "emoji": false
+  },
+  {
+   "id": "6XfXc9zF7DA",
+   "title": "Astronomical events in November 2026😲 (Part 2) #shorts #astronomicalevents #space #helpyn",
+   "channel": "Helpyn Facts'",
+   "published": "2026-11-07",
+   "seconds": 58,
+   "views": 2302348,
+   "views_per_day": 153489,
+   "engagement": 0.0001,
+   "acceleration": -0.05,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "NxnN30MUoaA",
+   "title": "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+   "channel": "susballs",
+   "published": "2026-11-03",
+   "seconds": 7,
+   "views": 2647505,
+   "views_per_day": 147083,
+   "engagement": 0.0049,
+   "acceleration": -0.037,
+   "format": "quiz_guess",
+   "hook": "extreme_number",
+   "theme": "venus",
+   "emoji": true
+  },
+  {
+   "id": "Hxk8pTWURNw",
+   "title": "JWST Just Found A Black Hole Inside A Star",
+   "channel": "AstroKobi",
+   "published": "2026-11-09",
+   "seconds": 1336,
+   "views": 1632998,
+   "views_per_day": 136083,
+   "engagement": 0.0087,
+   "acceleration": -0.061,
+   "format": "survive_x",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "zMt9YzQ_hf4",
+   "title": "HOW BIG IS THE SOLAR SYSTEM!💀☝️",
+   "channel": "Limitless fax ",
+   "published": "2026-10-30",
+   "seconds": 29,
+   "views": 2669119,
+   "views_per_day": 121323,
+   "engagement": 0.0092,
+   "acceleration": -0.045,
+   "format": "scale_zoom",
+   "hook": "question",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "WYFmPq6X9mg",
+   "title": "SpaceX Just Caught Starship on Its FIRST Attempt!",
+   "channel": "Marcus House",
+   "published": "2026-11-15",
+   "seconds": 1679,
+   "views": 836660,
+   "views_per_day": 119522,
+   "engagement": 0.026,
+   "acceleration": -0.139,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "spaceflight",
+   "emoji": false
+  },
+  {
+   "id": "tKikZXrcZCQ",
+   "title": "Why Nothing Can Survive Venus",
+   "channel": "Facts' Mine",
+   "published": "2026-10-24",
+   "seconds": 57,
+   "views": 3304312,
+   "views_per_day": 113941,
+   "engagement": 0.0539,
+   "acceleration": -0.028,
+   "format": "survive_x",
+   "hook": "paradox",
+   "theme": "venus",
+   "emoji": false
+  },
+  {
+   "id": "OVMRncCa-tI",
+   "title": "La Voyager 1, se calló 48h, después volvió sola, la NASA no sabe por qué.",
+   "channel": "La Mirada Tecno",
+   "published": "2026-11-08",
+   "seconds": 180,
+   "views": 1310997,
+   "views_per_day": 100845,
+   "engagement": 0.0537,
+   "acceleration": -0.069,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "wka6dUErnQU",
+   "title": "NASA가 종이접기 작가를 부른이유ㄷㄷ",
+   "channel": "소란도란",
+   "published": "2026-10-25",
+   "seconds": 22,
+   "views": 2777291,
+   "views_per_day": 99188,
+   "engagement": 0.0064,
+   "acceleration": -0.013,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "uyFdbzAcOZw",
+   "title": "SpaceX Starship Flight 15 - Coast Phase Part 1 - LIVE",
+   "channel": "NASASpaceflight",
+   "published": "2026-11-14",
+   "seconds": 42844,
+   "views": 669616,
+   "views_per_day": 83702,
+   "engagement": 0.0086,
+   "acceleration": null,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "spaceflight",
+   "emoji": false
+  },
+  {
+   "id": "CiMGXfEjF7c",
+   "title": "Solar System's Biggest Lie!💀☝",
+   "channel": "Astrryy",
+   "published": "2026-10-28",
+   "seconds": 32,
+   "views": 1990765,
+   "views_per_day": 79630,
+   "engagement": 0.0002,
+   "acceleration": -0.034,
+   "format": "scale_zoom",
+   "hook": "paradox",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "MibAlwX0DQk",
+   "title": "Pilot showcases jet suit at NASA's Kennedy Space Center",
+   "channel": "ABC 7 Chicago",
+   "published": "2026-11-10",
+   "seconds": 91,
+   "views": 828172,
+   "views_per_day": 75288,
+   "engagement": 0.0045,
+   "acceleration": -0.091,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "INjqjSjtPKc",
+   "title": "Special Story: NASA Telescope Heads Towards Earth! Is Cuttack in the Possible Debris Zone ?",
+   "channel": "OTV",
+   "published": "2026-11-04",
+   "seconds": 273,
+   "views": 1330399,
+   "views_per_day": 73911,
+   "engagement": 0.0034,
+   "acceleration": -0.055,
+   "format": "quiz_guess",
+   "hook": "question",
+   "theme": "earth",
+   "emoji": false
+  },
+  {
+   "id": "ybuGx_I5tZI",
+   "title": "धरती से ऊपर जाते रहो तो आखिर कहाँ तक पहुँचोगे? 😱 पूरा ब्रह्मांड देख लो! | Space Journey | #space",
+   "channel": "Infinityx: The Company ",
+   "published": "2026-11-04",
+   "seconds": 107,
+   "views": 1279350,
+   "views_per_day": 71075,
+   "engagement": 0.0393,
+   "acceleration": -0.03,
+   "format": "other",
+   "hook": "question",
+   "theme": "other",
+   "emoji": true
+  }
+ ],
+ "formats": {
+  "other": {
+   "score": 13.72,
+   "videos": 13,
+   "accelerating": false,
+   "engagement": 0.0205,
+   "ours_7d": 3,
+   "examples": [
+    "Something Weird is Happening Inside Earth | Dhruv Rathee",
+    "Last Words Of Lady Pilot"
+   ]
+  },
+  "news_angle": {
+   "score": 8.45,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.0107,
+   "ours_7d": 0,
+   "examples": [
+    "What Voyager 1 Found Beyond the Edge of Our Solar System",
+    "Voyager 1 Becomes the First Object to Pass One Light-Day from Earth 🚀"
+   ]
+  },
+  "scale_zoom": {
+   "score": 2.64,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0068,
+   "ours_7d": 1,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀",
+    "HOW BIG IS THE SOLAR SYSTEM!💀☝️"
+   ]
+  },
+  "mission_glitch": {
+   "score": 1.79,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0238,
+   "ours_7d": 0,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS"
+   ]
+  },
+  "survive_x": {
+   "score": 1.63,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0313,
+   "ours_7d": 0,
+   "examples": [
+    "JWST Just Found A Black Hole Inside A Star",
+    "Why Nothing Can Survive Venus"
+   ]
+  },
+  "quiz_guess": {
+   "score": 1.44,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0042,
+   "ours_7d": 0,
+   "examples": [
+    "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+    "Special Story: NASA Telescope Heads Towards Earth! Is Cuttack in the Possible Debris Zone ?"
+   ]
+  }
+ },
+ "hooks": {
+  "other": {
+   "score": 23.0,
+   "videos": 8,
+   "accelerating": false,
+   "engagement": 0.0203,
+   "ours_7d": null,
+   "examples": [
+    "Something Weird is Happening Inside Earth | Dhruv Rathee",
+    "Last Words Of Lady Pilot"
+   ]
+  },
+  "extreme_number": {
+   "score": 13.73,
+   "videos": 9,
+   "accelerating": false,
+   "engagement": 0.0109,
+   "ours_7d": null,
+   "examples": [
+    "What Voyager 1 Found Beyond the Edge of Our Solar System",
+    "Voyager 1 Becomes the First Object to Pass One Light-Day from Earth 🚀"
+   ]
+  },
+  "question": {
+   "score": 3.53,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.0189,
+   "ours_7d": null,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS",
+    "HOW BIG IS THE SOLAR SYSTEM!💀☝️"
+   ]
+  },
+  "paradox": {
+   "score": 2.36,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0259,
+   "ours_7d": null,
+   "examples": [
+    "This drawing will make you believe in God! #faith #shorts #god #news #science",
+    "Why Nothing Can Survive Venus"
+   ]
+  },
+  "comparison": {
+   "score": 1.33,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0109,
+   "ours_7d": null,
+   "examples": [
+    "SIZE OF SOLAR SYSTEM! 💀"
+   ]
+  }
+ },
+ "themes": {
+  "earth": {
+   "score": 14.76,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.0063,
+   "ours_7d": null,
+   "examples": [
+    "Something Weird is Happening Inside Earth | Dhruv Rathee",
+    "Voyager 1 Becomes the First Object to Pass One Light-Day from Earth 🚀"
+   ]
+  },
+  "other": {
+   "score": 12.14,
+   "videos": 9,
+   "accelerating": false,
+   "engagement": 0.0205,
+   "ours_7d": null,
+   "examples": [
+    "Last Words Of Lady Pilot",
+    "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn"
+   ]
+  },
+  "solar_system": {
+   "score": 7.38,
+   "videos": 4,
+   "accelerating": false,
+   "engagement": 0.007,
+   "ours_7d": null,
+   "examples": [
+    "What Voyager 1 Found Beyond the Edge of Our Solar System",
+    "SIZE OF SOLAR SYSTEM! 💀"
+   ]
+  },
+  "black_hole": {
+   "score": 3.38,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0279,
+   "ours_7d": null,
+   "examples": [
+    "The Black Hole That Makes Stars",
+    "JWST Just Found A Black Hole Inside A Star"
+   ]
+  },
+  "spaceflight": {
+   "score": 2.8,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0163,
+   "ours_7d": null,
+   "examples": [
+    "SPACEX CAUGHT A STARSHIP! - SpaceX Starship Flight 15",
+    "SpaceX Just Caught Starship on Its FIRST Attempt!"
+   ]
+  },
+  "iss": {
+   "score": 1.79,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0238,
+   "ours_7d": null,
+   "examples": [
+    "Why NASA Is Paying to Destroy the ISS"
+   ]
+  },
+  "venus": {
+   "score": 1.7,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0294,
+   "ours_7d": null,
+   "examples": [
+    "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+    "Why Nothing Can Survive Venus"
+   ]
+  }
+ },
+ "short_share": 0.68,
+ "audience_questions": [
+  "I have a suggestion. How can we listen to your videos in other Indian regional languages ?",
+  "So...a galaxy could just decide to hurl a blackhole our way?",
+  "Is it just me, or am I the only one still crying over Dhoni's retirement?",
+  "And what about the aeroplanes at night at that time?",
+  "Should we do a face video at 10K Subscribers?",
+  "Well, how sad is that?",
+  "Guys, you do realize they're just moving it right?"
+ ],
+ "instagram_median_likes": {
+  "IMAGE": 11034,
+  "CAROUSEL_ALBUM": 9661
+ },
+ "median_views_per_day": 153489,
+ "niche": "cosmos",
+ "date": "2026-11-22",
+ "source": "2026-W47.json",
+ "sky": [
+  {
+   "date": "2026-11-24",
+   "name": "Full Moon (supermoon)",
+   "hint": "the full Moon of 24 November 2026, a supermoon: how much closer and bigger it really is",
+   "computed": true,
+   "in_days": 2
+  },
+  {
+   "date": "2026-11-30",
+   "name": "Moon near Jupiter",
+   "hint": "the Moon passing close to Jupiter around 30 November 2026: how to use the Moon to find the planet with your own eyes, and Jupiter's real numbers",
+   "computed": true,
+   "in_days": 8
+  },
+  {
+   "date": "2026-11-30",
+   "name": "Moon near Mars",
+   "hint": "the Moon passing close to Mars around 30 November 2026: how to use the Moon to find the planet with your own eyes, and Mars's real numbers",
+   "computed": true,
+   "in_days": 8
+  }
+ ]
+}

@@ -905,6 +905,32 @@
   "short": "c1121-p6-clip-e"
  },
  {
+  "ref": "th-news-1122-apod-v-g-r",
+  "at": "2026-11-22 12:00",
+  "tag": "NASA",
+  "text": "V-G-R (NASA Astronomy Picture of the Day)\n\nOn November 17, fans of interstellar spaceflight around planet Earth were invited to shine a message into the night sky. Traced by a flashlight beam switched on and off, the dashes and dots of a Morse code message captured in this time exposure from the Emirates Astronomical Observatory are read V-G-R.\n\nSource: NASA APOD (20 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-20-v-g-r/",
+  "replies": [
+   "That's a call sign for the Voyager 1 spacecraft currently in interstellar space some 26 billion kilometers away. Traveling at the speed of light, the answer is one day.\n\nImage: Apostolos Kyriazis."
+  ],
+  "news_title": "APOD: 2026 November 20 – V-G-R"
+ },
+ {
+  "ref": "th-quiz-1122-orbital-period-max",
+  "at": "2026-11-22 16:00",
+  "tag": "Science",
+  "poll": [
+   "Mercury",
+   "Jupiter",
+   "Venus"
+  ],
+  "text": "Yesterday's answer: Mercury, 4222.6 hours from sunrise to sunrise (NASA Planetary Fact Sheet).\n\nToday's quiz 📅 Which of these planets has the longest year?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Orbital Period-0",
+  "answer": "Jupiter, 4331 days per orbit (NASA Planetary Fact Sheet)"
+ },
+ {
   "ref": "th-c1122-p6-clip-g",
   "at": "2026-11-22 21:00",
   "tag": "Jupiter",

@@ -64,3 +64,6 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1121-apod-v-g-r", "ok": true, "score": 71, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1121-length-day-max", "ok": true, "score": 77, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-c1122-p6-clip-g", "ok": true, "score": 58, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1122-apod-swirls-colors-jupiter", "ok": true, "score": 68, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1122-apod-v-g-r", "ok": true, "score": 72, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-quiz-1122-orbital-period-max", "ok": true, "score": 78, "errors": []}

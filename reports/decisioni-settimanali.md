@@ -1,5 +1,22 @@
 # Decisioni settimanali (GitHub Actions)
 
+## 23/11/2026: scorecard `reports/scorecard-2026-11-23.md`
+### Interpretazione
+- Dal 2026-11-16 al 2026-11-23, gli acct_website_clicks su Instagram sono stati 0 e gli acct_link_clicks_7d su Threads sono scesi da 6 a 0. Le visite e le vendite su Gumroad non sono misurate dalle API, quindi l'impatto reale sul business resta ignoto.
+- Su YouTube, gli Short (44 post totali, 8 nuovi nei 7 giorni) registrano +1.193 visualizzazioni settimanali con mediana di 127, contro i video Long (6 post totali, 1 nuovo, campione piccolo) che hanno +31 visualizzazioni con mediana di 21,5.
+- Su Instagram, i Reel (26 post totali, 6 nuovi) registrano +896 visualizzazioni settimanali con mediana di 132,5 e tempo di visione mediano di 6,7 s, mentre i Caroselli (7 post totali, 1 nuovo, campione piccolo) hanno ottenuto +3 visualizzazioni settimanali con mediana di 6.
+- Su Threads, i text_post (23 totali, 4 nuovi) generano +74 visualizzazioni settimanali (mediana 34) e 48 commenti, superando i video (16 totali, 6 nuovi) che generano +89 visualizzazioni (mediana 22,5) e 36 commenti.
+
+### Decisioni (ipotesi da testare)
+- Nessuna decisione: Le visite e le vendite su Gumroad non sono esposte dalle API, gli acct_website_clicks su Instagram sono 0 e i link_clicks su Threads sono stati 0 tra il 2026-11-16 e il 2026-11-23. Senza dati sul traffico o sulle conversioni verso LOOK UP, non ci sono prove sufficienti per prendere decisioni strategiche di business.
+
+### Prossimo test utile
+- Inserire un link tracciato a LOOK UP nei commenti fissati di tutti i nuovi YouTube Short per 14 giorni (mantenendo invariata la struttura dei video) per misurare se l'unico formato con oltre 1.000 visualizzazioni settimanali (+1.193) genera visite al prodotto.
+
+### Idee dai competitor
+- Testare un incipit visivo con smentita immediata nei Reel/Short: mostrare una scia luminosa nei primi 3 secondi spiegando che si credeva un errore del sensore (adattato dal video di Past the Blue del 2026-10-28 che ha fatto 9.673.612 visualizzazioni).
+- Aggiungere grafici temporali animati a schermo con metriche di confronto (es. tempo per coprire la distanza Terra-Luna) per cercare di adeguarci al ritmo dei competitor analizzati e fare test sull'aumento della visione media (attualmente a 6,7 s su Instagram e 2,5 s su Facebook).
+
 ## 16/11/2026: scorecard `reports/scorecard-2026-11-16.md`
 ### Interpretazione
 - Dal 2026-11-07 al 2026-11-15, i YouTube Short guidano la distribuzione con 991 visualizzazioni nella settimana su 35 post totali (mediana 164 visualizzazioni).

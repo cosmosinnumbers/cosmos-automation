@@ -71,7 +71,11 @@ def at_date(rows: list[dict], d: str) -> dict[str, dict]:
 def fmt(n) -> str:
     if n is None:
         return "–"
-    return f"{n:,.0f}".replace(",", ".") if float(n).is_integer() else f"{n:.1f}".replace(".", ",")
+    try:
+        val = float(n)
+        return f"{val:,.0f}".replace(",", ".") if val.is_integer() else f"{val:.1f}".replace(".", ",")
+    except (TypeError, ValueError):
+        return str(n)
 
 
 def scorecard(today: date) -> tuple[list[str], str]:

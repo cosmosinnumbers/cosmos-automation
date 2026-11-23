@@ -939,5 +939,31 @@
    "Full video: Why NASA Will Fly Past Europa 49 Times: https://youtu.be/0dYQy7Ku2_s"
   ],
   "short": "c1122-p6-clip-g"
+ },
+ {
+  "ref": "th-news-1123-apod-emergence-dark-nebula",
+  "at": "2026-11-23 12:00",
+  "tag": "Astronomy",
+  "text": "If you stare into space for a long time, what might you see?\n\nAt first, you might only see the usual brightest stars, but if your eyes (or camera) could continue to collect light, you would see increasingly more.\n\nSource: NASA Astronomy Picture of the Day, \"The Emergence of Dark Nebula Lynds 1251\" (23 Nov 2026).\nhttps://science.nasa.gov/image-article/apod-2026-november-23-the-emergence-of-dark-nebula-lynds-1251/",
+  "replies": [
+   "In the direction of the featured image, after only a few minutes, you would begin to notice some regions without stars. As your staring continued, the dark region would become better defined, and after a full 20 hours, you would notice a strange dark structure.\n\nImage: David Cruz."
+  ],
+  "news_title": "APOD: 2026 November 23 – The Emergence of Dark Nebula Lynds 1251"
+ },
+ {
+  "ref": "th-quiz-1123-number-moons-max",
+  "at": "2026-11-23 16:00",
+  "tag": "Science",
+  "poll": [
+   "Jupiter",
+   "Venus",
+   "Mars"
+  ],
+  "text": "Yesterday's answer: Jupiter, 4331 days per orbit (NASA Planetary Fact Sheet).\n\nToday's quiz 🌙 Which of these planets has the most known moons?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Number of Moons-0",
+  "answer": "Jupiter, 95 known moons (NASA Planetary Fact Sheet)"
  }
 ]

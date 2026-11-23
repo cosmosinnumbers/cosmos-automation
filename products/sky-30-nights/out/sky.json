@@ -1,6 +1,6 @@
 {
- "start": "2026-11-16",
- "end": "2026-12-15",
+ "start": "2026-11-23",
+ "end": "2026-12-22",
  "days": 30,
  "latitude": "40° N",
  "method": "Computed with PyEphem for 40° N. Meteor shower peaks and rates: IMO Meteor Shower Calendar. Dates are UTC and can shift by one day where you live.",
@@ -8,7 +8,7 @@
   {
    "name": "Mercury",
    "text": "before dawn, low in the south-east before sunrise; by the end of the period: hidden in the Sun's glare",
-   "mag": -0.3,
+   "mag": -0.5,
    "constellation": "Libra",
    "when": "before dawn",
    "visible": true
@@ -16,7 +16,7 @@
   {
    "name": "Venus",
    "text": "before dawn, midway up in the south-east before sunrise",
-   "mag": -4.4,
+   "mag": -4.5,
    "constellation": "Virgo",
    "when": "before dawn",
    "visible": true
@@ -24,14 +24,14 @@
   {
    "name": "Mars",
    "text": "before dawn, high in the south before sunrise; by the end of the period: before dawn, high in the south-west before sunrise",
-   "mag": 0.7,
+   "mag": 0.6,
    "constellation": "Leo",
    "when": "before dawn",
    "visible": true
   },
   {
    "name": "Jupiter",
-   "text": "before dawn, high in the south before sunrise; by the end of the period: before dawn, high in the south-west before sunrise",
+   "text": "before dawn, high in the south-west before sunrise",
    "mag": -2.0,
    "constellation": "Leo",
    "when": "before dawn",
@@ -39,32 +39,14 @@
   },
   {
    "name": "Saturn",
-   "text": "evening, midway up in the south-east after sunset",
-   "mag": 0.6,
+   "text": "evening, midway up in the south-east after sunset; by the end of the period: evening, high in the south-east after sunset",
+   "mag": 0.7,
    "constellation": "Cetus",
    "when": "evening",
    "visible": true
   }
  ],
  "events": [
-  {
-   "at": "2026-11-17T11:47+00:00",
-   "date": "2026-11-17",
-   "kind": "moon",
-   "name": "First quarter",
-   "text": "First quarter Moon: half lit in the evening, the best phase to see craters with binoculars."
-  },
-  {
-   "at": "2026-11-17T23:43+00:00",
-   "date": "2026-11-17",
-   "kind": "meteors",
-   "name": "Leonids meteor shower peak",
-   "shower": "Leonids",
-   "zhr": 15,
-   "parent": "Comet Tempel-Tuttle",
-   "moon_lit_pct": 55,
-   "text": "Leonids peak: up to 15 meteors an hour under a perfect dark sky, debris of Comet Tempel-Tuttle. Moon 55% lit: some moonlight. Best after midnight."
-  },
   {
    "at": "2026-11-24T14:53+00:00",
    "date": "2026-11-24",
@@ -117,44 +99,34 @@
    "parent": "asteroid 3200 Phaethon",
    "moon_lit_pct": 25,
    "text": "Geminids peak: up to 150 meteors an hour under a perfect dark sky, debris of asteroid 3200 Phaethon. Moon 25% lit: a dark sky, the Moon is out of the way. Best after midnight."
+  },
+  {
+   "at": "2026-12-17T05:42+00:00",
+   "date": "2026-12-17",
+   "kind": "moon",
+   "name": "First quarter",
+   "text": "First quarter Moon: half lit in the evening, the best phase to see craters with binoculars."
+  },
+  {
+   "at": "2026-12-21T20:49+00:00",
+   "date": "2026-12-21",
+   "kind": "season",
+   "name": "December solstice",
+   "text": "December solstice: the longest night of the year in one hemisphere, the shortest in the other."
+  },
+  {
+   "at": "2026-12-22T22:08+00:00",
+   "date": "2026-12-22",
+   "kind": "meteors",
+   "name": "Ursids meteor shower peak",
+   "shower": "Ursids",
+   "zhr": 10,
+   "parent": "Comet Tuttle",
+   "moon_lit_pct": 98,
+   "text": "Ursids peak: up to 10 meteors an hour under a perfect dark sky, debris of Comet Tuttle. Moon 98% lit: a bright Moon will hide the faint ones. Best after midnight."
   }
  ],
  "moon": [
-  {
-   "date": "2026-11-16",
-   "lit": 44,
-   "waxing": true
-  },
-  {
-   "date": "2026-11-17",
-   "lit": 53,
-   "waxing": true
-  },
-  {
-   "date": "2026-11-18",
-   "lit": 63,
-   "waxing": true
-  },
-  {
-   "date": "2026-11-19",
-   "lit": 73,
-   "waxing": true
-  },
-  {
-   "date": "2026-11-20",
-   "lit": 82,
-   "waxing": true
-  },
-  {
-   "date": "2026-11-21",
-   "lit": 89,
-   "waxing": true
-  },
-  {
-   "date": "2026-11-22",
-   "lit": 95,
-   "waxing": true
-  },
   {
    "date": "2026-11-23",
    "lit": 99,
@@ -269,41 +241,76 @@
    "date": "2026-12-15",
    "lit": 36,
    "waxing": true
+  },
+  {
+   "date": "2026-12-16",
+   "lit": 46,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-17",
+   "lit": 56,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-18",
+   "lit": 66,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-19",
+   "lit": 76,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-20",
+   "lit": 85,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-21",
+   "lit": 93,
+   "waxing": true
+  },
+  {
+   "date": "2026-12-22",
+   "lit": 98,
+   "waxing": true
   }
  ],
  "charts": {
-  "date": "2026-11-23",
+  "date": "2026-11-30",
   "evening": [
    {
     "name": "Saturn",
-    "az": 121,
-    "alt": 33,
+    "az": 127,
+    "alt": 37,
     "mag": 0.7
    }
   ],
   "morning": [
    {
     "name": "Mercury",
-    "az": 117,
-    "alt": 10,
+    "az": 119,
+    "alt": 7,
     "mag": -0.5
    },
    {
     "name": "Venus",
-    "az": 128,
-    "alt": 25,
-    "mag": -4.4
+    "az": 133,
+    "alt": 28,
+    "mag": -4.5
    },
    {
     "name": "Mars",
-    "az": 190,
-    "alt": 63,
-    "mag": 0.6
+    "az": 202,
+    "alt": 61,
+    "mag": 0.5
    },
    {
     "name": "Jupiter",
-    "az": 196,
-    "alt": 63,
+    "az": 212,
+    "alt": 60,
     "mag": -2.0
    }
   ]

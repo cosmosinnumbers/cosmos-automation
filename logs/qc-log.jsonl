@@ -71,3 +71,7 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1123-apod-emergence-dark-nebula", "ok": true, "score": 72, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-news-1123-apod-swirls-colors-jupiter", "ok": true, "score": 67, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1123-number-moons-max", "ok": true, "score": 76, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1124-dark-energy-camera", "ok": true, "score": 67, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1124-apod-swirls-colors-jupiter", "ok": true, "score": 69, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1124-nasa-webb-shows", "ok": true, "score": 69, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-quiz-1124-orbital-period-min", "ok": true, "score": 76, "errors": []}

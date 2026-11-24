@@ -1,40 +1,40 @@
 {
- "updated": "2026-11-23",
- "n_shorts": 42,
+ "updated": "2026-11-24",
+ "n_shorts": 43,
  "formats": {
+  "other": {
+   "n": 19,
+   "wins": 6.87,
+   "losses": 4.73,
+   "mean": 1.47,
+   "decision": "vince"
+  },
   "scale_zoom": {
    "n": 10,
    "wins": 3.1,
    "losses": 3.01,
-   "mean": 1.49,
-   "decision": "vince"
-  },
-  "other": {
-   "n": 18,
-   "wins": 6.0,
-   "losses": 4.83,
-   "mean": 1.48,
+   "mean": 1.44,
    "decision": "vince"
   },
   "news_angle": {
    "n": 3,
    "wins": 0.92,
    "losses": 0.8,
-   "mean": 1.45,
+   "mean": 1.4,
    "decision": "esplora"
   },
   "mission_glitch": {
    "n": 3,
-   "wins": 0.92,
-   "losses": 0.8,
-   "mean": 1.12,
+   "wins": 0.41,
+   "losses": 1.21,
+   "mean": 1.1,
    "decision": "esplora"
   },
   "audience_question": {
    "n": 6,
-   "wins": 2.24,
-   "losses": 2.41,
-   "mean": 1.01,
+   "wins": 2.08,
+   "losses": 2.13,
+   "mean": 0.98,
    "decision": "esplora"
   },
   "sky_tonight": {
@@ -48,51 +48,51 @@
    "n": 1,
    "wins": 0.0,
    "losses": 1.0,
-   "mean": 0.23,
+   "mean": 0.22,
    "decision": "esplora"
   }
  },
  "hooks": {
   "extreme_number": {
    "n": 16,
-   "wins": 5.3,
-   "losses": 4.03,
-   "mean": 1.6,
+   "wins": 5.17,
+   "losses": 3.93,
+   "mean": 1.55,
    "decision": "vince"
   },
   "other": {
-   "n": 8,
-   "wins": 2.54,
-   "losses": 2.11,
-   "mean": 1.49,
+   "n": 9,
+   "wins": 3.03,
+   "losses": 2.52,
+   "mean": 1.5,
    "decision": "vince"
   },
   "comparison": {
    "n": 4,
    "wins": 0.74,
-   "losses": 1.21,
-   "mean": 1.32,
+   "losses": 1.13,
+   "mean": 1.28,
    "decision": "esplora"
   },
   "you": {
    "n": 2,
    "wins": 0.51,
    "losses": 0.8,
-   "mean": 1.23,
+   "mean": 1.19,
    "decision": "esplora"
   },
   "question": {
    "n": 9,
-   "wins": 2.88,
-   "losses": 4.8,
-   "mean": 0.91,
+   "wins": 2.72,
+   "losses": 4.6,
+   "mean": 0.89,
    "decision": "esplora"
   },
   "paradox": {
    "n": 3,
    "wins": 1.21,
    "losses": 0.41,
-   "mean": 0.84,
+   "mean": 0.83,
    "decision": "esplora"
   }
  },
@@ -101,98 +101,98 @@
    "n": 3,
    "wins": 0.82,
    "losses": 0.41,
-   "mean": 2.32,
+   "mean": 2.23,
    "decision": "esplora"
   },
   "moon": {
    "n": 3,
    "wins": 1.56,
    "losses": 0.0,
-   "mean": 2.18,
+   "mean": 2.11,
    "decision": "esplora"
   },
   "earth": {
    "n": 1,
-   "wins": 0.64,
+   "wins": 0.51,
    "losses": 0.0,
-   "mean": 1.89,
+   "mean": 1.84,
    "decision": "esplora"
   },
   "saturn": {
    "n": 1,
    "wins": 0.51,
    "losses": 0.0,
-   "mean": 1.47,
+   "mean": 1.42,
    "decision": "esplora"
   },
   "other": {
    "n": 5,
-   "wins": 2.36,
-   "losses": 0.0,
-   "mean": 1.44,
+   "wins": 1.84,
+   "losses": 0.41,
+   "mean": 1.4,
    "decision": "vince"
+  },
+  "solar_system": {
+   "n": 3,
+   "wins": 0.74,
+   "losses": 0.41,
+   "mean": 1.36,
+   "decision": "esplora"
   },
   "mars": {
    "n": 2,
    "wins": 1.15,
    "losses": 0.0,
-   "mean": 1.4,
-   "decision": "esplora"
-  },
-  "solar_system": {
-   "n": 3,
-   "wins": 0.74,
-   "losses": 0.51,
-   "mean": 1.39,
+   "mean": 1.36,
    "decision": "esplora"
   },
   "jupiter": {
-   "n": 6,
-   "wins": 0.41,
-   "losses": 4.8,
-   "mean": 1.24,
-   "decision": "esplora"
+   "n": 7,
+   "wins": 1.41,
+   "losses": 4.6,
+   "mean": 1.32,
+   "decision": "vince"
   },
   "sun": {
    "n": 8,
-   "wins": 3.04,
+   "wins": 2.88,
    "losses": 2.91,
-   "mean": 1.04,
+   "mean": 1.02,
    "decision": "esplora"
   },
   "light_speed": {
    "n": 5,
    "wins": 1.95,
    "losses": 1.21,
-   "mean": 1.0,
+   "mean": 0.97,
    "decision": "esplora"
   },
   "venus": {
    "n": 1,
    "wins": 0.0,
-   "losses": 0.41,
-   "mean": 0.96,
+   "losses": 0.33,
+   "mean": 0.94,
    "decision": "esplora"
   },
   "iss": {
    "n": 1,
    "wins": 0.0,
    "losses": 0.51,
-   "mean": 0.88,
+   "mean": 0.87,
    "decision": "esplora"
   },
   "galaxy": {
    "n": 2,
    "wins": 0.0,
    "losses": 1.6,
-   "mean": 0.82,
+   "mean": 0.8,
    "decision": "esplora"
   },
   "stars": {
    "n": 1,
    "wins": 0.0,
    "losses": 1.0,
-   "mean": 0.69,
+   "mean": 0.67,
    "decision": "esplora"
   }
  },
@@ -200,37 +200,37 @@
   {
    "title": "11 Earths Fit Across Jupiter (NASA data)",
    "id": "Z0e8oVP51bo",
-   "score": 4.54,
-   "views": 957,
+   "score": 4.36,
+   "views": 959,
    "pct": 59.2
   },
   {
    "title": "NASA's Roman Telescope Got Sharper by Moving a Mirror",
    "id": "fD8pNtTwvXs",
-   "score": 4.41,
+   "score": 4.22,
    "views": 938,
    "pct": 53.2
   },
   {
    "title": "The Moon Swings 295 °C in One Day. Here's Why (NASA data)",
    "id": "6qv4TZ6AqdU",
-   "score": 3.59,
+   "score": 3.43,
    "views": 749,
    "pct": 50.1
   },
   {
-   "title": "The Most Common Planet Size Doesn't Exist in Our Solar System",
-   "id": "8Tb7dHT1vek",
-   "score": 1.94,
-   "views": 340,
-   "pct": 60.1
+   "title": "Clipper's long road to Jupiter",
+   "id": "z4woxGSa5so",
+   "score": 1.98,
+   "views": 388,
+   "pct": 50.0
   },
   {
-   "title": "A 3,200-Pound Space Telescope Is Falling to Earth",
-   "id": "rXEds3znnhI",
-   "score": 1.89,
-   "views": 243,
-   "pct": 103.8
+   "title": "The Most Common Planet Size Doesn't Exist in Our Solar System",
+   "id": "8Tb7dHT1vek",
+   "score": 1.87,
+   "views": 340,
+   "pct": 60.1
   }
  ]
 }

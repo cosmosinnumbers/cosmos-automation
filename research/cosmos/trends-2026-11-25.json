@@ -1,0 +1,624 @@
+{
+ "videos": [
+  {
+   "id": "QsHQxRlBy6Y",
+   "title": "Something Weird is Happening Inside Earth | Dhruv Rathee",
+   "channel": "Dhruv Rathee",
+   "published": "2026-11-13",
+   "seconds": 1360,
+   "views": 16264957,
+   "views_per_day": 1355413,
+   "engagement": 0.0128,
+   "acceleration": -0.076,
+   "format": "other",
+   "hook": "other",
+   "theme": "earth",
+   "emoji": false
+  },
+  {
+   "id": "wQZPZCY30hQ",
+   "title": "Last Words Of Lady Pilot",
+   "channel": "Facts' Mine",
+   "published": "2026-11-05",
+   "seconds": 63,
+   "views": 14181315,
+   "views_per_day": 709065,
+   "engagement": 0.0352,
+   "acceleration": -0.037,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "hbeuMnpAak4",
+   "title": "The Edge Of The Universe 🚀 (fiction)",
+   "channel": "Zack D. Films",
+   "published": "2026-11-07",
+   "seconds": 69,
+   "views": 11882450,
+   "views_per_day": 660136,
+   "engagement": 0.0524,
+   "acceleration": null,
+   "format": "other",
+   "hook": "other",
+   "theme": "galaxy",
+   "emoji": true
+  },
+  {
+   "id": "NiVGpee8M7s",
+   "title": "What Voyager 1 Found Beyond the Edge of Our Solar System",
+   "channel": "Astrum",
+   "published": "2026-11-18",
+   "seconds": 1885,
+   "views": 2713471,
+   "views_per_day": 452245,
+   "engagement": 0.0072,
+   "acceleration": 0.037,
+   "format": "news_angle",
+   "hook": "extreme_number",
+   "theme": "solar_system",
+   "emoji": false
+  },
+  {
+   "id": "d4wwK7OsF9I",
+   "title": "We Saw Alien Weather (First Time Ever)",
+   "channel": "Cleo Abram",
+   "published": "2026-11-23",
+   "seconds": 49,
+   "views": 757828,
+   "views_per_day": 378914,
+   "engagement": 0.0507,
+   "acceleration": -0.396,
+   "format": "news_angle",
+   "hook": "paradox",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "INmLPyGjsMI",
+   "title": "The Black Hole That Makes Stars",
+   "channel": "Past the Blue",
+   "published": "2026-10-28",
+   "seconds": 63,
+   "views": 9769365,
+   "views_per_day": 348905,
+   "engagement": 0.0471,
+   "acceleration": -0.031,
+   "format": "other",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "edXxRIJ1II8",
+   "title": "Which One Is the Real Moon?",
+   "channel": "Akaich ",
+   "published": "2026-11-19",
+   "seconds": 54,
+   "views": 2010519,
+   "views_per_day": 335086,
+   "engagement": 0.0001,
+   "acceleration": null,
+   "format": "quiz_guess",
+   "hook": "question",
+   "theme": "moon",
+   "emoji": false
+  },
+  {
+   "id": "FIMRiDi3kfE",
+   "title": "Earth Becomes a Black Hole! 🌍🌀#Earth #BlackHole #SpaceFacts #ScienceFacts #WhatIf",
+   "channel": "SibtainVlogging_fact",
+   "published": "2026-11-23",
+   "seconds": 91,
+   "views": 633379,
+   "views_per_day": 316689,
+   "engagement": 0.0001,
+   "acceleration": -0.296,
+   "format": "other",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": true
+  },
+  {
+   "id": "uiiSWRsRI8Q",
+   "title": "The Man Who Jumped From Space😱",
+   "channel": "Seren Explains",
+   "published": "2026-11-12",
+   "seconds": 92,
+   "views": 3988901,
+   "views_per_day": 306838,
+   "engagement": 0.0178,
+   "acceleration": null,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "_fw3vnQconI",
+   "title": "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn",
+   "channel": "Helpyn Facts'",
+   "published": "2026-10-31",
+   "seconds": 60,
+   "views": 4835175,
+   "views_per_day": 193407,
+   "engagement": 0.0001,
+   "acceleration": -0.039,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "-Uqzd88AhGY",
+   "title": "Voyager 1 Becomes the First Object to Pass One Light-Day from Earth 🚀",
+   "channel": "The Silent Universe",
+   "published": "2026-11-17",
+   "seconds": 92,
+   "views": 1489784,
+   "views_per_day": 186223,
+   "engagement": 0.0003,
+   "acceleration": null,
+   "format": "news_angle",
+   "hook": "extreme_number",
+   "theme": "earth",
+   "emoji": true
+  },
+  {
+   "id": "Yx7cZrZH9M4",
+   "title": "Did NASA lose the technology to go to the moon? #Space #science #conspiracy #debunk #stem",
+   "channel": "ASTRO ALEXANDRA",
+   "published": "2026-11-16",
+   "seconds": 119,
+   "views": 1266875,
+   "views_per_day": 158359,
+   "engagement": 0.0492,
+   "acceleration": -0.117,
+   "format": "other",
+   "hook": "question",
+   "theme": "moon",
+   "emoji": false
+  },
+  {
+   "id": "mfoNTDuOdXI",
+   "title": "This drawing will make you believe in God! #faith #shorts #god #news #science",
+   "channel": "Joel Cauley",
+   "published": "2026-11-09",
+   "seconds": 137,
+   "views": 2265187,
+   "views_per_day": 151012,
+   "engagement": 0.0239,
+   "acceleration": -0.017,
+   "format": "other",
+   "hook": "paradox",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "LR91hK_smqY",
+   "title": "Someone Drilled a Hole in a Spaceship",
+   "channel": "Past the Blue",
+   "published": "2026-11-12",
+   "seconds": 71,
+   "views": 1855849,
+   "views_per_day": 142757,
+   "engagement": 0.0202,
+   "acceleration": -0.048,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "NxnN30MUoaA",
+   "title": "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts",
+   "channel": "susballs",
+   "published": "2026-11-03",
+   "seconds": 7,
+   "views": 2763053,
+   "views_per_day": 131573,
+   "engagement": 0.0048,
+   "acceleration": 0.012,
+   "format": "quiz_guess",
+   "hook": "extreme_number",
+   "theme": "venus",
+   "emoji": true
+  },
+  {
+   "id": "6XfXc9zF7DA",
+   "title": "Astronomical events in November 2026😲 (Part 2) #shorts #astronomicalevents #space #helpyn",
+   "channel": "Helpyn Facts'",
+   "published": "2026-11-07",
+   "seconds": 58,
+   "views": 2356092,
+   "views_per_day": 130894,
+   "engagement": 0.0001,
+   "acceleration": -0.052,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "knQZI4RxsBY",
+   "title": "‘Not good at all’: Intelligence experts react to NSA outage",
+   "channel": "CNN",
+   "published": "2026-11-17",
+   "seconds": 1203,
+   "views": 855297,
+   "views_per_day": 122185,
+   "engagement": 0.0075,
+   "acceleration": -0.139,
+   "format": "other",
+   "hook": "other",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "RrLa_4tJZGE",
+   "title": "😱 चाँद की 3 सबसे अजीब घटनाएँ! #MoonFacts #SpaceMysteries #AmazingFacts #SpaceFacts #Shorts",
+   "channel": "JayDoc",
+   "published": "2026-11-14",
+   "seconds": 69,
+   "views": 1315838,
+   "views_per_day": 119621,
+   "engagement": 0.0001,
+   "acceleration": 0.276,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "other",
+   "emoji": true
+  },
+  {
+   "id": "Hxk8pTWURNw",
+   "title": "JWST Just Found A Black Hole Inside A Star",
+   "channel": "AstroKobi",
+   "published": "2026-11-09",
+   "seconds": 1336,
+   "views": 1708751,
+   "views_per_day": 113916,
+   "engagement": 0.0086,
+   "acceleration": -0.057,
+   "format": "survive_x",
+   "hook": "other",
+   "theme": "black_hole",
+   "emoji": false
+  },
+  {
+   "id": "VRag078yfl0",
+   "title": "NASA's Voyager 1 will soon become the first human-made object to reach a light-day from Earth",
+   "channel": "Associated Press",
+   "published": "2026-11-13",
+   "seconds": 253,
+   "views": 1236101,
+   "views_per_day": 112372,
+   "engagement": 0.0086,
+   "acceleration": -0.09,
+   "format": "news_angle",
+   "hook": "extreme_number",
+   "theme": "earth",
+   "emoji": false
+  },
+  {
+   "id": "reKDMrLYunM",
+   "title": "SPACE NEWS! The Voyager 1 spacecraft is officially ONE LIGHT DAY away! More below! @caltech #ad",
+   "channel": "ASTRO ALEXANDRA",
+   "published": "2026-11-18",
+   "seconds": 88,
+   "views": 673025,
+   "views_per_day": 112170,
+   "engagement": 0.0749,
+   "acceleration": null,
+   "format": "other",
+   "hook": "extreme_number",
+   "theme": "light_speed",
+   "emoji": false
+  },
+  {
+   "id": "zMt9YzQ_hf4",
+   "title": "HOW BIG IS THE SOLAR SYSTEM!💀☝️",
+   "channel": "Limitless fax ",
+   "published": "2026-10-30",
+   "seconds": 29,
+   "views": 2670056,
+   "views_per_day": 102694,
+   "engagement": 0.0092,
+   "acceleration": -0.038,
+   "format": "scale_zoom",
+   "hook": "question",
+   "theme": "solar_system",
+   "emoji": true
+  },
+  {
+   "id": "eOZblHcqkvo",
+   "title": "The Big Bang Theory Is Wrong, This New Theory Is Even Stranger",
+   "channel": "The Infographics Show",
+   "published": "2026-11-14",
+   "seconds": 967,
+   "views": 1010281,
+   "views_per_day": 91843,
+   "engagement": 0.0098,
+   "acceleration": null,
+   "format": "myth_number",
+   "hook": "paradox",
+   "theme": "other",
+   "emoji": false
+  },
+  {
+   "id": "WYFmPq6X9mg",
+   "title": "SpaceX Just Caught Starship on Its FIRST Attempt!",
+   "channel": "Marcus House",
+   "published": "2026-11-15",
+   "seconds": 1679,
+   "views": 839901,
+   "views_per_day": 83990,
+   "engagement": 0.026,
+   "acceleration": -0.099,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "spaceflight",
+   "emoji": false
+  },
+  {
+   "id": "L1g_MJVnfAY",
+   "title": "New mini moon orbiting earth for the rest of the year! #space #science #astronomy #news",
+   "channel": "ASTRO ALEXANDRA",
+   "published": "2026-11-11",
+   "seconds": 67,
+   "views": 1082166,
+   "views_per_day": 83243,
+   "engagement": 0.0504,
+   "acceleration": null,
+   "format": "news_angle",
+   "hook": "other",
+   "theme": "moon",
+   "emoji": false
+  }
+ ],
+ "formats": {
+  "other": {
+   "score": 31.97,
+   "videos": 14,
+   "accelerating": false,
+   "engagement": 0.0244,
+   "ours_7d": 0,
+   "examples": [
+    "Something Weird is Happening Inside Earth | Dhruv Rathee",
+    "Last Words Of Lady Pilot"
+   ]
+  },
+  "news_angle": {
+   "score": 4.21,
+   "videos": 6,
+   "accelerating": false,
+   "engagement": 0.0239,
+   "ours_7d": 3,
+   "examples": [
+    "What Voyager 1 Found Beyond the Edge of Our Solar System",
+    "We Saw Alien Weather (First Time Ever)"
+   ]
+  },
+  "quiz_guess": {
+   "score": 3.86,
+   "videos": 2,
+   "accelerating": true,
+   "engagement": 0.0024,
+   "ours_7d": 0,
+   "examples": [
+    "Which One Is the Real Moon?",
+    "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts"
+   ]
+  },
+  "survive_x": {
+   "score": 0.75,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0086,
+   "ours_7d": 0,
+   "examples": [
+    "JWST Just Found A Black Hole Inside A Star"
+   ]
+  },
+  "myth_number": {
+   "score": 0.61,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0098,
+   "ours_7d": 1,
+   "examples": [
+    "The Big Bang Theory Is Wrong, This New Theory Is Even Stranger"
+   ]
+  },
+  "scale_zoom": {
+   "score": 0.33,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0092,
+   "ours_7d": 3,
+   "examples": [
+    "HOW BIG IS THE SOLAR SYSTEM!💀☝️"
+   ]
+  }
+ },
+ "hooks": {
+  "other": {
+   "score": 28.1,
+   "videos": 11,
+   "accelerating": false,
+   "engagement": 0.0253,
+   "ours_7d": null,
+   "examples": [
+    "Something Weird is Happening Inside Earth | Dhruv Rathee",
+    "Last Words Of Lady Pilot"
+   ]
+  },
+  "extreme_number": {
+   "score": 11.91,
+   "videos": 8,
+   "accelerating": true,
+   "engagement": 0.012,
+   "ours_7d": null,
+   "examples": [
+    "What Voyager 1 Found Beyond the Edge of Our Solar System",
+    "Astronomical events in November 2026😲 #shorts #astronomicalevents #space #helpyn"
+   ]
+  },
+  "paradox": {
+   "score": 4.12,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0281,
+   "ours_7d": null,
+   "examples": [
+    "We Saw Alien Weather (First Time Ever)",
+    "This drawing will make you believe in God! #faith #shorts #god #news #science"
+   ]
+  },
+  "question": {
+   "score": 3.95,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0195,
+   "ours_7d": null,
+   "examples": [
+    "Which One Is the Real Moon?",
+    "Did NASA lose the technology to go to the moon? #Space #science #conspiracy #debunk #stem"
+   ]
+  }
+ },
+ "themes": {
+  "other": {
+   "score": 15.54,
+   "videos": 10,
+   "accelerating": false,
+   "engagement": 0.0165,
+   "ours_7d": null,
+   "examples": [
+    "Last Words Of Lady Pilot",
+    "We Saw Alien Weather (First Time Ever)"
+   ]
+  },
+  "earth": {
+   "score": 10.95,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0072,
+   "ours_7d": null,
+   "examples": [
+    "Something Weird is Happening Inside Earth | Dhruv Rathee",
+    "Voyager 1 Becomes the First Object to Pass One Light-Day from Earth 🚀"
+   ]
+  },
+  "black_hole": {
+   "score": 5.16,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0186,
+   "ours_7d": null,
+   "examples": [
+    "The Black Hole That Makes Stars",
+    "Earth Becomes a Black Hole! 🌍🌀#Earth #BlackHole #SpaceFacts #ScienceFacts #WhatIf"
+   ]
+  },
+  "galaxy": {
+   "score": 4.37,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0524,
+   "ours_7d": null,
+   "examples": [
+    "The Edge Of The Universe 🚀 (fiction)"
+   ]
+  },
+  "moon": {
+   "score": 3.82,
+   "videos": 3,
+   "accelerating": false,
+   "engagement": 0.0332,
+   "ours_7d": null,
+   "examples": [
+    "Which One Is the Real Moon?",
+    "Did NASA lose the technology to go to the moon? #Space #science #conspiracy #debunk #stem"
+   ]
+  },
+  "solar_system": {
+   "score": 3.67,
+   "videos": 2,
+   "accelerating": false,
+   "engagement": 0.0082,
+   "ours_7d": null,
+   "examples": [
+    "What Voyager 1 Found Beyond the Edge of Our Solar System",
+    "HOW BIG IS THE SOLAR SYSTEM!💀☝️"
+   ]
+  },
+  "venus": {
+   "score": 1.09,
+   "videos": 1,
+   "accelerating": true,
+   "engagement": 0.0048,
+   "ours_7d": null,
+   "examples": [
+    "Which planet has the most moons? 🪐 (Venus has 0 😭) #space  #shorts"
+   ]
+  },
+  "light_speed": {
+   "score": 0.74,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.0749,
+   "ours_7d": null,
+   "examples": [
+    "SPACE NEWS! The Voyager 1 spacecraft is officially ONE LIGHT DAY away! More below! @caltech #ad"
+   ]
+  },
+  "spaceflight": {
+   "score": 0.56,
+   "videos": 1,
+   "accelerating": false,
+   "engagement": 0.026,
+   "ours_7d": null,
+   "examples": [
+    "SpaceX Just Caught Starship on Its FIRST Attempt!"
+   ]
+  }
+ },
+ "short_share": 0.72,
+ "audience_questions": [
+  "I have a suggestion. How can we listen to your videos in other Indian regional languages ?",
+  "When is AI BOOTCAMP coming where you will be teaching us how to create apps and games????",
+  "MA! ...yes dear?",
+  "How did they find that planet?",
+  "If we can see whether 7 light years away why can't we take detailed photographs of every molecule of the moon?",
+  "If it's alone, without a sun, isn't it technically an asteroid?",
+  "Is this Wise from solar balls ?",
+  "Doesn't jupiter have weather?",
+  "Isn't there a giant storm that's been going for ages on it and looks like a giant spot on the planet?",
+  "So...a galaxy could just decide to hurl a blackhole our way?"
+ ],
+ "instagram_median_likes": {
+  "IMAGE": 11144,
+  "CAROUSEL_ALBUM": 10513
+ },
+ "median_views_per_day": 151012,
+ "niche": "cosmos",
+ "date": "2026-11-25",
+ "source": "2026-W48.json",
+ "sky": [
+  {
+   "date": "2026-11-30",
+   "name": "Moon near Jupiter",
+   "hint": "the Moon passing close to Jupiter around 30 November 2026: how to use the Moon to find the planet with your own eyes, and Jupiter's real numbers",
+   "computed": true,
+   "in_days": 5
+  },
+  {
+   "date": "2026-11-30",
+   "name": "Moon near Mars",
+   "hint": "the Moon passing close to Mars around 30 November 2026: how to use the Moon to find the planet with your own eyes, and Mars's real numbers",
+   "computed": true,
+   "in_days": 5
+  }
+ ]
+}

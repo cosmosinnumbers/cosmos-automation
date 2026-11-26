@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -55,8 +56,7 @@ def _api(method: str, path: str, body: dict | None = None):
     return json.loads(raw) if raw else None
 
 
-def main():
-    dry = "--dry-run" in sys.argv
+def tick(dry: bool):
     repo = os.environ.get("GITHUB_REPOSITORY", "cosmosinnumbers/cosmos-automation")
     ref = os.environ.get("CLOCK_REF", "main")
     cfg = json.loads((ROOT / "config" / "clock.json").read_text("utf-8"))
@@ -77,6 +77,28 @@ def main():
             continue
         _api("POST", f"/repos/{repo}/actions/workflows/{wf}/dispatches", {"ref": ref, "inputs": inputs})
         print(f"{wf} {job['at']}: started with {inputs}")
+
+
+def main():
+    """One tick, or with --loop MIN a tick every 5 min for MIN minutes (26/11/2026: the in-repo keeper).
+
+    GitHub cron runs of this repository came 6-12 hours late from 23/11/2026 and cron-job.org was never set up, so
+    clock.yml now keeps itself alive: a run ticks for up to ~5h40m and then dispatches the next run of itself
+    (workflow_dispatch made with GITHUB_TOKEN is allowed to start a run). A tick that fails is logged and skipped.
+    """
+    a = sys.argv[1:]
+    dry = "--dry-run" in a
+    loop_min = int(a[a.index("--loop") + 1]) if "--loop" in a else 0
+    end = time.monotonic() + loop_min * 60
+    while True:
+        try:
+            tick(dry)
+        except Exception as e:  # noqa: BLE001 - one bad tick (API hiccup) must not stop the clock
+            print(f"tick failed: {e}")
+        sys.stdout.flush()
+        if time.monotonic() + 300 > end:
+            break
+        time.sleep(300)
 
 
 if __name__ == "__main__":

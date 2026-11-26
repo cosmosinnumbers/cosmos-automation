@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25",
+ "updated": "2026-11-26",
  "items": 54,
  "posts": 130,
  "channels": {
@@ -81,7 +81,7 @@
   {
    "title": "The Sun you see is 8 minutes old",
    "score": 2.992,
-   "views": 375,
+   "views": 378,
    "channels": {
     "threads": 6.0,
     "youtube": 1.49
@@ -113,10 +113,10 @@
   },
   {
    "title": "The Sun will swell 200 times wider",
-   "score": 2.487,
-   "views": 253,
+   "score": 2.497,
+   "views": 254,
    "channels": {
-    "youtube": 1.39,
+    "youtube": 1.41,
     "facebook": 0.5,
     "threads": 6.0
    },
@@ -133,12 +133,12 @@
  "bottom": [
   {
    "title": "Has anyone actually seen Europa's ocean?",
-   "score": 0.436,
-   "views": 154,
+   "score": 0.459,
+   "views": 155,
    "channels": {
     "youtube": 0.22,
     "threads": 0.27,
-    "instagram": 0.72,
+    "instagram": 0.78,
     "facebook": 0.5
    },
    "themes": [
@@ -215,7 +215,7 @@
    "extremes": {
     "mean": 1.662,
     "n": 4,
-    "lift": 0.211
+    "lift": 0.212
    },
    "telescopes": {
     "mean": 1.553,
@@ -230,22 +230,22 @@
    "light_distance": {
     "mean": 1.435,
     "n": 12,
-    "lift": 0.031
-   },
-   "explainer": {
-    "mean": 1.396,
-    "n": 8,
-    "lift": -0.005
+    "lift": 0.032
    },
    "scale_size": {
-    "mean": 1.395,
+    "mean": 1.396,
     "n": 8,
-    "lift": -0.006
+    "lift": -0.004
+   },
+   "explainer": {
+    "mean": 1.393,
+    "n": 8,
+    "lift": -0.007
    },
    "planets": {
-    "mean": 1.312,
+    "mean": 1.31,
     "n": 27,
-    "lift": -0.121
+    "lift": -0.122
    },
    "deep_sky": {
     "mean": 1.145,
@@ -255,14 +255,14 @@
    "records_missions": {
     "mean": 1.051,
     "n": 13,
-    "lift": -0.31
+    "lift": -0.311
    }
   },
   "format": {
    "scale_zoom": {
     "mean": 1.505,
     "n": 12,
-    "lift": 0.099
+    "lift": 0.1
    },
    "quiz_guess": {
     "mean": 1.36,
@@ -272,7 +272,7 @@
    "news_angle": {
     "mean": 1.346,
     "n": 4,
-    "lift": -0.045
+    "lift": -0.044
    },
    "mission_glitch": {
     "mean": 1.212,
@@ -285,14 +285,14 @@
     "lift": -0.201
    },
    "myth_number": {
-    "mean": 1.103,
+    "mean": 1.109,
     "n": 2,
-    "lift": -0.225
+    "lift": -0.221
    },
    "audience_question": {
-    "mean": 1.005,
+    "mean": 1.001,
     "n": 4,
-    "lift": -0.305
+    "lift": -0.309
    },
    "sky_tonight": {
     "mean": 0.753,
@@ -307,9 +307,9 @@
     "lift": 0.131
    },
    "question": {
-    "mean": 1.168,
+    "mean": 1.17,
     "n": 8,
-    "lift": -0.195
+    "lift": -0.193
    },
    "you": {
     "mean": 1.167,
@@ -331,7 +331,7 @@
    "13": {
     "mean": 1.579,
     "n": 5,
-    "lift": 0.146
+    "lift": 0.147
    },
    "20": {
     "mean": 1.51,
@@ -349,14 +349,14 @@
     "lift": -0.074
    },
    "21": {
-    "mean": 1.295,
+    "mean": 1.293,
     "n": 18,
-    "lift": -0.112
+    "lift": -0.113
    },
    "16": {
-    "mean": 1.158,
+    "mean": 1.16,
     "n": 4,
-    "lift": -0.19
+    "lift": -0.188
    },
    "18": {
     "mean": 1.152,
@@ -376,14 +376,14 @@
   },
   "short_headline": {
    "no": {
-    "mean": 1.452,
+    "mean": 1.451,
     "n": 31,
-    "lift": 0.088
+    "lift": 0.087
    },
    "yes": {
     "mean": 1.335,
     "n": 23,
-    "lift": -0.081
+    "lift": -0.08
    }
   }
  },
@@ -400,7 +400,7 @@
    "dim": "theme",
    "value": "records_missions",
    "label": "Record e missioni",
-   "lift": -0.31,
+   "lift": -0.311,
    "n": 13,
    "do": false
   },
@@ -408,7 +408,7 @@
    "dim": "format",
    "value": "audience_question",
    "label": "Risposta a una domanda vera",
-   "lift": -0.305,
+   "lift": -0.309,
    "n": 4,
    "do": false
   },
@@ -440,7 +440,7 @@
    "dim": "theme",
    "value": "extremes",
    "label": "Estremi (temperatura, velocità)",
-   "lift": 0.211,
+   "lift": 0.212,
    "n": 4,
    "do": true
   }
@@ -450,8 +450,8 @@
   "Telescopi",
   "Notizia del giorno",
   "Luce, distanze e anni luce",
-  "Spiegone di un concetto",
   "Scala e dimensioni",
+  "Spiegone di un concetto",
   "Pianeti e lune",
   "Galassie, nebulose, stelle"
  ],
@@ -461,25 +461,22 @@
   "telescopes",
   "news of the day",
   "light, distances and light-years",
-  "explaining a familiar concept for real",
   "scale and size comparisons",
+  "explaining a familiar concept for real",
   "planets and moons",
   "galaxies, nebulae, stars"
  ],
  "avoid_en": [],
  "next_long": {
-  "from": "Europa Clipper is not a life detector",
-  "score": 1.423,
+  "from": "Earth runs out of time before the Sun does",
+  "score": 1.652,
   "channels": {
-   "threads": 0.61,
-   "youtube": 3.02,
-   "instagram": 0.7,
-   "facebook": 0.0
+   "instagram": 1.23,
+   "facebook": 0.5,
+   "youtube": 0.58,
+   "threads": 5.42
   },
-  "themes": [
-   "records_missions",
-   "planets"
-  ],
-  "hint": "Our clip 'Europa Clipper is not a life detector' was a hit (1.423x our median across channels: threads 0.61x, youtube 3.02x, instagram 0.7x, facebook 0.0x). Make the next long video in the same vein (records and missions, planets and moons): a question with a surprising, measurable answer, explained step by step with animated numbers, built so every chapter works as a 30-50 s clip on its own. New topic and NEW measured numbers, never the same facts."
+  "themes": [],
+  "hint": "Our clip 'Earth runs out of time before the Sun does' was a hit (1.652x our median across channels: instagram 1.23x, facebook 0.5x, youtube 0.58x, threads 5.42x). Make the next long video in the same vein (same angle): a question with a surprising, measurable answer, explained step by step with animated numbers, built so every chapter works as a 30-50 s clip on its own. New topic and NEW measured numbers, never the same facts."
  }
 }

@@ -1,0 +1,823 @@
+{
+ "date": "2026-11-26",
+ "made_at": "2026-11-26T16:45+00:00",
+ "hours": 48,
+ "sources": {
+  "news": 413,
+  "hn": 1,
+  "wiki": 18,
+  "trends": 18,
+  "agency": 14
+ },
+ "skipped": {
+  "reddit": "RuntimeError: no subreddit readable"
+ },
+ "stories": [
+  {
+   "title": "NASA hit an asteroid to test planetary defense. Here’s what happened.",
+   "heat": 44.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 44,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "asteroid",
+    "crater",
+    "defense",
+    "deflection",
+    "european",
+    "experiment",
+    "happened",
+    "left",
+    "planetary",
+    "protection",
+    "reveal",
+    "sized",
+    "spacecraft",
+    "stadium"
+   ],
+   "newest": "2026-11-26T15:21+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMitAFBVV95cUxNRXU1X0tEY2FuVDhXM1VmQkZPNGRzNlBwMmxXX1JmRUduem5qMFkzVlZnZmZuTlVsdHpOc3p6bTBCanhYM0hZalc2OXM4R0M4UWZvekZkcjhzZnM1QjdrUHJ3Z1BHVnAzcEhybEhFcVRDQlBvM1FfN3RJRm94ZlhvZDBGUFBmZVN3N2lyUUJKT1BuMXkzdnI2NURfakJ2c09TV0dZajNkUE9tS2ZFdU9NX3d6ejk?oc=5",
+    "https://news.google.com/rss/articles/CBMisAFBVV95cUxNR18xMlNKTzZ3UkVrenNaYzl1YVNaSkc2XzIxYW83TE1Oem5GdktmREk4c3BxeDI5dld5S2tXN3RBbnQ1bnBwcEd4X0poSWVDYnExOEhxZVdfSTc5bzJXVVczZy1zRldueGQxdWFZbDg3Z0lxTVNTVl9WNmJtSHlYbklPaktDV2R1VV94cGRPa0wxTS1rRTAyRGFidGdZOTFKU1NoSWt5bEphUEx0dV9zdA?oc=5",
+    "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNLXA5b0FqbEQ1SkdSeGZKMVpZWm94V3lVWU5zN0RHUUFSNDNaMkxTNnRPT0hRczVkSm92UHFuVEt5VG1VTmpqOXpOQU1oVXJBZHNiWW5QUTBuMThSUS1FRE0ycHFwU3lwa1UtUkNfV1YyZlM2aXpYWGhPU2pEUFVUS3N3Q1JtdE1iTmpXVTdUUFlXdy0tQVJpcXZLOVdvSEJxNEhIRkZsTG9TUdIBrwFBVV95cUxQQ0JGSHlDWVY3a1YySHFHQXNPTUI1UUVTcG5LdGMxYUVkaEJNdlc3eUpyQnRUSE83QzVSdjk2NlBwZmdEcFdXWTFRMEFZVTRmTi1keW5qdVZjaVphOVA0bFZsM3puNWRJTEx3anRyRklEVFBWV1NfRl9PVGhGUWIwd0xzR1hsYXFDLXktUml2czhrb0c1VFRKTWQ1TF9RUWxKYk04Mzg1U3E3NFpSOUNZ?oc=5",
+    "https://news.google.com/rss/articles/CBMiygFBVV95cUxNeEMzeVNuY2pqWUxBSkZFWHg3ODlNTkZwMlhmeEZIZ09qYmVSUS1IUGstYXhNcXFabDVjQ0FRZi1LdHJINWtLVE5hb1ZGQVNzYm51cU5oTXJYVzJRbU9tR3JQSVc3SGFVYjBuV2ttWjl1allPUXoxdzc2bWpsalUtZlo2MmZQQzZLbExSYU5YV0hWWE5ObmlLVnNfbFp6bDJsc0k2MFk3LXZXNUQ5TWpkUENIVl9CaHVGWEk3ZGZpYmttaWR0NWx6QzN3?oc=5"
+   ]
+  },
+  {
+   "title": "Moment Nasa spacecraft hit asteroid - and what happened next",
+   "heat": 24.7,
+   "sky": true,
+   "primary": null,
+   "outlets": 19,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "1",
+    "asteroid",
+    "close",
+    "dart",
+    "gets",
+    "hera",
+    "hole",
+    "look",
+    "mission",
+    "moment",
+    "punched",
+    "sized",
+    "spacecraft",
+    "stadium"
+   ],
+   "newest": "2026-11-26T14:25+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5zY082U0Fmdl81c3U0ZnhfWHRGRlczelUxMHBJWEpTLVhmelBoTms0REpIcjVTNmZDWHo2Zm9HamVXOUdkVHhmR2hZUmVjSEpIUmZrckZFSlU?oc=5",
+    "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPcks2cFhLVGxRTlROWmU2M2tLTG42RFJaWk9qbTU4b2w1OUxUQkdrZmFfTUh1dlVGRFhRWkRFUjEzTnA3c2FCMDZDOHFrOWEwTkhoWHNCTFA3UGRVcmRoVWEzSnN0SVFWMVFUX01HX0ktY01MNk9ORlhJTzQ1LWFDUFczMS1uVm95YnAzUmxGdXBfeUQzUWtfc2NzM1dJVWdfRWhLanRqaGtiNDZsZFJHcU9JQ3VodGd1bllzZ0ZTOUxKY19wQU9xV3JlTEpRQ1A2MU5jMTZnTWRkX0U?oc=5",
+    "https://news.google.com/rss/articles/CBMihAFBVV95cUxQMUhDWEtyX3NjaXJQdlgxVFMtQmpxNi02TllLa09tcW4yV1FaQndseTkzMzd5RlJQTVZpWldnZTdySDBycVRTUEw2Yl9hTjUzeUlfSm40eGttbE1RcGpycnRGZFZoV0t5WUhxbjN2QzMxVjFiYS02R29hNWFPQmhjZE1PSzY?oc=5",
+    "https://news.google.com/rss/articles/CBMirwFBVV95cUxQZUVQVkdFVDNfV1dlRE5tU2tGdUJpSXhZc1l6RHRiWGRubFpFZUFIN3JiWWVOdjFuaERlWk5PT1JkVWdsaTQweG5DMi00Z3FVRWdDc1ZNeUFwb29pd2tLQzZUZFZZNzlQTkZQTElvQkFQbzhGLW5ZdkUtS0RqdGJ5VGJqcWdCNFNkckIzWnUwWjBqNnprem02S0MtWDcyclNEVTh0OHZQOXp1NEZmWnZF?oc=5"
+   ]
+  },
+  {
+   "title": "Earliest monster black hole in the universe discovered just 630 million years after Big Bang",
+   "heat": 16.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 14,
+   "signals": [
+    "news",
+    "wiki"
+   ],
+   "keywords": [
+    "630",
+    "ancient",
+    "bang",
+    "black",
+    "discover",
+    "discovered",
+    "distant",
+    "earliest",
+    "hole",
+    "million",
+    "monster",
+    "most",
+    "powered",
+    "quasar"
+   ],
+   "newest": "2026-11-26T14:17+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOV25PR0QzQ1FNOTA4X2hkZUlzT0pwNkowcFZYSkVJM3RDTElEN1VzdTRvb1ZpYmZ2dzhyci1LMm9wTmRGUkhxM3FaTEoxN2VvRk5VcnI1YWQyMXpQekVwMm1zMGhyWkFfbmxYSlJHZEdTNVUyNkhXQklXc1VQdkZxYzF6Vk5ZWXVHazRNQm9vRnlCUEJlTEQ0TzEwSEt6SXdOZF84c2lBMWpKQy1vNlF3eFlKb0dPcTd5ZUU4Q25JZFlXN1d1enFDbHEzU0Z1WnN5S1E?oc=5",
+    "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNOWQxeXo2NWl5a196NUJHZmdzd1dJUXZGaWJTQUNISzJtZ293dkF3dkFpbHBmcEN5eEpxQkdMS3dELXlOTEZnT0lRblJmX1hPQ0owOHJqSXBHWVhnUlZZbk9qb3FsaFRqZzJVejd0eEVlNzMxSS1VT1NET2twcnRvX3p3d19vWWF5aDZxTXJrcHZWQmZHQ0ZvdW8wZzJIZl80Q0NfSGZ4NGd4Wk5Ma0cxQkFJNXpaeG8yNGVsdUd4LWtIQmtLeVVYTzg2dld4bWpTQTQ5dUtTSDhSS0M3T1F0bm1EZk9Udw?oc=5",
+    "https://news.google.com/rss/articles/CBMipgFBVV95cUxPNWQ4MjJwb3M5ejZIa0dUbDBncmVLaDAwMzlHQTd1QUFXQW9LQkVnOW8yNWJ3SjVONGRQZk80bDlpTDduR3VhQlA4d1pOdWRBVWpFT1F2WEwyTnpKTS1OVV9ZaHRCb3BST290N1RwMHZ1NmpLNlVYeW93NzVPNW1tREJ5MVBXcFZhS29sNVlDdnA3YWhkT3Bjb1l1UjdtVEg2UkNmcUZR0gGmAUFVX3lxTE1FTTBrQzU0VWo2ZHIxSlhqYUpqaE1nMmJhVUQ5VUFjT0F3WXV3cy00eFdkUU5oSnV3Q1E5RERrdTFqWk52Ql81aE9ITmNidHBfaFl3THpDa3VkWjBHdXBfN2pjdVVuaW5Hc3BwMzhmRkx4V0dhOVlhT0lYZFlQd0ZQWVVuTHdQYkdlMmRGUEtoa29RNVVKZXhpZDJwR0N1bnZUVnhCV3c?oc=5",
+    "https://news.google.com/rss/articles/CBMizAFBVV95cUxPYjRZbEZpWkpWTHkxTW5fdFlyeEVidjZXR29vRW1henUwQW5MUjE5aTNoQmJaejl6SVFqYS1Ha1djSUFQd1BjNjdXUkNpM3Rzb2RieVBvZnpBZWRqX3ZSN2xKU09BTWRTV3NJemZ4UWE3NnppY25zcjY1akFOZzVNOTZtdV9mdm5BLUotb0ZfSnpRZEpQNVpROTd0cmROR3Fzc1JrU1dFeWVELXAyTGpvVGducXNRM0cxTmoxbHhPNHg5TDluZmwtR1U5VU_SAdIBQVVfeXFMUEkyV0xyc3NYbmN3LVdaeGE1OWhueFZmS3pVNm5oaExhbDBoMGMzekc4Y002MzZMM0hLdTlIX1J5WXpxV0NpZDJRcVpLY0Ribi02dF9ucEwtQWlmbEd4Z3FkbnFXcGlYUGVLSGphSWFQdGF0Vlp2NkthTjU5Znd0cWtCWFVhTjlWLU1HYTlMdGlFTkdvbjRFV3VtV0lKSW0xQ0UzTWY5Y1FWbWk1VDJJQXg1Si0taGI1d2o4MjJNMkVpb3I1NWtCQ0pjQ2l6SW9DM1F3?oc=5"
+   ]
+  },
+  {
+   "title": "Fiery orange ‘Beaver Moon’ in the sky tonight — here’s exactly when to snap a photo",
+   "heat": 15.6,
+   "sky": true,
+   "primary": null,
+   "outlets": 12,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "beaver",
+    "does",
+    "dropping",
+    "exactly",
+    "fiery",
+    "know",
+    "light",
+    "look",
+    "moon",
+    "night",
+    "orange",
+    "photo",
+    "snap",
+    "supermoon"
+   ],
+   "newest": "2026-11-25T19:07+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQZUhKdURhNmdWbEkzdFBXaVJKem1pdHFtSVRjNFdpd1NrTDF5aHh4eHdFWFhPUTNHS3NZUHBVaFIyYzU0UHJzZFhZc0VVV0FtZXBZMEpVQTBHR2JjaG9ZWlZFR2V6YjdKWkFCUm5qRXRjTnJod2dUc0ZoeVVhT21ELWZRVnVkTlNDY0NfbFJLcnBxVVpNcUZvVGMwT0dpNVVBUDNCWGNpN2FxX1N0UTJ2LUdXNzRKXzN1TzQ0?oc=5",
+    "https://news.google.com/rss/articles/CBMie0FVX3lxTE1xYmdvdWE0eWZqX1RrQkhKeTVKTmVKY1NpNVh1REtmQlZIVHd4RVJuVVRYc0wtX3U5TTF1aVZXVGZpN2V6YmNxT3JZXzZDdnFhQ2l3dU4yNVFKTXdCZUdlM2tfX1dtMHRVeHNzQUdGWXR4dVRYalc4X3hCQQ?oc=5",
+    "https://news.google.com/rss/articles/CBMivwFBVV95cUxPUGxzNW1xdnFqWlRUald3RzZkQkh5S3pCd1hOcm5QNWFRcVlKMHNqdFNRWjZjdDBKQnhFUjE1NUlJRzFrUGlReWlTLWxkUktUN3VnOFh2NjhiMk1GNXI5TXhxSUI1YlN4bEdtRUpBZTltN3dPSUVCaG52VHktY1M4ODFiTUZnNXl3SEppRnlFbnRDbVNZMFBZcVJGel92UDdXT0ItOExSbVhIcEl4TWNhNnVFb0lNM3lhdGpVZU1mMA?oc=5",
+    "https://news.google.com/rss/articles/CBMizAFBVV95cUxPOEdrTlYxMlkwVkJJN0UxUXJHSW5RaVltN1Z3eklQakVLZTdLQ3VkS3cxMW1FdHdMZmZXZmd4SjhRMDJ0UUVJWDFUclhvaHgwRHFneXZYS1lJVExJRGR5cldJcTVGTTI0VmQxbGVEMTdtX3ZfVDNuTWdLU2hkU1BQNkNsc3c5V2lWbjUyV1VIaDR4ZXlkcHZUdGRWOV9lcHFsZ1dXM2d1S3Q0b1dFOTlTWWNsNlkzR0JMMm9vSmJSMC1fNExQa3JQcXNfV08?oc=5"
+   ]
+  },
+  {
+   "title": "Japan Unveils Lunar Rover Ahead of 2028 Moon Mission",
+   "heat": 12.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 12,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "2028",
+    "ahead",
+    "find",
+    "india",
+    "japan",
+    "jaxa",
+    "lunar",
+    "mission",
+    "model",
+    "moon",
+    "rover",
+    "test",
+    "unveil",
+    "water"
+   ],
+   "newest": "2026-11-26T08:24+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMiVEFVX3lxTE85ZDl0NTU2UGRrc3FmS0MyUGdMd3l5bWRFVWdfcERHVHF3eW9wSWw0d1ZtLUZiS1czY1A4Sk9RMEEwNXIxVDhMcDhXXzh4WU56bzZ5Yw?oc=5",
+    "https://news.google.com/rss/articles/CBMiigFBVV95cUxPb3RDQjhHMy1LSjlEb01qaUVheTV0cklmVzJfVi13SHptaHp5TGQweTBKdThJelktOUlNT3l4X2lHZ1FkTGVZdzRDMVo2eWdHMzNiU2JQQmVFb0xSYk9ic01zdy1rZkJQMFNldnY4SlAyb0p6Nzl5a0RWVUV0LUlDd3Zta1BRMHdablE?oc=5",
+    "https://news.google.com/rss/articles/CBMieEFVX3lxTE1rRDNkOFdJVy1Vd3daZ09sbXhNamUybGZZQ3AwXzRDSGlLU0phd09PaWotLTdZRUU4Nnc4bThWNFcwRm42SGQzRVFRVEVsNXB1QXZGeDBzcEt1ZE92REVTRVB3TUdaaVVROVJTeTFQRGR6QVZFV21TOQ?oc=5",
+    "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPMnJnanpuNU5UUEdCZEF5WVhZZFRQZDNJbWZ0WlIxbW9HbDJBQkI4d0JpeENGXzgyRjJ0OEpQQnFWMllfeDliNks4TDI2Zk5wa2dQa0h4T3lLSWlHVW02UWt1X0VFUVdPQ1dXdnFwTHBLVkZRVm1wWFZxbVMwR0o2SXlQUFFPaHVjT29yNXlUelJWUWtRWTNGcFZwNmtuTzBxR3M1MG9QcVhfUnk3akR1NUdkdWoyNmdWZGtqLVNGZ2JpZVE?oc=5"
+   ]
+  },
+  {
+   "title": "NASA’s Hubble Views Ocean of Stars in Groundwork for Roman",
+   "heat": 8.9,
+   "sky": false,
+   "primary": "https://science.nasa.gov/missions/hubble/nasas-hubble-views-ocean-of-stars-in-groundwork-for-roman/",
+   "outlets": 6,
+   "signals": [
+    "agency",
+    "news",
+    "wiki"
+   ],
+   "keywords": [
+    "bulge",
+    "catalog",
+    "galactic",
+    "groundwork",
+    "help",
+    "hubble",
+    "ocean",
+    "planet",
+    "planned",
+    "publishe",
+    "roman",
+    "star",
+    "view",
+    "weigh"
+   ],
+   "newest": "2026-11-26T15:58+00:00",
+   "links": [
+    "https://science.nasa.gov/missions/hubble/nasas-hubble-views-ocean-of-stars-in-groundwork-for-roman/",
+    "https://news.google.com/rss/articles/CBMioAFBVV95cUxNekEyY3BXcUJkakFtSFRzbXNiZVVlcXAwWmVVUzBtZl9kcTJ0MEZwbWo3RmF4V0tpS0VKeUhPVHNJdE9FbkRETS15N2t3Szc3M2JvYzV2TE1VYURFV2VTWlctamg1bWlEd1RtTzY2NTdMeWNoMHhiSXh6WkFMLXI1U3gzNjByc1FVVHItblRLQmNFRlR6MUNTQTAxQ093MWZl?oc=5",
+    "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNbWVxbE5MOE54NE9DMkV0ZlI3Tmo4SlFpZURYcFNaZDZWWkF4NEhUdG9QbkZLeTBGdWpMRnB6N0Y4OG56aDZBb0ljUVJBNkJSTEVVM2Iyb0hlalZKOU1jQ3ZSNmo1VThhemZFQ292QnVsd2NVNFdRbHpkNHY0R3lINDZ1VzNjNXlmRlJGYnlBQ19qbDZxN1NubEpfdjREcHlZNUpxMlVQaWZnYm51OWlSa1JUVWNUTUFZdGdYNVJTZmFzbnhlT29zZFVoVm9uOEhoRVM4ekdWMW4yX0dSMXc?oc=5",
+    "https://news.google.com/rss/articles/CBMia0FVX3lxTFBwbEstSUNtZUFNUmZUNjl0NzYxS2FPa29BcXlOU2pxb1o5VFdwWEhLWnlwaVBkNnZVMkZDMDdNT3pSc0hnSnBFSUNRWjNzb08tcm5CZC1PT1NWY09maXpCLS1jR0dvZ1AzN0xr?oc=5"
+   ]
+  },
+  {
+   "title": "First Close-Up Images of Asteroid Struck by NASA Reveal a Giant Crater – And a Swarm of Mysterious Flying Boulders",
+   "heat": 8.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 8,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "2022",
+    "asteroid",
+    "boulder",
+    "close",
+    "crater",
+    "finally",
+    "flying",
+    "giant",
+    "impact",
+    "massive",
+    "mysteriou",
+    "reveal",
+    "seeing",
+    "struck"
+   ],
+   "newest": "2026-11-26T12:17+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMitwFBVV95cUxNc1lwbXlQMXcwUm9oenc2clFhN05HUlJ0TXd3bGgxYV9JVXpTWFUxN055djdxbWpPN3FuM3ByeGRZWFRuQ1k5LWhpTHNGOWVTSk8xU0VCM1pCOVZBck84T1JNUWcwVlIxNU01cUFwS1B0RDZLc0NSQmxpLUpqQnpLd1VJY0hyT3E3Vm5iZ3IyN1F6QlhHdDlwLVU5aW5BaFNLRHhYdHp6cTZMd1lNRVR6N0ZvY0t2djA?oc=5",
+    "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQV3pKckZ4alpuNWM0eUk2Rm1jTzdFNFM4SjVXSnVIVnpUM1VzOXBoT0E0NXRqQU5jNDQyVFVzTzNucjUzcnBhQkdwQkx5RWw1ZGNyM0NvclA4anhEWEdzcHZFSXAwLTBySU5yMkpXWlFnUFVVR2lvbUhGQjNxS2dCUDd1c2NWdDJQV1hDRG5raE5hZ1JpX0V2a2w0LWh1cGliZTlHRW1JLTNGVlRIeU9aNDJMTjBIbzBMRi1jdFU3M1hGY2xkRDZ5TQ?oc=5",
+    "https://news.google.com/rss/articles/CBMipgFBVV95cUxOTHhhREtSNUtyVllDZ0FDZ3JvSFQxemJRYXdkNXNYXzk3MkgzaGVUVExOaHVZYm0tcGFQdEdWZERObmZzVzFBNFRxXzRENFFudzYxY3d6ZHBqdmhLdll0SEw4YkRrRFdhYUpNNm9xUnZ6WkR3NzdrNHhfRVZYeG8ycFpQajNPRlBWSWhwLWhXVXpLV1NfVWNJeVI5LXNMYnhBMXFoOXZR?oc=5",
+    "https://news.google.com/rss/articles/CBMiowFBVV95cUxPeXRsSGxleUZ6Ykg1RUU0Q0hfVld5RmFTUmRjZU1sZlRzZ3pNdC1QTzItYUk2eTNya0tmR24zNm4zNERtQkI1UDZwRVpOek16T2JRdWQ3V2g4UHlhc3duUzZKTW1JUkJycWM4RTRDSDYzV216Z0JDSnNDV19FQ28xYU50cFQ5WWVjeVoySndRdmlyMFREV3NRdGo1Yjh1UGhhSG5J?oc=5"
+   ]
+  },
+  {
+   "title": "December 13-14, 2026 Geminids Meteor Shower",
+   "heat": 7.8,
+   "sky": true,
+   "primary": null,
+   "outlets": 6,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "13",
+    "14",
+    "2026",
+    "cold",
+    "december",
+    "fayoum",
+    "geminid",
+    "line",
+    "meteor",
+    "shower",
+    "stargazing",
+    "supermoon",
+    "tourism",
+    "trip"
+   ],
+   "newest": "2026-11-26T11:24+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMijAFBVV95cUxPbnNFMnN5Y2hKSlRfSnhGSEIwcU5QSTNpVlM3bndUNm9oazRDSlRhZ0ZJU1JwWGEwekZNbEExSjl4ajlqNGdsQzc4WktKQ2x2RW44TEpsRE5pSm9TLUY3alphY20xOTZuTndJN1RhMXgtRkZpUUI0M1V2eXkxdTI3cnlubUtRVng4eDJGOA?oc=5",
+    "https://news.google.com/rss/articles/CBMijgFBVV95cUxNRThlT0QxVDdLYUFMRmdnZGFGZXFaVzE0WEFwYV9uY21pV1Z1SE54T0pCWC10T2IyZTdXcWtUbFkyTlJ0WjZpOVRVdDlEWTVwazBiczBZXzFGaEpGRTBfMUx3aldJYmhGTC1KUjBHaGFicHVUcWVFemw0RHA5UFFKbVNYRFRQX3NsZTRMUF9n0gGeAUFVX3lxTFBvR0t1Vnl3OHpPYllEYkx0R21mdEhpNmVhVkpMWkYxbzR6YlhvRmlndE9HYjI4blRDay0tSjlqZUMySTFRM05TOTRPNEhpMHllU2lsQ19KVnJySmxzSmhELVBXOEctZzI4MXN0S040dkpGY2Q2SFFmbHEzaHVLbkpRTmpRdEFua25tYS1SbW1MX0RLaTBXWkxWb2pTRmdR?oc=5",
+    "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9pelpOTE9SM0Nsem1zdnEtR0Myc05pTzViWEI2UkxfMElWZENzQnlYdDVGUjZ3cmgtcUhBdElwSlFkSUVLSGZHTEhkRVNlc04wSkYxdUQ3LUg?oc=5",
+    "https://news.google.com/rss/articles/CBMizAFBVV95cUxPWHZzUXFCMVdBUEVfUnRPN042MFotRVgtY05sV1FqTk9HVVQ4Y25mUy03ZWpCb1dadnNVNFcxX0JnVC1iZS1lbkhIWGpmNFhyWjJ0VWhBeXBhTFQyamVWNHNwNjRsNzgtMHVLOXRCYjRFeHRVelJwQVItSWlEZnlRQWR4SWRqOWE3dUlTZTFYenNxOThubnp2X0ZTVmE3a3Y5YnRqVGRBdEVhZnlBZE1BVWlrLTZzUUV4VkRuMElYNzkyOXZ2UXlBUENSZ0M?oc=5"
+   ]
+  },
+  {
+   "title": "Hawaii astronomers discover rare triple-star system, Welopōʻai, just 28 light-years from Earth",
+   "heat": 6.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 6,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "28",
+    "away",
+    "cosmic",
+    "discover",
+    "earth",
+    "exist",
+    "hawaii",
+    "light",
+    "mystery",
+    "rare",
+    "should",
+    "star",
+    "system",
+    "triple"
+   ],
+   "newest": "2026-11-26T06:30+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOb1dGcF9rWHRGT1JyTTRNMzdHQkZyeTJPcGhUTTlWb2MyNkEyc2tiaXZSbHNKTG1BSll4ZENkdkoxU0RHRndDN0Vjakhjcy1SeDJXelZUTDVPUmc4NzU3ZEhaNHhfUzNFbFlQNXhaT2VZVU1PazhLQW0zZ2pPVUdWUENoU3lDN2lqZUd4ekdzb1pJQ3VoSzU0SjJyUFE5VDZreFYyTnFxM1Q0QXJLMkRYWTZlM2t6QmNDODFDcktxMHIyaDZiUnFkQw?oc=5",
+    "https://news.google.com/rss/articles/CBMivwFBVV95cUxNTmlfZFRPRTY4Q2htd0x0OUdkanJEYlNCYUQyOTNaMEdVYXQyV1VxMHYyOHpkTVQzcEJDLTlwb3ktRkYxN29ZVjViQWtTalVVMGtyQnI4d2hWN2c4Ql9WZEJ1dC11TmtQWW1DelRKbUVfb2RZN2NRb2Z4MUxqa3hPQ3NBWDg5Wl9DX1NJWS1naVJ5TkdPeHBwMHVSRlViTjFkaFJnWElaT3ZTSDdISnN0ZFJxS0YxdGlRSzZHOFBBMA?oc=5",
+    "https://news.google.com/rss/articles/CBMiSEFVX3lxTE9EcmplbUt2MGdrMEQzN2hlczhsSmxaV0ZUV2tNWGg4b19BTjNGRHFXZG5kcHNJVEprWmkyVmRST3ExbDFUd1hJZA?oc=5",
+    "https://news.google.com/rss/articles/CBMiSEFVX3lxTE1hZFdPRnRaMXIxbkg3elhkSEkyWjBWZkhTRGtQUGM2cmstMFppMkx1NmdCVnRwWGs5Q0pILWk2WDRwV2RZN2lTRQ?oc=5"
+   ]
+  },
+  {
+   "title": "Webb telescope helps confirm the first star-within-a-star detection",
+   "heat": 6.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 6,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "before",
+    "blast",
+    "confirm",
+    "detection",
+    "evidence",
+    "find",
+    "help",
+    "internal",
+    "mixing",
+    "star",
+    "supernova",
+    "telescope",
+    "webb",
+    "within"
+   ],
+   "newest": "2026-11-26T14:03+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMilAFBVV95cUxOV0ZSUmdFR3ZlbDFGejZReDZVRmE5ak5oWG5qS3VNT0lManpRSVRHNU15aGpMRXZvX1JoUUt6c3BFWUhGQTNudmFROWZ3eUZJU1B6YjhMOUEtRkNPZEJfZkVsVnhHSGxtVkVNME9zU3pGX2U5VkxKRlhMOHdYVmxPTEVJMl9xX0pvMFdOSHRXdXpCU2V6?oc=5",
+    "https://news.google.com/rss/articles/CBMimAFBVV95cUxNN0hJWWx3enpzaGdkMG5aUERYakpveWJRaloyZXY0UkJxLW1uM19IZW0tSFgzMWFmWVBCcEttTmp2UnRyNUZKZlNKMGRxXzlMTnZGckZXRE4yU2xXWURSN3Rhcmh1OXlXRGQxM2FfUjF0SFQ5Q05DTFQzaDBVZERQM1BhaVZSZVZpOWdVVVd3TzlNZHRwQ1pWYQ?oc=5",
+    "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPeDlWb1pKSzEzV2thaTdLaTRXQUQtdG9MY0dlY19hUmtCandLX3JkcGs3TjFDX01OdHNveE5oWWRUb0hISHJHTVNVS1c2dWRDX0l2WWp2N3ZXRXhFby1qRmQ5SGk1WWdENzZpOGoyVlFnMzNScUxZdzliWmEyZTJjR2ZKSHlHTUZYd3ZRUWZmTDNiOVpQWnA2ZUdUcTdjdnJUQkNiZnVJQTByLUVqYmlxbzEyeWNzYy1TX3JsejJWTDBva2tYSEdWOGUwUjZiZkJndmh3VWp2eWFyNFoxMVdXRw?oc=5",
+    "https://news.google.com/rss/articles/CBMi1wFBVV95cUxNdzhrSGlmMmhHdUtFQnVrakgwZjFIa0h4VWg3cHRmX0MtMUFZNkVuUng3MVdOUnBrR2hWbDg0SWFXOEFfci1TZlBMdG52Q3BCWGFHWEFUSWQzYnZwal85OWdOdXUzcUQ0alcwbjRxNUF6S01ndF9Kb1c3MkNaY1VUUE9IdlpzejAxN1EyMzVSYTFhY2tOX2xROXdIcVRBMV93OC14NnYtMlRwWFRYallVYjBmODJLbmFXdHZ1VkJPdWVtbnh5Q2FzWE9oZDVDM3dfUDhibE1GUdIB3AFBVV95cUxNcDNsUGN2MnpZaVhNa0NCLXRFY09iTU1TWFc2dzJ3T1VVa0E0VG8xcXVTaE1FT0VMZ0RJaUM3WDVicWZFSXRINGJCSEpNNDNBeGtaSGNaTUFsWV9HS2h3WnE2YXFNZThNUnJoOXZoZ1RfbnRzSERkc2NzYWNDc3hpSTh2djlwZFlON012SzNiV19uc0tEYk84cnlObkRNVVhuSVU2bEFtYnRhNnVkOHNhcXNiZ3VUblNnTWVDLTZZS0FWVHphMWhDT2hZcFdJN05JU2VpRDJXZWFBRnFL?oc=5"
+   ]
+  },
+  {
+   "title": "NASA Chief Jared Isaacman Hits Back at MTG Over Moon Landings",
+   "heat": 6.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 6,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "back",
+    "chief",
+    "denial",
+    "fire",
+    "greene",
+    "hits",
+    "houston",
+    "isaacman",
+    "jared",
+    "landing",
+    "marjorie",
+    "moon",
+    "problem",
+    "taylor"
+   ],
+   "newest": "2026-11-26T04:35+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMikAFBVV95cUxNTUlWWElTZ1lrbm80cDhDOXJ6alREbUx0ZWpjN3VyNHFxVE1sNVhSRTRxZWMzZE5qWjZxM3FUUGNqeC1sZmVFTk1NTDQ3cmpaeDVqVlVLLTFrSUFiZllTaTM0aThsSnJKLUhxbTVsQ3Y3TjZVbC1jQlFsUF9iRnFka0VKNm5YS0JYdUZnRXN4UDY?oc=5",
+    "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1Kb0ptallSWDFocWpHemp3VXkyWDVfZjI1bThxUFRrU19wcGhkRHdkNDhxVmFIY2ZwRHN3MjFRY1Q1UTEwVEVJLVduQmczUEJPUTV5MlVBMWNUQTNZdHlZ?oc=5",
+    "https://news.google.com/rss/articles/CBMitwFBVV95cUxNdWVybUNScWhxeWZQUXFvN2l3UDEyT0lSMkp5cUlZbmJSYVFiVXlqUkhrZVF2aS16V01ZVFAzVGxTU1NhUFEtaUhJY0tVVDRzeC05cnBaWFc1UUstZHJRb0RReWtIOXotZURSZ0gwb2JraHZCelhBMXh5SURRdnNER2sybTBuVGNMdTh3QUdEYkxYRE9YY2VCTXlGREIzY19UcVpEV3lObFZRLVVxQnh2bm83cjRucjA?oc=5",
+    "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQUDdmcUtfYlNpX2pVUW0zTHIyYWY2Yk1iUmwyOG1DbmNVSXd3dEtuUUY0ZnE3QkVKQVo1Q0dIWVBGT2FHTllmLXhJb3ZIajAyckppeXFsck5wakllUjBRWGdfVWFzakRGajZCbFBLWHg2MDdWRFh0S3NNNDFST1FQQURmX3RXdHRKUVNCWVFSbjBxaG54Q1FhaFQ4MlliSGs3ZlQ4RTFXcDNMbW5JUGg1QnpKSnJBM3ox0gG0AUFVX3lxTE1CSG92SW9kTkV4bDYyd011RDlncnZINHVqd3ZKNXJtUFdqQWhqei1WZEtubXNNNkp0eE5hbWtqMF9oRFNHOF9KbTVTMkowdFFKeEpGN29UWXBRLXo3ajdtbHc4TmlKMm83RmxXM1k5aXJ1UlBwdm9TRUIzU01EN0NvVFlxX0FMUENvY0cwOEJwUHJZTkVpNE9RUzlTdjVhQ0VMY09aMnU4cXJ0ejJuejc3eXVqYg?oc=5"
+   ]
+  },
+  {
+   "title": "NASA fully deploys James Webb Space Telescope",
+   "heat": 5.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 5,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "astronomer",
+    "caused",
+    "cluster",
+    "contribution",
+    "cosmic",
+    "deploy",
+    "fully",
+    "interesting",
+    "jame",
+    "pandora",
+    "rethink",
+    "retire",
+    "scottish",
+    "telescope"
+   ],
+   "newest": "2026-11-26T10:51+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMijAFBVV95cUxOWnJfOEtqU1VPY0pvZnk0cFpFb1VLZnkwQ28zNHFuODlUa3UxRk5qVEVRWFRtbXkyLXNKUzZaVWZFeXE5by1HMVBmZXNoaU9tOWYzRGQ4cGhkcURDb0VaSlZuZmNuVXdYQTh1Y2dwQkZyeHlxWW5nV3NTRUdhZkljYjBHRDZwcTkwTng0Rg?oc=5",
+    "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQVkNkcGtwdk1OS3FsME9VTWhRWnNuS3FYUHNBeXBxNl9HaUp4ZmZncGRuX1ZxTFM5dWlueTBJd1YzWG5DUmJ2Vjd2VzNualVzYllSLTRVb1RjamJnNmhHVW9EZUEwZHV1SEozVEZENXlIa2I2cFFxdHJtQkwwdWdidkV3TjJoQW5Kc0pCNW94MVpyQzd1LWUxRTJXWnB3R3NkdWE0TjVJVnFLa1U?oc=5",
+    "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPV1lGNUpFOWdWMUlsX0ZpZ0l5c1RTLVlsZExtVWstLWE2UWZBM0N3bkt2RWZYcC1nQ1JzZVVYdVR3ZW5jdkdiYzlGYVdGemt1VTRyT1MzQW0zbDUyeE1VazIzYWk1MHhQT2FqMkFkdjIzbTFOSE5OMkVCWXNIY3JKZlNqR3NUNXJ4?oc=5",
+    "https://news.google.com/rss/articles/CBMirwFBVV95cUxQN0RzSDZ4RE1Ha0pIOGpLV3ltUy1DUkFNNk8tdk93TXhfOVc3SFp3YTBMN01KS1Bxd0VvcHVvQm11MGM2NEstcFRXZU1EdDVSN3FPMVVhc1dpSDhFTEFXSDRVUTNHSmo4cGluUGN5eXJiUV9KV24wbVZ0SGczcWpkNHRndk43QzBHb29jeUZrZlhqN2ZJZ2FlSlVtalgzLTRPcTRuNHpOd0RpVF96dTk4?oc=5"
+   ]
+  },
+  {
+   "title": "NASA explores in-space servicing options for Hubble Space Telescope",
+   "heat": 5.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 5,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "2032",
+    "asks",
+    "before",
+    "boost",
+    "companie",
+    "deorbit",
+    "explore",
+    "falling",
+    "hubble",
+    "idea",
+    "option",
+    "private",
+    "reboost",
+    "safely"
+   ],
+   "newest": "2026-11-25T12:40+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMiogFBVV95cUxPb1pUSnlUdEFBVTFqamtWTFNiY3JPbmt1ckVMeUExNDVvaWJ5QWx0cm5GMm1MZWZfMWwzLTMzcTBraXlReFlObEozREFtMzFTdjc3bTlfdkg1OWpvcDJkWmVKZ29WZ3haQnFiU2x1aFpHMnBLcE5LVWhKVGRtbEFfeFJndjJ6dlczUVFWRmxyR0dLSlNWMVp3OWJDaldIS2tlNEE?oc=5",
+    "https://news.google.com/rss/articles/CBMinAFBVV95cUxNMG5EcGZ0dldLQlZXaUtzMy0wRUxyeHlsWVEycjh6RktUcWFmaVFSWjlFYmRlMGVqWFM2cWpsTUxuZkE5MkpibHFCN1BlcTlyMFhOUFJ2UVRQUFdlSHJaUm5XNXFYZkRlYW0tbk1XaTZZZTUwX0NpV3hSdDFZVjgwQjFDTTh1LTZJUUtlN09nam9TMTlKaldXaExLMDk?oc=5",
+    "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNbXE5Q0hETUIyRkRTUXQ0RWVXZ0tmenROX2VILUVIdUU2QnY3dzdVYWRhMmVrckw3eFZKaHJWU2Z5bDh0UFpLSVdpNnhPb3hzZDVWdnFTWFhtd1czVTVER09MSDZZX3hYem9MOFZsMGt5amZqWlZZaTd3MnBVa0dwcHNjU0MyRzBEZTJ5Rmx5UzVpVko1dmMwckRTUmREeWN6b055WmlkWTV6VEJ2Q2E0X0UwcmI2bUxJYmhRQVpxV3hqV1E4TzNJVVJEYklLTGV0S3NOLUpTWU5mQktsanBnZ2Z3?oc=5",
+    "https://news.google.com/rss/articles/CBMikgFBVV95cUxPbDdrOF9rVGEyRW5QTGh2cERYUkNJZVNGMjctNEU5d19wZkRZcFRxcDFYTEMzMmN5ZTY2cHBYMk5zS3hJd29GV3p0cXdzSEN1b0tWQ3JQODV3cDdpX2FnVDVzTHBGSnNMYjJ1WHNHRlZSejUwWnctSXlYVENtOXh2NzdNUGVUNGluemhPYVo5LWlJQQ?oc=5"
+   ]
+  },
+  {
+   "title": "Science Release: Webb shows how supernova dust chronicles star evolution",
+   "heat": 5.0,
+   "sky": false,
+   "primary": "https://esawebb.org/news/weic2624/",
+   "outlets": 4,
+   "signals": [
+    "agency",
+    "news"
+   ],
+   "keywords": [
+    "astrochemistry",
+    "between",
+    "chronicle",
+    "dust",
+    "evolution",
+    "found",
+    "hinting",
+    "layer",
+    "maps",
+    "merger",
+    "shell",
+    "show",
+    "sign",
+    "star"
+   ],
+   "newest": "2026-11-25T20:52+00:00",
+   "links": [
+    "https://esawebb.org/news/weic2624/",
+    "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPdmI2ZlpGSzNOMmhMQnJwRTl6aG5vOE9YTTRmLW5Fem02bTQ4d0RJMXlGVGZiZ3pIR09lcFFtLVU3U3gxMXcwOHhCNUFqdUg2Sk9iOHpmN2hYbU5RdGFOWDRRc3JlMk95UnJYWTI1STZkRUtjVk42Q0NHTWV3b1FpaVpTNV9WZkRYVV9UQWRYTzdPTm1fZDhqWHVDNXViMl9YZ0h0N1JNZ0NxcUU?oc=5",
+    "https://news.google.com/rss/articles/CBMif0FVX3lxTFBtSnU1elRPNDM2aXFzV3o0Qm1fbk9LWW94OEtlRUowZzBQLXVBbWZQXzMza0gweWNpZkh4SEJoT3hFOGZqOUptTG5aNHZUOVV0VGw4WHJHT19jNXR1OG9mc0ktQndZTkhtckpwbHpDWHo0ZFNyYzJzUVBIdktWRkk?oc=5",
+    "https://news.google.com/rss/articles/CBMiswFBVV95cUxQSWNPdlRocTg3T0FvMXUtNVIwSXBfSHIxRUZjaU1ENDRicFFUNzV4SkdVTzlVSXdVR2VXZWNnOExsZ2JYVjVLVEY3VWNDTy1ueGowZmVteTUtZTFnZDgtT1VlU2gwekt0aXEyRTd0YlVKNHBBSmYxbzlMbXA1VDA3cW1hRUR6bXBIRXh3dXZja1RFRjBYTlRTQVpjYkRlVjludFlfOGxKTnRPdHBWajZDYmhxNA?oc=5"
+   ]
+  },
+  {
+   "title": "NASA's nuclear powered spacecraft just took one step closer to launching to Mars. Here's what we know",
+   "heat": 4.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 4,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "closer",
+    "delivery",
+    "journey",
+    "know",
+    "launching",
+    "mars",
+    "nuclear",
+    "plan",
+    "powered",
+    "service",
+    "shape",
+    "spacecraft",
+    "step",
+    "take"
+   ],
+   "newest": "2026-11-26T15:01+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMimgFBVV95cUxQbFhJQTBiU0FDSXN1WDM0YkFjNWg5MDBwNG1LRlBYQ29YemZPZ09HS1p6ZHRLcnRpVF9RbUVCVkt0bmt6WlNVemoxTF9lcGNnejRoMzIxZl9Sd3BEUWtPeUo0WF9MVk9DZ2VGQk5jM0hSNks0ay1XYjZmRkRfLWdFSlRyQ1JVTmFRZjVTdF9nNnZIUk9XX2JGNHR3?oc=5",
+    "https://news.google.com/rss/articles/CBMirwFBVV95cUxOWDhHSWFVbWV4QWNLTVpRUDRMVnNtbFhocXJ5V2NDNnd2NUVVNjhLcnRzWWVFR092WHRzV1hHYkpqYnZHOExrbGJtRk84dllUSVVMdjFtWGlPeHM2NzR6OEdsQld4d2hwQzcwbXA4Sk9rSEF1RVcySFBzN3JfRUE5OTBLREw2WmdUbDI5VlVkZnlKdkc5dERxdE9GS0c2SXdCdDBFS19rNDJiR0ljYm1Z?oc=5",
+    "https://news.google.com/rss/articles/CBMirwFBVV95cUxQMjdsMzFRaEM1b1BqLVBFcXZjWlNxdHRDa2hUbzhkOFBHLVpacXJSXzlYZkY2Vjk2c244ejVxTVFOMGpTTEhPWEJ1QVRnNW9MbHlXaVI2RmNOYmh5Tm93QnRqZFVhVmdHeFl1blFCQTVCOVJwMTVPWVRpOHFSbUNLNDlaSFZwMXQ5MFIzRVNIbGJrbHJaNkw5a0JKT2d0eGgtOFh6VGVIblBhWVlFY01j0gGrAUFVX3lxTFBodllhVWludHNiMm1VeW5tWFJydzd5S3hpM0J5QjlkU1lXT2RHNE13X1F2c1hMcVRSOUJ0ZzhOeEJYZWR5MC1fbXgtVVFteTEwT1U4VFVLb0t5LUVfV0RxaURkb1ZKa013T0RTU2ZpZktrOFhWV3lIVTZEdGpFZXpwRGdsMUtkX3hCeTZXeDd2bnJmN2dueDVsdFZmY05Kajd5bnZPeWVBUHRWYw?oc=5",
+    "https://news.google.com/rss/articles/CBMikgFBVV95cUxPaHk5TjZyTzlFdW93amREMk5kd0lCTnp3YTRSbVBKZEMwWkZhSi1ydEtDVmhNd0JGaEh3dm9GcXI2dXg4aWNDNmcweExIejBldTFmTkRHN2lTbU5fdDJCMnFGeFYxc2RQMzhPSzgyLTVjd0J3dzl6MG9tbXpQeDlSTjdmMmwySV9nM3RhNkVaQWdPUQ?oc=5"
+   ]
+  },
+  {
+   "title": "NASA's Mars Fleet Stalls: Perseverance Loses Radio Link as Odyssey Runs Low on Fuel",
+   "heat": 4.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 4,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "droid",
+    "fault",
+    "fleet",
+    "fuel",
+    "link",
+    "lose",
+    "mars",
+    "odyssey",
+    "pause",
+    "perseverance",
+    "problem",
+    "radio",
+    "reaction",
+    "runs"
+   ],
+   "newest": "2026-11-26T12:55+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMidkFVX3lxTE5kUFRUbXhNU3VhU0NFOTE3U05Tc0ZJbVRtTnRMRHRfWHltRVczMXBVcEJ6NEtVQnVsbGJ3TXlqbDdaUFFWeVZfdDh4WVZhM21iUjR1TW9GZDJJVXFYUjBKeXUxM3pIU2c4WVcyR1VqVGpBN3g5U3c?oc=5",
+    "https://news.google.com/rss/articles/CBMikgFBVV95cUxPRWNFbjRQaUNqZi1HNlBBUi15aGh2azdCLVdBaEFqX2xrTkliWFFLWXF0OU5NMXlsX2RfM0EwekhMTF8zX1FkdGVvcWxxVEVUMFdLY19lZWgtUUNkbE9LVmxMdFNIWldXTmJkYkNMNDNOazdvV3VsSjFTaWRld08yZ1VfRnB4SHZKMnFYU05fY28yZw?oc=5",
+    "https://news.google.com/rss/articles/CBMipwFBVV95cUxPUWRuaF8xWFE0SzZzaF93QUtFRGp6N0lVUk1QbHVfUmNRRGZLajZhODNoektkYUFGWmRKSTB4M0hDOVNwQkg3SDhjM0w4N3B5b3M5U1pBSUFhWWNEV3BRaWpGY0FMRllXdU1CUnV1NEp3bmwyRWI5TXJxX0ZmRjNsTUVHTUNUaFAtbWNVaHNNeUxpRDN3d3ZYcUFoMm5XNWticEYyaElvNA?oc=5",
+    "https://news.google.com/rss/articles/CBMifEFVX3lxTE5ZVm5BZGtUMTl4LWZMblpIS2VJQzV4Tjk3LTdqbjNvX285QThkYXJLNjRvVzdnYWg0TUpnWG5NaVRLaEhvTklnX19aVE9NQk9xakczQlFKdmxjT0NCdHZ0V3dPcGZrU2pndG9DNzZadVN2dTVmNXp0ZG5DdWs?oc=5"
+   ]
+  },
+  {
+   "title": "Hera's Images of Smashed Asteroid Moon Dimorphos, Unveiled",
+   "heat": 4.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 4,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "architect",
+    "arrival",
+    "asteroid",
+    "autonomy",
+    "built",
+    "didymo",
+    "dimorpho",
+    "dublin",
+    "gyroscope",
+    "hera",
+    "imaging",
+    "innalab",
+    "moon",
+    "smashed"
+   ],
+   "newest": "2026-11-26T16:04+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMif0FVX3lxTE1IZVFOQmcxbzhTcldCOXZpZDgyV1RIcVJMRTFWYldGLUlRektEeVNPZnFTUlNvU2ZQT2RZZDdOaWxzZW9MR0JBZkdsZ2hIWW1wcUpVTUxrb0dtbVVFU3pxa3h2NGJ1STBZamtJaWRHZmhJSEZxVk90ZjVvNnNEYWM?oc=5",
+    "https://news.google.com/rss/articles/CBMiowFBVV95cUxNcUlDUnA4Q2c4MkUzTXExaVFGZnNZZ0lNOE5wa2tWczIxVjFvbzhBcnVRQXpmRHQ1aTdtTlBfWEYwYmdUSmRIeEZROEYwak9qejRGeUF6MEZvaktBVHhTRHkwN0hxYlpPZVhzMFlsaXBMTUVmdXdlUWVESkZ4bmZ2cDB3MmIxUjdLZGlFdzJNQUt6WmtxaFJTZXI3cE1WRnFVTkpj?oc=5",
+    "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOR2hpS1N3ZkZob211RUdJdGxadkZPdnVfTkpTbnIycmhob3h3ZzlSQkZRY0NUaUJWVml3cGtZODRGbjdLQ2JCUHFRc3BBbVp4WDlITlZwSEJTQVhxbjZYcEdjU3FsT3FaYmlBLWpQNW9STHVRSDlIUUN3RC1FT21VNGx6NldISW5BMjBabTR1UXoxRnNFNEFJQjc2S2MyZG9QNXlnOUNneE5pT1E?oc=5",
+    "https://news.google.com/rss/articles/CBMi1AFBVV95cUxPczJYLXRJbGNDVUxQR21pY0JmSE9qbG92XzYtaGpDQVVRN09GbHdTSHZrNG4zQi1BWUw2NjJVS0VVZlRhekZkb1JHei16RUdJbll3NU5weTZKaWVDbnQtT0Q5NWFPcW5uQS1Mc0Z1RThuTDhjZ3gyOGtqS3ZkbDJxOGQ3cEltVHl5ZFV1anFrMlVPc1h6c0hscEc1VmZBNHM5NEFIencxbWpsaERwTFVYYi03UVl5OEtPYlNFTnJwTXhXdFRNc1BvOTNNRlpmejRIZ1VMeA?oc=5"
+   ]
+  },
+  {
+   "title": "About International Observe the Moon Night",
+   "heat": 3.9,
+   "sky": true,
+   "primary": null,
+   "outlets": 3,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "6",
+    "biggest",
+    "colorful",
+    "decade",
+    "december",
+    "event",
+    "full",
+    "international",
+    "meteor",
+    "moon",
+    "night",
+    "observe"
+   ],
+   "newest": "2026-11-25T12:06+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMib0FVX3lxTFBma2hNblFSd0h1eXlzdXJ5SDRFRmcyajVzZWtkbHo0MG1Sakk0LVhmUEtyNmJJZVJnX3JLbjN4ZWtjSF9JZC1Qa1VFS0pFQjVWNExFdVAzYnN0TzFuY0FwUmM2VjI2RDl1ZDZlQjdKZw?oc=5",
+    "https://news.google.com/rss/articles/CBMidEFVX3lxTFBaYmhzLWxYSDJ6TVV5UGVJSW5DWThWazRlTXhPckx0YXMybzdXUGc5ZV9tTlJOaFlVWXZUVHJ5Rmw3Y004bDhmNk5QTEdhOFJaRW1yVC1WdDZMaW5uMjZPMmV0eDFDVWE4N29Ja0tOSXRGRUZ2?oc=5",
+    "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOYVQ2cFNvRFhCX2hVenc1STVXZmNfX2c5SHZEdGY1Wm1ISGgya1oyM0NZbF8yTGFCeWpMVTNhMUdhYmFDb3FoSGV5NkNSTmw5NkdvSEVBRERyLXlVdVpVUHFxcVZGZ3U0OXFPa2NUU0trQm9NV2tSNFg0UjVEb1dPdHhBenYyVXZR?oc=5"
+   ]
+  },
+  {
+   "title": "'Did anyone else see this?': Ontario witnesses capture brilliant meteor streaking across night sky",
+   "heat": 3.9,
+   "sky": true,
+   "primary": null,
+   "outlets": 3,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "across",
+    "anyone",
+    "brilliant",
+    "capture",
+    "else",
+    "fireball",
+    "flashe",
+    "meteor",
+    "michigan",
+    "night",
+    "northeast",
+    "ohio",
+    "ontario",
+    "spotted"
+   ],
+   "newest": "2026-11-26T14:54+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQd1ZvUklncHZuQWYyYWkya1pUT1BIeEp0SFVqOHlvQTdaV3psTFV1UnZ3SmRTdjAwTVh0MkJ2dDBRYnVJM2lXX1BrQkNkMWV6UWI4eWFVNUYzaEhtTExwLWl4eThxSnZGYlVVX3UzQjhkQk9NNi1xeEluRUh1R3RnUzhYVzBCdWkxTF9VMngwMFh2Z1BFZV8tLS05ZUJ1bEF1OWJaTWlJaHNNY3AzTzZUNXlycFN1TXlSRU4wT2ZWekd2bzd3aERrR1NDMFlzUFM4?oc=5",
+    "https://news.google.com/rss/articles/CBMiugFBVV95cUxPbE1IMWVlZjVKMnZGV1l6U0t2VW9JX2FZWVh5ZzVkb3BVbm04OV9pcEhnVHZnelFSM2oxbGxHaEREYWduY3BacldVajdhSnhJRWhKLW5MdG1iQVFYU3RLa3JLekh2X0QwMkJPb2h2V3RzSkc4bnFGZmtoMWxmd1Zzb0xxY0plMHJOWmhtRFc2em9PRldvajN0YVZOM0pRYXJLU0pNckZsZFQyWHZZS1loZGRKN2liY0xPZFE?oc=5",
+    "https://news.google.com/rss/articles/CBMiogFBVV95cUxNV2FkSm0yb3VsNTVwMDhVVEpPejN1Q2JIWnRiX1pXU2dhM3V3VEpSckZmdDl0RTl2d1lKZ0lCRWFFUktyNFJUS01zdFNNMndSTzNWTzhuaHdlbzcxbE16dXNLVndrU3VIc1NFbmdXYXRWU2M0aGVqUjhIenNKWGxDRjNKZFVQZlhHM3lXLWpIQVZPQmN2M1dnRDVxOEJSMzJwZ1HSAbYBQVVfeXFMUGwtUFpPV0h5ZWdmSUdsRXRxcENzeUszRFRHX2FqTmVrWHp1ajZWc1RZcGFZS3hjRmhsaVdJdUdYMW44bURyOExac3VUUmtfZzVPRjBxZGV1ejBNVDUzVmlRTDFIdkZ2YW1LN3gyalFsU2VnQUpqYmtCNFBOQmdwaXdVNExBVHMxYTBLMTNFVlJMWGdEdkZFaWlRZDY0bU9id3o1NWF6WmxQSnZ6MU1BSVdXSjR2UlE?oc=5"
+   ]
+  },
+  {
+   "title": "Progress Cargo Craft Approaching Station With Space Delivery",
+   "heat": 3.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 1,
+   "signals": [
+    "news",
+    "wiki"
+   ],
+   "keywords": [
+    "approaching",
+    "cargo",
+    "craft",
+    "delivery",
+    "progress",
+    "station"
+   ],
+   "newest": "2026-11-26T11:32+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMisgFBVV95cUxNbFJycjN6RXpjOHBoSnE2bVFHZmY3YU9kZ0ROYXQ3MXpnVENtblEwWXEzMEFfRzJPaDBPNjJBcUJBSU05bVZYN2JLM1RVeVdWTkxXOW02LUYxVnpCVjIxU0NiNV95YUJzaV9IWklKbERObG8zcVRsQzd2cWNpYzNYSl9WX2JxU2dUVkdkT1ZCQjFwaEFxRmQ2WUItQ0NlX3dVLVF2SHpGMEVDRm1JdEwwVEFn?oc=5",
+    "https://en.wikipedia.org/wiki/Tiangong_space_station"
+   ]
+  },
+  {
+   "title": "NASA Enhances Supplier Program, Announces Mentor-Protégé Agreement",
+   "heat": 3.0,
+   "sky": false,
+   "primary": "https://www.nasa.gov/organizations/osbp/nasa-enhances-supplier-program-announces-mentor-protege-agreement/",
+   "outlets": 2,
+   "signals": [
+    "agency",
+    "news"
+   ],
+   "keywords": [
+    "agreement",
+    "announce",
+    "approve",
+    "boeing",
+    "business",
+    "deal",
+    "enhance",
+    "grace",
+    "mentor",
+    "program",
+    "prot",
+    "protege",
+    "small",
+    "supplier"
+   ],
+   "newest": "2026-11-26T13:57+00:00",
+   "links": [
+    "https://www.nasa.gov/organizations/osbp/nasa-enhances-supplier-program-announces-mentor-protege-agreement/",
+    "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPUXhTTXA2ajRuNlRYSTdBSG5Dd2dGMVdIcGJLZ3NPRHMtZXQwYTJvRE9pRXloSVRiY1g3Qm05M2J6bk9FaGVEQ2N1M0xDMzNPZWU4eTdWbXd1dmQxbldqNWNRRGllREJGZFd5Rl96cUxXcDFzMTZQRGgwNHhCeTZReWhySUdsb21oU0g2ejdreFNZbmdBdzNjcHFiWTdFVU5UZGs2Vjl0TF8tdw?oc=5",
+    "https://news.google.com/rss/articles/CBMioAFBVV95cUxNcFVIYlBCTGZjX3hGVGdaZXZhemRTMTA5T0hib3ByZ1JkaVhwZ0tJZHBMSUR4SGVybzAycWtxckQweWtrbTBjd2pUc0I2OWk3akdyM3lVRlN6aGdWMVVyckVCTUNYLTNaMjJISk9UU2NfV3pwOVhFczlYTUwwYmVoSVpOVm9aYkZDeHNWZVFJUE1nN19VWHlScmNUSWh3SXhT?oc=5"
+   ]
+  },
+  {
+   "title": "NASA sends planes to monitor US Army's lead detonation. 'Irresponsible' to compare it to Chernobyl, agency chief says",
+   "heat": 3.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 3,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "agency",
+    "army",
+    "azide",
+    "chernobyl",
+    "chief",
+    "compare",
+    "deck",
+    "detonate",
+    "detonation",
+    "flying",
+    "hand",
+    "iowa",
+    "irresponsible",
+    "lead"
+   ],
+   "newest": "2026-11-25T18:04+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPS2piSUhZUWpRSWRjLWR2UkFZYnlQV0d0TzdQakVGS2NmM0prWGs4UGJ2S2hjMllSMGVzTUhiaFZYTGhmTlJvOEZGbWFyTnRfSXJaQ0JhdmxwQmxMb3NkNjVCY3lVeGJ1YmFOZnFNX1lCTnpoeW9mY1pwdFBUaDVyLU4xM3R2eWJVY3phVzIzbzB4S0pDT2pFd05VU1M3TDVlTzVzXy1nWFN3djFVMmZMVmtFZmdnajNtc1Y0Tno2emJaTDBVbnBSUmZtcHJvOWtram5CSy0zZ0dRTmVnd1NMRG1MakNfaUpaX000?oc=5",
+    "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNYS1wNnAxbG1CWXNDZUFwZWZtN0Q0QzVibGV0VDhsNFRIblgyQURBb0FDOFZzalYtN3hlYmhMbnU4bDQ1UWJ6TTlvZlItZUlxYm5rRlN4bFkyd1VrSFFIVGV4aE10UG1JeXllY0RKYUg2c01DUDRBU1dBWDM1OVBSbjBHRGZ2VW54cUcwREI2ckx5WmJ5aHVFZzIxOG10WUVHUWl0ZGZod05OZWdqZ1RiQkZIUmVTXzc5eWN6Wmk5cnJPYUtjVVllZndpcFVBOXhmdFFLRkxVRlljWldPcXVaNHhLbzVLYTJYVWlRZmpB?oc=5",
+    "https://news.google.com/rss/articles/CBMifkFVX3lxTFB0SlFrRFZqYUVObnI4LWtpWFVNY3l5VW4yUjdRemhNWEpzWHB1SzAyNnhLY3ZkbWNSS29FZE85MDhpMnZFQ2w1Z3RmbnBONVFSa05CYkdNTTVZMG5VVGhXR3hnSXBHVkg3T0dCMEhqVGY5Mk5FeXJDMFNKVmdZUQ?oc=5"
+   ]
+  },
+  {
+   "title": "NASA deploys research aircraft and satellite tools to aid in lead azide detonation in Iowa",
+   "heat": 3.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 3,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "3",
+    "aircraft",
+    "azide",
+    "deploy",
+    "detonation",
+    "gulfstream",
+    "iowa",
+    "king",
+    "lead",
+    "monitor",
+    "orion",
+    "research",
+    "satellite",
+    "tool"
+   ],
+   "newest": "2026-11-26T13:13+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMivwFBVV95cUxNYmZEWE1qNHY5MmlrWm5iX3hfMGlua0d6cldaRHp1alF5cDBXUklNX0FfbzZhdTRnZ2o1b2lsY0lXNHZoclpMRjdQTkNkQlowVHd1NVFJYWwyQlNTaUpJUERFMTBpa05NTy1Ma0Q4TjFDdUcycXlXX3VuOGM0cU5wOVZjVVZ6cXVXUDlKWV9hTVBrc2EzVm1LaTlXVll0RXlmNGFJdFF1YWNWQ2FDbHVCWTl3ZkJsam9hNHllM28xZw?oc=5",
+    "https://news.google.com/rss/articles/CBMikAFBVV95cUxOTDJ6eVBiUFBTaGIyUktKTnAwekhtSWlBQnRWa296NUstWkJPVkVLUExJTnVUQk0wQVN4Q2tCdVRRYzZYd1lKMTNjb2NGbGlsX2M1UC1lZkdDaTJ6Y1RtMWI5b3ZtSkloa2Z6Q294c1A1SzJwV2l5Z0h0QjY5ZEEyelpEQS1vajNOQkxLc1E5TnA?oc=5",
+    "https://news.google.com/rss/articles/CBMinAFBVV95cUxPR0c5S1dNdHlFbF8xVmZzanZCRnJHLWZydW1xN2FjVDhsUDNhcnVmQnRtUkwtZnJQbERyU2FuOHRfck80THh6TW1lWGd3RmltX2NxamxZTFd2VkdlRTB2RG5DQ0RvOGpNQ3o2NndfVklKelgxN3I2N3Y2YzI4S0liZTNiRTdTZTJMZW1VNnJscG5vTGFuRkI0NXVsX20?oc=5"
+   ]
+  },
+  {
+   "title": "Hubble Space Telescope shows galaxy resembling our own, NGC 4394: NASA",
+   "heat": 3.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 3,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "4394",
+    "confirm",
+    "exomoon",
+    "galaxy",
+    "hubble",
+    "resembling",
+    "show",
+    "telescope"
+   ],
+   "newest": "2026-11-25T17:49+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMieEFVX3lxTE5NMzVPWjhfRVJDb1luRzRramMwMjVUMUpQemFoYkREaW04MUdfQzh5N3VJS3NvbWdLeVZrX2lsRFFXVmFwVC1kYkdQQjN0WGFieWhIdUxXTV9RUGdoZW1aMG1IT2Mycm1SQlRaMUJTYVRybC1MS3VQTdIBfkFVX3lxTFB0RUlvOWdpN05GbzQ3elZxWmlwZHcxSXkwWDBKYW81cE9IcUhrbWxscGlmWGFOcEV0X2p5OGl1LXF1S3hoTVlsUmxqWENITEZCd3UtUFhHYjZMSFNzNWZGbnhTS09lTW51cHYwLVBGc0x2a1BXVGxJQ2k1azczUQ?oc=5",
+    "https://news.google.com/rss/articles/CBMikwFBVV95cUxNRzZLdmdxSmk1SG5vYjBQVm8xMVFlR01YQVp6el9WQkxZYTNsWE1neHE5MnVHT0dGZnRjakdZVmxvU3VTZkFhMnVnZ2VkV210UmhLZm0ybzI0N09PZ051X1NFX084S2ljTTVRSjNaQlozMjZQTDFKal8ySzFuRWF1V1d2VWR4QjJWSlhJSjFqaHZ5elk?oc=5",
+    "https://news.google.com/rss/articles/CBMihgFBVV95cUxPUTlsUTVpcnc2MVJKOHR5WEFlVEZDYl9zTDBWZTFFTHRmS2g0X1M5Z3d3TDlhSU56RXdiZTFrSWZHN2hZMEU4X2NiY0Zxclp5MjlydkFvNThpUEUwMURSQkFHVmI1d3Bma3gzdVVIR0pFLVZSOFdMOEhwSlQyV1JXTzBRLW9uQQ?oc=5"
+   ]
+  },
+  {
+   "title": "Fueling Deep Space: DLA Energy Secures Mission-Critical Propellant for NASA’s Roman Space Telescope",
+   "heat": 3.0,
+   "sky": false,
+   "primary": null,
+   "outlets": 3,
+   "signals": [
+    "news"
+   ],
+   "keywords": [
+    "290",
+    "align",
+    "before",
+    "critical",
+    "deep",
+    "energy",
+    "fueling",
+    "gallon",
+    "hydrazine",
+    "instrument",
+    "mission",
+    "propellant",
+    "roman",
+    "science"
+   ],
+   "newest": "2026-11-26T13:10+00:00",
+   "links": [
+    "https://news.google.com/rss/articles/CBMi4wFBVV95cUxPNlQ5dnItNW9FaXZVZDFURUpJazBac2lDVlFCdnlVYWs2NnFhV1cxZlpJZGxlbjc3b1FMcGJibFZoNVRrR2hrNTVXVkJETzNsR1lFTlJCRl9tZ2xpR3NWeFpyTkxJbllrLTZLdS1WVDdOcEVhUnAwVjJLUy1veEpzQkF1T1phZ2thOEVCUTZEa29vR1liN0hyOW1wbmtFenJEblA5YWdvODhmcm9hcElyNHVxSFIySERnanlNSXA5MVNlREx5dE54bXNzVE9SbVVvazhEeEZiXzVjSjlfczhLMDZVSQ?oc=5",
+    "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQVkxqbUwzcDNkdUJ6VTFBaXVPbmFzSnNTeGw4aG5tX2Y1RFRYbHY3d0UtZTZCRUpiVUxRSmNxM0RWMG9ZMVFGRDdpNkk1cDNHWjJkU21va0JzSlM3X0VKT2RfNXNOYzk1MDR5WmZyZUF3OWM3THZGQ2RiWFBsenN4Ym9TenJ2SFZTQmZV?oc=5",
+    "https://news.google.com/rss/articles/CBMikwFBVV95cUxQc1VWQmtIR3A3S191Qkhsc2VYbTVjWE5JQ185RDhQdldxQmJna0NRRVk0OGdoVDZKYVpUZHBVN21WZVVHV2k5eFd6NWRIM2NxMnc3Rkk4alB2X19oRUFJRW1pc0FqMHRfMVBjeUFlOTFZaEVRLXp0Ul9RblBoR2w3NVlMZDI2RjZrUXVrRlkwc2tPdUU?oc=5"
+   ]
+  }
+ ]
+}

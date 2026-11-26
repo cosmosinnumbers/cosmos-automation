@@ -83,3 +83,4 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1126-eye-sahara", "ok": true, "score": 56, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-news-1126-nasa-hubble-views", "ok": true, "score": 61, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1126-orbital-velocity-max", "ok": true, "score": 76, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-a1126-europa-clipper-earth-flyby", "ok": true, "score": 88, "errors": []}

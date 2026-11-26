@@ -1043,5 +1043,15 @@
   ],
   "quiz": "Orbital Velocity-0",
   "answer": "Mercury, 47.4 km/s around the Sun (NASA Planetary Fact Sheet)"
+ },
+ {
+  "ref": "th-a1126-europa-clipper-earth-flyby",
+  "at": "2026-11-26 21:00",
+  "tag": "Jupiter",
+  "text": "Europa Clipper Sweeps 2,000 Miles From Earth (NASA data)\n\nIf you looked up on December 3, NASA's Europa Clipper sweeps about 2,000 miles from Earth. The giant spacecraft flies just 2,000 miles above our planet to grab a gravity boost. This slingshot gives it the speed to reach Jupiter in April 2030. It carries nine science instruments to probe an alien ocean.\n\nSource: NASA.\nNarration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers",
+  "replies": [
+   "Source: Earth Flyby: https://science.nasa.gov/mission/europa-clipper/earth-flyby/"
+  ],
+  "short": "a1126-europa-clipper-earth-flyby"
  }
 ]

@@ -2,16 +2,26 @@
 # (POST /repos/cosmosinnumbers/cosmos-automation/actions/workflows/clock.yml/dispatches, body {"ref":"main"}).
 # tools/clock.py then starts the time-critical workflows of config/clock.json at their Italian time.
 # Runs started here use GITHUB_TOKEN, so self-heal still covers them (triggering actor github-actions[bot]).
+# 26/11/2026: cron-job.org was never set up and GitHub cron runs came 6-12 h late, so nothing went out by day.
+# Now the clock keeps itself alive inside GitHub: each run ticks every 5 min for ~5h40m (tools/clock.py --loop)
+# and then dispatches the next run of itself. The cron every 3 h below only restarts the chain if it ever breaks
+# (the concurrency group keeps a single clock alive; a second one waits and then only ticks).
 # Off switch: repository variable CLOCK_ENABLED=false (or disable this workflow, or pause the cron-job.org job).
 name: clock
 
 on:
+  schedule:
+    - cron: "17 */3 * * *"   # restarts the chain if it broke (late cron runs are fine here)
   workflow_dispatch:
     inputs:
       dry_run:
         description: "Dry run: only print what would start"
         type: boolean
         default: false
+      loop:
+        description: "Minutes to keep ticking (0 = one tick, as for cron-job.org)"
+        type: string
+        default: "340"
 
 permissions:
   actions: write
@@ -25,7 +35,7 @@ jobs:
   tick:
     if: vars.CLOCK_ENABLED != 'false'
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@v7
         with:
@@ -37,6 +47,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           IN_DRY: ${{ inputs.dry_run }}
+          IN_LOOP: ${{ github.event_name == 'schedule' && '340' || inputs.loop }}
         run: |
           args=(); [ "$IN_DRY" = "true" ] && args+=(--dry-run)
+          [ -n "$IN_LOOP" ] && [ "$IN_LOOP" != "0" ] && args+=(--loop "$IN_LOOP")
           python3 tools/clock.py "${args[@]}"
+      - name: Start the next clock run
+        if: always() && inputs.dry_run != true && (github.event_name == 'schedule' || (inputs.loop != '' && inputs.loop != '0'))
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl -fsS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/clock.yml/dispatches" \
+            -d '{"ref":"main","inputs":{"loop":"340"}}' && echo "next clock run requested"

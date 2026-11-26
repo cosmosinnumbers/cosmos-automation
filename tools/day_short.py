@@ -57,7 +57,19 @@ def on_youtube() -> list[str]:
 def pick(rels: list[dict], day: datetime, prefix: str = "a") -> dict | None:
     """The release that is the Short of `day` (releases as returned by the GitHub API), or None."""
     if clips_mode(day) and prefix == "a":
-        prefix = "c"   # the 21:00 Short is the clip of a long video
+        clip = pick_prefix(rels, day, "c")   # the 21:00 Short is the clip of a long video
+        if clip:
+            return clip
+        # 26/11/2026: no clip left (every clip of the public long videos used, no new long video) meant NOTHING on
+        # any channel from 23/11. Then the news Short a<MMDD>-* of that day goes out instead.
+        hit = pick_prefix(rels, day, "a")
+        if hit:
+            print(f"  no clip {key(day, 'c')}-*: the news Short {hit['tag_name']} is the Short of the day")
+        return hit
+    return pick_prefix(rels, day, prefix)
+
+
+def pick_prefix(rels: list[dict], day: datetime, prefix: str) -> dict | None:
     # prefix "b": the 15:00 news Short (Katana motion graphics) goes out every day on YouTube, clips mode or not
     # (owner 06/11/2026: "Perché non l'hai caricato?" about the 15:00 Short)
     k = key(day, prefix)

@@ -8,7 +8,7 @@
     {"workflow": "shorts-build.yml", "at": "11:00", "inputs": {"clock": true}},
     {"workflow": "publish.yml", "at": "11:45", "inputs": {"dry_run": false}},
     {"workflow": "shorts-build.yml", "at": "12:30", "inputs": {"clock": true, "second": true}},
-    {"workflow": "youtube-upload.yml", "at": "14:45", "inputs": {"dry_run": false}},
+    {"workflow": "youtube-upload.yml", "at": "14:45", "inputs": {"dry_run": false, "second": true}},
     {"workflow": "shorts-build.yml", "at": "15:00", "inputs": {"clock": true}},
     {"workflow": "publish.yml", "at": "15:45", "inputs": {"dry_run": false}},
     {"workflow": "publish.yml", "at": "18:45", "inputs": {"dry_run": false}},

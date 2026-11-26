@@ -36,6 +36,10 @@ on:
         description: "Publish only this queue ref, ignoring its time window (tests)"
         type: string
         default: ""
+      min_gap_h:
+        description: "Threads: hours between two posts for this run only (empty = 3)"
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -53,6 +57,7 @@ jobs:
       PYTHONIOENCODING: utf-8
       META_ENABLED: ${{ vars.META_ENABLED || 'true' }}
       THREADS_ENABLED: ${{ vars.THREADS_ENABLED || 'true' }}
+      THREADS_MIN_GAP_H: ${{ inputs.min_gap_h }}
       X_ENABLED: ${{ vars.X_ENABLED || 'true' }}
       TIKTOK_ENABLED: ${{ vars.TIKTOK_ENABLED || 'false' }}
       TIKTOK_AIGC_LABEL: ${{ vars.TIKTOK_AIGC_LABEL || 'false' }}

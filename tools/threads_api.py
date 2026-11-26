@@ -18,6 +18,7 @@ API: https://developers.facebook.com/docs/threads (500-char text, link_attachmen
 from __future__ import annotations
 
 import json
+import os
 import sys
 import time
 from datetime import date
@@ -32,7 +33,9 @@ import cta  # noqa: E402
 LOG = creds.LOGS / "threads-publish-log.jsonl"
 QUEUE = creds.QUEUES / "threads-queue.json"
 G = "https://graph.threads.net"
-MAX_PER_DAY, MIN_GAP_H = 3, 3
+MAX_PER_DAY = 3
+# hours between two main posts; publish.yml input min_gap_h lowers it for one manual run (26/11/2026)
+MIN_GAP_H = float(os.environ.get("THREADS_MIN_GAP_H") or 3)
 
 
 def cfg():

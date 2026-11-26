@@ -1017,5 +1017,31 @@
   ],
   "quiz": "Density-1",
   "answer": "Neptune, 1638 kg per cubic meter (NASA Planetary Fact Sheet)"
+ },
+ {
+  "ref": "th-news-1126-dark-energy-camera",
+  "at": "2026-11-26 12:00",
+  "tag": "Astronomy",
+  "text": "Dark Energy Camera Captures the Betta Fish Nebula Swimming Through Space\n\nWispy blue ribbons of stellar matter float deep in the cosmos, appearing like the waving tails of betta fish. This stunning snapshot features the best, most detailed view of supernova remnant SNR G295.5+09.7 to date. Department of Energy-fabricated Dark Energy Camera, mounted on the U.S.\n\nSource: NOIRLab (23 Nov 2026).",
+  "replies": [
+   "Blanco 4-meter Telescope at Cerro Tololo Inter-American Observatory in Chile.\n\nhttp://noirlab.edu/public/news/noirlab2629/"
+  ],
+  "news_title": "Dark Energy Camera Captures the Betta Fish Nebula Swimming Through Space"
+ },
+ {
+  "ref": "th-quiz-1126-orbital-velocity-max",
+  "at": "2026-11-26 17:55",
+  "tag": "Science",
+  "poll": [
+   "Saturn",
+   "Mercury",
+   "Uranus"
+  ],
+  "text": "Yesterday's answer: Neptune, 1638 kg per cubic meter (NASA Planetary Fact Sheet).\n\nToday's quiz 💨 Which of these planets orbits the Sun fastest?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Orbital Velocity-0",
+  "answer": "Mercury, 47.4 km/s around the Sun (NASA Planetary Fact Sheet)"
  }
 ]

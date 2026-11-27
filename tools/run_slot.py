@@ -203,6 +203,9 @@ def main():
                 if not dry and ch in ("meta", "tiktok") and it["ref"] in done_refs(ch):
                     print(f"WARNING {label}: published, then: {msg}")
                     break
+                if msg.startswith("PACING") and not dry:
+                    print(f"SKIP {label}: {msg}")
+                    break
                 if dry or msg.startswith(("PACING", "BUDGET")):
                     problems.append(f"{'CHECK' if dry else 'FAILED'} {label}: {msg}")
                     break

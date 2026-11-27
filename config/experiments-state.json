@@ -1,17 +1,17 @@
 {
- "updated": "2026-11-26",
+ "updated": "2026-11-27",
  "n_shorts": 45,
  "formats": {
   "other": {
    "n": 20,
-   "wins": 7.56,
-   "losses": 4.21,
-   "mean": 1.5,
+   "wins": 7.17,
+   "losses": 4.05,
+   "mean": 1.49,
    "decision": "vince"
   },
   "scale_zoom": {
    "n": 10,
-   "wins": 2.3,
+   "wins": 1.92,
    "losses": 3.45,
    "mean": 1.4,
    "decision": "vince"
@@ -33,7 +33,7 @@
   "audience_question": {
    "n": 6,
    "wins": 1.95,
-   "losses": 2.13,
+   "losses": 1.93,
    "mean": 0.97,
    "decision": "esplora"
   },
@@ -55,37 +55,37 @@
  "hooks": {
   "other": {
    "n": 10,
-   "wins": 3.95,
+   "wins": 3.79,
    "losses": 2.26,
-   "mean": 1.6,
+   "mean": 1.58,
    "decision": "vince"
   },
   "extreme_number": {
    "n": 17,
-   "wins": 5.94,
+   "wins": 5.63,
    "losses": 3.41,
    "mean": 1.48,
    "decision": "vince"
   },
   "comparison": {
    "n": 4,
-   "wins": 0.74,
+   "wins": 0.67,
    "losses": 1.13,
    "mean": 1.25,
    "decision": "esplora"
   },
   "you": {
    "n": 2,
-   "wins": 0.51,
+   "wins": 0.41,
    "losses": 0.64,
    "mean": 1.16,
    "decision": "esplora"
   },
   "question": {
    "n": 9,
-   "wins": 2.59,
-   "losses": 4.2,
-   "mean": 0.88,
+   "wins": 2.46,
+   "losses": 3.84,
+   "mean": 0.87,
    "decision": "esplora"
   },
   "paradox": {
@@ -120,14 +120,14 @@
   },
   "jupiter": {
    "n": 9,
-   "wins": 3.41,
-   "losses": 4.2,
-   "mean": 1.44,
+   "wins": 3.33,
+   "losses": 3.84,
+   "mean": 1.42,
    "decision": "vince"
   },
   "other": {
    "n": 5,
-   "wins": 1.84,
+   "wins": 1.74,
    "losses": 0.41,
    "mean": 1.37,
    "decision": "vince"
@@ -141,7 +141,7 @@
   },
   "solar_system": {
    "n": 3,
-   "wins": 0.74,
+   "wins": 0.67,
    "losses": 0.41,
    "mean": 1.32,
    "decision": "esplora"
@@ -155,14 +155,14 @@
   },
   "sun": {
    "n": 8,
-   "wins": 2.88,
+   "wins": 2.59,
    "losses": 2.49,
    "mean": 0.99,
    "decision": "esplora"
   },
   "light_speed": {
    "n": 5,
-   "wins": 1.15,
+   "wins": 0.92,
    "losses": 1.85,
    "mean": 0.95,
    "decision": "esplora"
@@ -216,14 +216,14 @@
    "id": "6qv4TZ6AqdU",
    "score": 3.3,
    "views": 751,
-   "pct": 50.1
+   "pct": 50.0
   },
   {
    "title": "Europa Clipper is not a life detector",
    "id": "uNIeY5pXVis",
-   "score": 2.81,
-   "views": 421,
-   "pct": 143.3
+   "score": 2.67,
+   "views": 423,
+   "pct": 126.0
   },
   {
    "title": "Clipper's long road to Jupiter",

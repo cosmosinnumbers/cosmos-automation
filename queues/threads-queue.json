@@ -1053,5 +1053,31 @@
    "Source: Earth Flyby: https://science.nasa.gov/mission/europa-clipper/earth-flyby/"
   ],
   "short": "a1126-europa-clipper-earth-flyby"
+ },
+ {
+  "ref": "th-news-1127-nasa-hubble-views",
+  "at": "2026-11-27 12:00",
+  "tag": "Hubble",
+  "text": "NASA’s Hubble Views Ocean of Stars in Groundwork for Roman\n\nThese Hubble observations will help researchers better interpret upcoming Nancy Grace Roman Space Telescope observations.\n\nSource: NASA (25 Nov 2026).",
+  "replies": [
+   "Read more: https://science.nasa.gov/missions/hubble/nasas-hubble-views-ocean-of-stars-in-groundwork-for-roman/"
+  ],
+  "news_title": "NASA’s Hubble Views Ocean of Stars in Groundwork for Roman"
+ },
+ {
+  "ref": "th-quiz-1127-mass-max",
+  "at": "2026-11-27 17:55",
+  "tag": "Science",
+  "poll": [
+   "Saturn",
+   "Venus",
+   "Neptune"
+  ],
+  "text": "Yesterday's answer: Mercury, 47.4 km/s around the Sun (NASA Planetary Fact Sheet).\n\nToday's quiz ⚖️ Which of these planets is the most massive?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Mass-0",
+  "answer": "Saturn, 568 × 10^24 kg (NASA Planetary Fact Sheet)"
  }
 ]

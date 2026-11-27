@@ -1079,5 +1079,15 @@
   ],
   "quiz": "Mass-0",
   "answer": "Saturn, 568 × 10^24 kg (NASA Planetary Fact Sheet)"
+ },
+ {
+  "ref": "th-a1127-four-consecutive-supermoons",
+  "at": "2026-11-27 21:00",
+  "tag": "Moon",
+  "text": "The Moon Brings 4 Consecutive Supermoons (NASA data)\n\nYour eyes can see 4 consecutive supermoons light up the twilight sky. And the reason behind this bright streak is simple mechanics. On November 24, the full Moon reached perigee, Earth's closest orbital point. This close approach makes the Moon look exceptionally big and bright.\n\nSource: NASA.\nNarration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers",
+  "replies": [
+   "Source: APOD: 2026 November 27 – The Moon Watchers: https://science.nasa.gov/image-article/apod-2026-november-27-the-moon-watchers/"
+  ],
+  "short": "a1127-four-consecutive-supermoons"
  }
 ]

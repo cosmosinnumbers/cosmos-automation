@@ -1089,5 +1089,31 @@
    "Source: APOD: 2026 November 27 – The Moon Watchers: https://science.nasa.gov/image-article/apod-2026-november-27-the-moon-watchers/"
   ],
   "short": "a1127-four-consecutive-supermoons"
+ },
+ {
+  "ref": "th-news-1128-nasa-europa-clipper",
+  "at": "2026-11-28 12:00",
+  "tag": "Moon",
+  "text": "NASA’s Europa Clipper Zooming by Earth on Way to Jupiter’s Icy Moon\n\nThe largest orbiter NASA has ever sent into deep space is using our home planet’s gravity in December to propel itself toward Europa.\n\nSource: NASA/JPL (25 Nov 2026).",
+  "replies": [
+   "3, with its closest approach west of Africa at 3:14 p.m.\n\nhttps://www.jpl.nasa.gov/news/nasas-europa-clipper-zooming-by-earth-on-way-to-jupiters-icy-moon"
+  ],
+  "news_title": "NASA’s Europa Clipper Zooming by Earth on Way to Jupiter’s Icy Moon"
+ },
+ {
+  "ref": "th-quiz-1128-diameter-max",
+  "at": "2026-11-28 16:00",
+  "tag": "Science",
+  "poll": [
+   "Mars",
+   "Mercury",
+   "Venus"
+  ],
+  "text": "Yesterday's answer: Saturn, 568 × 10^24 kg (NASA Planetary Fact Sheet).\n\nToday's quiz 📏 Which of these planets is the widest?\n\nAnswer tomorrow.",
+  "replies": [
+   "Data: NASA Planetary Fact Sheet, https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
+  ],
+  "quiz": "Diameter-0",
+  "answer": "Venus, 12,104 km across (NASA Planetary Fact Sheet)"
  }
 ]

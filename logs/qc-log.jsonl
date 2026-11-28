@@ -89,3 +89,7 @@
 {"stage": "build", "p": "threads", "ref": "th-news-1127-nasa-hubble-views", "ok": true, "score": 61, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-quiz-1127-mass-max", "ok": true, "score": 76, "errors": []}
 {"stage": "build", "p": "threads", "ref": "th-a1127-four-consecutive-supermoons", "ok": true, "score": 89, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1128-apod-eye-sky-milky", "ok": true, "score": 61, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1128-eye-sahara", "ok": true, "score": 61, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-news-1128-nasa-europa-clipper", "ok": true, "score": 64, "errors": []}
+{"stage": "build", "p": "threads", "ref": "th-quiz-1128-diameter-max", "ok": true, "score": 84, "errors": []}

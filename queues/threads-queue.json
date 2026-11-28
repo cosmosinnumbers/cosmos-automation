@@ -1115,5 +1115,15 @@
   ],
   "quiz": "Diameter-0",
   "answer": "Venus, 12,104 km across (NASA Planetary Fact Sheet)"
+ },
+ {
+  "ref": "th-a1128-apollo-17-moon-rocks",
+  "at": "2026-11-28 21:00",
+  "tag": "Moon",
+  "text": "Apollo 17 Returned 110 Kilograms of Moon Rocks (NASA data)\n\nIf you walked on the Moon, you would stay about 75 hours. And what you bring home is even more surprising. Astronauts on Apollo 17 spent those three days exploring lunar valleys. They hauled back 110 kilograms of rock and soil samples. That is more cosmic material than any other lunar landing returned.\n\nSource: NASA.\nNarration: synthetic voice; script AI-assisted, checked by a human. Full videos on YouTube: @CosmosinNumbers",
+  "replies": [
+   "Source: APOD: 2026 November 28 – Apollo 17 VIP Site Anaglyph: https://science.nasa.gov/image-article/apod-2026-november-28-apollo-17-vip-site-anaglyph/"
+  ],
+  "short": "a1128-apollo-17-moon-rocks"
  }
 ]
